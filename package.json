@@ -1,0 +1,36 @@
+{
+  "name": "inline-style-prefixer",
+  "version": "0.1.0",
+  "description": "Inline-style prefixer based on userAgent and CanIUse.com",
+  "main": "lib/prefixer.js",
+  "files": [
+    "LICENSE",
+    "README.md",
+    "lib/"
+  ],
+	"scripts" : {
+		"pretest" : "babel src --out-dir lib && babel generator --out-dir dist && node dist/generatePrefixData.js",
+    "test": "mocha --recursive --compilers js:babel/register",
+		"prepublish" : "babel src --out-dir lib && babel generator --out-dir dist",
+		"preinstall" : "node dist/generatePrefixData.js"
+	},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rofrischmann/inline-style-prefixer"
+  },
+  "keywords": [
+    "prefixer",
+    "inline styles",
+    "autoprefixer",
+    "vendor prefix",
+    "userAgent"
+  ],
+  "author": "Robin Frischmann",
+  "license": "MIT",
+  "devDependencies": {
+    "babel": "^5.6.14",
+    "caniuse-api": "^1.3.2",
+    "chai": "^3.2.0",
+    "mocha": "^2.2.5"
+  }
+}
