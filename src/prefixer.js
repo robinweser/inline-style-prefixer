@@ -1,43 +1,130 @@
 import prefixProperties from './data';
 import checkBrowser from './checkBrowser';
 
+const vendorPrefixes = {
+	firefox: 'Moz',
+	chrome: 'Webkit',
+	safari: 'Webkit',
+	ie: 'ms'
+};
+
+let prefix = '';
 let requiredProperties = [];
 let ua = (typeof navigator !== 'undefined' ? navigator.userAgent : undefined);
 let generated = false;
 
 export default {
+	/**
+	 * Sets the used userAgent
+	 * @param {string} userAgent - a valid userAgent string
+	 */
 	setUserAgent(userAgent) {
 			ua = userAgent;
-			this.generateRequiredProperties();
+			generateRequiredProperties(userAgent);
 		},
 
+		/**
+		 * Returns the currently used userAgent
+		 */
 		getUserAgent() {
 			return ua;
 		},
 
-		generateRequiredProperties(userAgent = ua) {
-			if (userAgent) {
-				let browserInformation = checkBrowser(userAgent);
-				let browserData = prefixProperties[browserInformation.browser];
-				
-				let prop;
-				for (prop in browserData){
-					if (browserData[prop] >= browserInformation.version){
-						requiredProperties.push(prop);
-					}
-				}
+		/**
+		 * Processes an object of styles using userAgent specific 
+		 * @param {Object} styles - Styles object that gets prefixed
+		 * @param {Boolean} hacks - If hacks should be used to resolve browser differences
+		 */
+		process(styles, hacks = true) {
+			if (requiredProperties.length > 0) {
+				addPrefixedProperties(styles, vendorPrefixes[prefix]);
 			} else {
-				console.warn('There is no userAgent specified.');
+				if (!generated) {
+					console.warn('Use .generatedRequiredProperties() first to create a prefix-property map.');
+					return false;
+				}
 			}
 			
+			return styles;
+		}
+}
+
+
+/**
+ * Generates an array of all relevant properties according to the userAgent
+ * @param {string} userAgent - a valid userAgent string
+ */
+export function generateRequiredProperties() {
+	if (ua) {
+		let info = checkBrowser(ua);
+		let data = prefixProperties[info.browser];
+
+		//only generate if there is browser data provided
+		if (data) {
+			prefix = vendorPrefixes[info.browser];
+
+			let propperty;
+			for (propperty in data) {
+				if (data[propperty] >= info.version) {
+					requiredProperties.push(propperty);
+				}
+			}
+			generated = true;
 			return requiredProperties;
-		},
+		} else {
+			console.warn('Your browser seems to not be supported by inline-style-prefixer.');
+			console.warn('Please create an issue at https://github.com/rofrischmann/inline-style-prefixer');
+			return false;
+		}
+	} else {
+		console.warn('userAgent needs to be set first. Use `.setUserAgent(userAgent)`');
+		return false;
+	}
+}
 
-		process(styles) {
-			if (generated) {
+/**
+ * Adds prefixed properties to a style object
+ * @param {Map} selectors - Map of selectors
+ */
+export function addPrefixedProperties(selectors) {
+	let property;
 
-			} else {
-				console.warn('Use .generatedRequiredProperties() first to create a prefix-property map.');
+	for (property in selectors) {
+		let value = selectors[property];
+		
+		if (value instanceof Object) {
+			addPrefixedProperties(value);
+		} else {
+			if (isPrefixProperty(property)) {
+				selectors[generatePrefixedProperty(property)] = value;
 			}
 		}
+	}
+}
+
+
+
+/**
+ * Capitalizes first letter of a string
+ * @param {String} str - str to caplitalize
+ */
+export function caplitalizeString(str) {
+	return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+/**
+ * Returns a prefixed style property
+ * @param {String} property - a style property in camelCase
+ * @param {String} prefix - evaluated vendor prefix that will be added
+ */
+export function generatePrefixedProperty(property) {
+	return prefix + caplitalizeString(property);
+}
+
+/**
+ * Checks if a property needs to be prefixed
+ * @param {String} property - a style property
+ */
+export function isPrefixProperty(property) {
+	return requiredProperties.indexOf(property) > -1;
 }
