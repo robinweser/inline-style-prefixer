@@ -5,10 +5,12 @@ const vendorPrefixes = {
 	firefox: 'Moz',
 	chrome: 'Webkit',
 	safari: 'Webkit',
-	ie: 'ms'
+	ie: 'ms',
+	opera : 'O'
 };
 
 let prefix = '';
+let info;
 let requiredProperties = [];
 let ua = (typeof navigator !== 'undefined' ? navigator.userAgent : undefined);
 let generated = false;
@@ -20,7 +22,7 @@ export default {
 	 */
 	setUserAgent(userAgent) {
 			ua = userAgent;
-			generateRequiredProperties(userAgent);
+			generateRequiredProperties();
 		},
 
 		/**
@@ -36,15 +38,12 @@ export default {
 		 * @param {Boolean} hacks - If hacks should be used to resolve browser differences
 		 */
 		process(styles, hacks = true) {
-			if (requiredProperties.length > 0) {
-				addPrefixedProperties(styles, vendorPrefixes[prefix]);
-			} else {
-				if (!generated) {
-					console.warn('Use .generatedRequiredProperties() first to create a prefix-property map.');
-					return false;
-				}
+			if (!generated) {
+				generateRequiredProperties();
 			}
-			
+			if (requiredProperties.length > 0) {
+				addPrefixedProperties(styles);
+			} 
 			return styles;
 		}
 }
@@ -56,7 +55,7 @@ export default {
  */
 export function generateRequiredProperties() {
 	if (ua) {
-		let info = checkBrowser(ua);
+		info = checkBrowser(ua);
 		let data = prefixProperties[info.browser];
 
 		//only generate if there is browser data provided
@@ -84,22 +83,23 @@ export function generateRequiredProperties() {
 
 /**
  * Adds prefixed properties to a style object
- * @param {Map} selectors - Map of selectors
+ * @param {Map} styles - Style object that gets prefixed properties added
  */
-export function addPrefixedProperties(selectors) {
+export function addPrefixedProperties(styles) {
 	let property;
 
-	for (property in selectors) {
-		let value = selectors[property];
-		
+	for (property in styles) {
+		let value = styles[property];
+
 		if (value instanceof Object) {
 			addPrefixedProperties(value);
 		} else {
 			if (isPrefixProperty(property)) {
-				selectors[generatePrefixedProperty(property)] = value;
+				styles[generatePrefixedProperty(property)] = value;
 			}
 		}
 	}
+	return styles;
 }
 
 

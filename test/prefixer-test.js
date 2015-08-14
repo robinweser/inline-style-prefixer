@@ -42,6 +42,7 @@ describe('Prefixing a property', () => {
 		expect(generatePrefixedProperty('transition')).to.eql('msTransition');
 	});
 	
+	
 	it('should only add required prefixes', () => {
 		let input = {
 			appearance: 'test',
@@ -61,6 +62,6 @@ describe('Prefixing a property', () => {
 			transition: 'test'
 		};
 		Prefixer.setUserAgent('Chrome/ 49.0');
-				expect(Prefixer.process(input2)).to.eql(input2);
+		expect(Prefixer.process(input2)).to.eql(input2);
 	});
 });
