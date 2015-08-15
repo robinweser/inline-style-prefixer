@@ -1,5 +1,6 @@
 language: node_js
 node_js:
 - "0.12"
-before_install: npm run transpile
-install: npm install
+install:
+- "npm install"
+- "npm run transpile"
