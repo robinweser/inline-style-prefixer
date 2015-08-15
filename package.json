@@ -6,13 +6,15 @@
   "files": [
     "LICENSE",
     "README.md",
-    "lib/"
+    "lib/",
+    "dist/"
   ],
 	"scripts" : {
-		"pretest" : "babel src --out-dir lib && babel generator --out-dir dist && node dist/generatePrefixData.js",
+    "transpile" : "babel src --out-dir lib && babel generator --out-dir dist",
+		"pretest" : "npm run transpile && node dist/generatePrefixData.js",
     "test": "mocha --recursive --compilers js:babel/register",
-		"prepublish" : "babel src --out-dir lib && babel generator --out-dir dist",
-		"preinstall" : "node dist/generatePrefixData.js"
+		"prepublish" : "npm run transpile",
+		"postinstall" : "node dist/generatePrefixData.js"
 	},
   "repository": {
     "type": "git",
