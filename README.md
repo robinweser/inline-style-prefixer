@@ -1,7 +1,13 @@
-# Autoprefixer for inline-style objects
+# Autoprefixer for Inline Styles
+[![Build Status](https://travis-ci.org/rofrischmann/inline-style-prefixer.svg)](https://travis-ci.org/rofrischmann/inline-style-prefixer)
+[![Code Climate](https://codeclimate.com/github/rofrischmann/inline-style-prefixer/badges/gpa.svg)](https://codeclimate.com/github/rofrischmann/inline-style-prefixer)
+[![npm version](https://badge.fury.io/js/inline-style-prefixer.svg)](http://badge.fury.io/js/inline-style-prefixer)
+![Dependencies](https://david-dm.org/rofrischmann/inline-style-prefixer.svg)
+> **Warning**: Very early stage supporting only a small set of prefixes by now.
+**Usage on your own risk**!
 
 	npm install inline-style-prefixer
-**inline-style-prefixer** adds required **vendor-prefixes** to your style object. It only adds prefixes if they're actually required since it evaluates the environments `userAgent`.<br>
+**inline-style-prefixer** adds required **vendor prefixes** to your style object. It only adds prefixes if they're actually required since it evaluates the environments `userAgent`.<br>
 > The information is based on [caniuse.com](http://caniuse.com/).
 
 ## Usage
