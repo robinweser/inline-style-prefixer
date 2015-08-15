@@ -1,5 +1,5 @@
 import prefixProperties from './data';
-import checkBrowser from './checkBrowser';
+import checkBrowser from './utils/checkBrowser';
 
 const vendorPrefixes = {
 	firefox: 'Moz',
