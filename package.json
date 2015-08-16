@@ -1,7 +1,7 @@
 {
-  "name": "react-style-prefixer",
+  "name": "inline-style-prefixer",
   "version": "0.1.0",
-  "description": "Autoprefixer for React Inline Styles using userAgent and caniuse data",
+  "description": "Autoprefixer for Inline Style objects using userAgent and caniuse data",
   "main": "lib/prefixer.js",
   "files": [
     "LICENSE",
@@ -18,7 +18,7 @@
 	},
   "repository": {
     "type": "git",
-    "url": "https://github.com/rofrischmann/react-style-prefixer"
+    "url": "https://github.com/rofrischmann/inline-style-prefixer"
   },
   "keywords": [
     "react",
