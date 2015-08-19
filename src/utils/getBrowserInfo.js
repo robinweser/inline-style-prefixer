@@ -1,6 +1,14 @@
+const vendorPrefixes = {
+	firefox: 'Moz',
+	chrome: 'Webkit',
+	safari: 'Webkit',
+	opera: 'O',
+	ie: 'ms'
+};
+
 // (C) viazenetti GmbH (Christian Ludwig)
 // http://jsfiddle.net/ChristianL/AVyND/
-export default function checkBrowser(userAgent) {
+export default function getBrowserInfo(userAgent) {
 	let browser;
 	let version;
 	let verOffset;
@@ -34,8 +42,11 @@ export default function checkBrowser(userAgent) {
 		version = userAgent.substring(verOffset + 1);
 	}
 
+	let prefix = vendorPrefixes[browser] ? vendorPrefixes[browser] : '';
 	return {
 		browser: browser,
-		version: version
+		version: version,
+		prefix: prefix,
+		css: '-' + prefix.toLowerCase() + '-'
 	};
 }
