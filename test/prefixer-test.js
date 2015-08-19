@@ -27,12 +27,12 @@ describe('Generating required properties', () => {
 
 
 describe('Prefixing a property', () => {
-	
+
 	it('should capitalize a property', () => {
 		expect(caplitalizeString('test')).to.eql('Test');
 	});
-	
-	
+
+
 	it('should return a prefixed property', () => {
 		Prefixer.setUserAgent('Chrome/ 45.0');
 		expect(generatePrefixedProperty('transition')).to.eql('WebkitTransition');
@@ -41,27 +41,74 @@ describe('Prefixing a property', () => {
 		Prefixer.setUserAgent('MSIE 11.0');
 		expect(generatePrefixedProperty('transition')).to.eql('msTransition');
 	});
-	
-	
+
+
 	it('should only add required prefixes', () => {
 		let input = {
 			appearance: 'test',
-			transition: 'test'
+			transition: 'test',
 		};
-		
+
 		let output = {
-			WebkitAppearance : 'test',
+			WebkitAppearance: 'test',
 			appearance: 'test',
 			transition: 'test'
 		}
 		Prefixer.setUserAgent('Chrome/ 45.0');
 		expect(Prefixer.process(input)).to.eql(output);
-		
+
 		let input2 = {
 			appearance: 'test',
 			transition: 'test'
 		};
 		Prefixer.setUserAgent('Chrome/ 49.0');
 		expect(Prefixer.process(input2)).to.eql(input2);
+	});
+});
+
+
+describe('Resolving hacks', () => {
+
+	it('should resolve properties', () => {
+		let input = {
+			alignItems: 'center'
+		};
+
+		let output = {
+			msFlexAlign: 'center',
+			msAlignItems: 'center',
+			alignItems: 'center'
+		}
+		Prefixer.setUserAgent('MSIE 10.0');
+		expect(Prefixer.process(input)).to.eql(output);
+	});
+
+
+
+	it('should resolve alternatives', () => {
+		let input = {
+			display: 'flex'
+		};
+
+		let output = {
+			display: '-webkit-flex;display:flex'
+		}
+
+		Prefixer.setUserAgent('Chrome/ 45.0');
+		expect(Prefixer.process(input)).to.eql(output);
+	});
+
+	it('should resolve values', () => {
+		let input = {
+			justifyContent: 'space-between'
+		};
+
+		let output = {
+			justifyContent: 'justify'
+		}
+		Prefixer.setUserAgent('MSIE 10.0');
+		let prefixed = Prefixer.process(input);
+		expect(prefixed.justifyContent).to.equal('justify');
+		expect(prefixed).to.have.property('msFlexPack');
 	});
 });

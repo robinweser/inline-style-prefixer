@@ -1,17 +1,10 @@
+import getBrowserInfo from './utils/getBrowserInfo';
 import prefixProperties from './data';
-import checkBrowser from './utils/checkBrowser';
+import hacks from './hacks';
 
-const vendorPrefixes = {
-	firefox: 'Moz',
-	chrome: 'Webkit',
-	safari: 'Webkit',
-	ie: 'ms',
-	opera : 'O'
-};
-
-let prefix = '';
 let info;
 let requiredProperties = [];
+let requiredHacks = [];
 let ua = (typeof navigator !== 'undefined' ? navigator.userAgent : undefined);
 let generated = false;
 
@@ -37,53 +30,20 @@ export default {
 		 * @param {Object} styles - Styles object that gets prefixed
 		 * @param {Boolean} hacks - If hacks should be used to resolve browser differences
 		 */
-		process(styles, hacks = true) {
+		process(styles) {
 			if (!generated) {
 				generateRequiredProperties();
 			}
 			if (requiredProperties.length > 0) {
 				addPrefixedProperties(styles);
-			} 
+			}
 			return styles;
 		}
 }
 
-
-/**
- * Generates an array of all relevant properties according to the userAgent
- * @param {string} userAgent - a valid userAgent string
- */
-export function generateRequiredProperties() {
-	if (ua) {
-		info = checkBrowser(ua);
-		let data = prefixProperties[info.browser];
-
-		//only generate if there is browser data provided
-		if (data) {
-			prefix = vendorPrefixes[info.browser];
-
-			let propperty;
-			for (propperty in data) {
-				if (data[propperty] >= info.version) {
-					requiredProperties.push(propperty);
-				}
-			}
-			generated = true;
-			return requiredProperties;
-		} else {
-			console.warn('Your browser seems to not be supported by inline-style-prefixer.');
-			console.warn('Please create an issue at https://github.com/rofrischmann/inline-style-prefixer');
-			return false;
-		}
-	} else {
-		console.warn('userAgent needs to be set first. Use `.setUserAgent(userAgent)`');
-		return false;
-	}
-}
-
 /**
  * Adds prefixed properties to a style object
- * @param {Map} styles - Style object that gets prefixed properties added
+ * @param {Object} styles - Style object that gets prefixed properties added
  */
 export function addPrefixedProperties(styles) {
 	let property;
@@ -92,17 +52,54 @@ export function addPrefixedProperties(styles) {
 		let value = styles[property];
 
 		if (value instanceof Object) {
+			//recursively loop through nested style objects
 			addPrefixedProperties(value);
 		} else {
+			//add prefixes if needed
 			if (isPrefixProperty(property)) {
 				styles[generatePrefixedProperty(property)] = value;
 			}
+
+			//resolve hacks
+			requiredHacks.forEach(hack => {
+				resolveHack(hack, styles, property, value);
+			});
+
 		}
 	}
 	return styles;
 }
 
 
+/**
+ * Resolves browser issues using some hacks
+ * @param {Object} hack - contains a condition and properties/values that need to be corrected
+ * @param {Object} styles - a style object
+ * @param {string} property - property that gets corrected
+ * @param {any} value - property value
+ */
+export function resolveHack(hack, styles, property, value) {
+	//resolve special property values
+	if (hack.hasOwnProperty('values')) {
+		if (hack.values(info)[property] && hack.values(info)[property][value]) {
+			styles[property] = hack.values(info)[property][value];
+		}
+	}
+
+	//resolve properties
+	if (hack.hasOwnProperty('properties')) {
+		if (hack.properties(info)[property]) {
+			styles[hack.properties(info)[property]] = styles[property];
+		}
+	}
+
+	//resolve alternative values
+	if (hack.hasOwnProperty('alternatives')) {
+		if (hack.alternatives(info)[property] && hack.alternatives(info)[property][value]) {
+			styles[property] = hack.alternatives(info)[property][value] + ';' + property + ':' + styles[property];
+		}
+	}
+}
 
 /**
  * Capitalizes first letter of a string
@@ -118,7 +115,7 @@ export function caplitalizeString(str) {
  * @param {String} prefix - evaluated vendor prefix that will be added
  */
 export function generatePrefixedProperty(property) {
-	return prefix + caplitalizeString(property);
+	return info.prefix + caplitalizeString(property);
 }
 
 /**
@@ -127,4 +124,49 @@ export function generatePrefixedProperty(property) {
  */
 export function isPrefixProperty(property) {
 	return requiredProperties.indexOf(property) > -1;
+}
+
+
+/**
+ * Generates an array of all relevant properties according to the userAgent
+ * @param {string} userAgent - userAgent which gets used to gather information
+ */
+export function generateRequiredProperties(userAgent = ua) {
+	requiredProperties = [];
+	requiredHacks = [];
+	
+	if (userAgent) {
+		info = getBrowserInfo(userAgent);
+		let data = prefixProperties[info.browser];
+
+		//only generate if there is browser data provided
+		if (data) {
+			let property;
+			for (property in data) {
+				if (data[property] >= info.version) {
+					requiredProperties.push(property);
+				}
+			}
+
+			//add all required hacks for current browser
+			let hack;
+			for (hack in hacks) {
+				let value = hacks[hack];
+				if (value.condition(info)) {
+					requiredHacks.push(value);
+				}
+			}
+
+
+			generated = true;
+			return requiredProperties;
+		} else {
+			console.warn('Your browser seems to not be supported by inline-style-prefixer.');
+			console.warn('Please create an issue at https://github.com/rofrischmann/inline-style-prefixer');
+			return false;
+		}
+	} else {
+		console.warn('userAgent needs to be set first. Use `.setUserAgent(userAgent)`');
+		return false;
+	}
 }
