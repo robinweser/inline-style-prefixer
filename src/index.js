@@ -6,7 +6,7 @@ import hacks from './hacks';
 let info;
 let requiredProperties = [];
 let requiredHacks = [];
-let ua = (typeof navigator !== 'undefined' ? navigator.userAgent : undefined);
+let ua = typeof navigator !== 'undefined' ? navigator.userAgent : undefined;
 let generated = false;
 
 export default {
