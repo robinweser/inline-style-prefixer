@@ -1,14 +1,16 @@
-export default {
-	condition(info) {
-			return info.prefix == 'Webkit';
-		},
+function condition(browserInfo) {
+	return browserInfo.prefix.inline == 'Webkit';
+}
 
-		alternatives(info) {
-			return {
-				display: {
-					'flex': info.css + 'flex',
-					'inline-flex': info.css + 'inline-flex'
-				}
+export default function hack(browserInfo) {
+	if (condition(browserInfo)) {
+
+		return {
+			prefixValue: {
+				display: ['flex', 'inline-flex']
 			}
 		}
+	} else {
+		return false;
+	}
 }
