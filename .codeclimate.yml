@@ -1,5 +1,5 @@
 languages:
 	JavaScript: true
 exclude_paths:
-	- dist/*
-	- generator/*
+	- dist/prefixer.js
+	- dist/prefixer.min.js
