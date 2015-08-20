@@ -40,13 +40,18 @@ export default function getBrowserInfo(userAgent) {
 	} else if ((nameOffset = userAgent.lastIndexOf(' ') + 1) < (verOffset = userAgent.lastIndexOf('/'))) {
 		browser = userAgent.substring(nameOffset, verOffset);
 		version = userAgent.substring(verOffset + 1);
+	} else {
+		browser = '';
+		version = 1;
 	}
 
 	let prefix = vendorPrefixes[browser] ? vendorPrefixes[browser] : '';
 	return {
 		browser: browser,
 		version: version,
-		prefix: prefix,
-		css: '-' + prefix.toLowerCase() + '-'
+		prefix: {
+			inline: prefix,
+			css: '-' + prefix.toLowerCase() + '-'
+		}
 	};
 }

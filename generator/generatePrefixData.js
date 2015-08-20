@@ -9,7 +9,8 @@ function gatherInformation() {
 		ie: {},
 		firefox: {},
 		safari: {},
-		chrome: {}
+		chrome: {},
+		opera : {}
 	};
 
 	let search;

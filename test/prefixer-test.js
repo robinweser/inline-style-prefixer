@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import Prefixer, {caplitalizeString, generateRequiredProperties, generatePrefixedProperty} from '../lib/prefixer';
+import Prefixer, {caplitalizeString, generateRequiredProperties, generatePrefixedProperty} from '../lib/index';
 
 describe('Generating required properties', () => {
 
