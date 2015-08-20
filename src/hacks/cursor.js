@@ -1,16 +1,16 @@
-export default {
-	condition(info) {
-			return info.prefix == 'Webkit' || info.prefix == 'Moz' && info.version <= 23;
-		},
+function condition(browserInfo) {
+	return browserInfo.prefix.inline == 'Webkit' || browserInfo.prefix.inline == 'Moz' && browserInfo.version <= 23;
+}
 
-		alternatives(info) {
-			return {
-				cursor: {
-					'zoom-in': info.css + 'zoom-in',
-					'zoom-out': info.css + 'zoom-out',
-					'grab': info.css + 'grab',
-					'grabbing': info.css + 'grabbing'
-				}
+export default function hack(browserInfo) {
+	if (condition(browserInfo)) {
+
+		return {
+			prefixValue: {
+				cursor: ['zoom-in', 'zoom-out', 'grab', 'grabbing']
 			}
 		}
+	} else {
+		return false;
+	}
 }
