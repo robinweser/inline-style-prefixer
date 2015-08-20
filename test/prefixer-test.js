@@ -94,7 +94,7 @@ describe('Resolving hacks', () => {
 			display: '-webkit-flex;display:flex'
 		}
 
-		Prefixer.setUserAgent('Chrome/ 45.0');
+		Prefixer.setUserAgent('Chrome/ 14.0');
 		expect(Prefixer.process(input)).to.eql(output);
 	});
 
@@ -104,11 +104,11 @@ describe('Resolving hacks', () => {
 		};
 
 		let output = {
-			justifyContent: 'justify'
+			justifyContent: 'justify;justify-content:space-between'
 		}
 		Prefixer.setUserAgent('MSIE 10.0');
 		let prefixed = Prefixer.process(input);
-		expect(prefixed.justifyContent).to.equal('justify');
+		expect(prefixed.justifyContent).to.equal('justify;justify-content:space-between');
 		expect(prefixed).to.have.property('msFlexPack');
 	});
 });

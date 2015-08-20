@@ -1,6 +1,6 @@
 {
   "name": "inline-style-prefixer",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Autoprefixer for Inline Style objects using userAgent and caniuse data",
   "main": "lib/prefixer.js",
   "files": [
@@ -12,7 +12,7 @@
   "scripts": {
     "clean": "rimraf lib dist",
     "transpile": "babel src --out-dir lib && babel generator --out-dir lib/generator",
-    "pretest": "npm run transpile && npm run generate",
+    "pretest": "npm run clean && npm run transpile && npm run generate",
     "generate": "node lib/generator/generatePrefixData.js",
     "bundle": "browserify lib/index.js --o dist/prefixer.js && uglifyjs dist/prefixer.js -o dist/prefixer.min.js",
     "test": "mocha --recursive --compilers js:babel/register",
@@ -35,7 +35,8 @@
   "author": "Robin Frischmann",
   "license": "MIT",
   "dependencies": {
-    "caniuse-api": "^1.3.2"
+    "caniuse-api": "^1.3.2",
+    "param-case": "^1.1.1"
   },
   "devDependencies": {
     "babel": "^5.6.14",

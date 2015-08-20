@@ -1,3 +1,4 @@
+import paramCase from 'param-case';
 import getBrowserInfo from './utils/getBrowserInfo';
 import prefixProperties from './data';
 import hacks from './hacks';
@@ -71,33 +72,56 @@ export function addPrefixedProperties(styles) {
 }
 
 
+function getPrefixedValue(property, oldValue, newValue) {
+	if (newValue) {
+		return value.replace(oldValue, info.prefix.css + newValue, 'g') + ';' + paramCase(property) + ':' + oldValue;
+	} else {
+		return info.prefix.css + oldValue + ';' + paramCase(property) + ':' + oldValue;
+	}
+}
+
 /**
  * Resolves browser issues using some hacks
- * @param {Object} hack - contains a condition and properties/values that need to be corrected
+ * @param {Object} hackData - contains a condition and properties/values that need to be corrected
  * @param {Object} styles - a style object
  * @param {string} property - property that gets corrected
  * @param {any} value - property value
  */
-export function resolveHack(hack, styles, property, value) {
-	//resolve special property values
-	if (hack.hasOwnProperty('values')) {
-		if (hack.values(info)[property] && hack.values(info)[property][value]) {
-			styles[property] = hack.values(info)[property][value];
+export function resolveHack(hackData, styles, property, value) {
+
+	//prefix ordinary values
+	if (hackData.prefixValue) {
+
+		let values = hackData.prefixValue[property];
+		if (values) {
+			if (hackData.containValue) {
+				values.forEach(val => {
+					if (value.indexOf(val) > -1) {
+						styles[property] = getPrefixedValue(property, value, val);
+					}
+				});
+			} else {
+				styles[property] = getPrefixedValue(property, value);
+			}
 		}
 	}
 
-	//resolve properties
-	if (hack.hasOwnProperty('properties')) {
-		if (hack.properties(info)[property]) {
-			styles[hack.properties(info)[property]] = styles[property];
+	//resolve property issues
+	if (hackData.alternativeProperty) {
+
+		let oldProperty = hackData.alternativeProperty[property];
+		if (oldProperty) {
+			styles[oldProperty] = value;
 		}
 	}
-
+	
 	//resolve alternative values
-	if (hack.hasOwnProperty('alternatives')) {
-		if (hack.alternatives(info)[property] && hack.alternatives(info)[property][value]) {
-			styles[property] = hack.alternatives(info)[property][value] + ';' + property + ':' + styles[property];
-		}
+	if (hackData.alternativeValue){
+		
+		let oldValue = hackData.alternativeValue[property];
+		if (oldValue && oldValue[value]){
+			styles[property] = oldValue[value] + ';' + paramCase(property) + ':' + value;
+ 		}
 	}
 }
 
@@ -115,7 +139,7 @@ export function caplitalizeString(str) {
  * @param {String} prefix - evaluated vendor prefix that will be added
  */
 export function generatePrefixedProperty(property) {
-	return info.prefix + caplitalizeString(property);
+	return info.prefix.inline + caplitalizeString(property);
 }
 
 /**
@@ -134,7 +158,7 @@ export function isPrefixProperty(property) {
 export function generateRequiredProperties(userAgent = ua) {
 	requiredProperties = [];
 	requiredHacks = [];
-	
+
 	if (userAgent) {
 		info = getBrowserInfo(userAgent);
 		let data = prefixProperties[info.browser];
@@ -151,9 +175,9 @@ export function generateRequiredProperties(userAgent = ua) {
 			//add all required hacks for current browser
 			let hack;
 			for (hack in hacks) {
-				let value = hacks[hack];
-				if (value.condition(info)) {
-					requiredHacks.push(value);
+				let hackData = hacks[hack](info);
+				if (hackData) {
+					requiredHacks.push(hackData);
 				}
 			}
 
