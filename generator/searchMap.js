@@ -33,5 +33,4 @@ export default {
 	'font-feature': 'fontFeatureSettings',
 	'css-boxshadow' : 'boxShadow',
 	'multicolumn' : ['breakAfter', 'breakBefore', 'breakInside', 'columnCount', 'columnFill', 'columnGap', 'columnRule', 'columnRuleColor', 'columnRuleStyle', 'columnRuleWidth', 'columns', 'columnSpan', 'columnWidth']
-	
 }

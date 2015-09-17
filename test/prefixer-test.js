@@ -9,7 +9,7 @@ describe('Generating required properties', () => {
 
 
 	it('should set a custom userAgent', () => {
-		let userAgent = 'Chrome/ 45.0';
+		let userAgent = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36'
 		Prefixer.setUserAgent(userAgent);
 		expect(Prefixer.getUserAgent()).to.equal(userAgent);
 	});
@@ -17,7 +17,7 @@ describe('Generating required properties', () => {
 
 	it('should return correct properties according to userAgent', () => {
 		let Chrome45Props = generateRequiredProperties();
-		let IE11Props = generateRequiredProperties('MSIE 11.0');
+		let IE11Props = generateRequiredProperties('Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko');
 
 		expect(IE11Props).to.include('userSelect');
 		expect(Chrome45Props).to.include('appearance').and.to.include('userSelect');
@@ -34,11 +34,11 @@ describe('Prefixing a property', () => {
 
 
 	it('should return a prefixed property', () => {
-		Prefixer.setUserAgent('Chrome/ 45.0');
+		Prefixer.setUserAgent('Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36');
 		expect(generatePrefixedProperty('transition')).to.eql('WebkitTransition');
 		expect(generatePrefixedProperty('transitionDuration')).to.eql('WebkitTransitionDuration');
 
-		Prefixer.setUserAgent('MSIE 11.0');
+		Prefixer.setUserAgent('Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko');
 		expect(generatePrefixedProperty('transition')).to.eql('msTransition');
 	});
 
@@ -54,14 +54,14 @@ describe('Prefixing a property', () => {
 			appearance: 'test',
 			transition: 'test'
 		}
-		Prefixer.setUserAgent('Chrome/ 45.0');
+		Prefixer.setUserAgent('Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36');
 		expect(Prefixer.process(input)).to.eql(output);
 
 		let input2 = {
 			appearance: 'test',
 			transition: 'test'
 		};
-		Prefixer.setUserAgent('Chrome/ 49.0');
+		Prefixer.setUserAgent('Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2454.85 Safari/537.36');
 		expect(Prefixer.process(input2)).to.eql(input2);
 	});
 });
@@ -79,7 +79,7 @@ describe('Resolving hacks', () => {
 			msAlignItems: 'center',
 			alignItems: 'center'
 		}
-		Prefixer.setUserAgent('MSIE 10.0');
+		Prefixer.setUserAgent('Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)');
 		expect(Prefixer.process(input)).to.eql(output);
 	});
 
@@ -94,7 +94,7 @@ describe('Resolving hacks', () => {
 			display: '-webkit-flex;display:flex'
 		}
 
-		Prefixer.setUserAgent('Chrome/ 14.0');
+		Prefixer.setUserAgent('Mozilla/5.0 (Windows NT 5.1) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.815.0 Safari/535.1');
 		expect(Prefixer.process(input)).to.eql(output);
 	});
 
@@ -106,7 +106,7 @@ describe('Resolving hacks', () => {
 		let output = {
 			justifyContent: 'justify;justify-content:space-between'
 		}
-		Prefixer.setUserAgent('MSIE 10.0');
+		Prefixer.setUserAgent('Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)');
 		let prefixed = Prefixer.process(input);
 		expect(prefixed.justifyContent).to.equal('justify;justify-content:space-between');
 		expect(prefixed).to.have.property('msFlexPack');

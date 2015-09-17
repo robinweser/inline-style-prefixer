@@ -10,6 +10,8 @@
 **inline-style-prefixer** adds required **vendor prefixes** to your style object. It only adds prefixes if they're actually required since it evaluates the environments `userAgent`.<br>
 > The information is based on [caniuse.com](http://caniuse.com/).
 
+See [SupportedProps.md](SupportedProps.md) for detail informaton on supported properties that get evaluated and prefixed.
+
 ## Usage
 ```javascript
 import Prefixer from 'inline-style-prefixer';

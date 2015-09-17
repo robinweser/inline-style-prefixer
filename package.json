@@ -13,7 +13,7 @@
     "clean": "rimraf lib dist",
     "transpile": "babel src --out-dir lib && babel generator --out-dir lib/generator",
     "pretest": "npm run clean && npm run transpile && npm run generate",
-    "generate": "node lib/generator/generatePrefixData.js",
+    "generate": "node lib/generator/generateData.js",
     "bundle": "browserify lib/index.js --o dist/prefixer.js && uglifyjs dist/prefixer.js -o dist/prefixer.min.js",
     "test": "mocha --recursive --compilers js:babel/register",
     "build": "npm run clean && mkdir dist && npm run transpile && npm run generate && npm run bundle",
@@ -35,6 +35,7 @@
   "author": "Robin Frischmann",
   "license": "MIT",
   "dependencies": {
+    "bowser": "^1.0.0",
     "caniuse-api": "^1.3.2",
     "param-case": "^1.1.1"
   },
