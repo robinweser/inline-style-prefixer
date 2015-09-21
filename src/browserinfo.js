@@ -25,7 +25,7 @@ const browsers = {
  * Evaluates bowser info and adds vendorPrefix information
  * @param {string} userAgent - userAgent that gets evaluated
  */
-export default (userAgent) => {
+export default userAgent => {
   let info = bowser._detect(userAgent)
 	let prefix
 	for (prefix in vendorPrefixes) {

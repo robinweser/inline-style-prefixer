@@ -1,14 +1,27 @@
-import paramCase from 'param-case'
 import getBrowserInformation from './browserinfo'
 import caniuseData from './caniuseData'
 import hacks from './hacks'
 
-let browserinfo
+let browserinfo = undefined
 let requiredHacks = []
 let requiredProperties = []
 let defaultUserAgent = typeof navigator !== 'undefined' ? navigator.userAgent : undefined
 let lastUserAgent = undefined
 let generated = false
+
+
+/**
+ * Transforms camel case to dash case (param case)
+ * @param {string} str - str that gets transformed
+ * Thanks to @ianobermiller for this short method
+ * https://github.com/rofrischmann/inline-style-prefixer/issues/9
+ */
+const CAMEL_CASE_REGEXP = /([a-z])([A-Z])/g
+const camelToDashCase = str => {
+	return str.replace(CAMEL_CASE_REGEXP, (match, p1, p2) => {
+		return p1 + '-' + p2.toLowerCase()
+	})
+}
 
 /**
  * Processes an object of styles using userAgent specific
@@ -63,9 +76,9 @@ export function addPrefixedProperties(styles) {
  */
 export function getPrefixedValue(property, value, alternative) {
 	if (alternative) {
-		return value.replace(value, browserinfo.prefix.CSS + alternative, 'g') + ';' + paramCase(property) + ':' + value
+		return value.replace(value, browserinfo.prefix.CSS + alternative, 'g') + ';' + camelToDashCase(property) + ':' + value
 	} else {
-		return browserinfo.prefix.CSS + value + ';' + paramCase(property) + ':' + value
+		return browserinfo.prefix.CSS + value + ';' + camelToDashCase(property) + ':' + value
 	}
 }
 
@@ -137,7 +150,7 @@ export function resolveHack(hackData, styles, property, value) {
 
 		let oldValue = hackData.alternativeValue[property];
 		if (oldValue && oldValue[value]) {
-			styles[property] = oldValue[value] + ';' + paramCase(property) + ':' + value
+			styles[property] = oldValue[value] + ';' + camelToDashCase(property) + ':' + value
 		}
 	}
 }
