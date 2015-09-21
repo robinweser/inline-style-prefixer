@@ -79,8 +79,8 @@ describe('Resolving hacks', () => {
 			msAlignItems: 'center',
 			alignItems: 'center'
 		}
-		Prefixer.setUserAgent('Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)');
-		expect(Prefixer.process(input)).to.eql(output);
+		Prefixer.setUserAgent('Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)')
+		expect(Prefixer.process(input)).to.eql(output)
 	});
 
 

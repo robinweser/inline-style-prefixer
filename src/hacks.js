@@ -11,7 +11,7 @@ export default {
 	cursor,
 	flexbox,
 	sizing,
-	gradient, 
+	gradient,
 	flexbox2009,
 	flexbox2012
 }

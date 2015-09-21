@@ -11,6 +11,6 @@ export default function hack(browserInfo) {
 			}
 		}
 	} else {
-		return false;
+		return false
 	}
 }

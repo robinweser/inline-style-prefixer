@@ -1,5 +1,5 @@
 function condition(browserInfo) {
-	return browserInfo.browser == 'ie' && browserInfo.version == 10;
+	return browserInfo.msie && browserInfo.version == 10
 }
 
 export default function hack(browserInfo) {
@@ -27,12 +27,12 @@ export default function hack(browserInfo) {
 				justifyContent: msValues,
 				alignContent: msValues,
 				display: {
-					'flex': browserInfo.prefix.css + 'flexbox',
-					'inline-flex': browserInfo.prefix.css + 'inline-flexbox'
+					'flex': browserInfo.prefix.CSS + 'flexbox',
+					'inline-flex': browserInfo.prefix.CSS + 'inline-flexbox'
 				}
 			}
 		}
 	} else {
-		return false;
+		return false
 	}
 }

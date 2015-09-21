@@ -163,7 +163,7 @@ export function generateRequiredProperties(userAgent = ua) {
 
   if (userAgent) {
     info = browserInfo(userAgent)
-    let data = prefixProperties[info.name.toLowerCase()]
+    let data = prefixProperties[info.browser.toLowerCase()]
 
     //only generate if there is browser data provided
     if (data) {
@@ -175,14 +175,13 @@ export function generateRequiredProperties(userAgent = ua) {
       }
 
       //add all required hacks for current browser
-      let hack;
+      let hack
       for (hack in hacks) {
         let hackData = hacks[hack](info)
         if (hackData) {
           requiredHacks.push(hackData)
         }
       }
-
 
       generated = true
       return requiredProperties

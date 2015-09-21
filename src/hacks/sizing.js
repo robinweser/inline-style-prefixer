@@ -12,7 +12,7 @@ export default function hack(browserInfo) {
 		let sizingValues = ['min-content', 'max-content', 'fill-available', 'fit-content'];
 		let containFloats = Array(...sizingValues);
 		containFloats.push('contain-floats');
-		
+
 		return {
 			prefixValue : {
 				columnWidth: sizingValues,
@@ -21,7 +21,7 @@ export default function hack(browserInfo) {
 				width: sizingValues,
 				height: sizingValues,
 				minWidth: containFloats,
-				minHeight: containFloats	
+				minHeight: containFloats
 			}
 		}
 	} else {
