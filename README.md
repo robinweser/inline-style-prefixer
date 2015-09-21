@@ -14,7 +14,7 @@ See [SupportedProps.md](SupportedProps.md) for detail informaton on supported pr
 
 ## Usage
 ```javascript
-import Prefixer from 'inline-style-prefixer';
+import Prefixer from 'inline-style-prefixer'
 
 let styles = {
 	transition: '200ms all linear',
@@ -27,7 +27,7 @@ let styles = {
 	}
 }
 
-Prefixer.process(styles);
+Prefixer(styles)
 ```
 
 Assuming you are using .e.g Chrome version 27.0 this would output the following styles object:
@@ -48,15 +48,14 @@ Assuming you are using .e.g Chrome version 27.0 this would output the following 
 ```
 
 ## Custom userAgent
-Sometimes your environment does not provide a proper userAgent string e.g. if you are **rendering on server-side**. Therefore you can use `setUserAgent` and `getUserAgent`.
+Sometimes your environment does not provide a proper userAgent string e.g. if you are **rendering on server-side**. Therefore optionally just pass a userAgent-string.
 
 ```javascript
-import Prefixer from 'inline-style-prefixer';
+import Prefixer from 'inline-style-prefixer'
 
-Prefixer.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.155 Safari/537.36');
-Prefixer.getUserAgent() // => Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.155 Safari/537.36
-
+Prefixer(styles, 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.155 Safari/537.36')
 ```
+
 ## How it works
 While installing it automatically searches the latest **caniuse.com data** for CSS properties and creates a data map sort by browsers. Those maps include pairs of properties and the maximum version that needs a prefix.<br>
 

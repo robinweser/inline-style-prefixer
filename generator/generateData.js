@@ -24,11 +24,11 @@ function gatherInformation() {
       }
     })
   }
-  return 'var prefixes = ' + JSON.stringify(prefixProperties) + '; module.exports = prefixes';
-
+  return 'var caniuseData = ' + JSON.stringify(prefixProperties) + '; module.exports = caniuseData';
 }
 
-fs.writeFile('./lib/data.js', gatherInformation(), err => {
+fs.writeFile('./lib/caniuseData.js', gatherInformation(), err => {
   if (err) throw err
-  console.log("Successfully generated prefix data.")
+  console.log("Successfully generated CSS property vendor-prefix data using latest caniuse.com data.")
+  console.log("Support following browser: ", browsers.join(', '))
 })
