@@ -16,7 +16,7 @@ let generated = false
  * Thanks to @ianobermiller for this short method
  * https://github.com/rofrischmann/inline-style-prefixer/issues/9
  */
-const CAMEL_CASE_REGEXP = /([a-z])([A-Z])/g
+const CAMEL_CASE_REGEXP = /([a-z]|^)([A-Z])/g
 const camelToDashCase = str => {
 	return str.replace(CAMEL_CASE_REGEXP, (match, p1, p2) => {
 		return p1 + '-' + p2.toLowerCase()
