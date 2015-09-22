@@ -1,24 +1,24 @@
-import {getSupport, getBrowserScope} from 'caniuse-api'
-import searchMap from './searchMap'
-import fs from 'fs'
+var caniuse = require('caniuse-api')
+var searchMap = require('./searchMap')
+var fs = require('fs')
 
-const browsers = ['chrome', 'safari', 'firefox', 'opera', 'ie', 'ios_saf', 'android', 'and_chr', 'and_uc', 'op_mini', 'ie_mob']
+var browsers = ['chrome', 'safari', 'firefox', 'opera', 'ie', 'ios_saf', 'android', 'and_chr', 'and_uc', 'op_mini', 'ie_mob']
 
 function gatherInformation() {
-  let prefixProperties = {}
+  var prefixProperties = {}
   browsers.forEach(browser => {
     prefixProperties[browser] = {}
   })
 
-  let search
+  var search
   for (search in searchMap) {
-    let properties = searchMap[search]
-    let versions = getSupport(search, true);
+    var properties = searchMap[search]
+    var versions = caniuse.getSupport(search, true);
     if (properties instanceof Array !== true) {
       properties = [properties]
     }
     properties.forEach(prop => {
-      let prefix
+      var prefix
       for (prefix in prefixProperties) {
         prefixProperties[prefix][prop] = versions[prefix].x
       }
@@ -27,7 +27,7 @@ function gatherInformation() {
   return 'var caniuseData = ' + JSON.stringify(prefixProperties) + '; module.exports = caniuseData';
 }
 
-fs.writeFile('./lib/caniuseData.js', gatherInformation(), err => {
+fs.writeFile('./caniuseData.js', gatherInformation(), function (err){
   if (err) throw err
   console.log("Successfully generated CSS property vendor-prefix data using latest caniuse.com data.")
   console.log("Support following browser: ", browsers.join(', '))
