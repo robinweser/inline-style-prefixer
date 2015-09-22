@@ -1,8 +1,8 @@
 {
   "name": "inline-style-prefixer",
-  "version": "0.1.9",
+  "version": "0.2.1",
   "description": "Autoprefixer for Inline Style objects using userAgent and caniuse data",
-  "main": "lib/index.js",
+  "main": "lib/Prefixer.js",
   "files": [
     "LICENSE",
     "README.md",
@@ -11,14 +11,14 @@
   ],
   "scripts": {
     "clean": "rimraf lib dist",
-    "transpile": "babel src --out-dir lib && babel generator --out-dir lib/generator",
+    "transpile": "babel src --out-dir lib",
     "pretest": "npm run clean && npm run transpile && npm run generate",
-    "generate": "node lib/generator/generateData.js",
+    "generate": "node generator/generateData.js",
     "bundle": "browserify lib/Prefixer.js --o dist/prefixer.js && uglifyjs dist/prefixer.js -o dist/prefixer.min.js",
     "test": "mocha --recursive --compilers js:babel/register",
     "build": "npm run clean && mkdir dist && npm run transpile && npm run generate && npm run bundle",
     "release": "npm run build && npm publish",
-    "postinstall": "npm run transpile && npm run generate"
+    "postinstall": "npm run generate"
   },
   "repository": {
     "type": "git",

@@ -1,5 +1,5 @@
 import getBrowserInformation from './browserinfo'
-import caniuseData from './caniuseData'
+import caniuseData from '../caniuseData'
 import hacks from './hacks'
 
 let browserinfo = undefined
