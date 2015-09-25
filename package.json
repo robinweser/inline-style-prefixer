@@ -1,6 +1,6 @@
 {
   "name": "inline-style-prefixer",
-  "version": "0.2.3",
+  "version": "0.2.5",
   "description": "Autoprefixer for Inline Style objects using userAgent and caniuse data",
   "main": "lib/Prefixer.js",
   "files": [

@@ -1,23 +1,23 @@
 import bowser from 'bowser'
 
 const vendorPrefixes = {
-	'Webkit' : ['chrome', 'safari', 'ios', 'android', 'phantom', 'opera', 'webos', 'blackberry', 'bada', 'tizen'],
-	'Moz' : ['firefox', 'seamonkey', 'sailfish'],
-	'ms' : ['msie', 'msedge']
+  'Webkit': ['chrome', 'safari', 'ios', 'android', 'phantom', 'opera', 'webos', 'blackberry', 'bada', 'tizen'],
+  'Moz': ['firefox', 'seamonkey', 'sailfish'],
+  'ms': ['msie', 'msedge']
 }
 
 const browsers = {
-	'chrome' : [['chrome'], ['phantom'], ['webos'], ['blackberry'], ['bada'], ['tizenn']],
-	'safari' : [['safari']],
-	'firefox' : [['firefox'], ['seamonkey'], ['sailfish']],
-	'ie': [['msie'], ['msedge']],
-	'opera' : [['opera']],
-	'ios_saf' : [['ios', 'mobile'], ['ios', 'tablet']],
-	'ie_mob' : [['windowsphone', 'mobile', 'msie'], ['windowsphone', 'tablet', 'msie'], ['windowsphone', 'mobile', 'msedge'], ['windowsphone', 'tablet', 'msedge']],
-	'op_mini' : [['opera', 'mobile'], ['opera', 'tablet']],
-	'and_chr' : [['android', 'chrome', 'mobile'], ['android', 'chrome', 'tablet']],
-	'and_uc' : [['android', 'mobile'], ['android', 'mobile']],
-	'android' : [['android', 'mobile'], ['android', 'mobile']],
+  'chrome': [['chrome'], ['phantom'], ['webos'], ['blackberry'], ['bada'], ['tizenn']],
+  'safari': [['safari']],
+  'firefox': [['firefox'], ['seamonkey'], ['sailfish']],
+  'ie': [['msie'], ['msedge']],
+  'opera': [['opera']],
+  'ios_saf': [['ios', 'mobile'], ['ios', 'tablet']],
+  'ie_mob': [['windowsphone', 'mobile', 'msie'], ['windowsphone', 'tablet', 'msie'], ['windowsphone', 'mobile', 'msedge'], ['windowsphone', 'tablet', 'msedge']],
+  'op_mini': [['opera', 'mobile'], ['opera', 'tablet']],
+  'and_chr': [['android', 'chrome', 'mobile'], ['android', 'chrome', 'tablet']],
+  'and_uc': [['android', 'mobile'], ['android', 'mobile']],
+  'android': [['android', 'mobile'], ['android', 'mobile']]
 }
 
 /**
@@ -27,34 +27,34 @@ const browsers = {
  */
 export default userAgent => {
   let info = bowser._detect(userAgent)
-	let prefix
-	for (prefix in vendorPrefixes) {
-		vendorPrefixes[prefix].forEach(browser => {
-			if (info[browser]) {
-				info.prefix = {
-					inline: prefix,
-					CSS: '-' + prefix.toLowerCase() + '-'
-				}
-			}
-		})
-	}
+  let prefix
+  for (prefix in vendorPrefixes) {
+    vendorPrefixes[prefix].forEach(browser => {
+      if (info[browser]) {
+        info.prefix = {
+          inline: prefix,
+          CSS: '-' + prefix.toLowerCase() + '-'
+        }
+      }
+    })
+  }
 
-	let name = ''
-	let browser
-	for (browser in browsers) {
-		browsers[browser].forEach(condition => {
-			let match = 0
-			condition.forEach(single => {
-				if (info[single]) {
-					match += 1
-				}
-			})
-			if (condition.length === match) {
-				name = browser
-			}
-		})
-	}
+  let name = ''
+  let browser
+  for (browser in browsers) {
+    browsers[browser].forEach(condition => {
+      let match = 0
+      condition.forEach(single => {
+        if (info[single]) {
+          match += 1
+        }
+      })
+      if (condition.length === match) {
+        name = browser
+      }
+    })
+  }
 
-	info.browser = name
+  info.browser = name
   return info
 }
