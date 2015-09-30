@@ -1,13 +1,12 @@
 {
   "name": "inline-style-prefixer",
-  "version": "0.2.5",
+  "version": "0.3.0",
   "description": "Autoprefixer for Inline Style objects using userAgent and caniuse data",
   "main": "lib/Prefixer.js",
   "files": [
     "LICENSE",
     "README.md",
-    "lib/",
-    "generator/"
+    "lib/"
   ],
   "scripts": {
     "clean": "rimraf lib dist",

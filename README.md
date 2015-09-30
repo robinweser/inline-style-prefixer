@@ -45,7 +45,8 @@ Sometimes your environment does not provide a proper userAgent string e.g. if yo
 ```javascript
 import Prefixer from 'inline-style-prefixer'
 
-Prefixer(styles, 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.155 Safari/537.36')
+const customUserAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.155 Safari/537.36'
+Prefixer(styles, customUserAgent)
 ```
 
 ## Supported properties
