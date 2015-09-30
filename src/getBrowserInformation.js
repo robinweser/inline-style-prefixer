@@ -27,8 +27,8 @@ const browsers = {
  */
 export default userAgent => {
   let info = bowser._detect(userAgent)
-  let prefix
-  for (prefix in vendorPrefixes) {
+
+  Object.keys(vendorPrefixes).forEach(prefix => {
     vendorPrefixes[prefix].forEach(browser => {
       if (info[browser]) {
         info.prefix = {
@@ -37,11 +37,10 @@ export default userAgent => {
         }
       }
     })
-  }
+  })
 
   let name = ''
-  let browser
-  for (browser in browsers) {
+  Object.keys(browsers).forEach(browser => {
     browsers[browser].forEach(condition => {
       let match = 0
       condition.forEach(single => {
@@ -53,7 +52,7 @@ export default userAgent => {
         name = browser
       }
     })
-  }
+  })
 
   info.browser = name
   return info
