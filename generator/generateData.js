@@ -1,5 +1,7 @@
 var caniuse = require('caniuse-api');
 var searchMap = require('./searchMap');
+var browserConfig = require('../config.js');
+var assign = require('object-assign');
 var fs = require('fs');
 
 var browsers = ['chrome', 'safari', 'firefox', 'opera', 'ie', 'ios_saf', 'android', 'and_chr', 'and_uc', 'op_mini', 'ie_mob'];
@@ -19,7 +21,9 @@ function gatherInformation() {
     properties.forEach(function(prop) {
       var prefix;
       for (prefix in prefixProperties) {
-        prefixProperties[prefix][prop] = versions[prefix].x;
+        if (versions[prefix].x >= browserConfig[prefix]) {
+          prefixProperties[prefix][prop] = versions[prefix].x;
+        }
       }
     })
   }
@@ -27,6 +31,8 @@ function gatherInformation() {
   //remove flexprops from IE
   var flexPropsIE = ['alignContent', 'alignSelf', 'alignItems', 'justifyContent', 'order', 'flexGrow', 'flexShrink', 'flexBasis'];
 
+  prefixProperties.ie = assign({}, prefixProperties.ie, prefixProperties.ie_mob);
+  delete prefixProperties.ie_mob;
   flexPropsIE.forEach(function(prop) {
     delete prefixProperties.ie[prop]
   })

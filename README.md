@@ -5,9 +5,28 @@
 ![Dependencies](https://david-dm.org/rofrischmann/inline-style-prefixer.svg)
 
 	npm install inline-style-prefixer
-**inline-style-prefixer** adds required **vendor prefixes** to your style object. It only adds prefixes if they're actually required since it evaluates the environments `userAgent`.<br>
+**inline-style-prefixer** adds required **vendor prefixes** to your style object. It only adds prefixes if they're actually required since it evaluates the environments `userAgent`.<br> *~7kb gzipped.*
 > The information is based on [caniuse.com](http://caniuse.com/).
 
+## Browser Support
+Supports the major browsers with the following versions.
+* Chrome: 30+
+* Safari: 6+
+* Firefox: 25+
+* Opera: 13+
+* IE: 9+
+* iOS: 6+
+* Android: 4+
+* IE mobile: 9+
+* Opera mini: 5+
+* Android UC: 9+
+
+### Custom Build
+You may have to create a custom build if you need older browser versions. Just modify the [config.js](config.js) file which includes all the browser version specifications.
+```sh
+npm install
+npm run build
+```
 ## Usage
 ```javascript
 import Prefixer from 'inline-style-prefixer'
