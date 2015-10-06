@@ -19,7 +19,7 @@ const properties = Object.keys(alternativeProps).concat(['alignContent', 'alignS
 
 
 export default (property, value, {browser, version, prefix}) => {
-  if (properties.indexOf(property) > -1 && browser === 'firefox' && version < 22 || browser === 'chrome' && version < 21 || (browser === 'safari' || browser === 'ios_saf') && version <= 6.1 || browser === 'android' && version < 4.4 || browser === 'and_uc') {
+  if (properties.indexOf(property) > -1 && (browser === 'firefox' && version < 22 || browser === 'chrome' && version < 21 || (browser === 'safari' || browser === 'ios_saf') && version <= 6.1 || browser === 'android' && version < 4.4 || browser === 'and_uc')) {
     if (property === 'flexDirection') {
       return {
         WebkitBoxOrient: value.indexOf('column') > -1 ? 'vertical' : 'horizontal',

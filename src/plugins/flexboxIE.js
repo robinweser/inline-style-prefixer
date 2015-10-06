@@ -21,7 +21,7 @@ const alternativeProps = {
 const properties = Object.keys(alternativeProps).concat('display')
 
 export default (property, value, {browser, version} , styles) => {
-  if (properties.indexOf(property) > -1 && (browser === 'ie_mob' || browser === 'ie') && version == 10) {
+  if (properties.indexOf(property) > -1 && ((browser === 'ie_mob' || browser === 'ie') && version == 10)) {
     delete styles[property]
     return {
       [alternativeProps[property] || property]: alternativeValues[value] || value
