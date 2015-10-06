@@ -42,7 +42,8 @@ let styles = {
 	}
 }
 
-Prefixer(styles)
+let prefixer = new Prefixer()
+prefixer.prefix(styles)
 
 // Assuming you are using e.g. Chrome version 27.0 this would
 // transform your styles object to the following the following
@@ -65,7 +66,8 @@ Sometimes your environment does not provide a proper userAgent string e.g. if yo
 import Prefixer from 'inline-style-prefixer'
 
 const customUserAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.155 Safari/537.36'
-Prefixer(styles, customUserAgent)
+let prefixer = new Prefixer(customUserAgent)
+prefixer.prefix(styles)
 ```
 
 ## Supported properties
