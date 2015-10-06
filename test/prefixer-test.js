@@ -23,8 +23,8 @@ describe('Prefixing a property', () => {
       WebkitAppearance: 'test',
       transition: 'test'
     }
-    expect(Prefixer(input, Chrome45)).to.eql(prefixed)
-    expect(Prefixer(input2, Chrome49)).to.eql(input2)
+    expect(new Prefixer(Chrome45).prefix(input)).to.eql(prefixed)
+    expect(new Prefixer(Chrome49).prefix(input2)).to.eql(input2)
   })
 })
 
@@ -37,7 +37,7 @@ describe('Resolving plugins', () => {
     let output = {
       msFlexAlign: 'center'
     }
-    expect(Prefixer(input, MSIE10)).to.eql(output)
+    expect(new Prefixer(MSIE10).prefix(input)).to.eql(output)
   })
   it('should resolve values', () => {
     let input = {
@@ -46,7 +46,7 @@ describe('Resolving plugins', () => {
     let output = {
       display: '-webkit-box'
     }
-    expect(Prefixer(input, Chrome14)).to.eql(output)
+    expect(new Prefixer(Chrome14).prefix(input)).to.eql(output)
   })
 
   it('should resolve alternatives', () => {
@@ -56,6 +56,6 @@ describe('Resolving plugins', () => {
     let output = {
       msFlexPack: 'justify'
     }
-    expect(Prefixer(input, MSIE10)).to.eql(output)
+    expect(new Prefixer(MSIE10).prefix(input)).to.eql(output)
   })
 })
