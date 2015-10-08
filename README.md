@@ -43,11 +43,11 @@ let styles = {
 }
 
 let prefixer = new Prefixer()
-prefixer.prefix(styles)
+let prefixedStyles = prefixer.prefix(styles)
 
 // Assuming you are using e.g. Chrome version 27.0 this would
-// transform your styles object to the following the following
-let output = {
+// transform the prefixedStyles object to the following the following
+{
 	transition: '200ms all linear',
 	WebkitUserSelect: 'none',
 	nested: {
