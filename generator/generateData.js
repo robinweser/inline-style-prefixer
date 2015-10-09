@@ -1,6 +1,6 @@
 var caniuse = require('caniuse-api');
 var searchMap = require('./searchMap');
-var browserConfig = require('../config.js');
+var browserConfig = require('../config');
 var assign = require('object-assign');
 var fs = require('fs');
 
@@ -28,7 +28,7 @@ function gatherInformation() {
     })
   }
 
-  //remove flexprops from IE
+  // remove flexprops from IE
   var flexPropsIE = ['alignContent', 'alignSelf', 'alignItems', 'justifyContent', 'order', 'flexGrow', 'flexShrink', 'flexBasis'];
 
   prefixProperties.ie = assign({}, prefixProperties.ie, prefixProperties.ie_mob);
@@ -40,8 +40,9 @@ function gatherInformation() {
 }
 
 fs.writeFile('./lib/caniuseData.js', gatherInformation(), function(err) {
-  if (err)
+  if (err) {
     throw err;
-  console.log("Successfully generated CSS property vendor-prefix data using latest caniuse.com data.");
-  console.log("Support following browser: ", browsers.join(', '));
+  }
+  console.log('Successfully generated CSS property vendor-prefix data using latest caniuse.com data.');
+  console.log('Support following browser: ', browsers.join(', '));
 })

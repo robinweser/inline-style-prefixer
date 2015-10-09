@@ -1,4 +1,3 @@
-import assign from 'object-assign'
 import getBrowserInformation from './getBrowserInformation'
 import caniuseData from './caniuseData'
 import plugins from './Plugins'
@@ -19,59 +18,60 @@ export default class Prefixer {
 
     let data = caniuseData[this._browserInfo.browser]
     if (data) {
-      this._requiresPrefix = Object.keys(data)
-        .filter(key => data[key] >= this._browserInfo.version)
-        .reduce((result, name) => {
-          result[name] = true
-          return result
+      this._requiresPrefix = Object.keys(data).filter(key => data[key] >= this._browserInfo.version).reduce((result, name) => {
+        result[name] = true
+        return result
         }, {})
-      this._hasPropsRequiringPrefix = Object.keys(this._requiresPrefix).length > 0
-    } else {
-      this._hasPropsRequiringPrefix = false
+        this._hasPropsRequiringPrefix = Object.keys(this._requiresPrefix).length > 0
+      } else {
+        this._hasPropsRequiringPrefix = false
 
-      // TODO warn only in dev mode
-      console.warn('Your userAgent seems to be not supported by inline-style-prefixer. Feel free to open an issue.')
+        // TODO warn only in dev mode
+        console.warn('Your userAgent seems to be not supported by inline-style-prefixer. Feel free to open an issue.')
+      }
     }
-  }
 
-  /**
-   * Returns a prefixed version of the style object
-   * @param {Object} styles - Style object that gets prefixed properties added
-   * @returns {Object} - Style object with prefixed properties and valeus
-   */
-  prefix(styles) {
-    // only add prefixes if needed
-    if (!this._hasPropsRequiringPrefix) {
+    /**
+     * Returns a prefixed version of the style object
+     * @param {Object} styles - Style object that gets prefixed properties added
+     * @returns {Object} - Style object with prefixed properties and valeus
+     */
+    prefix(styles) {
+      // only add prefixes if needed
+      if (!this._hasPropsRequiringPrefix) {
+        return styles
+      }
+
+      styles = assign({}, styles)
+
+      Object.keys(styles).forEach(property => {
+        let value = styles[property]
+        if (value instanceof Object) {
+          // recursively loop through nested style objects
+          styles[property] = this.prefix(value)
+        } else {
+          // add prefixes if needed
+          if (this._requiresPrefix[property]) {
+            styles[this.jsPrefix + caplitalizeString(property)] = value
+            delete styles[property]
+          }
+
+          // resolve plugins
+          plugins.forEach(plugin => {
+            assign(styles, plugin(property, value, this._browserInfo, styles))
+          })
+        }
+      })
+
       return styles
     }
-
-    styles = assign({}, styles)
-
-    Object.keys(styles).forEach(property => {
-      let value = styles[property]
-      if (value instanceof Object) {
-        // recursively loop through nested style objects
-        styles[property] = this.prefix(value)
-      } else {
-        // add prefixes if needed
-        if (this._requiresPrefix[property]) {
-          styles[this.jsPrefix + caplitalizeString(property)] = value
-          delete styles[property]
-        }
-
-        // resolve plugins
-        plugins.forEach(plugin => {
-          assign(styles, plugin(property, value, this._browserInfo, styles))
-        })
-      }
-    })
-
-    return styles
   }
-}
 
-/**
- * Capitalizes first letter of a string
- * @param {String} str - str to caplitalize
- */
-const caplitalizeString = str => str.charAt(0).toUpperCase() + str.slice(1)
+  // helper to capitalize strings
+  const caplitalizeString = str => str.charAt(0).toUpperCase() + str.slice(1)
+
+  // leight polyfill for Object.assign
+  const assign = (base, extend) => {
+    extend && Object.keys(extend).forEach(key => base[key] = extend[key])
+    return extend
+    }
