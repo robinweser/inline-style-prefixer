@@ -62,15 +62,19 @@ describe('Resolving plugins', () => {
 
 
 describe('Combine all supported browser prefixes', () => {
-  it('should resolve combined vendor properties', () => {
+  it('should resolve common required vendor properties', () => {
     let input = {
-      alignItems: 'center'
+      alignItems: 'center',
+      height: '100px',
+      width: '200px'
     }
     let output = {
       MozAlignItems: 'center',
       WebkitAlignItems: 'center',
+      msAlignItems: 'center',
       alignItems: 'center',
-      msAlignItems: 'center'
+      height: '100px',
+      width: '200px'
     }
     expect(new Prefixer('*').prefix(input)).to.eql(output)
   })

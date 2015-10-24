@@ -16,9 +16,17 @@ export default class Prefixer {
 
     // All browsers
     if (userAgent === '*') {
-      // Assume we always need to prefix
-      this._hasPropsRequiringPrefix = true
       this._allBrowsers = true
+      this._requiresPrefix = {}
+
+      this._browserInfo.browsers.forEach(browser => {
+        let data = caniuseData[browser]
+        if (data) {
+          assign(this._requiresPrefix, data)
+        }
+      })
+
+      this._hasPropsRequiringPrefix = Object.keys(this._requiresPrefix).length > 0
 
     // Single browser
     } else {
@@ -60,11 +68,15 @@ export default class Prefixer {
         styles[property] = this.prefix(value) 
       } else {
         // multiple prefixes
-        if(this._allBrowsers) {
+        if (this._allBrowsers) {
           let browsers = Object.keys(this._browserInfo.prefixes)
           browsers.forEach(browser => {
             let style = this._browserInfo.prefixes[browser]
-            styles[style.inline + caplitalizeString(property)] = value
+
+            // add prefixes if needed
+            if (this._requiresPrefix[property]) {
+              styles[style.inline + caplitalizeString(property)] = value
+            }
 
             // resolve plugins for each browser
             plugins.forEach(plugin => {
