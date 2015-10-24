@@ -107,15 +107,6 @@ export default class Prefixer {
 
     return styles
   }
-
-  /**
-   * Returns a prefixed version of a single property
-   * @param {string} name - Property name that gets prefixed
-   * @returns {Object} - Style object with prefixed properties and values
-   */
-  prefixProperty(name) {
-    
-  }
 }
 
   // helper to capitalize strings

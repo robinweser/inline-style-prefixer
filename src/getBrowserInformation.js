@@ -40,7 +40,7 @@ const getPrefixes = browser => {
     conditions = browsers[browser]
     for (prefixVendor of vendors) {
       for (browserVendors of conditions) {
-        if (browserVendors.includes(prefixVendor)) {
+        if (browserVendors.indexOf(prefixVendor) !== -1) {
           return {
             inline: prefix,
             CSS: '-' + prefix.toLowerCase() + '-'
