@@ -2,25 +2,33 @@ import getBrowserInformation from './getBrowserInformation'
 import caniuseData from './caniuseData'
 import plugins from './Plugins'
 
-const defaultUserAgent = typeof navigator !== 'undefined' ? navigator.userAgent : undefined
+const defaultUserAgent = typeof navigator !== 'undefined' ? navigator.userAgent : '*'
 
 export default class Prefixer {
   /**
-   * Instantiante a new prefixer.
+   * Instantiante a new prefixer. Pass an asterisk as userAgent to combine all prefixes
    * @param {string} userAgent - userAgent to gather prefix information according to caniuse.com
    */
   constructor(userAgent = defaultUserAgent) {
     this._userAgent = userAgent
     this._browserInfo = getBrowserInformation(userAgent)
+    this._allBrowsers = false
 
-    this.cssPrefix = this._browserInfo.prefix.CSS
-    this.jsPrefix = this._browserInfo.prefix.inline
+    // All browsers
+    if (userAgent === '*') {
+      // Assume we always need to prefix
+      this._hasPropsRequiringPrefix = true
+      this._allBrowsers = true
 
-    let data = caniuseData[this._browserInfo.browser]
-    if (data) {
-      this._requiresPrefix = Object.keys(data).filter(key => data[key] >= this._browserInfo.version).reduce((result, name) => {
-        result[name] = true
-        return result
+    // Single browser
+    } else {
+      this.cssPrefix = this._browserInfo.prefix.CSS
+      this.jsPrefix = this._browserInfo.prefix.inline  
+      let data = this._browserInfo.browser && caniuseData[this._browserInfo.browser]
+      if (data) {
+        this._requiresPrefix = Object.keys(data).filter(key => data[key] >= this._browserInfo.version).reduce((result, name) => {
+          result[name] = true
+          return result
         }, {})
         this._hasPropsRequiringPrefix = Object.keys(this._requiresPrefix).length > 0
       } else {
@@ -30,25 +38,46 @@ export default class Prefixer {
         console.warn('Your userAgent seems to be not supported by inline-style-prefixer. Feel free to open an issue.')
       }
     }
+  }
 
-    /**
-     * Returns a prefixed version of the style object
-     * @param {Object} styles - Style object that gets prefixed properties added
-     * @returns {Object} - Style object with prefixed properties and valeus
-     */
-    prefix(styles) {
-      // only add prefixes if needed
-      if (!this._hasPropsRequiringPrefix) {
-        return styles
-      }
+  /**
+   * Returns a prefixed version of the style object
+   * @param {Object} styles - Style object that gets prefixed properties added
+   * @returns {Object} - Style object with prefixed properties and values
+   */
+  prefix(styles) {
+    // only add prefixes if needed
+    if (!this._hasPropsRequiringPrefix) {
+      return styles
+    }
 
-      styles = assign({}, styles)
+    styles = assign({}, styles)
 
-      Object.keys(styles).forEach(property => {
-        let value = styles[property]
-        if (value instanceof Object) {
-          // recursively loop through nested style objects
-          styles[property] = this.prefix(value)
+    Object.keys(styles).forEach(property => {
+      let value = styles[property]
+      if (value instanceof Object) {
+        // recurse through nested style objects
+        styles[property] = this.prefix(value) 
+      } else {
+        // multiple prefixes
+        if(this._allBrowsers) {
+          let browsers = Object.keys(this._browserInfo.prefixes)
+          browsers.forEach(browser => {
+            let style = this._browserInfo.prefixes[browser]
+            styles[style.inline + caplitalizeString(property)] = value
+
+            // resolve plugins for each browser
+            plugins.forEach(plugin => {
+              let browserInfo = {
+                name: browser,
+                prefix: style,
+                version: 0 // assume lowest
+              }
+              assign(styles, plugin(property, value, browserInfo, styles, this._allBrowsers))
+            })
+          })
+          
+        // single prefix
         } else {
           // add prefixes if needed
           if (this._requiresPrefix[property]) {
@@ -58,14 +87,24 @@ export default class Prefixer {
 
           // resolve plugins
           plugins.forEach(plugin => {
-            assign(styles, plugin(property, value, this._browserInfo, styles))
+            assign(styles, plugin(property, value, this._browserInfo, styles, this._allBrowsers))
           })
         }
-      })
+      }
+    })
 
-      return styles
-    }
+    return styles
   }
+
+  /**
+   * Returns a prefixed version of a single property
+   * @param {string} name - Property name that gets prefixed
+   * @returns {Object} - Style object with prefixed properties and values
+   */
+  prefixProperty(name) {
+    
+  }
+}
 
   // helper to capitalize strings
   const caplitalizeString = str => str.charAt(0).toUpperCase() + str.slice(1)
