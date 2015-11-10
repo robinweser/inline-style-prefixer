@@ -59,3 +59,23 @@ describe('Resolving plugins', () => {
     expect(new Prefixer(MSIE10).prefix(input)).to.eql(output)
   })
 })
+
+
+describe('Combine all supported browser prefixes', () => {
+  it('should resolve common required vendor properties', () => {
+    let input = {
+      alignItems: 'center',
+      height: '100px',
+      width: '200px'
+    }
+    let output = {
+      MozAlignItems: 'center',
+      WebkitAlignItems: 'center',
+      msAlignItems: 'center',
+      alignItems: 'center',
+      height: '100px',
+      width: '200px'
+    }
+    expect(Prefixer.prefixAll(input)).to.eql(output)
+  })
+})
