@@ -76,6 +76,6 @@ describe('Combine all supported browser prefixes', () => {
       height: '100px',
       width: '200px'
     }
-    expect(new Prefixer('*').prefix(input)).to.eql(output)
+    expect(new Prefixer.prefixAll(input)).to.eql(output)
   })
 })
