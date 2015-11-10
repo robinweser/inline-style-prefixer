@@ -2,7 +2,7 @@ import getBrowserInformation from './getBrowserInformation'
 import caniuseData from './caniuseData'
 import plugins from './Plugins'
 
-const defaultUserAgent = typeof navigator !== 'undefined' ? navigator.userAgent : '*'
+const defaultUserAgent = typeof navigator !== 'undefined' ? navigator.userAgent : undefined;
 
 export default class Prefixer {
   /**
@@ -12,39 +12,21 @@ export default class Prefixer {
   constructor(userAgent = defaultUserAgent) {
     this._userAgent = userAgent
     this._browserInfo = getBrowserInformation(userAgent)
-    this._allBrowsers = false
 
-    // All browsers
-    if (userAgent === '*') {
-      this._allBrowsers = true
-      this._requiresPrefix = {}
-
-      this._browserInfo.browsers.forEach(browser => {
-        let data = caniuseData[browser]
-        if (data) {
-          assign(this._requiresPrefix, data)
-        }
-      })
-
+    this.cssPrefix = this._browserInfo.prefix.CSS
+    this.jsPrefix = this._browserInfo.prefix.inline  
+    let data = this._browserInfo.browser && caniuseData[this._browserInfo.browser]
+    if (data) {
+      this._requiresPrefix = Object.keys(data).filter(key => data[key] >= this._browserInfo.version).reduce((result, name) => {
+        result[name] = true
+        return result
+      }, {})
       this._hasPropsRequiringPrefix = Object.keys(this._requiresPrefix).length > 0
-
-    // Single browser
     } else {
-      this.cssPrefix = this._browserInfo.prefix.CSS
-      this.jsPrefix = this._browserInfo.prefix.inline  
-      let data = this._browserInfo.browser && caniuseData[this._browserInfo.browser]
-      if (data) {
-        this._requiresPrefix = Object.keys(data).filter(key => data[key] >= this._browserInfo.version).reduce((result, name) => {
-          result[name] = true
-          return result
-        }, {})
-        this._hasPropsRequiringPrefix = Object.keys(this._requiresPrefix).length > 0
-      } else {
-        this._hasPropsRequiringPrefix = false
+      this._hasPropsRequiringPrefix = false
 
-        // TODO warn only in dev mode
-        console.warn('Your userAgent seems to be not supported by inline-style-prefixer. Feel free to open an issue.')
-      }
+      // TODO warn only in dev mode
+      console.warn('Your userAgent seems to be not supported by inline-style-prefixer. Feel free to open an issue.')
     }
   }
 
@@ -67,41 +49,70 @@ export default class Prefixer {
         // recurse through nested style objects
         styles[property] = this.prefix(value) 
       } else {
-        // multiple prefixes
-        if (this._allBrowsers) {
-          let browsers = Object.keys(this._browserInfo.prefixes)
-          browsers.forEach(browser => {
-            let style = this._browserInfo.prefixes[browser]
+        // add prefixes if needed
+        if (this._requiresPrefix[property]) {
+          styles[this.jsPrefix + caplitalizeString(property)] = value
+          delete styles[property]
+        }
 
-            // add prefixes if needed
-            if (this._requiresPrefix[property]) {
-              styles[style.inline + caplitalizeString(property)] = value
-            }
+        // resolve plugins
+        plugins.forEach(plugin => {
+          assign(styles, plugin(property, value, this._browserInfo, styles, false))
+        })
+      }
+    })
 
-            // resolve plugins for each browser
-            plugins.forEach(plugin => {
-              let browserInfo = {
-                name: browser,
-                prefix: style,
-                version: 0 // assume lowest
-              }
-              assign(styles, plugin(property, value, browserInfo, styles, this._allBrowsers))
-            })
-          })
-          
-        // single prefix
-        } else {
+    return styles
+  }
+
+  /**
+   * Returns a prefixed version of the style object using all vendor prefixes
+   * @param {Object} styles - Style object that gets prefixed properties added
+   * @returns {Object} - Style object with prefixed properties and values
+   */
+  static prefixAll(styles) {
+
+    const prefixes = {}
+    const browserInfo = getBrowserInformation('*')
+
+    browserInfo.browsers.forEach(browser => {
+      let data = caniuseData[browser]
+      if (data) {
+        assign(prefixes, data)
+      }
+    })
+
+    // there should always be at least one prefixed style, but just incase
+    if (!Object.keys(prefixes).length > 0)
+      return styles
+
+    styles = assign({}, styles)
+
+    Object.keys(styles).forEach(property => {
+      let value = styles[property]
+      if (value instanceof Object) {
+        // recurse through nested style objects
+        styles[property] = Prefixer.prefixAll(value) 
+      } else {
+        let browsers = Object.keys(browserInfo.prefixes)
+        browsers.forEach(browser => {
+          let style = browserInfo.prefixes[browser]
+
           // add prefixes if needed
-          if (this._requiresPrefix[property]) {
-            styles[this.jsPrefix + caplitalizeString(property)] = value
-            delete styles[property]
+          if (prefixes[property]) {
+            styles[style.inline + caplitalizeString(property)] = value
           }
 
-          // resolve plugins
+          // resolve plugins for each browser
           plugins.forEach(plugin => {
-            assign(styles, plugin(property, value, this._browserInfo, styles, this._allBrowsers))
+            let browserInfo = {
+              name: browser,
+              prefix: style,
+              version: 0 // assume lowest
+            }
+            assign(styles, plugin(property, value, browserInfo, styles, true))
           })
-        }
+        });
       }
     })
 
