@@ -4,6 +4,25 @@ import plugins from './Plugins'
 
 const defaultUserAgent = typeof navigator !== 'undefined' ? navigator.userAgent : undefined
 
+// only throw warnings if devmode is enabled
+const warn = (...message) => {
+  if (process.env.NODE_ENV !== 'production') {
+    console.warn(...message)
+  }
+}
+// helper to capitalize strings
+const caplitalizeString = str => str.charAt(0).toUpperCase() + str.slice(1)
+
+// leight polyfill for Object.assign
+const assign = (base, extend) => {
+  if (extend) {
+    Object.keys(extend).forEach(key => base[key] = extend[key])
+  }
+  return extend
+}
+
+
+
 export default class Prefixer {
   /**
    * Instantiante a new prefixer.
@@ -13,9 +32,13 @@ export default class Prefixer {
     this._userAgent = userAgent
     this._browserInfo = getBrowserInformation(userAgent)
 
-    this.cssPrefix = this._browserInfo.prefix ? this._browserInfo.prefix.CSS : '';
-    this.jsPrefix = this._browserInfo.prefix ? this._browserInfo.prefix.inline : '';
-
+    if (this._browserInfo) {
+      this.cssPrefix = this._browserInfo.prefix.CSS
+      this.jsPrefix = this._browserInfo.prefix.inline
+    } else {
+      this._hasPropsRequiringPrefix = false
+      warn('Navigator was undefined and no custom userAgent was provided.')
+    }
     let data = caniuseData[this._browserInfo.browser]
     if (data) {
       this._requiresPrefix = Object.keys(data).filter(key => data[key] >= this._browserInfo.version).reduce((result, name) => {
@@ -25,9 +48,7 @@ export default class Prefixer {
         this._hasPropsRequiringPrefix = Object.keys(this._requiresPrefix).length > 0
       } else {
         this._hasPropsRequiringPrefix = false
-
-        // TODO warn only in dev mode
-        console.warn('Your userAgent seems to be not supported by inline-style-prefixer. Feel free to open an issue.')
+        warn('Your userAgent seems to be not supported by inline-style-prefixer. Feel free to open an issue.')
       }
     }
 
@@ -66,12 +87,3 @@ export default class Prefixer {
       return styles
     }
   }
-
-  // helper to capitalize strings
-  const caplitalizeString = str => str.charAt(0).toUpperCase() + str.slice(1)
-
-  // leight polyfill for Object.assign
-  const assign = (base, extend) => {
-    extend && Object.keys(extend).forEach(key => base[key] = extend[key])
-    return extend
-    }
