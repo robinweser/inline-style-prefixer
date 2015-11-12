@@ -13,8 +13,8 @@ export default class Prefixer {
     this._userAgent = userAgent
     this._browserInfo = getBrowserInformation(userAgent)
 
-    this.cssPrefix = this._browserInfo.prefix.CSS
-    this.jsPrefix = this._browserInfo.prefix.inline
+    this.cssPrefix = this._browserInfo.prefix ? this._browserInfo.prefix.CSS : '';
+    this.jsPrefix = this._browserInfo.prefix ? this._browserInfo.prefix.inline : '';
 
     let data = caniuseData[this._browserInfo.browser]
     if (data) {
