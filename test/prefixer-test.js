@@ -41,7 +41,7 @@ describe('Resolving plugins', () => {
 
 describe('Prefixing keyframes', () => {
   it('should return the correct keyframes string', () => {
-    expect(new Prefixer(Chrome14).prefixedKeyframesString).to.eql('-webkit-keyframes')
-    expect(new Prefixer(Chrome49).prefixedKeyframesString).to.eql('keyframes')
+    expect(new Prefixer(Chrome14).prefixedKeyframes).to.eql('-webkit-keyframes')
+    expect(new Prefixer(Chrome49).prefixedKeyframes).to.eql('keyframes')
   })
 })

@@ -4,7 +4,7 @@
 [![npm version](https://badge.fury.io/js/inline-style-prefixer.svg)](http://badge.fury.io/js/inline-style-prefixer)
 ![Dependencies](https://david-dm.org/rofrischmann/inline-style-prefixer.svg)
 ![Gzipped Size](https://img.shields.io/badge/gzipped-~7k-blue.svg)
-  
+
 **inline-style-prefixer** adds required **vendor prefixes** to your style object. It only adds prefixes if they're actually required by evaluating the browser's `userAgent` against data from [caniuse.com](http://caniuse.com/).
 
 ## Usage
@@ -51,6 +51,15 @@ import Prefixer from 'inline-style-prefixer'
 const customUserAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.155 Safari/537.36'
 const prefixer = new Prefixer(customUserAgent)
 prefixer.prefix(styles)
+```
+
+## Prefix information
+Every `Prefixer` instance also provides prefix information.
+```javascript
+// e.g. using a Chrome version 40 userAgent
+prefixer.cssPrefix = '-webkit-'
+prefixer.jsPrefix = 'Webkit'
+prefixer.prefixedKeyframes = '-webkit-keyframes'
 ```
 
 ## Browser Support
@@ -117,10 +126,10 @@ Sometimes it is not enough to just prefix a property, but you also need to prefi
 
 * **calc**: Adds support for prefixed `calc` values on any property.
 * **cursor**: Adds support for prefixed new `cursor` values `zoom-in`, `zoom-out`, `grab`, `grabbing`.
-* **flex**: Adds support for prefixed `display` values using `display: flex` or `display: inline-flex`. 
+* **flex**: Adds support for prefixed `display` values using `display: flex` or `display: inline-flex`.
 * **flexboxIE**: Adds trasformators for the early 2012 flexbox specification used in IE 10 and IE Mobile 10.
 * **flexboxOld**: Adds trasformators for the old 2009 flexbox specification used in old Webkit-based browsers.
-* **gradient**: Adds support for prefixed `background` and `backgroundImage` values `linear-gradient`, `radial-gradient`, `repeating-linear-gradient` and `repeating-radial-gradient`. 
+* **gradient**: Adds support for prefixed `background` and `backgroundImage` values `linear-gradient`, `radial-gradient`, `repeating-linear-gradient` and `repeating-radial-gradient`.
 * **sizing**: Adds support for prefixed `maxHeight`, `maxWidth`, `width`, `height`, `columnWidth`,`minWidth`, `minHeight` intrinsic & extrinsic sizing values `min-content`, `max-content`, `fill-available`, `fit-content`, `contain-floats`
 
 
