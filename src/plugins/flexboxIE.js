@@ -3,19 +3,19 @@ const alternativeValues = {
   'space-between': 'justify',
   'flex-start': 'start',
   'flex-end': 'end',
-  'flex': '-ms-flexbox',
+  flex: '-ms-flexbox',
   'inline-flex': '-ms-inline-flexbox'
 }
 
 const alternativeProps = {
-  'alignContent': 'msFlexLinePack',
-  'alignSelf': 'msFlexItemAlign',
-  'alignItems': 'msFlexAlign',
-  'justifyContent': 'msFlexPack',
-  'order': 'msFlexOrder',
-  'flexGrow': 'msFlexPositive',
-  'flexShrink': 'msFlexNegative',
-  'flexBasis': 'msPreferredSize'
+  alignContent: 'msFlexLinePack',
+  alignSelf: 'msFlexItemAlign',
+  alignItems: 'msFlexAlign',
+  justifyContent: 'msFlexPack',
+  order: 'msFlexOrder',
+  flexGrow: 'msFlexPositive',
+  flexShrink: 'msFlexNegative',
+  flexBasis: 'msPreferredSize'
 }
 
 const properties = Object.keys(alternativeProps).concat('display')

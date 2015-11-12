@@ -11,18 +11,9 @@ let Chrome49 = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, l
 
 describe('Prefixing a property', () => {
   it('should only add required prefixes', () => {
-    let input = {
-      appearance: 'test',
-      transition: 'test'
-    }
-    let input2 = {
-      appearance: 'test',
-      transition: 'test'
-    }
-    let prefixed = {
-      WebkitAppearance: 'test',
-      transition: 'test'
-    }
+    let input = {appearance: 'test', transition: 'test'}
+    let input2 = {appearance: 'test', transition: 'test'}
+    let prefixed = {WebkitAppearance: 'test', transition: 'test'}
     expect(new Prefixer(Chrome45).prefix(input)).to.eql(prefixed)
     expect(new Prefixer(Chrome49).prefix(input2)).to.eql(input2)
   })
@@ -31,31 +22,19 @@ describe('Prefixing a property', () => {
 
 describe('Resolving plugins', () => {
   it('should resolve properties', () => {
-    let input = {
-      alignItems: 'center'
-    }
-    let output = {
-      msFlexAlign: 'center'
-    }
+    let input = {alignItems: 'center'}
+    let output = {msFlexAlign: 'center'}
     expect(new Prefixer(MSIE10).prefix(input)).to.eql(output)
   })
   it('should resolve values', () => {
-    let input = {
-      display: 'flex'
-    }
-    let output = {
-      display: '-webkit-box'
-    }
+    let input = {display: 'flex'}
+    let output = {display: '-webkit-box'}
     expect(new Prefixer(Chrome14).prefix(input)).to.eql(output)
   })
 
   it('should resolve alternatives', () => {
-    let input = {
-      justifyContent: 'space-between'
-    }
-    let output = {
-      msFlexPack: 'justify'
-    }
+    let input = {justifyContent: 'space-between'}
+    let output = {msFlexPack: 'justify'}
     expect(new Prefixer(MSIE10).prefix(input)).to.eql(output)
   })
 })

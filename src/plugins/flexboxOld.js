@@ -4,8 +4,8 @@ const alternativeValues = {
   'flex-start': 'start',
   'flex-end': 'end',
   'wrap-reverse': 'multiple',
-  'wrap': 'multiple',
-  'flex': 'box',
+  wrap: 'multiple',
+  flex: 'box',
   'inline-flex': 'inline-box'
 }
 
@@ -27,9 +27,7 @@ export default (property, value, {browser, version, prefix}) => {
       }
     }
     if (property === 'display' && alternativeValues[value]) {
-      return {
-        display: prefix.CSS + alternativeValues[value]
-      }
+      return {display: prefix.CSS + alternativeValues[value]}
     }
     return {
       [alternativeProps[property] || property]: alternativeValues[value] || value

@@ -7,8 +7,6 @@ export default (property, value, {prefix}) => {
    * NOTE: This might change in the feature
    */
   if (properties.indexOf(property) > -1 && values.indexOf(value) > -1) {
-    return {
-      [property]: prefix.CSS + value
-    }
+    return {[ property]: prefix.CSS + value}
   }
 }
