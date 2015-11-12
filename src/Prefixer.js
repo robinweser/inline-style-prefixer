@@ -1,4 +1,5 @@
 import getBrowserInformation from './getBrowserInformation'
+import getPrefixedKeyframesString from './getPrefixedKeyframesString'
 import caniuseData from './caniuseData'
 import plugins from './Plugins'
 
@@ -35,6 +36,7 @@ export default class Prefixer {
     if (this._browserInfo) {
       this.cssPrefix = this._browserInfo.prefix.CSS
       this.jsPrefix = this._browserInfo.prefix.inline
+      this.prefixedKeyframesString = getPrefixedKeyframesString(this._browserInfo)
     } else {
       this._hasPropsRequiringPrefix = false
       warn('Navigator was undefined and no custom userAgent was provided.')
