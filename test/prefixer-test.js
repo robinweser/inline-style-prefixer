@@ -45,3 +45,22 @@ describe('Prefixing keyframes', () => {
     expect(new Prefixer(Chrome49).prefixedKeyframes).to.eql('keyframes')
   })
 })
+
+describe('Combine all supported browser prefixes', () => {
+  it('should resolve common required vendor properties', () => {
+    let input = {
+      alignItems: 'center',
+      height: '100px',
+      width: '200px'
+    }
+    let output = {
+      MozAlignItems: 'center',
+      WebkitAlignItems: 'center',
+      msAlignItems: 'center',
+      alignItems: 'center',
+      height: '100px',
+      width: '200px'
+    }
+    expect(Prefixer.prefixAll(input)).to.eql(output)
+  })
+})

@@ -26,7 +26,7 @@ const assign = (base, extend) => {
 
 export default class Prefixer {
   /**
-   * Instantiante a new prefixer.
+   * Instantiante a new prefixer. Pass an asterisk as userAgent to combine all prefixes
    * @param {string} userAgent - userAgent to gather prefix information according to caniuse.com
    */
   constructor(userAgent = defaultUserAgent) {
@@ -41,7 +41,7 @@ export default class Prefixer {
       this._hasPropsRequiringPrefix = false
       warn('Navigator was undefined and no custom userAgent was provided.')
     }
-    let data = caniuseData[this._browserInfo.browser]
+    let data = this._browserInfo.browser && caniuseData[this._browserInfo.browser]
     if (data) {
       this._requiresPrefix = Object.keys(data).filter(key => data[key] >= this._browserInfo.version).reduce((result, name) => {
         result[name] = true
@@ -57,7 +57,7 @@ export default class Prefixer {
     /**
      * Returns a prefixed version of the style object
      * @param {Object} styles - Style object that gets prefixed properties added
-     * @returns {Object} - Style object with prefixed properties and valeus
+     * @returns {Object} - Style object with prefixed properties and values
      */
     prefix(styles) {
       // only add prefixes if needed
@@ -70,7 +70,7 @@ export default class Prefixer {
       Object.keys(styles).forEach(property => {
         let value = styles[property]
         if (value instanceof Object) {
-          // recursively loop through nested style objects
+          // recurse through nested style objects
           styles[property] = this.prefix(value)
         } else {
           // add prefixes if needed
@@ -81,7 +81,60 @@ export default class Prefixer {
 
           // resolve plugins
           plugins.forEach(plugin => {
-            assign(styles, plugin(property, value, this._browserInfo, styles))
+            assign(styles, plugin(property, value, this._browserInfo, styles, false))
+          })
+        }
+      })
+
+      return styles
+    }
+
+    /**
+     * Returns a prefixed version of the style object using all vendor prefixes
+     * @param {Object} styles - Style object that gets prefixed properties added
+     * @returns {Object} - Style object with prefixed properties and values
+     */
+    static prefixAll(styles) {
+      const prefixes = {}
+      const browserInfo = getBrowserInformation('*')
+
+      browserInfo.browsers.forEach(browser => {
+        let data = caniuseData[browser]
+        if (data) {
+          assign(prefixes, data)
+        }
+      })
+
+      // there should always be at least one prefixed style, but just incase
+      if (!Object.keys(prefixes).length > 0) {
+        return styles
+      }
+
+      styles = assign({}, styles)
+
+      Object.keys(styles).forEach(property => {
+        let value = styles[property]
+        if (value instanceof Object) {
+          // recurse through nested style objects
+          styles[property] = Prefixer.prefixAll(value)
+        } else {
+          let browsers = Object.keys(browserInfo.prefixes)
+          browsers.forEach(browser => {
+            let style = browserInfo.prefixes[browser]
+            // add prefixes if needed
+            if (prefixes[property]) {
+              styles[style.inline + caplitalizeString(property)] = value
+            }
+
+            // resolve plugins for each browser
+            plugins.forEach(plugin => {
+              let browserInfo = {
+                name: browser,
+                prefix: style,
+                version: 0 // assume lowest
+              }
+              assign(styles, plugin(property, value, browserInfo, styles, true))
+            })
           })
         }
       })

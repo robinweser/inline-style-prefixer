@@ -21,6 +21,40 @@ const browsers = {
 }
 
 /**
+ * Returns an object containing prefix data associated with a browser
+ * @param {string} browser - browser to find a prefix for
+ */
+const getPrefixes = browser => {
+  let prefixKeys
+  let prefix
+  let vendors
+  let conditions
+  let prefixVendor
+  let browserVendors
+
+  // Find the prefix for this browser (if any)
+  prefixKeys = Object.keys(vendorPrefixes)
+  for (prefix of prefixKeys) {
+    // Find a matching vendor
+    vendors = vendorPrefixes[prefix]
+    conditions = browsers[browser]
+    for (prefixVendor of vendors) {
+      for (browserVendors of conditions) {
+        if (browserVendors.indexOf(prefixVendor) !== -1) {
+          return {
+            inline: prefix,
+            CSS: '-' + prefix.toLowerCase() + '-'
+          }
+        }
+      }
+    }
+  }
+
+  // No prefix found for this browser
+  return {inline: '', CSS: ''}
+}
+
+/**
  * Uses bowser to get default browser information such as version and name
  * Evaluates bowser info and adds vendorPrefix information
  * @param {string} userAgent - userAgent that gets evaluated
@@ -30,7 +64,28 @@ export default userAgent => {
     return false
   }
 
-  let info = bowser._detect(userAgent)
+  let info = {}
+
+  // Special user agent, return all supported prefixes
+  // instead of returning a string browser name and a prefix object
+  // we return an array of browser names and map of prefixes for each browser
+  if (userAgent === '*') {
+    // Return an array of supported browsers
+    info.browsers = Object.keys(browsers)
+
+    // Return prefixes associated by browser
+    info.prefixes = {}
+
+    // Iterate browser list, assign prefix to each
+    info.browsers.forEach(browser => {
+      info.prefixes[browser] = getPrefixes(browser)
+    })
+
+    return info
+  }
+
+  // Normal user agent, detect browser
+  info = bowser._detect(userAgent)
 
   Object.keys(vendorPrefixes).forEach(prefix => {
     vendorPrefixes[prefix].forEach(browser => {
