@@ -38,3 +38,10 @@ describe('Resolving plugins', () => {
     expect(new Prefixer(MSIE10).prefix(input)).to.eql(output)
   })
 })
+
+describe('Prefixing keyframes', () => {
+  it('should return the correct keyframes string', () => {
+    expect(new Prefixer(Chrome14).prefixedKeyframesString).to.eql('-webkit-keyframes')
+    expect(new Prefixer(Chrome49).prefixedKeyframesString).to.eql('keyframes')
+  })
+})
