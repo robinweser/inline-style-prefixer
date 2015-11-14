@@ -33,13 +33,15 @@ export default class Prefixer {
     this._userAgent = userAgent
     this._browserInfo = getBrowserInformation(userAgent)
 
-    if (this._browserInfo) {
+    // Checks if the userAgent was resolved correctly
+    if (this._browserInfo && this._browserInfo.prefix) {
       this.cssPrefix = this._browserInfo.prefix.CSS
       this.jsPrefix = this._browserInfo.prefix.inline
       this.prefixedKeyframes = getPrefixedKeyframes(this._browserInfo)
     } else {
       this._hasPropsRequiringPrefix = false
-      warn('Navigator was undefined and no custom userAgent was provided.')
+      warn('Either the global navigator was undefined or an invalid userAgent was provided.', 'Using a valid userAgent? Please let us know and create an issue at https://github.com/rofrischmann/inline-style-prefixer/issues')
+      return false
     }
     let data = this._browserInfo.browser && caniuseData[this._browserInfo.browser]
     if (data) {
@@ -51,6 +53,7 @@ export default class Prefixer {
       } else {
         this._hasPropsRequiringPrefix = false
         warn('Your userAgent seems to be not supported by inline-style-prefixer. Feel free to open an issue.')
+        return false
       }
     }
 

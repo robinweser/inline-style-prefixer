@@ -39,6 +39,13 @@ describe('Resolving plugins', () => {
   })
 })
 
+describe('Using an invalid userAgent', () => {
+  it('should return the exact input', () => {
+    const input = {appearance: 'test', transition: 'test'}
+    expect(new Prefixer('bad userAgent').prefix(input)).to.eql(input)
+  })
+})
+
 describe('Prefixing keyframes', () => {
   it('should return the correct keyframes string', () => {
     expect(new Prefixer(Chrome14).prefixedKeyframes).to.eql('-webkit-keyframes')
