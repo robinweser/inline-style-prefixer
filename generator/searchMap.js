@@ -1,7 +1,7 @@
 module.exports = {
   'border-radius': 'borderRadius',
   'border-image': ['borderImage', 'borderImageOutset', 'borderImageRepeat', 'borderImageSlice', 'borderImageSource', 'borderImageWidth'],
-  flexbox: ['flex', 'flexBasis', 'flexDirection', 'flexGrow', 'flexFlow', 'flexShrink', 'alignContent', 'alignItems', 'alignSelf', 'justifyContent', 'order'],
+  flexbox: ['flex', 'flexBasis', 'flexDirection', 'flexGrow', 'flexFlow', 'flexShrink', 'flexWrap', 'alignContent', 'alignItems', 'alignSelf', 'justifyContent', 'order'],
   'css-transitions': ['transition', 'transitionDelay', 'transitionDuration', 'transitionProperty', 'transitionTimingFunction'],
   transforms3d: ['backfaceVisibility', 'perspective', 'perspectiveOrigin', 'transform', 'transformOrigin', 'transformStyle', 'transformOriginX', 'transformOriginY'],
   'css-animation': ['animation', 'animationDelay', 'animationDirection', 'animationFillMode', 'animationDuration', 'anmationIterationCount', 'animationName', 'animationPlayState', 'animationTimingFunction'],
