@@ -23,7 +23,6 @@ describe('Prefixing a property', () => {
 describe('Running on android < 4.4', () => {
   it('should use the osversion to check for required props', () => {
     let andPrefixer = new Prefixer(Android4_4_4)
-    console.log(andPrefixer)
     expect(andPrefixer._browserInfo.version).to.eql(andPrefixer._browserInfo.osversion)
     expect(andPrefixer._browserInfo.version).to.eql(4.4)
 
