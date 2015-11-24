@@ -99,7 +99,7 @@ They are grouped in caniuse groups.
 * breakAfter, breakBefore, breakInside, columnCount, columnFill, columnGap, columnRule, columnRuleColor, columnRuleStyle, columnRuleWidth, columns, columnSpan, columnWidth
 * clipPath
 * filter
-* flex, flexBasis, flexDirection, flexGrow, flexFlow, flexShrink, alignContent, alignItems, alignSelf, justifyContent, order
+* flex, flexBasis, flexDirection, flexGrow, flexFlow, flexShrink, flexWrap, alignContent, alignItems, alignSelf, justifyContent, order
 * flowInto, flowFrom, breakBefore, breakAfter, breakInside, regionFragment
 * fontFeatureSettings
 * fontKerning
