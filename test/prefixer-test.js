@@ -9,6 +9,7 @@ const Android4_4_4 = 'Mozilla/5.0 (Linux; Android 4.4.4; One Build/KTU84L.H4) Ap
 const Chrome14 = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.812.0 Safari/535.1'
 const Chrome45 = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36'
 const Chrome49 = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2454.85 Safari/537.36'
+const SeaMonkey = 'Mozilla/5.0 (Windows NT 5.2; RW; rv:7.0a1) Gecko/20091211 SeaMonkey/9.23a1pre'
 
 
 describe('Prefixing a property', () => {
@@ -96,5 +97,11 @@ describe('Combine all supported browser prefixes', () => {
       width: '200px'
     }
     expect(Prefixer.prefixAll(input)).to.eql(output)
+  })
+})
+
+describe('Evaluating unsupported browsers', () => {
+  it('should not prefix any property', () => {
+    expect(new Prefixer(SeaMonkey)._hasPropsRequiringPrefix).to.eql(false)
   })
 })

@@ -7,9 +7,9 @@ const vendorPrefixes = {
 }
 
 const browsers = {
-  chrome: [['chrome'], ['phantom'], ['webos'], ['blackberry'], ['bada'], ['tizenn']],
+  chrome: [['chrome']],
   safari: [['safari']],
-  firefox: [['firefox'], ['seamonkey'], ['sailfish']],
+  firefox: [['firefox']],
   ie: [['msie'], ['msedge']],
   opera: [['opera']],
   ios_saf: [['ios', 'mobile'], ['ios', 'tablet']],
