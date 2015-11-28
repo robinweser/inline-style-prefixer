@@ -4,7 +4,7 @@ module.exports = {
   flexbox: ['flex', 'flexBasis', 'flexDirection', 'flexGrow', 'flexFlow', 'flexShrink', 'flexWrap', 'alignContent', 'alignItems', 'alignSelf', 'justifyContent', 'order'],
   'css-transitions': ['transition', 'transitionDelay', 'transitionDuration', 'transitionProperty', 'transitionTimingFunction'],
   transforms2d: ['transform', 'transformOrigin', 'transformOriginX', 'transformOriginY'],
-  transforms3d: ['backfaceVisibility', 'perspective', 'perspectiveOrigin', 'transform', 'transformOrigin', 'transformStyle', 'transformOriginX', 'transformOriginY'],
+  transforms3d: ['backfaceVisibility', 'perspective', 'perspectiveOrigin', 'transform', 'transformOrigin', 'transformStyle', 'transformOriginX', 'transformOriginY', 'transformOriginZ'],
   'css-animation': ['animation', 'animationDelay', 'animationDirection', 'animationFillMode', 'animationDuration', 'anmationIterationCount', 'animationName', 'animationPlayState', 'animationTimingFunction'],
   appearance: 'appearance',
   'user-select': 'userSelect',
