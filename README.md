@@ -89,7 +89,7 @@ They are grouped in caniuse groups.
 * animation, animationDelay, animationDirection, animationFillMode, animationDuration, anmationIterationCount, animationName, animationPlayState, animationTimingFunction
 * appearance
 * backdropFilter
-* backfaceVisibility, perspective, perspectiveOrigin, transform, transformOrigin, transformStyle, transformOriginX, transformOriginY
+* backfaceVisibility, perspective, perspectiveOrigin, transform, transformOrigin, transformStyle, transformOriginX, transformOriginY, transformOriginZ
 * backgroundClip, backgroundOrigin, backgroundSize
 * borderImage, borderImageOutset, borderImageRepeat, borderImageSlice, borderImageSource, borderImageWidth
 * borderRadius
