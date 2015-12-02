@@ -5,7 +5,7 @@ module.exports = {
   'css-transitions': ['transition', 'transitionDelay', 'transitionDuration', 'transitionProperty', 'transitionTimingFunction'],
   transforms2d: ['transform', 'transformOrigin', 'transformOriginX', 'transformOriginY'],
   transforms3d: ['backfaceVisibility', 'perspective', 'perspectiveOrigin', 'transform', 'transformOrigin', 'transformStyle', 'transformOriginX', 'transformOriginY', 'transformOriginZ'],
-  'css-animation': ['animation', 'animationDelay', 'animationDirection', 'animationFillMode', 'animationDuration', 'anmationIterationCount', 'animationName', 'animationPlayState', 'animationTimingFunction'],
+  'css-animation': ['animation', 'animationDelay', 'animationDirection', 'animationFillMode', 'animationDuration', 'animationIterationCount', 'animationName', 'animationPlayState', 'animationTimingFunction'],
   appearance: 'appearance',
   'user-select': 'userSelect',
   'backdrop-filter': 'backdropFilter',
