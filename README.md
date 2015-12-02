@@ -86,7 +86,7 @@ npm run build
 The following list shows all supported properties that get evaluated.<br>
 They are grouped in caniuse groups.
 
-* animation, animationDelay, animationDirection, animationFillMode, animationDuration, anmationIterationCount, animationName, animationPlayState, animationTimingFunction
+* animation, animationDelay, animationDirection, animationFillMode, animationDuration, animationIterationCount, animationName, animationPlayState, animationTimingFunction
 * appearance
 * backdropFilter
 * backfaceVisibility, perspective, perspectiveOrigin, transform, transformOrigin, transformStyle, transformOriginX, transformOriginY, transformOriginZ
