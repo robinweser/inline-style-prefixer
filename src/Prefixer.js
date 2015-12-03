@@ -26,7 +26,7 @@ const assign = (base, extend) => {
 
 export default class Prefixer {
   /**
-   * Instantiante a new prefixer. Pass an asterisk as userAgent to combine all prefixes
+   * Instantiante a new prefixer
    * @param {string} userAgent - userAgent to gather prefix information according to caniuse.com
    */
   constructor(userAgent = defaultUserAgent) {

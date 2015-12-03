@@ -41,6 +41,26 @@ const prefixedStyles = prefixer.prefix(styles)
   }
 }
 ```
+### prefixAll (static)
+Sometimes you might to prerender something without knowing the userAgent yet. Use the static `prefixAll` to achieve that.
+
+```javascript
+import Prefixer from 'inline-style-prefixer'
+
+const styles = {
+  transition: '200ms all linear'
+}
+
+const prefixedStyles = Prefixer.prefixAll(styles)
+
+// prefixedStyles will be:
+{
+  WebkitTransition: '200ms all linear',
+  MozTransition: '200ms all linear',
+  msTransition: '200ms all linear',
+  transition: '200ms all linear'
+}
+```
 
 ## Custom userAgent
 Sometimes your environment does not provide a proper userAgent string e.g. if you are **rendering on server-side**. Therefore optionally just pass a userAgent-string.
@@ -50,7 +70,6 @@ import Prefixer from 'inline-style-prefixer'
 
 const customUserAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.155 Safari/537.36'
 const prefixer = new Prefixer(customUserAgent)
-prefixer.prefix(styles)
 ```
 
 ## Prefix information
@@ -75,7 +94,7 @@ Supports the major browsers with the following versions.
 * Opera mini: 5+
 * Android UC: 9+
 
-### Custom Build
+### Custom Build & Legacy Support
 You may have to create a custom build if you need older browser versions. Just modify the [config.js](config.js) file which includes all the browser version specifications.
 ```sh
 npm install
