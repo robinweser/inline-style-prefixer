@@ -3,6 +3,7 @@ import getPrefixedKeyframes from './getPrefixedKeyframes'
 import caniuseData from './caniuseData'
 import plugins from './Plugins'
 
+const browserWhitelist = ['phantom']
 const defaultUserAgent = typeof navigator !== 'undefined' ? navigator.userAgent : undefined
 
 // only throw warnings if devmode is enabled
@@ -51,7 +52,18 @@ export default class Prefixer {
         }, {})
         this._hasPropsRequiringPrefix = Object.keys(this._requiresPrefix).length > 0
       } else {
+        // check for whitelisted browsers
+        browserWhitelist.forEach(browser => {
+          if (this._browserInfo[browser]) {
+            this._isWhitelisted = true
+          }
+        })
         this._hasPropsRequiringPrefix = false
+
+        // Do not throw a warning if whitelisted
+        if (this._isWhitelisted) {
+          return true
+        }
         warn('Your userAgent seems to be not supported by inline-style-prefixer. Feel free to open an issue.')
         return false
       }

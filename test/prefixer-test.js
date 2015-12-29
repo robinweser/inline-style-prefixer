@@ -11,6 +11,7 @@ const Chrome45 = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML,
 const Chrome49 = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2454.85 Safari/537.36'
 const SeaMonkey = 'Mozilla/5.0 (Windows NT 5.2; RW; rv:7.0a1) Gecko/20091211 SeaMonkey/9.23a1pre'
 
+const PhantomJS = 'Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.0.0 Safari/538.1'
 
 describe('Prefixing a property', () => {
   it('should only add required prefixes', () => {
@@ -103,5 +104,17 @@ describe('Combine all supported browser prefixes', () => {
 describe('Evaluating unsupported browsers', () => {
   it('should not prefix any property', () => {
     expect(new Prefixer(SeaMonkey)._hasPropsRequiringPrefix).to.eql(false)
+  })
+})
+
+describe('Evaluating whitelisted browsers', () => {
+  it('should not return false', () => {
+    expect(new Prefixer(PhantomJS)).to.not.eql(false)
+  })
+  it('should not prefix any property', () => {
+    expect(new Prefixer(PhantomJS)._hasPropsRequiringPrefix).to.eql(false)
+  })
+  it('should add a whitelist flag', () => {
+    expect(new Prefixer(PhantomJS)._isWhitelisted).to.eql(true)
   })
 })
