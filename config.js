@@ -8,6 +8,7 @@ module.exports = {
   ie: 9,
   ie_mob: 9,
   opera: 13,
+  edge: 12,
   op_mini: 5,
   and_uc: 9,
   and_chr: 30

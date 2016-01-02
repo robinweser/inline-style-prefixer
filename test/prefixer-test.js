@@ -48,9 +48,9 @@ describe('Running on android < 4.4', () => {
 })
 
 describe('Prefixing with MS Edge', () => {
-  it('should not require any properties', () => {
-    const edgePrefixer = new Prefixer(MSEdge12)
-    expect(new Prefixer(MSEdge12)._hasPropsRequiringPrefix).to.eql(false)
+  it('should not add -webkit- prefixes', () => {
+    const input = {alignItems: 'center', justifyContent: 'center'}
+    expect(new Prefixer(MSEdge12).prefix(input)).to.eql(input)
   })
 })
 
