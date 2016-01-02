@@ -1,29 +1,13 @@
-import getBrowserInformation from './getBrowserInformation'
-import getPrefixedKeyframes from './getPrefixedKeyframes'
+import getBrowserInformation from './utils/getBrowserInformation'
+import getPrefixedKeyframes from './utils/getPrefixedKeyframes'
+import caplitalizeString from './utils/caplitalizeString'
+import assign from './utils/assign'
+import warn from './utils/warn'
 import caniuseData from './caniuseData'
 import plugins from './Plugins'
 
 const browserWhitelist = ['phantom']
 const defaultUserAgent = typeof navigator !== 'undefined' ? navigator.userAgent : undefined
-
-// only throw warnings if devmode is enabled
-const warn = (...message) => {
-  if (process.env.NODE_ENV !== 'production') {
-    console.warn(...message)
-  }
-}
-// helper to capitalize strings
-const caplitalizeString = str => str.charAt(0).toUpperCase() + str.slice(1)
-
-// leight polyfill for Object.assign
-const assign = (base, extend) => {
-  if (extend) {
-    Object.keys(extend).forEach(key => base[key] = extend[key])
-  }
-  return extend
-}
-
-
 
 export default class Prefixer {
   /**
