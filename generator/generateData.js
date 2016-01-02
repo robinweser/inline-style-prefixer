@@ -4,7 +4,7 @@ var browserConfig = require('../config');
 var assign = require('object-assign');
 var fs = require('fs');
 
-var browsers = ['chrome', 'safari', 'firefox', 'opera', 'ie', 'ios_saf', 'android', 'and_chr', 'and_uc', 'op_mini', 'ie_mob'];
+var browsers = ['chrome', 'safari', 'firefox', 'opera', 'ie', 'edge', 'ios_saf', 'android', 'and_chr', 'and_uc', 'op_mini', 'ie_mob'];
 function gatherInformation() {
   var prefixProperties = {};
   browsers.forEach(function(browser) {
