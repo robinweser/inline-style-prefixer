@@ -8,6 +8,7 @@ const MSEdge12 = 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like 
 
 const Android4_4_4 = 'Mozilla/5.0 (Linux; Android 4.4.4; One Build/KTU84L.H4) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Mobile Safari/537.36'
 const Chrome14 = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.812.0 Safari/535.1'
+const Chrome22 = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.2 (KHTML, like Gecko) Chrome/22.0.1216.0 Safari/537.2'
 const Chrome45 = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36'
 const Chrome49 = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2454.85 Safari/537.36'
 const SeaMonkey = 'Mozilla/5.0 (Windows NT 5.2; RW; rv:7.0a1) Gecko/20091211 SeaMonkey/9.23a1pre'
@@ -96,10 +97,31 @@ describe('Keeping defaults', () => {
     }
     expect(new Prefixer(Chrome45, true).prefix(input)).to.eql(prefixed)
   })
+  it('should keep default values', () => {
+    expect(new Prefixer(Chrome22, true).prefix({
+      display: 'flex'
+    })).to.eql({display: '-webkit-flex;display:flex'})
+  })
 })
 
 describe('Combine all supported browser prefixes', () => {
   it('should resolve common required vendor properties', () => {
+    const input = {
+      transition: '200ms all linear',
+      height: '100px',
+      width: '200px'
+    }
+    const output = {
+      MozTransition: '200ms all linear',
+      WebkitTransition: '200ms all linear',
+      msTransition: '200ms all linear',
+      transition: '200ms all linear',
+      height: '100px',
+      width: '200px'
+    }
+    expect(Prefixer.prefixAll(input)).to.eql(output)
+  })
+  it('should resolve every plugin by default', () => {
     const input = {
       alignItems: 'center',
       height: '100px',
@@ -108,7 +130,9 @@ describe('Combine all supported browser prefixes', () => {
     const output = {
       MozAlignItems: 'center',
       WebkitAlignItems: 'center',
+      WebkitBoxAlign: 'center',
       msAlignItems: 'center',
+      msFlexAlign: 'center',
       alignItems: 'center',
       height: '100px',
       width: '200px'

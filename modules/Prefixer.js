@@ -1,6 +1,6 @@
 import getBrowserInformation from './utils/getBrowserInformation'
 import getPrefixedKeyframes from './utils/getPrefixedKeyframes'
-import caplitalizeString from './utils/caplitalizeString'
+import capitalizeString from './utils/capitalizeString'
 import assign from './utils/assign'
 import warn from './utils/warn'
 import caniuseData from './caniuseData'
@@ -14,8 +14,9 @@ export default class Prefixer {
    * Instantiante a new prefixer
    * @param {string} userAgent - userAgent to gather prefix information according to caniuse.com
    */
-  constructor(userAgent = defaultUserAgent) {
+  constructor(userAgent = defaultUserAgent, keepDefaults = false) {
     this._userAgent = userAgent
+    this._keepDefaults = keepDefaults
     this._browserInfo = getBrowserInformation(userAgent)
 
     // Checks if the userAgent was resolved correctly
@@ -74,13 +75,15 @@ export default class Prefixer {
         } else {
           // add prefixes if needed
           if (this._requiresPrefix[property]) {
-            styles[this.jsPrefix + caplitalizeString(property)] = value
-            delete styles[property]
+            styles[this.jsPrefix + capitalizeString(property)] = value
+            if (!this._keepDefaults) {
+              delete styles[property]
+            }
           }
 
           // resolve plugins
           plugins.forEach(plugin => {
-            assign(styles, plugin(property, value, this._browserInfo, styles, false))
+            assign(styles, plugin(property, value, this._browserInfo, styles, this._keepDefaults, false))
           })
         }
       })
@@ -122,7 +125,7 @@ export default class Prefixer {
             let style = browserInfo.prefixes[browser]
             // add prefixes if needed
             if (prefixes[property]) {
-              styles[style.inline + caplitalizeString(property)] = value
+              styles[style.inline + capitalizeString(property)] = value
             }
 
             // resolve plugins for each browser
@@ -132,7 +135,7 @@ export default class Prefixer {
                 prefix: style,
                 version: 0 // assume lowest
               }
-              assign(styles, plugin(property, value, browserInfo, styles, true))
+              assign(styles, plugin(property, value, browserInfo, styles, true, true))
             })
           })
         }

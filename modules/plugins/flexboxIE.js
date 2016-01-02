@@ -20,11 +20,20 @@ const alternativeProps = {
 
 const properties = Object.keys(alternativeProps).concat('display')
 
-export default (property, value, {browser, version} , styles) => {
-  if (properties.indexOf(property) > -1 && ((browser === 'ie_mob' || browser === 'ie') && version == 10)) {
-    delete styles[property]
-    return {
-      [alternativeProps[property] || property]: alternativeValues[value] || value
+export default (property, value, {browser, version} , styles, keepDefaults, forceRun) => {
+  if (properties.indexOf(property) > -1 && (forceRun || (browser === 'ie_mob' || browser === 'ie') && version == 10)) {
+    if (!keepDefaults) {
+      delete styles[property]
+    }
+    if (alternativeProps[property]) {
+      return {
+        [alternativeProps[property]]: alternativeValues[value] || value
+      }
+    }
+    if (alternativeValues[value]) {
+      return {
+        [property]: alternativeValues[value] + (keepDefaults ? ';' + property + ':' + value : '')
+      }
     }
   }
 }
