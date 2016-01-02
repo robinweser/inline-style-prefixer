@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "clean": "rimraf lib dist",
-    "transpile": "babel src --out-dir lib",
+    "transpile": "babel modules --out-dir lib",
     "pretest": "npm run clean && npm run transpile && npm run generate",
     "generate": "node ./generator/generateData.js",
     "bundle": "browserify lib/Prefixer.js --o dist/prefixer.js && uglifyjs dist/prefixer.js -o dist/prefixer.min.js",
