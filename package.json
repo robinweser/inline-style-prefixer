@@ -6,7 +6,8 @@
   "files": [
     "LICENSE",
     "README.md",
-    "lib/"
+    "lib/",
+    "dist/"
   ],
   "scripts": {
     "clean": "rimraf lib dist",

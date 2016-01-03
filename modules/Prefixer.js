@@ -13,10 +13,11 @@ export default class Prefixer {
   /**
    * Instantiante a new prefixer
    * @param {string} userAgent - userAgent to gather prefix information according to caniuse.com
+   * @param {string} keepUnprefixed - keeps unprefixed properties and values
    */
-  constructor(userAgent = defaultUserAgent, keepDefaults = false) {
+  constructor({userAgent = defaultUserAgent, keepUnprefixed = false}) {
     this._userAgent = userAgent
-    this._keepDefaults = keepDefaults
+    this._keepUnprefixed = keepUnprefixed
     this._browserInfo = getBrowserInformation(userAgent)
 
     // Checks if the userAgent was resolved correctly
@@ -76,14 +77,14 @@ export default class Prefixer {
           // add prefixes if needed
           if (this._requiresPrefix[property]) {
             styles[this.jsPrefix + capitalizeString(property)] = value
-            if (!this._keepDefaults) {
+            if (!this._keepUnprefixed) {
               delete styles[property]
             }
           }
 
           // resolve plugins
           plugins.forEach(plugin => {
-            assign(styles, plugin(property, value, this._browserInfo, styles, this._keepDefaults, false))
+            assign(styles, plugin(property, value, this._browserInfo, styles, this._keepUnprefixed, false))
           })
         }
       })

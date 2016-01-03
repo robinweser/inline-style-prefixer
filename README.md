@@ -22,15 +22,19 @@ Supports the major browsers with the following versions. <br>For legacy support 
 * Opera mini: 5+
 * Android UC: 9+
 
+#### Whitelisted Browser
+Some browser e.g. headless browsers are whitelisted to not throw errors and not prefix at all.
+* PhantomJS
+
 ## Usage
 ```bash
 npm install inline-style-prefixer
 ```
-## Prefixer(userAgent, keepDefault)
-| Option | Default | Description | 
-| ------ | ------ | ------ | 
-| [userAgent](#useragent)<br>*(optional)* | `navigator.userAgent`  | userAgent used to detect browser features | 
-| [keepDefaults](#keepdefaults)<br>*(optional)* | `false`  | keeps unprefixed properties and values | 
+## Prefixer(options)
+| Option | Default | Description |
+| ------ | ------ | ------ |
+| [userAgent](#useragent)<br>*(optional)* | `navigator.userAgent`  | userAgent used to detect browser features |
+| [keepUnprefixed](#keepunprefixed)<br>*(optional)* | `false`  | keeps unprefixed properties and values |
 ```javascript
 import Prefixer from 'inline-style-prefixer'
 
@@ -55,7 +59,7 @@ const output = {
   color: 'blue'
 }
 ```
-### keepDefaults
+### keepUnprefixed
 Use this option to keep default values. This should be used if you're facing wrong prefixes.
 ```javascript
 const styles = {
@@ -63,7 +67,7 @@ const styles = {
   display: 'flex'
 }
 
-const prefixer = new Prefixer(navigator.userAgent, true)
+const prefixer = new Prefixer({keepUnprefixed: true})
 const prefixedStyles = prefixer.prefix(styles)
 
 // Assuming you are using e.g. Chrome version 22
@@ -83,7 +87,7 @@ Sometimes your environment does not provide a proper userAgent string e.g. if yo
 ```javascript
 const customUserAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.155 Safari/537.36'
 
-const prefixer = new Prefixer(customUserAgent)
+const prefixer = new Prefixer({userAgent: customUserAgent})
 ```
 
 ## prefixAll (static)

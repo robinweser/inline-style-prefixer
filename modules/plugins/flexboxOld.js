@@ -18,7 +18,7 @@ const alternativeProps = {
 const properties = Object.keys(alternativeProps).concat(['alignContent', 'alignSelf', 'display', 'order', 'flexGrow', 'flexShrink', 'flexBasis', 'flexDirection'])
 
 
-export default (property, value, {browser, version, prefix} ,styles, keepDefaults, forceRun) => {
+export default (property, value, {browser, version, prefix} ,styles, keepUnprefixed, forceRun) => {
   if (properties.indexOf(property) > -1 && (forceRun || browser === 'firefox' && version < 22 || browser === 'chrome' && version < 21 || (browser === 'safari' || browser === 'ios_saf') && version <= 6.1 || browser === 'android' && version < 4.4 || browser === 'and_uc')) {
     if (property === 'flexDirection') {
       return {
@@ -28,7 +28,7 @@ export default (property, value, {browser, version, prefix} ,styles, keepDefault
     }
     if (property === 'display' && alternativeValues[value]) {
       return {
-        display: prefix.CSS + alternativeValues[value] + (keepDefaults ? ';' + property + ':' + value : '')
+        display: prefix.CSS + alternativeValues[value] + (keepUnprefixed ? ';' + property + ':' + value : '')
       }
     }
     if (alternativeProps[property]) {
@@ -38,7 +38,7 @@ export default (property, value, {browser, version, prefix} ,styles, keepDefault
     }
     if (alternativeValues[value]) {
       return {
-        [property]: alternativeValues[value] + (keepDefaults ? ';' + property + ':' + value : '')
+        [property]: alternativeValues[value] + (keepUnprefixed ? ';' + property + ':' + value : '')
       }
     }
   }

@@ -20,9 +20,9 @@ const alternativeProps = {
 
 const properties = Object.keys(alternativeProps).concat('display')
 
-export default (property, value, {browser, version} , styles, keepDefaults, forceRun) => {
+export default (property, value, {browser, version} , styles, keepUnprefixed, forceRun) => {
   if (properties.indexOf(property) > -1 && (forceRun || (browser === 'ie_mob' || browser === 'ie') && version == 10)) {
-    if (!keepDefaults) {
+    if (!keepUnprefixed) {
       delete styles[property]
     }
     if (alternativeProps[property]) {
@@ -32,7 +32,7 @@ export default (property, value, {browser, version} , styles, keepDefaults, forc
     }
     if (alternativeValues[value]) {
       return {
-        [property]: alternativeValues[value] + (keepDefaults ? ';' + property + ':' + value : '')
+        [property]: alternativeValues[value] + (keepUnprefixed ? ';' + property + ':' + value : '')
       }
     }
   }
