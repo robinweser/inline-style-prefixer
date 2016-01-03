@@ -8,69 +8,104 @@
 
 **inline-style-prefixer** adds required **vendor prefixes** to your style object. It only adds prefixes if they're actually required by evaluating the browser's `userAgent` against data from [caniuse.com](http://caniuse.com/).
 
+## Browser Support
+Supports the major browsers with the following versions. <br>For legacy support check [custom build](custom-build--legacy-support).
+* Chrome: 30+
+* Safari: 6+
+* Firefox: 25+
+* Opera: 13+
+* IE: 9+
+* Edge 12+
+* iOS: 6+
+* Android: 4+
+* IE mobile: 9+
+* Opera mini: 5+
+* Android UC: 9+
+
 ## Usage
 ```bash
 npm install inline-style-prefixer
 ```
-
+## Prefixer(userAgent, keepDefault)
+| Option | Default | Description |
+| ------ | ------ | ------ |
+| [userAgent](#useragent)<br>*(optional)* | `navigator.userAgent`  | userAgent used to detect browser features |
+| [keepDefaults](#keepdefaults)<br>*(optional)* | `false`  | keeps unprefixed properties and values |
 ```javascript
 import Prefixer from 'inline-style-prefixer'
 
 const styles = {
   transition: '200ms all linear',
   userSelect: 'none',
-  nested : {
-    boxSizing: 'border-box',
-    appearance: 'none',
-    color: 'blue',
-    flex: 1
-  }
+  boxSizing: 'border-box',
+  display: 'flex',
+  color: 'blue'
 }
 
 const prefixer = new Prefixer()
 const prefixedStyles = prefixer.prefix(styles)
 
-// Assuming you are using e.g. Chrome version 27.0, prefixedStyles will be:
-{
+// Assuming you are using e.g. Chrome version 25
+// prefixedStyles === output
+const output = {
   transition: '200ms all linear',
   WebkitUserSelect: 'none',
-  nested: {
-    boxSizing: 'border-box',
-    WebkitAppearance: 'none',
-    color: 'blue',
-    WebkitFlex: 1
-  }
+  boxSizing: 'border-box',
+  display: '-webkit-flex',
+  color: 'blue'
 }
 ```
-### prefixAll (static)
-Sometimes you might to prerender something without knowing the userAgent yet. Use the static `prefixAll` to achieve that.
-
+### keepDefaults
+Use this option to keep default values. This should be used if you're facing wrong prefixes.
 ```javascript
-import Prefixer from 'inline-style-prefixer'
-
 const styles = {
-  transition: '200ms all linear'
+  userSelect: 'none',
+  display: 'flex'
 }
 
-const prefixedStyles = Prefixer.prefixAll(styles)
+const prefixer = new Prefixer(navigator.userAgent, true)
+const prefixedStyles = prefixer.prefix(styles)
 
-// prefixedStyles will be:
-{
-  WebkitTransition: '200ms all linear',
-  MozTransition: '200ms all linear',
-  msTransition: '200ms all linear',
-  transition: '200ms all linear'
+// Assuming you are using e.g. Chrome version 22
+// prefixedStyles === output
+const output = {
+  WebkitUserSelect: 'none',  
+  // unprefixed properties do not get removed
+  userSelect: 'none',
+  // unprefixed values will be appended to the string
+  display: '-webkit-flex:display:flex'
 }
 ```
 
-## Custom userAgent
+### userAgent
 Sometimes your environment does not provide a proper userAgent string e.g. if you are **rendering on server-side**. Therefore optionally just pass a userAgent-string.
 
 ```javascript
-import Prefixer from 'inline-style-prefixer'
-
 const customUserAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.155 Safari/537.36'
+
 const prefixer = new Prefixer(customUserAgent)
+```
+
+## prefixAll (static)
+Sometimes you might to prerender something without knowing the userAgent yet. Use the static `prefixAll` to achieve that.
+
+```javascript
+const styles = {alignItems: 'center'}
+
+const prefixedStyles = Prefixer.prefixAll(styles)
+
+// the userAgent doesn't matter
+// prefixedStyles === output
+const output = {
+  MozAlignItems: 'center',
+  WebkitAlignItems: 'center',
+  msAlignItems: 'center',
+  alignItems: 'center',
+  // it also adds legacy properties
+  // by running every plugin available
+  WebkitBoxAlign: 'center',
+  msFlexAlign: 'center',
+}
 ```
 
 ## Prefix information
@@ -82,20 +117,7 @@ prefixer.jsPrefix = 'Webkit'
 prefixer.prefixedKeyframes = '-webkit-keyframes'
 ```
 
-## Browser Support
-Supports the major browsers with the following versions.
-* Chrome: 30+
-* Safari: 6+
-* Firefox: 25+
-* Opera: 13+
-* IE: 9+
-* iOS: 6+
-* Android: 4+
-* IE mobile: 9+
-* Opera mini: 5+
-* Android UC: 9+
-
-### Custom Build & Legacy Support
+## Custom Build & Legacy Support
 You may have to create a custom build if you need older browser versions. Just modify the [config.js](config.js) file which includes all the browser version specifications.
 ```sh
 npm install
@@ -152,7 +174,24 @@ Sometimes it is not enough to just prefix a property, but you also need to prefi
 * **gradient**: Adds support for prefixed `background` and `backgroundImage` values `linear-gradient`, `radial-gradient`, `repeating-linear-gradient` and `repeating-radial-gradient`.
 * **sizing**: Adds support for prefixed `maxHeight`, `maxWidth`, `width`, `height`, `columnWidth`,`minWidth`, `minHeight` intrinsic & extrinsic sizing values `min-content`, `max-content`, `fill-available`, `fit-content`, `contain-floats`
 
+## Known issues
+Most issues so far have been due to false browser detection which is by now handled by [bowser](https://github.com/ded/bowser). If your browser (userAgent) does not get evaluated correctly, please create an issue at the bowser repository, not here.<br>
+To check if your browser gets evaluated correctly, simply add this to your code:
+```javascript
+console.log(new Prefixer()._browserInfo)
+```
 
 # License
-**inline-style-prefixer** is licensed under the [MIT License](LICENSE).<br>
+**inline-style-prefixer** is licensed under the [MIT License](http://opensource.org/licenses/MIT).<br>
+Documentation is licensed under [Creative Common License](http://creativecommons.org/licenses/by/4.0/).<br>
 Created with ♥ by [@rofrischmann](http://rofrischmann.de).
+
+# Contributing
+I would love to see people getting involved.<br>
+If you have a feature request please create an issue. Also if you're even improving inline-style-prefixer by any kind please don't be shy and send a pull request to let everyone benefit.
+
+### Issues
+If you're having any issue please let me know as fast as possible to find a solution a hopefully fix the issue. Try to add as much information as possible such as your environment, exact case, the line of actions to reproduce the issue.
+
+### Pull Requests
+If you are creating a pull request, try to use commit messages that are self-explanatory. Also always add some **tests** unless it's totally senseless (add a reason why it's senseless) and test your code before you commit so Travis won't throw errors.

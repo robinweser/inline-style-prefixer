@@ -7,8 +7,8 @@ module.exports = {
   safari: 6,
   ie: 9,
   ie_mob: 9,
-  opera: 13,
   edge: 12,
+  opera: 13,
   op_mini: 5,
   and_uc: 9,
   and_chr: 30

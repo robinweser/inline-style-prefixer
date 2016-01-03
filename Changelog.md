@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.6
+### 0.6.0 (03.01.16)
+* fixed a bug that caused the `display:flex` plugin to prefix incorrectly
+* added `forceRun`-option to plugins to support plugins when using `prefixAll`
+* added `keepDefault`-option to keep defaults after prefixing
+* added MS Edge support
+* added whitelist for headless browsers
+* several data updates
+
 ## 0.5
 ## 0.5.4 (03.12.15)
 * fixed a typo in `animationIterationCount`
