@@ -7,7 +7,12 @@ import caniuseData from './caniuseData'
 import plugins from './Plugins'
 
 const browserWhitelist = ['phantom']
+
 const defaultUserAgent = typeof navigator !== 'undefined' ? navigator.userAgent : undefined
+const defaultOpts = {
+  userAgent: defaultUserAgent,
+  keepUnprefixed: false
+}
 
 export default class Prefixer {
   /**
@@ -15,10 +20,10 @@ export default class Prefixer {
    * @param {string} userAgent - userAgent to gather prefix information according to caniuse.com
    * @param {string} keepUnprefixed - keeps unprefixed properties and values
    */
-  constructor({userAgent = defaultUserAgent, keepUnprefixed = false}) {
-    this._userAgent = userAgent
-    this._keepUnprefixed = keepUnprefixed
-    this._browserInfo = getBrowserInformation(userAgent)
+  constructor(options = defaultOpts) {
+    this._userAgent = options.userAgent
+    this._keepUnprefixed = options.keepUnprefixed
+    this._browserInfo = getBrowserInformation(this._userAgent)
 
     // Checks if the userAgent was resolved correctly
     if (this._browserInfo && this._browserInfo.prefix) {

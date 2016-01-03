@@ -1,6 +1,9 @@
 # Changelog
 
 ## 0.6
+### 0.6.2 (03.01.16)
+* fixed dist files to register globally
+
 ### 0.6.1 (03.01.16)
 * replaced multi-options with an object hash
 * renamed `keepDefaults` to `keepUnprefixed`
