@@ -1,6 +1,10 @@
 # Changelog
 
 ## 0.6
+### 0.6.1 (03.01.16)
+* replaced multi-options with an object hash
+* renamed `keepDefaults` to `keepUnprefixed`
+
 ### 0.6.0 (03.01.16)
 * fixed a bug that caused the `display:flex` plugin to prefix incorrectly
 * added `forceRun`-option to plugins to support plugins when using `prefixAll`
