@@ -27,10 +27,10 @@ Supports the major browsers with the following versions. <br>For legacy support 
 npm install inline-style-prefixer
 ```
 ## Prefixer(userAgent, keepDefault)
-| Option | Default | Description |
-| ------ | ------ | ------ |
-| [userAgent](#useragent)<br>*(optional)* | `navigator.userAgent`  | userAgent used to detect browser features |
-| [keepDefaults](#keepdefaults)<br>*(optional)* | `false`  | keeps unprefixed properties and values |
+| Option | Default | Description | 
+| ------ | ------ | ------ | 
+| [userAgent](#useragent)<br>*(optional)* | `navigator.userAgent`  | userAgent used to detect browser features | 
+| [keepDefaults](#keepdefaults)<br>*(optional)* | `false`  | keeps unprefixed properties and values | 
 ```javascript
 import Prefixer from 'inline-style-prefixer'
 
