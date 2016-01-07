@@ -60,6 +60,16 @@ const output = {
   color: 'blue'
 }
 ```
+
+### userAgent
+Sometimes your environment does not provide a proper userAgent string e.g. if you are **rendering on server-side**. Therefore optionally just pass a userAgent-string.
+
+```javascript
+const customUserAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.155 Safari/537.36'
+
+const prefixer = new Prefixer({userAgent: customUserAgent})
+```
+
 ### keepUnprefixed
 Use this option to keep default values. This should be used if you're facing wrong prefixes.
 ```javascript
@@ -81,16 +91,6 @@ const output = {
   display: '-webkit-flex:display:flex'
 }
 ```
-
-### userAgent
-Sometimes your environment does not provide a proper userAgent string e.g. if you are **rendering on server-side**. Therefore optionally just pass a userAgent-string.
-
-```javascript
-const customUserAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.155 Safari/537.36'
-
-const prefixer = new Prefixer({userAgent: customUserAgent})
-```
-
 ## prefixAll (static)
 Sometimes you might to prerender something without knowing the userAgent yet. Use the static `prefixAll` to achieve that.
 
@@ -179,12 +179,8 @@ Sometimes it is not enough to just prefix a property, but you also need to prefi
 * **gradient**: Adds support for prefixed `background` and `backgroundImage` values `linear-gradient`, `radial-gradient`, `repeating-linear-gradient` and `repeating-radial-gradient`.
 * **sizing**: Adds support for prefixed `maxHeight`, `maxWidth`, `width`, `height`, `columnWidth`,`minWidth`, `minHeight` intrinsic & extrinsic sizing values `min-content`, `max-content`, `fill-available`, `fit-content`, `contain-floats`
 
-## Known issues
-Most issues so far have been due to false browser detection which is by now handled by [bowser](https://github.com/ded/bowser). If your browser (userAgent) does not get evaluated correctly, please create an issue at the bowser repository, not here.<br>
-To check if your browser gets evaluated correctly, simply add this to your code:
-```javascript
-console.log(new Prefixer()._browserInfo)
-```
+# [FAQ](docs/FAQ.md)
+If you got any issue using this prefixer, please first check the FAQ's. Most cases are already covered and provide a solid solution.
 
 # License
 **inline-style-prefixer** is licensed under the [MIT License](http://opensource.org/licenses/MIT).<br>
