@@ -115,7 +115,8 @@ export default userAgent => {
   })
 
   info.browser = name
-  info.version = parseFloat(info.version)
+  // For cordova IOS 8 the version is missing, set 0 to prevent NaN
+  info.version = info.version ? parseFloat(info.version) : 0
   info.osversion = parseFloat(info.osversion)
 
   // For android < 4.4 we want to check the osversion
