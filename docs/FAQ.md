@@ -1,8 +1,9 @@
 # FAQ
 
-1. [How can I disable the warnings?](#disablewarnings) (for tests)
-2. [How can I do server-side rendering?](#server-siderendering)
-3. [Why is my userAgent not supported?](#unsupporteduseragent)
+1. [How can I disable the warnings?](#1-disable-warnings) (for tests)
+2. [How can I do server-side rendering?](#2-server-side-rendering)
+3. [Why is my userAgent not supported?](#3-unsupported-useragent)
+4. [Why do some Cordova apps & in-app browser have issues?](#4-cordova-apps--in-app-browser)
 
 ## 1. Disable warnings
 If you're running tests and wan't to get rid of the warnings you might need set a `global.navigator` and pass a **valid** userAgent which gets validated correctly e.g.
@@ -19,3 +20,14 @@ If you still get the warning even if using a valid `userAgent` the issue's most 
 ```javascript
 console.log(new Prefixer()._browserInfo)
 ```
+
+## 4. Cordova apps & in-app browser
+We have seen different issues with [Cordova](https://cordova.apache.org)-based mobile applications as well as several in-app browsers. This is due to their userAgent which differs from default ones.<br>
+This especially occured on iOS 8.4.x.
+
+<br> For **Cordova/Phonegap** there is a method of changing the userAgent. I'd suggest one that gets recognized by bowser.
+```xml
+	<preference name="OverrideUserAgent" value="/* userAgent */" />
+```
+For both I also recommend enabling the `keepUnprefixed` option.
+> I hope that we will be able to support those out of the box as soon as possible.

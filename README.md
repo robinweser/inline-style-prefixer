@@ -27,6 +27,13 @@ Supports the major browsers with the following versions. <br>For legacy support 
 Some browser e.g. headless browsers are whitelisted to not throw errors and not prefix at all.
 * PhantomJS
 
+## Docs
+If you got any issue using this prefixer, please first check the FAQ's. Most cases are already covered and provide a solid solution.
+
+* [FAQ](docs/FAQ.md)
+* [Supported properties](docs/Properties.md)
+* [Special Plugins](docs/Plugins.md)
+
 ## Usage
 ```bash
 npm install inline-style-prefixer
@@ -128,59 +135,6 @@ You may have to create a custom build if you need older browser versions. Just m
 npm install
 npm run build
 ```
-
-## Supported properties
-The following list shows all supported properties that get evaluated.<br>
-They are grouped in caniuse groups.
-
-* animation, animationDelay, animationDirection, animationFillMode, animationDuration, animationIterationCount, animationName, animationPlayState, animationTimingFunction
-* appearance
-* backdropFilter
-* backfaceVisibility, perspective, perspectiveOrigin, transform, transformOrigin, transformStyle, transformOriginX, transformOriginY, transformOriginZ
-* backgroundClip, backgroundOrigin, backgroundSize
-* borderImage, borderImageOutset, borderImageRepeat, borderImageSlice, borderImageSource, borderImageWidth
-* borderRadius
-* boxDecorationBreak
-* boxShadow
-* boxSizing
-* breakAfter, breakBefore, breakInside, columnCount, columnFill, columnGap, columnRule, columnRuleColor, columnRuleStyle, columnRuleWidth, columns, columnSpan, columnWidth
-* clipPath
-* filter
-* flex, flexBasis, flexDirection, flexGrow, flexFlow, flexShrink, flexWrap, alignContent, alignItems, alignSelf, justifyContent, order
-* flowInto, flowFrom, breakBefore, breakAfter, breakInside, regionFragment
-* fontFeatureSettings
-* fontKerning
-* gridTemplateColumns, gridTemplateRows, gridTemplateAreas, gridTemplate, gridAutoColumns, gridAutoRows, gridAutoFlow, grid, gridRowStart, gridColumnStart, gridRowEnd, gridRow, gridColumn, gridArea, rowGap, columnGap, gridGap
-* hyphens
-* maskImage, maskMode, maskRepeat, maskPosition, maskClip, maskOrigin, maskSize, maskComposite, mask, maskBorderSource, maskBorderMode, maskBorderSlice, maskBorderWidth, maskBorderOutset, maskBorderRepeat, maskBorder, maskType
-* objectFit, objectPosition
-* resize
-* scrollSnapType, scrollSnapPointsX, scrollSnapPointsY, scrollSnapDestination, scrollSnapCoordinate
-* shapeImageThreshold, shapeImageMargin, shapeImageOutside
-* tabSize
-* textAlignLast
-* textDecorationStyle, textDecorationSkip, textDecorationLine, textDecorationColor
-* textEmphasisPosition, textEmphasis, textEmphasisStyle, textEmphasisColor
-* textOverflow
-* textSizeAdjust
-* touchAction
-* transition, transitionDelay, transitionDuration, transitionProperty, transitionTimingFunction
-* userSelect
-* wrapFlow, wrapThrough, wrapMargin
-
-## Special plugins
-Sometimes it is not enough to just prefix a property, but you also need to prefix the value or even transform the property and value completely. Plugins are used to tackle browser incompatibilities. File an issue or submit a PR if a plugin you need is missing (these are roughly equivalent to Autoprefixer's *hacks*). The following plugins are included by default:
-
-* **calc**: Adds support for prefixed `calc` values on any property.
-* **cursor**: Adds support for prefixed new `cursor` values `zoom-in`, `zoom-out`, `grab`, `grabbing`.
-* **flex**: Adds support for prefixed `display` values using `display: flex` or `display: inline-flex`.
-* **flexboxIE**: Adds trasformators for the early 2012 flexbox specification used in IE 10 and IE Mobile 10.
-* **flexboxOld**: Adds trasformators for the old 2009 flexbox specification used in old Webkit-based browsers.
-* **gradient**: Adds support for prefixed `background` and `backgroundImage` values `linear-gradient`, `radial-gradient`, `repeating-linear-gradient` and `repeating-radial-gradient`.
-* **sizing**: Adds support for prefixed `maxHeight`, `maxWidth`, `width`, `height`, `columnWidth`,`minWidth`, `minHeight` intrinsic & extrinsic sizing values `min-content`, `max-content`, `fill-available`, `fit-content`, `contain-floats`
-
-# [FAQ](docs/FAQ.md)
-If you got any issue using this prefixer, please first check the FAQ's. Most cases are already covered and provide a solid solution.
 
 # License
 **inline-style-prefixer** is licensed under the [MIT License](http://opensource.org/licenses/MIT).<br>
