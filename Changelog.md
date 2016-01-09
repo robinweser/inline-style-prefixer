@@ -1,6 +1,11 @@
 # Changelog
 
 ## 0.6
+### 0.6.3 (09.01.16)
+* added support for Cordova apps & in-app browser *(especially on iOS 8.4.x)*
+* fixed Android Chrome detection *(on Android 4.x)*
+* added some [FAQ](docs/FAQ.md)'s
+
 ### 0.6.2 (03.01.16)
 * fixed dist files to register globally
 

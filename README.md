@@ -9,7 +9,7 @@
 
 **inline-style-prefixer** adds required **vendor prefixes** to your style object. It only adds prefixes if they're actually required by evaluating the browser's `userAgent` against data from [caniuse.com](http://caniuse.com/).
 
-## Browser Support
+# Browser Support
 Supports the major browsers with the following versions. <br>For legacy support check [custom build](custom-build--legacy-support).
 * Chrome: 30+
 * Safari: 6+
@@ -22,27 +22,25 @@ Supports the major browsers with the following versions. <br>For legacy support 
 * IE mobile: 9+
 * Opera mini: 5+
 * Android UC: 9+
+* Android Chrome: 30+
 
 #### Whitelisted Browser
 Some browser e.g. headless browsers are whitelisted to not throw errors and not prefix at all.
 * PhantomJS
 
-## Docs
+# Docs
 If you got any issue using this prefixer, please first check the FAQ's. Most cases are already covered and provide a solid solution.
 
 * [FAQ](docs/FAQ.md)
-* [Supported properties](docs/Properties.md)
+* [Supported Properties](docs/Properties.md)
 * [Special Plugins](docs/Plugins.md)
 
-## Usage
+# Usage
 ```bash
 npm install inline-style-prefixer
 ```
-## Prefixer(options)
-| Option | Default | Description |
-| ------ | ------ | ------ |
-| [userAgent](#useragent)<br>*(optional)* | `navigator.userAgent`  | userAgent used to detect browser features |
-| [keepUnprefixed](#keepunprefixed)<br>*(optional)* | `false`  | keeps unprefixed properties and values |
+## Prefixer([config])
+
 ```javascript
 import Prefixer from 'inline-style-prefixer'
 
@@ -67,8 +65,10 @@ const output = {
   color: 'blue'
 }
 ```
+### Config
+#### userAgent
+*Default: `navigator.userAgent`*
 
-### userAgent
 Sometimes your environment does not provide a proper userAgent string e.g. if you are **rendering on server-side**. Therefore optionally just pass a userAgent-string.
 
 ```javascript
@@ -77,7 +77,9 @@ const customUserAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWe
 const prefixer = new Prefixer({userAgent: customUserAgent})
 ```
 
-### keepUnprefixed
+#### keepUnprefixed
+*Default: `false`*
+
 Use this option to keep default values. This should be used if you're facing wrong prefixes.
 ```javascript
 const styles = {
@@ -98,7 +100,7 @@ const output = {
   display: '-webkit-flex:display:flex'
 }
 ```
-## prefixAll (static)
+## Prefixer.prefixAll (static)
 Sometimes you might to prerender something without knowing the userAgent yet. Use the static `prefixAll` to achieve that.
 
 ```javascript
@@ -120,7 +122,7 @@ const output = {
 }
 ```
 
-## Prefix information
+## Prefix Information
 Every `Prefixer` instance also provides prefix information.
 ```javascript
 // e.g. using a Chrome version 40 userAgent
@@ -129,7 +131,7 @@ prefixer.jsPrefix = 'Webkit'
 prefixer.prefixedKeyframes = '-webkit-keyframes'
 ```
 
-## Custom Build & Legacy Support
+# Custom Build & Legacy Support
 You may have to create a custom build if you need older browser versions. Just modify the [config.js](config.js) file which includes all the browser version specifications.
 ```sh
 npm install

@@ -1,4 +1,4 @@
-# Supported properties
+# Supported Properties
 The following list shows all supported properties that get evaluated.<br>
 They are grouped in caniuse groups.
 
