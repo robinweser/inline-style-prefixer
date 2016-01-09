@@ -7,6 +7,7 @@ const MSIE11 = 'Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko'
 const MSEdge12 = 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10136'
 
 const Android4_4_4 = 'Mozilla/5.0 (Linux; Android 4.4.4; One Build/KTU84L.H4) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Mobile Safari/537.36'
+const CordovaIOS8_4 = 'Mozilla/5.0 (iPhone; CPU iPhone OS 8_4 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Mobile/12H141'
 const Chrome14 = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.812.0 Safari/535.1'
 const Chrome22 = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.2 (KHTML, like Gecko) Chrome/22.0.1216.0 Safari/537.2'
 const Chrome45 = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36'
@@ -44,6 +45,18 @@ describe('Running on android < 4.4', () => {
     const transform = {transform: 'rotate(40deg)'}
     const output = {WebkitTransform: 'rotate(40deg)'}
     expect(new Prefixer({userAgent: Android4_4_4}).prefix(transform)).to.eql(output)
+  })
+})
+
+describe('Running on cordova ios <= 8.4', () => {
+  it('should be prefixed if the version is missing', () => {
+    const cdv8_4Prefixer = new Prefixer({userAgent: CordovaIOS8_4})
+
+    const transform = {transform: 'rotate(40deg)'}
+    const output = {WebkitTransform: 'rotate(40deg)'}
+    expect(cdv8_4Prefixer.prefix(transform)).to.eql(output)
+    
+    expect(cdv8_4Prefixer._browserInfo.version).to.eql(0)
   })
 })
 
