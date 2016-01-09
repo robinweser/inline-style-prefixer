@@ -16,7 +16,6 @@ const browsers = {
   ios_saf: [['ios', 'mobile'], ['ios', 'tablet']],
   ie_mob: [['windowsphone', 'mobile', 'msie'], ['windowsphone', 'tablet', 'msie'], ['windowsphone', 'mobile', 'msedge'], ['windowsphone', 'tablet', 'msedge']],
   op_mini: [['opera', 'mobile'], ['opera', 'tablet']],
-  and_chr: [['android', 'chrome', 'mobile'], ['android', 'chrome', 'tablet']],
   and_uc: [['android', 'mobile'], ['android', 'tablet']],
   android: [['android', 'mobile'], ['android', 'tablet']]
 }
@@ -117,12 +116,18 @@ export default userAgent => {
   info.browser = name
   // For cordova IOS 8 the version is missing, set 0 to prevent NaN
   info.version = info.version ? parseFloat(info.version) : 0
-  info.osversion = parseFloat(info.osversion)
 
+  // seperate native android chrome
+  // https://github.com/rofrischmann/inline-style-prefixer/issues/45
+  if (info.browser === 'android' && info.chrome && info.version > 37) {
+    info.browser = 'and_chr'
+  }
+  info.version = parseFloat(info.version)
+  info.osversion = parseFloat(info.osversion)
   // For android < 4.4 we want to check the osversion
   // not the chrome version, see issue #26
   // https://github.com/rofrischmann/inline-style-prefixer/issues/26
-  if (name === 'android' && info.osversion < 5) {
+  if (info.browser === 'android' && info.osversion < 5) {
     info.version = info.osversion
   }
 
