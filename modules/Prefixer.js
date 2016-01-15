@@ -159,11 +159,7 @@ export default class Prefixer {
                 prefix: style,
                 version: 0 // assume lowest
               },
-              prefix: {
-                js: this.jsPrefix,
-                css: this.cssPrefix,
-                keyframes: this.prefixedKeyframes
-              },
+              prefix: {},
               keepUnprefixed: true,
               requiresPrefix: prefixes,
               forceRun: true
