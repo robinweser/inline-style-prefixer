@@ -6,7 +6,6 @@ const alternativeValues = {
   flex: '-ms-flexbox',
   'inline-flex': '-ms-inline-flexbox'
 }
-
 const alternativeProps = {
   alignContent: 'msFlexLinePack',
   alignSelf: 'msFlexItemAlign',
@@ -18,13 +17,22 @@ const alternativeProps = {
   flexBasis: 'msPreferredSize'
 }
 
-const properties = Object.keys(alternativeProps).concat('display')
+const properties = Object.keys(alternativeProps).concat('display').reduce((result, prop) => ({...result, [prop]: true}), {})
 
-export default (property, value, {browser, version} , styles, keepUnprefixed, forceRun) => {
-  if (properties.indexOf(property) > -1 && (forceRun || (browser === 'ie_mob' || browser === 'ie') && version == 10)) {
+export default function flexboxIE(pluginInterface) {
+  const {property, value, styles, browserInfo, prefix, keepUnprefixed, forceRun} = pluginInterface
+  const {browser, version} = browserInfo
+
+  if (
+    properties[property] &&
+    (
+    forceRun ||
+    (browser === 'ie_mob' || browser === 'ie') && version == 10)
+  ) {
     if (!keepUnprefixed) {
       delete styles[property]
     }
+
     if (alternativeProps[property]) {
       return {
         [alternativeProps[property]]: alternativeValues[value] || value

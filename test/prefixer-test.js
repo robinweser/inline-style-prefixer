@@ -19,33 +19,57 @@ const PhantomJS = 'Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/538.1 (KH
 
 describe('Prefixing a property', () => {
   it('should only add required prefixes', () => {
-    const input = {appearance: 'test', transition: 'test'}
-    const prefixed = {WebkitAppearance: 'test', transition: 'test'}
-    expect(new Prefixer({userAgent: Chrome45}).prefix(input)).to.eql(prefixed)
+    const input = {
+      appearance: 'test',
+      transition: 'test'
+    }
+    const prefixed = {
+      WebkitAppearance: 'test',
+      transition: 'test'
+    }
+    expect(new Prefixer({
+      userAgent: Chrome45
+    }).prefix(input)).to.eql(prefixed)
   })
 })
 
 describe('Prefixing 2D transforms', () => {
-  const input = {transform: 'rotate(30deg)'}
-  const prefixed = {msTransform: 'rotate(30deg)'}
+  const input = {
+    transform: 'rotate(30deg)'
+  }
+  const prefixed = {
+    msTransform: 'rotate(30deg)'
+  }
 
   it('should be prefixed on IE 9', () => {
-    expect(new Prefixer({userAgent: MSIE9}).prefix(input)).to.eql(prefixed)
+    expect(new Prefixer({
+      userAgent: MSIE9
+    }).prefix(input)).to.eql(prefixed)
   })
   it('should not be prefixed on IE 10', () => {
-    expect(new Prefixer({userAgent: MSIE10}).prefix(input)).to.eql(input)
+    expect(new Prefixer({
+      userAgent: MSIE10
+    }).prefix(input)).to.eql(input)
   })
 })
 
 describe('Running on android < 4.4', () => {
   it('should use the osversion if its the native browser to check for required props', () => {
-    const andPrefixer = new Prefixer({userAgent: Android4_4_4})
+    const andPrefixer = new Prefixer({
+      userAgent: Android4_4_4
+    })
     expect(andPrefixer._browserInfo.version).to.eql(andPrefixer._browserInfo.osversion)
     expect(andPrefixer._browserInfo.version).to.eql(4.4)
 
-    const transform = {transform: 'rotate(40deg)'}
-    const output = {WebkitTransform: 'rotate(40deg)'}
-    expect(new Prefixer({userAgent: Android4_4_4}).prefix(transform)).to.eql(output)
+    const transform = {
+      transform: 'rotate(40deg)'
+    }
+    const output = {
+      WebkitTransform: 'rotate(40deg)'
+    }
+    expect(new Prefixer({
+      userAgent: Android4_4_4
+    }).prefix(transform)).to.eql(output)
   })
 
   it('should use the chrome version if its chrome to check for required props', () => {
@@ -59,10 +83,16 @@ describe('Running on android < 4.4', () => {
 
 describe('Running on cordova ios <= 8.4', () => {
   it('should be prefixed if the version is missing', () => {
-    const cdv8_4Prefixer = new Prefixer({userAgent: CordovaIOS8_4})
+    const cdv8_4Prefixer = new Prefixer({
+      userAgent: CordovaIOS8_4
+    })
 
-    const transform = {transform: 'rotate(40deg)'}
-    const output = {WebkitTransform: 'rotate(40deg)'}
+    const transform = {
+      transform: 'rotate(40deg)'
+    }
+    const output = {
+      WebkitTransform: 'rotate(40deg)'
+    }
     expect(cdv8_4Prefixer.prefix(transform)).to.eql(output)
 
     expect(cdv8_4Prefixer._browserInfo.version).to.eql(0)
@@ -71,47 +101,82 @@ describe('Running on cordova ios <= 8.4', () => {
 
 describe('Prefixing with MS Edge', () => {
   it('should not add -webkit- prefixes', () => {
-    const input = {alignItems: 'center', justifyContent: 'center'}
-    expect(new Prefixer({userAgent: MSEdge12}).prefix(input)).to.eql(input)
+    const input = {
+      alignItems: 'center',
+      justifyContent: 'center'
+    }
+    expect(new Prefixer({
+      userAgent: MSEdge12
+    }).prefix(input)).to.eql(input)
   })
 })
 
 describe('Resolving plugins', () => {
   it('should resolve properties', () => {
-    const input = {alignItems: 'center'}
-    const output = {msFlexAlign: 'center'}
-    expect(new Prefixer({userAgent: MSIE10}).prefix(input)).to.eql(output)
+    const input = {
+      alignItems: 'center'
+    }
+    const output = {
+      msFlexAlign: 'center'
+    }
+    expect(new Prefixer({
+      userAgent: MSIE10
+    }).prefix(input)).to.eql(output)
   })
   it('should resolve values', () => {
-    const input = {display: 'flex'}
-    const output = {display: '-webkit-box'}
-    expect(new Prefixer({userAgent: Chrome14}).prefix(input)).to.eql(output)
+    const input = {
+      display: 'flex'
+    }
+    const output = {
+      display: '-webkit-box'
+    }
+    expect(new Prefixer({
+      userAgent: Chrome14
+    }).prefix(input)).to.eql(output)
   })
 
   it('should resolve alternatives', () => {
-    const input = {justifyContent: 'space-between'}
-    const output = {msFlexPack: 'justify'}
-    expect(new Prefixer({userAgent: MSIE10}).prefix(input)).to.eql(output)
+    const input = {
+      justifyContent: 'space-between'
+    }
+    const output = {
+      msFlexPack: 'justify'
+    }
+    expect(new Prefixer({
+      userAgent: MSIE10
+    }).prefix(input)).to.eql(output)
   })
 })
 
 describe('Using an invalid userAgent', () => {
   it('should return the exact input', () => {
-    const input = {appearance: 'test', transition: 'test'}
-    expect(new Prefixer({userAgent: 'bad userAgent'}).prefix(input)).to.eql(input)
+    const input = {
+      appearance: 'test',
+      transition: 'test'
+    }
+    expect(new Prefixer({
+      userAgent: 'bad userAgent'
+    }).prefix(input)).to.eql(input)
   })
 })
 
 describe('Prefixing keyframes', () => {
   it('should return the correct keyframes string', () => {
-    expect(new Prefixer({userAgent: Chrome14}).prefixedKeyframes).to.eql('-webkit-keyframes')
-    expect(new Prefixer({userAgent: Chrome49}).prefixedKeyframes).to.eql('keyframes')
+    expect(new Prefixer({
+      userAgent: Chrome14
+    }).prefixedKeyframes).to.eql('-webkit-keyframes')
+    expect(new Prefixer({
+      userAgent: Chrome49
+    }).prefixedKeyframes).to.eql('keyframes')
   })
 })
 
 describe('Keeping defaults', () => {
   it('should not delete defaults properties', () => {
-    const input = {appearance: 'test', transition: 'test'}
+    const input = {
+      appearance: 'test',
+      transition: 'test'
+    }
     const prefixed = {
       WebkitAppearance: 'test',
       appearance: 'test',
@@ -126,7 +191,9 @@ describe('Keeping defaults', () => {
     expect(new Prefixer({
       userAgent: Chrome22,
       keepUnprefixed: true
-    }).prefix({display: 'flex'})).to.eql({
+    }).prefix({
+      display: 'flex'
+    })).to.eql({
       display: '-webkit-flex;display:flex'
     })
   })
@@ -171,18 +238,26 @@ describe('Combine all supported browser prefixes', () => {
 
 describe('Evaluating unsupported browsers', () => {
   it('should not prefix any property', () => {
-    expect(new Prefixer({userAgent: SeaMonkey})._hasPropsRequiringPrefix).to.eql(false)
+    expect(new Prefixer({
+      userAgent: SeaMonkey
+    })._hasPropsRequiringPrefix).to.eql(false)
   })
 })
 
 describe('Evaluating whitelisted browsers', () => {
   it('should not return false', () => {
-    expect(new Prefixer({userAgent: PhantomJS})).to.not.eql(false)
+    expect(new Prefixer({
+      userAgent: PhantomJS
+    })).to.not.eql(false)
   })
   it('should not prefix any property', () => {
-    expect(new Prefixer({userAgent: PhantomJS})._hasPropsRequiringPrefix).to.eql(false)
+    expect(new Prefixer({
+      userAgent: PhantomJS
+    })._hasPropsRequiringPrefix).to.eql(false)
   })
   it('should add a whitelist flag', () => {
-    expect(new Prefixer({userAgent: PhantomJS})._isWhitelisted).to.eql(true)
+    expect(new Prefixer({
+      userAgent: PhantomJS
+    })._isWhitelisted).to.eql(true)
   })
 })

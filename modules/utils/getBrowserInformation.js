@@ -43,7 +43,7 @@ const getPrefixes = browser => {
         if (browserVendors.indexOf(prefixVendor) !== -1) {
           return {
             inline: prefix,
-            CSS: '-' + prefix.toLowerCase() + '-'
+            css: '-' + prefix.toLowerCase() + '-'
           }
         }
       }
@@ -51,7 +51,10 @@ const getPrefixes = browser => {
   }
 
   // No prefix found for this browser
-  return {inline: '', CSS: ''}
+  return {
+    inline: '',
+    css: ''
+  }
 }
 
 /**
@@ -92,7 +95,7 @@ export default userAgent => {
       if (info[browser]) {
         info.prefix = {
           inline: prefix,
-          CSS: '-' + prefix.toLowerCase() + '-'
+          css: '-' + prefix.toLowerCase() + '-'
         }
       }
     })

@@ -10,14 +10,16 @@
     "dist/"
   ],
   "scripts": {
-    "clean": "rimraf lib dist",
-    "transpile": "babel modules/ --out-dir lib",
-    "pretest": "npm run clean && npm run transpile && npm run generate",
-    "generate": "node ./generator/generateData.js",
+    "babel": "babel modules/ --out-dir lib",
+    "build": "npm run clean && mkdir dist && npm run babel && npm run generate && npm run bundle",
     "bundle": "browserify lib/Prefixer.js --s Prefixer > dist/prefixer.js && uglifyjs dist/prefixer.js -o dist/prefixer.min.js",
+    "generate": "node ./generator/generateData.js",
+    "clean": "rimraf lib dist coverage",
+    "coverage": "codeclimate-test-reporter < coverage/lcov.info",
+    "pretest": "npm run clean && npm run babel && npm run generate",
+    "release": "npm run build && npm publish",
     "test": "mocha --recursive --compilers js:babel/register",
-    "build": "npm run clean && mkdir dist && npm run transpile && npm run generate && npm run bundle",
-    "release": "npm run build && npm publish"
+    "test:coverage": "babel-node ./node_modules/isparta/bin/isparta cover ./node_modules/mocha/bin/_mocha -- --recursive"
   },
   "repository": {
     "type": "git",
@@ -38,13 +40,15 @@
     "bowser": "^1.0.0"
   },
   "devDependencies": {
-    "caniuse-api": "^1.3.2",
     "babel": "^5.6.14",
     "babelify": "^6.3.0",
-    "object-assign": "^4.0.1",
     "browserify": "^11.1.0",
+    "caniuse-api": "^1.3.2",
     "chai": "^3.2.0",
+    "codeclimate-test-reporter": "^0.1.1",
+    "isparta": "^4.0.0",
     "mocha": "^2.2.5",
+    "object-assign": "^4.0.1",
     "rimraf": "^2.4.2",
     "uglifyjs": "^2.4.10"
   }
