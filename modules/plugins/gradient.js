@@ -1,7 +1,4 @@
-const properties = {
-  background: true,
-  backgroundImage: true
-}
+const properties = { background: true, backgroundImage: true }
 const values = {
   'linear-gradient': true,
   'radial-gradient': true,
@@ -10,8 +7,8 @@ const values = {
 }
 
 export default function gradient(pluginInterface) {
-  const {property, value, browserInfo, prefix, keepUnprefixed, forceRun} = pluginInterface
-  const {browser, version} = browserInfo
+  const { property, value, browserInfo, prefix, keepUnprefixed, forceRun } = pluginInterface
+  const { browser, version } = browserInfo
 
   if (
     properties[property] && values[value] &&
@@ -25,8 +22,13 @@ export default function gradient(pluginInterface) {
     browser === 'and_uc'
     )
   ) {
+    let newValue = forceRun ?
+      // prefix all
+      [ '-webkit-', '-moz-' ].map(prefix => prefix + value).join(';' + property + ':') :
+      // default
+      prefix.css + value
     return {
-      [property]: prefix.css + value + (keepUnprefixed ? ';' + property + ':' + value : '')
+      [property]: newValue + (keepUnprefixed ? ';' + property + ':' + value : '')
     }
   }
 }

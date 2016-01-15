@@ -1,11 +1,8 @@
-const values = {
-  flex: true,
-  'inline-flex': true
-}
+const values = { flex: true, 'inline-flex': true }
 
 export default function flex(pluginInterface) {
-  const {property, value, browserInfo, prefix, keepUnprefixed, forceRun} = pluginInterface
-  const {browser, version} = browserInfo
+  const { property, value, browserInfo, prefix, keepUnprefixed, forceRun } = pluginInterface
+  const { browser, version } = browserInfo
 
   if (
     property === 'display' && values[value] &&
@@ -16,8 +13,13 @@ export default function flex(pluginInterface) {
     browser === 'opera' && (version == 15 || version == 16)
     )
   ) {
+    let newValue = forceRun ?
+      // prefix all
+      [ '-webkit-box', '-moz-box', '-ms-' + value + 'box', '-webkit-' + value ].join(';' + property + ':') :
+      // default
+      '-webkit-' + value
     return {
-      display: prefix.css + value + (keepUnprefixed ? ';' + property + ':' + value : '')
+      display: newValue + (keepUnprefixed ? ';' + property + ':' + value : '')
     }
   }
 }

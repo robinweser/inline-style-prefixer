@@ -1,6 +1,6 @@
 export default function calc(pluginInterface) {
-  const {property, value, browserInfo, prefix, keepUnprefixed, forceRun} = pluginInterface
-  const {browser, version} = browserInfo
+  const { property, value, browserInfo, prefix, keepUnprefixed, forceRun } = pluginInterface
+  const { browser, version } = browserInfo
 
   if (
     value.indexOf('calc(') > -1 &&
@@ -12,8 +12,13 @@ export default function calc(pluginInterface) {
     browser === 'ios_saf' && version < 7
     )
   ) {
+    let newValue = forceRun ?
+      // prefix all
+      [ '-webkit-', '-moz-' ].map(prefix => value.replace(/calc\(/g, prefix + 'calc(')).join(';' + property + ':') :
+      // default
+      value.replace(/calc\(/g, prefix.css + 'calc(')
     return {
-      [property]: value.replace(/calc\(/g, prefix.css + 'calc(') + (keepUnprefixed ? ';' + property + ':' + value : '')
+      [property]: newValue + (keepUnprefixed ? ';' + property + ':' + value : '')
     }
   }
 }

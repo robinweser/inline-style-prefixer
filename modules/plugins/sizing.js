@@ -16,14 +16,19 @@ const values = {
 }
 
 export default function sizing(pluginInterface) {
-  const {property, value, browserInfo, prefix, keepUnprefixed, forceRun} = pluginInterface
-  const {browser, version} = browserInfo
+  const { property, value, browserInfo, prefix, keepUnprefixed, forceRun } = pluginInterface
+  const { browser, version } = browserInfo
 
   // This might change in the future
   // Keep an eye on it
   if (properties[property] && values[value]) {
+    let newValue = forceRun ?
+      // prefix all
+      [ '-webkit-', '-moz-' ].map(prefix => prefix + value).join(';' + property + ':') :
+      // default
+      prefix.css + value
     return {
-      [property]: prefix.css + value + (keepUnprefixed ? ';' + property + ':' + value : '')
+      [property]: newValue + (keepUnprefixed ? ';' + property + ':' + value : '')
     }
   }
 }

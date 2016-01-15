@@ -9,10 +9,6 @@ import plugins from './Plugins'
 const browserWhitelist = ['phantom']
 
 const defaultUserAgent = typeof navigator !== 'undefined' ? navigator.userAgent : undefined
-const defaultOpts = {
-  userAgent: defaultUserAgent,
-  keepUnprefixed: false
-}
 
 export default class Prefixer {
   /**
@@ -20,9 +16,10 @@ export default class Prefixer {
    * @param {string} userAgent - userAgent to gather prefix information according to caniuse.com
    * @param {string} keepUnprefixed - keeps unprefixed properties and values
    */
-  constructor(options = defaultOpts) {
+  constructor(options ) {
     this._userAgent = options.userAgent || defaultUserAgent
     this._keepUnprefixed = options.keepUnprefixed
+
     this._browserInfo = getBrowserInformation(this._userAgent)
 
     // Checks if the userAgent was resolved correctly
@@ -36,7 +33,7 @@ export default class Prefixer {
       warn('Either the global navigator was undefined or an invalid userAgent was provided.', 'Using a valid userAgent? Please let us know and create an issue at https://github.com/rofrischmann/inline-style-prefixer/issues')
       return false
     }
-    
+
     let data = this._browserInfo.browser && caniuseData[this._browserInfo.browser]
     if (data) {
       this._requiresPrefix = Object.keys(data).filter(key => data[key] >= this._browserInfo.version).reduce((result, name) => ({...result, [name]: true}), {})
