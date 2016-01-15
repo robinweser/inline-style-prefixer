@@ -65,7 +65,7 @@ describe('Running on cordova ios <= 8.4', () => {
     const output = { WebkitTransform: 'rotate(40deg)' }
     expect(cdv8_4Prefixer.prefix(transform)).to.eql(output)
 
-    expect(cdv8_4Prefixer._browserInfo.version).to.eql(0)
+    expect(cdv8_4Prefixer._browserInfo.version).to.eql(8)
   })
 })
 

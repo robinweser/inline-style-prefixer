@@ -1,23 +1,23 @@
 import bowser from 'bowser'
 
 const vendorPrefixes = {
-  Webkit: ['chrome', 'safari', 'ios', 'android', 'phantom', 'opera', 'webos', 'blackberry', 'bada', 'tizen'],
-  Moz: ['firefox', 'seamonkey', 'sailfish'],
-  ms: ['msie', 'msedge']
+  Webkit: [ 'chrome', 'safari', 'ios', 'android', 'phantom', 'opera', 'webos', 'blackberry', 'bada', 'tizen' ],
+  Moz: [ 'firefox', 'seamonkey', 'sailfish' ],
+  ms: [ 'msie', 'msedge' ]
 }
 
 const browsers = {
-  chrome: [['chrome']],
-  safari: [['safari']],
-  firefox: [['firefox']],
-  ie: [['msie']],
-  edge: [['msedge']],
-  opera: [['opera']],
-  ios_saf: [['ios', 'mobile'], ['ios', 'tablet']],
-  ie_mob: [['windowsphone', 'mobile', 'msie'], ['windowsphone', 'tablet', 'msie'], ['windowsphone', 'mobile', 'msedge'], ['windowsphone', 'tablet', 'msedge']],
-  op_mini: [['opera', 'mobile'], ['opera', 'tablet']],
-  and_uc: [['android', 'mobile'], ['android', 'tablet']],
-  android: [['android', 'mobile'], ['android', 'tablet']]
+  chrome: [ [ 'chrome' ] ],
+  safari: [ [ 'safari' ] ],
+  firefox: [ [ 'firefox' ] ],
+  ie: [ [ 'msie' ] ],
+  edge: [ [ 'msedge' ] ],
+  opera: [ [ 'opera' ] ],
+  ios_saf: [ [ 'ios', 'mobile' ], [ 'ios', 'tablet' ] ],
+  ie_mob: [ [ 'windowsphone', 'mobile', 'msie' ], [ 'windowsphone', 'tablet', 'msie' ], [ 'windowsphone', 'mobile', 'msedge' ], [ 'windowsphone', 'tablet', 'msedge' ] ],
+  op_mini: [ [ 'opera', 'mobile' ], [ 'opera', 'tablet' ] ],
+  and_uc: [ [ 'android', 'mobile' ], [ 'android', 'tablet' ] ],
+  android: [ [ 'android', 'mobile' ], [ 'android', 'tablet' ] ]
 }
 
 /**
@@ -51,10 +51,7 @@ const getPrefixes = browser => {
   }
 
   // No prefix found for this browser
-  return {
-    inline: '',
-    css: ''
-  }
+  return { inline: '', css: '' }
 }
 
 /**
@@ -67,7 +64,7 @@ export default userAgent => {
     return false
   }
 
-  let info = {}
+  let info = { }
 
   // Special user agent, return all supported prefixes
   // instead of returning a string browser name and a prefix object
@@ -77,7 +74,7 @@ export default userAgent => {
     info.browsers = Object.keys(browsers)
 
     // Return prefixes associated by browser
-    info.prefixes = {}
+    info.prefixes = { }
 
     // Iterate browser list, assign prefix to each
     info.browsers.forEach(browser => {
@@ -117,8 +114,8 @@ export default userAgent => {
   })
 
   info.browser = name
-  // For cordova IOS 8 the version is missing, set 0 to prevent NaN
-  info.version = info.version ? parseFloat(info.version) : 0
+  // For cordova IOS 8 the version is missing, set truncated osversion to prevent NaN
+  info.version = info.version ? parseFloat(info.version) : parseInt(parseFloat(info.osversion), 10)
 
   // seperate native android chrome
   // https://github.com/rofrischmann/inline-style-prefixer/issues/45
