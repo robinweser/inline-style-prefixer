@@ -109,6 +109,14 @@ describe('Prefixing keyframes', () => {
   })
 })
 
+describe('Prefixing gradients', () => {
+  it('should add prefixes', () => {
+    const input = { background: 'linear-gradient()' }
+    const prefixed = { background: '-webkit-linear-gradient()' }
+    expect(new Prefixer({ userAgent: Chrome22 }).prefix(input)).to.eql(prefixed)
+  })
+})
+
 describe('Keeping defaults', () => {
   it('should not delete defaults properties', () => {
     const input = { appearance: 'test', transition: 'test' }

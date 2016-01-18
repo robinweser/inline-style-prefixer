@@ -1,17 +1,11 @@
-const properties = { background: true, backgroundImage: true }
-const values = {
-  'linear-gradient': true,
-  'radial-gradient': true,
-  'repeating-linear-gradient': true,
-  'repeating-radial-gradient': true
-}
+const values = /linear-gradient|radial-gradient|repeating-linear-gradient|repeating-radial-gradient/
 
 export default function gradient(pluginInterface) {
   const { property, value, browserInfo, prefix, keepUnprefixed, forceRun } = pluginInterface
   const { browser, version } = browserInfo
 
   if (
-    properties[property] && values[value] &&
+    typeof value === 'string' && value.match(values) !== null &&
     (
     forceRun ||
     browser === 'firefox' && version < 16 ||
