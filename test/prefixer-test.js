@@ -243,6 +243,19 @@ describe('Combine all supported browser prefixes', () => {
     expect(Prefixer.prefixAll(input)).to.eql(output)
   })
 
+  it('should prefix every property within transition values', () => {
+    const input = {
+      transition: '200ms linear appearance, 100ms linear width'
+    }
+    const output = {
+      WebkitTransition: '200ms linear -webkit-appearance,200ms linear -moz-appearance,200ms linear -ms-appearance,200ms linear appearance, 100ms linear width',
+      MozTransition: '200ms linear -webkit-appearance,200ms linear -moz-appearance,200ms linear -ms-appearance,200ms linear appearance, 100ms linear width',
+      msTransition: '200ms linear -webkit-appearance,200ms linear -moz-appearance,200ms linear -ms-appearance,200ms linear appearance, 100ms linear width',
+      transition: '200ms linear -webkit-appearance,200ms linear -moz-appearance,200ms linear -ms-appearance,200ms linear appearance, 100ms linear width'
+    }
+    expect(Prefixer.prefixAll(input)).to.eql(output)
+  })
+
   it('should add all relevant prefixes for plugins', () => {
     const input = { width: 'calc(30px)' }
     const output = {

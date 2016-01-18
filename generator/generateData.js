@@ -4,11 +4,11 @@ var browserConfig = require('../config');
 var assign = require('object-assign');
 var fs = require('fs');
 
-var browsers = ['chrome', 'safari', 'firefox', 'opera', 'ie', 'edge', 'ios_saf', 'android', 'and_chr', 'and_uc', 'op_mini', 'ie_mob'];
+var browsers = [ 'chrome', 'safari', 'firefox', 'opera', 'ie', 'edge', 'ios_saf', 'android', 'and_chr', 'and_uc', 'op_mini', 'ie_mob' ];
 function gatherInformation() {
-  var prefixProperties = {};
+  var prefixProperties = { };
   browsers.forEach(function(browser) {
-    prefixProperties[browser] = {};
+    prefixProperties[browser] = { };
   })
 
   var search;
@@ -16,7 +16,7 @@ function gatherInformation() {
     var properties = searchMap[search];
     var versions = caniuse.getSupport(search, true);
     if (properties instanceof Array !== true) {
-      properties = [properties];
+      properties = [ properties ];
     }
     properties.forEach(function(prop) {
       var prefix;
@@ -29,9 +29,9 @@ function gatherInformation() {
   }
 
   // remove flexprops from IE
-  var flexPropsIE = ['alignContent', 'alignSelf', 'alignItems', 'justifyContent', 'order', 'flexGrow', 'flexShrink', 'flexBasis'];
+  var flexPropsIE = [ 'alignContent', 'alignSelf', 'alignItems', 'justifyContent', 'order', 'flexGrow', 'flexShrink', 'flexBasis' ];
 
-  prefixProperties.ie = assign({}, prefixProperties.ie, prefixProperties.ie_mob);
+  prefixProperties.ie = assign({ }, prefixProperties.ie, prefixProperties.ie_mob);
   delete prefixProperties.ie_mob;
   flexPropsIE.forEach(function(prop) {
     delete prefixProperties.ie[prop]

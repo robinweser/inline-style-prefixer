@@ -1,4 +1,5 @@
 import camelToDashCase from '../utils/camelToDashCase'
+import capitalizeString from '../utils/capitalizeString'
 
 export default function calc(pluginInterface) {
   const { property, value, browserInfo, prefix, keepUnprefixed, forceRun, requiresPrefix } = pluginInterface
@@ -16,10 +17,24 @@ export default function calc(pluginInterface) {
     requiresPrefixDashCased.forEach(property => {
       multipleValues.forEach((val, index) => {
         if (val.indexOf(property) > -1) {
-          multipleValues[index] = val.replace(property, prefix.css + property) + (keepUnprefixed ? ',' + val : '')
+          let newVal = forceRun ?
+            // prefix all
+            [ '-webkit-', '-moz-', '-ms-' ].map(prefix => val.replace(property, prefix + property)).join(',') :
+            // default
+            val.replace(property, prefix.css + property)
+          multipleValues[index] = newVal + (keepUnprefixed ? ',' + val : '')
         }
       })
     })
-    return { [ property]: multipleValues.join(',') }
+    const outputValue = multipleValues.join(',')
+    if (forceRun) {
+      return {
+        ['Webkit' + capitalizeString(property)]: outputValue,
+        ['Moz' + capitalizeString(property)]: outputValue,
+        ['ms' + capitalizeString(property)]: outputValue,
+        [property]: outputValue
+      }
+    }
+    return { [ property]: outputValue }
   }
 }
