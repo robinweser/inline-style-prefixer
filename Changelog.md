@@ -1,6 +1,10 @@
 # Changelog
 
 ## 0.6
+### 0.6.5 (18.01.16)
+* Plugins won't crash if a `number` value is passed
+* Added default `options`
+
 ### 0.6.4 (18.01.16)
 * support for prefixed `transition` properties *e.g. `transition: '-webkit-filter 200ms linear'`*
 * wider support for **gradients** on all properties

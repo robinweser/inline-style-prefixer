@@ -8,17 +8,17 @@ import plugins from './Plugins'
 
 const browserWhitelist = ['phantom']
 
-const defaultUserAgent = typeof navigator !== 'undefined' ? navigator.userAgent : undefined
-
 export default class Prefixer {
   /**
    * Instantiante a new prefixer
    * @param {string} userAgent - userAgent to gather prefix information according to caniuse.com
    * @param {string} keepUnprefixed - keeps unprefixed properties and values
    */
-  constructor(options ) {
+  constructor(options = {}) {
+    const defaultUserAgent = typeof navigator !== 'undefined' ? navigator.userAgent : undefined
+
     this._userAgent = options.userAgent || defaultUserAgent
-    this._keepUnprefixed = options.keepUnprefixed
+    this._keepUnprefixed = options.keepUnprefixed ||  false
 
     this._browserInfo = getBrowserInformation(this._userAgent)
 
@@ -88,7 +88,7 @@ export default class Prefixer {
           // generates a new plugin interface with current data
           const resolvedStyles = plugin({
             property: property,
-            value: value,
+            value: value.toString(),
             styles: styles,
             browserInfo: this._browserInfo,
             prefix: {
@@ -149,7 +149,7 @@ export default class Prefixer {
           plugins.forEach(plugin => {
             const resolvedStyles = plugin({
               property: property,
-              value: value,
+              value: value.toString(),
               styles: styles,
               browserInfo: {
                 name: browser,

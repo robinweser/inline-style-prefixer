@@ -289,6 +289,13 @@ describe('Evaluating unsupported browsers', () => {
   })
 })
 
+describe('Passing no userAgent', () => {
+  it('should not throw', () => {
+    global.navigator = { userAgent: Chrome45 }
+    expect(new Prefixer()._userAgent).to.eql(Chrome45)
+  })
+})
+
 describe('Evaluating whitelisted browsers', () => {
   it('should not return false', () => {
     expect(new Prefixer({ userAgent: PhantomJS })).to.not.eql(false)
