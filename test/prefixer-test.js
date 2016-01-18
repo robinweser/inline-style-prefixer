@@ -117,6 +117,73 @@ describe('Prefixing gradients', () => {
   })
 })
 
+describe('Prefixing transitions', () => {
+  it('should add prefixes to properties in value', () => {
+    const input = { transition: 'appearance 200ms linear' }
+    const prefixed = { transition: '-webkit-appearance 200ms linear' }
+    expect(new Prefixer({ userAgent: Chrome45 }).prefix(input)).to.eql(prefixed)
+  })
+
+  it('should add prefixes to multiple properties in value', () => {
+    const input = {
+      transition: 'appearance 200ms linear, user-select 100ms linear'
+    }
+    const prefixed = {
+      transition: '-webkit-appearance 200ms linear, -webkit-user-select 100ms linear'
+    }
+    expect(new Prefixer({ userAgent: Chrome45 }).prefix(input)).to.eql(prefixed)
+
+    const input2 = { transitionProperty: 'appearance, user-select' }
+    const prefixed2 = {
+      transitionProperty: '-webkit-appearance, -webkit-user-select'
+    }
+    expect(new Prefixer({ userAgent: Chrome45 }).prefix(input2)).to.eql(prefixed2)
+  })
+
+  it('should keep unprefixed properties', () => {
+    const input = { transition: 'appearance 200ms linear' }
+    const prefixed = {
+      transition: '-webkit-appearance 200ms linear,appearance 200ms linear'
+    }
+    expect(new Prefixer({
+      userAgent: Chrome45,
+      keepUnprefixed: true
+    }).prefix(input)).to.eql(prefixed)
+
+    const input2 = { transitionProperty: 'appearance' }
+    const prefixed2 = {
+      transitionProperty: '-webkit-appearance,appearance'
+    }
+    expect(new Prefixer({
+      userAgent: Chrome45,
+      keepUnprefixed: true
+    }).prefix(input2)).to.eql(prefixed2)
+  })
+
+  it('should keep unprefixed properties with multiple properties in value', () => {
+    const input = {
+      transition: 'appearance 200ms linear, user-select 100ms linear'
+    }
+    const prefixed = {
+      transition: '-webkit-appearance 200ms linear,appearance 200ms linear, -webkit-user-select 100ms linear, user-select 100ms linear'
+    }
+    expect(new Prefixer({
+      userAgent: Chrome45,
+      keepUnprefixed: true
+    }).prefix(input)).to.eql(prefixed)
+
+    const input2 = { transitionProperty: 'appearance, width' }
+    const prefixed2 = {
+      transitionProperty: '-webkit-appearance,appearance, width'
+    }
+    expect(new Prefixer({
+      userAgent: Chrome45,
+      keepUnprefixed: true
+    }).prefix(input2)).to.eql(prefixed2)
+  })
+})
+
+
 describe('Keeping defaults', () => {
   it('should not delete defaults properties', () => {
     const input = { appearance: 'test', transition: 'test' }
