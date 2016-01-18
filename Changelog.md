@@ -1,6 +1,12 @@
 # Changelog
 
 ## 0.6
+### 0.6.4 (18.01.16)
+* support for prefixed `transition` properties *e.g. `transition: '-webkit-filter 200ms linear'`*
+* wider support for **gradients** on all properties
+* `prefixAll` now prefixes all plugin values
+* uses default `userAgent` if no userAgent, `undefined` or `false` is passed
+
 ### 0.6.3 (09.01.16)
 * added support for Cordova apps & in-app browser *(especially on iOS 8.4.x)*
 * fixed Android Chrome detection *(on Android 4.x)*

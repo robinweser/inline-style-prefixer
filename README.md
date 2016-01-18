@@ -6,7 +6,7 @@
 [![npm version](https://badge.fury.io/js/inline-style-prefixer.svg)](http://badge.fury.io/js/inline-style-prefixer)
 [![npm downloads](https://img.shields.io/npm/dm/inline-style-prefixer.svg)](https://img.shields.io/npm/dm/inline-style-prefixer.svg)
 ![Dependencies](https://david-dm.org/rofrischmann/inline-style-prefixer.svg)
-![Gzipped Size](https://img.shields.io/badge/gzipped-~8k-blue.svg)
+![Gzipped Size](https://img.shields.io/badge/gzipped-~8k-brightgreen.svg)
 
 **inline-style-prefixer** adds required **vendor prefixes** to your style object. It only adds prefixes if they're actually required by evaluating the browser's `userAgent` against data from [caniuse.com](http://caniuse.com/).
 

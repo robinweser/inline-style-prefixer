@@ -7,6 +7,10 @@ Object.defineProperty(exports, '__esModule', {
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
+var _pluginsCalc = require('./plugins/calc');
+
+var _pluginsCalc2 = _interopRequireDefault(_pluginsCalc);
+
 var _pluginsCursor = require('./plugins/cursor');
 
 var _pluginsCursor2 = _interopRequireDefault(_pluginsCursor);
@@ -23,6 +27,10 @@ var _pluginsGradient = require('./plugins/gradient');
 
 var _pluginsGradient2 = _interopRequireDefault(_pluginsGradient);
 
+var _pluginsTransition = require('./plugins/transition');
+
+var _pluginsTransition2 = _interopRequireDefault(_pluginsTransition);
+
 // special flexbox specifications
 
 var _pluginsFlexboxIE = require('./plugins/flexboxIE');
@@ -33,18 +41,24 @@ var _pluginsFlexboxOld = require('./plugins/flexboxOld');
 
 var _pluginsFlexboxOld2 = _interopRequireDefault(_pluginsFlexboxOld);
 
-exports['default'] = [_pluginsCursor2['default'], _pluginsFlex2['default'], _pluginsSizing2['default'], _pluginsGradient2['default'], _pluginsFlexboxIE2['default'], _pluginsFlexboxOld2['default']];
+exports['default'] = [_pluginsCalc2['default'], _pluginsCursor2['default'], _pluginsSizing2['default'], _pluginsGradient2['default'], _pluginsTransition2['default'], _pluginsFlexboxIE2['default'], _pluginsFlexboxOld2['default'],
+// this must be run AFTER the flexbox specs
+_pluginsFlex2['default']];
 module.exports = exports['default'];
-},{"./plugins/cursor":4,"./plugins/flex":5,"./plugins/flexboxIE":6,"./plugins/flexboxOld":7,"./plugins/gradient":8,"./plugins/sizing":9}],2:[function(require,module,exports){
+},{"./plugins/calc":4,"./plugins/cursor":5,"./plugins/flex":6,"./plugins/flexboxIE":7,"./plugins/flexboxOld":8,"./plugins/gradient":9,"./plugins/sizing":10,"./plugins/transition":11}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
@@ -79,10 +93,6 @@ var _Plugins2 = _interopRequireDefault(_Plugins);
 var browserWhitelist = ['phantom'];
 
 var defaultUserAgent = typeof navigator !== 'undefined' ? navigator.userAgent : undefined;
-var defaultOpts = {
-  userAgent: defaultUserAgent,
-  keepUnprefixed: false
-};
 
 var Prefixer = (function () {
   /**
@@ -91,20 +101,20 @@ var Prefixer = (function () {
    * @param {string} keepUnprefixed - keeps unprefixed properties and values
    */
 
-  function Prefixer() {
+  function Prefixer(options) {
     var _this = this;
-
-    var options = arguments.length <= 0 || arguments[0] === undefined ? defaultOpts : arguments[0];
 
     _classCallCheck(this, Prefixer);
 
-    this._userAgent = options.userAgent;
+    this._userAgent = options.userAgent || defaultUserAgent;
     this._keepUnprefixed = options.keepUnprefixed;
+
     this._browserInfo = (0, _utilsGetBrowserInformation2['default'])(this._userAgent);
 
     // Checks if the userAgent was resolved correctly
     if (this._browserInfo && this._browserInfo.prefix) {
-      this.cssPrefix = this._browserInfo.prefix.CSS;
+      // set additional prefix information
+      this.cssPrefix = this._browserInfo.prefix.css;
       this.jsPrefix = this._browserInfo.prefix.inline;
       this.prefixedKeyframes = (0, _utilsGetPrefixedKeyframes2['default'])(this._browserInfo);
     } else {
@@ -112,13 +122,13 @@ var Prefixer = (function () {
       (0, _utilsWarn2['default'])('Either the global navigator was undefined or an invalid userAgent was provided.', 'Using a valid userAgent? Please let us know and create an issue at https://github.com/rofrischmann/inline-style-prefixer/issues');
       return false;
     }
+
     var data = this._browserInfo.browser && _caniuseData2['default'][this._browserInfo.browser];
     if (data) {
       this._requiresPrefix = Object.keys(data).filter(function (key) {
         return data[key] >= _this._browserInfo.version;
       }).reduce(function (result, name) {
-        result[name] = true;
-        return result;
+        return _extends({}, result, _defineProperty({}, name, true));
       }, {});
       this._hasPropsRequiringPrefix = Object.keys(this._requiresPrefix).length > 0;
     } else {
@@ -173,7 +183,22 @@ var Prefixer = (function () {
 
           // resolve plugins
           _Plugins2['default'].forEach(function (plugin) {
-            (0, _utilsAssign2['default'])(styles, plugin(property, value, _this2._browserInfo, styles, _this2._keepUnprefixed, false));
+            // generates a new plugin interface with current data
+            var resolvedStyles = plugin({
+              property: property,
+              value: value,
+              styles: styles,
+              browserInfo: _this2._browserInfo,
+              prefix: {
+                js: _this2.jsPrefix,
+                css: _this2.cssPrefix,
+                keyframes: _this2.prefixedKeyframes
+              },
+              keepUnprefixed: _this2._keepUnprefixed,
+              requiresPrefix: _this2._requiresPrefix,
+              forceRun: false
+            });
+            (0, _utilsAssign2['default'])(styles, resolvedStyles);
           });
         }
       });
@@ -222,12 +247,21 @@ var Prefixer = (function () {
 
             // resolve plugins for each browser
             _Plugins2['default'].forEach(function (plugin) {
-              var browserInfo = {
-                name: browser,
-                prefix: style,
-                version: 0 // assume lowest
-              };
-              (0, _utilsAssign2['default'])(styles, plugin(property, value, browserInfo, styles, true, true));
+              var resolvedStyles = plugin({
+                property: property,
+                value: value,
+                styles: styles,
+                browserInfo: {
+                  name: browser,
+                  prefix: style,
+                  version: 0 // assume lowest
+                },
+                prefix: {},
+                keepUnprefixed: true,
+                requiresPrefix: prefixes,
+                forceRun: true
+              });
+              (0, _utilsAssign2['default'])(styles, resolvedStyles);
             });
           });
         }
@@ -242,28 +276,39 @@ var Prefixer = (function () {
 
 exports['default'] = Prefixer;
 module.exports = exports['default'];
-},{"./Plugins":1,"./caniuseData":3,"./utils/assign":10,"./utils/capitalizeString":11,"./utils/getBrowserInformation":12,"./utils/getPrefixedKeyframes":13,"./utils/warn":14}],3:[function(require,module,exports){
-var caniuseData = {"chrome":{"transform":35,"transformOrigin":35,"transformOriginX":35,"transformOriginY":35,"backfaceVisibility":35,"perspective":35,"perspectiveOrigin":35,"transformStyle":35,"transformOriginZ":35,"animation":42,"animationDelay":42,"animationDirection":42,"animationFillMode":42,"animationDuration":42,"animationIterationCount":42,"animationName":42,"animationPlayState":42,"animationTimingFunction":42,"appearance":49,"userSelect":49,"fontKerning":32,"textEmphasisPosition":49,"textEmphasis":49,"textEmphasisStyle":49,"textEmphasisColor":49,"boxDecorationBreak":49,"clipPath":49,"maskImage":49,"maskMode":49,"maskRepeat":49,"maskPosition":49,"maskClip":49,"maskOrigin":49,"maskSize":49,"maskComposite":49,"mask":49,"maskBorderSource":49,"maskBorderMode":49,"maskBorderSlice":49,"maskBorderWidth":49,"maskBorderOutset":49,"maskBorderRepeat":49,"maskBorder":49,"maskType":49,"textDecorationStyle":49,"textDecorationSkip":49,"textDecorationLine":49,"textDecorationColor":49,"filter":49,"fontFeatureSettings":49,"breakAfter":49,"breakBefore":49,"breakInside":49,"columnCount":49,"columnFill":49,"columnGap":49,"columnRule":49,"columnRuleColor":49,"columnRuleStyle":49,"columnRuleWidth":49,"columns":49,"columnSpan":49,"columnWidth":49},"safari":{"flex":8,"flexBasis":8,"flexDirection":8,"flexGrow":8,"flexFlow":8,"flexShrink":8,"flexWrap":8,"alignContent":8,"alignItems":8,"alignSelf":8,"justifyContent":8,"order":8,"transition":6,"transitionDelay":6,"transitionDuration":6,"transitionProperty":6,"transitionTimingFunction":6,"transform":8,"transformOrigin":8,"transformOriginX":8,"transformOriginY":8,"backfaceVisibility":8,"perspective":8,"perspectiveOrigin":8,"transformStyle":8,"transformOriginZ":8,"animation":8,"animationDelay":8,"animationDirection":8,"animationFillMode":8,"animationDuration":8,"animationIterationCount":8,"animationName":8,"animationPlayState":8,"animationTimingFunction":8,"appearance":9,"userSelect":9,"backdropFilter":9,"fontKerning":9,"scrollSnapType":9,"scrollSnapPointsX":9,"scrollSnapPointsY":9,"scrollSnapDestination":9,"scrollSnapCoordinate":9,"textEmphasisPosition":7,"textEmphasis":7,"textEmphasisStyle":7,"textEmphasisColor":7,"boxDecorationBreak":9,"clipPath":9,"maskImage":9,"maskMode":9,"maskRepeat":9,"maskPosition":9,"maskClip":9,"maskOrigin":9,"maskSize":9,"maskComposite":9,"mask":9,"maskBorderSource":9,"maskBorderMode":9,"maskBorderSlice":9,"maskBorderWidth":9,"maskBorderOutset":9,"maskBorderRepeat":9,"maskBorder":9,"maskType":9,"textDecorationStyle":9,"textDecorationSkip":9,"textDecorationLine":9,"textDecorationColor":9,"shapeImageThreshold":9,"shapeImageMargin":9,"shapeImageOutside":9,"filter":9,"hyphens":9,"flowInto":9,"flowFrom":9,"breakBefore":8,"breakAfter":8,"breakInside":8,"regionFragment":9,"columnCount":8,"columnFill":8,"columnGap":8,"columnRule":8,"columnRuleColor":8,"columnRuleStyle":8,"columnRuleWidth":8,"columns":8,"columnSpan":8,"columnWidth":8},"firefox":{"appearance":45,"userSelect":45,"boxSizing":28,"textAlignLast":45,"textDecorationStyle":35,"textDecorationSkip":35,"textDecorationLine":35,"textDecorationColor":35,"tabSize":45,"hyphens":42,"fontFeatureSettings":33,"breakAfter":45,"breakBefore":45,"breakInside":45,"columnCount":45,"columnFill":45,"columnGap":45,"columnRule":45,"columnRuleColor":45,"columnRuleStyle":45,"columnRuleWidth":45,"columns":45,"columnSpan":45,"columnWidth":45},"opera":{"flex":16,"flexBasis":16,"flexDirection":16,"flexGrow":16,"flexFlow":16,"flexShrink":16,"flexWrap":16,"alignContent":16,"alignItems":16,"alignSelf":16,"justifyContent":16,"order":16,"transform":22,"transformOrigin":22,"transformOriginX":22,"transformOriginY":22,"backfaceVisibility":22,"perspective":22,"perspectiveOrigin":22,"transformStyle":22,"transformOriginZ":22,"animation":29,"animationDelay":29,"animationDirection":29,"animationFillMode":29,"animationDuration":29,"animationIterationCount":29,"animationName":29,"animationPlayState":29,"animationTimingFunction":29,"appearance":35,"userSelect":35,"fontKerning":19,"textEmphasisPosition":35,"textEmphasis":35,"textEmphasisStyle":35,"textEmphasisColor":35,"boxDecorationBreak":35,"clipPath":35,"maskImage":35,"maskMode":35,"maskRepeat":35,"maskPosition":35,"maskClip":35,"maskOrigin":35,"maskSize":35,"maskComposite":35,"mask":35,"maskBorderSource":35,"maskBorderMode":35,"maskBorderSlice":35,"maskBorderWidth":35,"maskBorderOutset":35,"maskBorderRepeat":35,"maskBorder":35,"maskType":35,"filter":35,"fontFeatureSettings":35,"breakAfter":35,"breakBefore":35,"breakInside":35,"columnCount":35,"columnFill":35,"columnGap":35,"columnRule":35,"columnRuleColor":35,"columnRuleStyle":35,"columnRuleWidth":35,"columns":35,"columnSpan":35,"columnWidth":35},"ie":{"transform":9,"wrapMargin":11,"userSelect":11,"scrollSnapCoordinate":11,"gridColumn":11,"flexDirection":10,"hyphens":11,"transformOrigin":9,"wrapFlow":11,"flexWrap":10,"gridAutoColumns":11,"touchAction":10,"flowFrom":11,"gridRow":11,"gridRowEnd":11,"gridColumnStart":11,"transformOriginX":9,"gridTemplate":11,"gridTemplateAreas":11,"scrollSnapPointsY":11,"breakAfter":11,"gridAutoRows":11,"scrollSnapPointsX":11,"gridTemplateColumns":11,"flexFlow":10,"gridArea":11,"gridAutoFlow":11,"breakInside":11,"regionFragment":11,"gridTemplateRows":11,"breakBefore":11,"scrollSnapDestination":11,"columnGap":11,"rowGap":11,"gridRowStart":11,"grid":11,"transformOriginY":9,"wrapThrough":11,"flowInto":11,"gridGap":11,"flex":10,"scrollSnapType":11,"textSizeAdjust":11},"edge":{"userSelect":14,"wrapFlow":14,"wrapThrough":14,"wrapMargin":14,"scrollSnapType":14,"scrollSnapPointsX":14,"scrollSnapPointsY":14,"scrollSnapDestination":14,"scrollSnapCoordinate":14,"hyphens":14,"flowInto":14,"flowFrom":14,"breakBefore":14,"breakAfter":14,"breakInside":14,"regionFragment":14,"gridTemplateColumns":14,"gridTemplateRows":14,"gridTemplateAreas":14,"gridTemplate":14,"gridAutoColumns":14,"gridAutoRows":14,"gridAutoFlow":14,"grid":14,"gridRowStart":14,"gridColumnStart":14,"gridRowEnd":14,"gridRow":14,"gridColumn":14,"gridArea":14,"rowGap":14,"columnGap":14,"gridGap":14},"ios_saf":{"flex":8.1,"flexBasis":8.1,"flexDirection":8.1,"flexGrow":8.1,"flexFlow":8.1,"flexShrink":8.1,"flexWrap":8.1,"alignContent":8.1,"alignItems":8.1,"alignSelf":8.1,"justifyContent":8.1,"order":8.1,"transition":6,"transitionDelay":6,"transitionDuration":6,"transitionProperty":6,"transitionTimingFunction":6,"transform":8.1,"transformOrigin":8.1,"transformOriginX":8.1,"transformOriginY":8.1,"backfaceVisibility":8.1,"perspective":8.1,"perspectiveOrigin":8.1,"transformStyle":8.1,"transformOriginZ":8.1,"animation":8.1,"animationDelay":8.1,"animationDirection":8.1,"animationFillMode":8.1,"animationDuration":8.1,"animationIterationCount":8.1,"animationName":8.1,"animationPlayState":8.1,"animationTimingFunction":8.1,"appearance":9,"userSelect":9,"backdropFilter":9,"fontKerning":9,"scrollSnapType":9,"scrollSnapPointsX":9,"scrollSnapPointsY":9,"scrollSnapDestination":9,"scrollSnapCoordinate":9,"boxDecorationBreak":9,"clipPath":9,"maskImage":9,"maskMode":9,"maskRepeat":9,"maskPosition":9,"maskClip":9,"maskOrigin":9,"maskSize":9,"maskComposite":9,"mask":9,"maskBorderSource":9,"maskBorderMode":9,"maskBorderSlice":9,"maskBorderWidth":9,"maskBorderOutset":9,"maskBorderRepeat":9,"maskBorder":9,"maskType":9,"textSizeAdjust":9,"textDecorationStyle":9,"textDecorationSkip":9,"textDecorationLine":9,"textDecorationColor":9,"shapeImageThreshold":9,"shapeImageMargin":9,"shapeImageOutside":9,"filter":9,"hyphens":9,"flowInto":9,"flowFrom":9,"breakBefore":8.1,"breakAfter":8.1,"breakInside":8.1,"regionFragment":9,"columnCount":8.1,"columnFill":8.1,"columnGap":8.1,"columnRule":8.1,"columnRuleColor":8.1,"columnRuleStyle":8.1,"columnRuleWidth":8.1,"columns":8.1,"columnSpan":8.1,"columnWidth":8.1},"android":{"borderImage":4.2,"borderImageOutset":4.2,"borderImageRepeat":4.2,"borderImageSlice":4.2,"borderImageSource":4.2,"borderImageWidth":4.2,"flex":4.2,"flexBasis":4.2,"flexDirection":4.2,"flexGrow":4.2,"flexFlow":4.2,"flexShrink":4.2,"flexWrap":4.2,"alignContent":4.2,"alignItems":4.2,"alignSelf":4.2,"justifyContent":4.2,"order":4.2,"transition":4.2,"transitionDelay":4.2,"transitionDuration":4.2,"transitionProperty":4.2,"transitionTimingFunction":4.2,"transform":4.4,"transformOrigin":4.4,"transformOriginX":4.4,"transformOriginY":4.4,"backfaceVisibility":4.4,"perspective":4.4,"perspectiveOrigin":4.4,"transformStyle":4.4,"transformOriginZ":4.4,"animation":4.4,"animationDelay":4.4,"animationDirection":4.4,"animationFillMode":4.4,"animationDuration":4.4,"animationIterationCount":4.4,"animationName":4.4,"animationPlayState":4.4,"animationTimingFunction":4.4,"appearance":44,"userSelect":44,"fontKerning":4.4,"textEmphasisPosition":44,"textEmphasis":44,"textEmphasisStyle":44,"textEmphasisColor":44,"boxDecorationBreak":44,"clipPath":44,"maskImage":44,"maskMode":44,"maskRepeat":44,"maskPosition":44,"maskClip":44,"maskOrigin":44,"maskSize":44,"maskComposite":44,"mask":44,"maskBorderSource":44,"maskBorderMode":44,"maskBorderSlice":44,"maskBorderWidth":44,"maskBorderOutset":44,"maskBorderRepeat":44,"maskBorder":44,"maskType":44,"filter":44,"fontFeatureSettings":44,"breakAfter":44,"breakBefore":44,"breakInside":44,"columnCount":44,"columnFill":44,"columnGap":44,"columnRule":44,"columnRuleColor":44,"columnRuleStyle":44,"columnRuleWidth":44,"columns":44,"columnSpan":44,"columnWidth":44},"and_chr":{"appearance":46,"userSelect":46,"textEmphasisPosition":46,"textEmphasis":46,"textEmphasisStyle":46,"textEmphasisColor":46,"boxDecorationBreak":46,"clipPath":46,"maskImage":46,"maskMode":46,"maskRepeat":46,"maskPosition":46,"maskClip":46,"maskOrigin":46,"maskSize":46,"maskComposite":46,"mask":46,"maskBorderSource":46,"maskBorderMode":46,"maskBorderSlice":46,"maskBorderWidth":46,"maskBorderOutset":46,"maskBorderRepeat":46,"maskBorder":46,"maskType":46,"textDecorationStyle":46,"textDecorationSkip":46,"textDecorationLine":46,"textDecorationColor":46,"filter":46,"fontFeatureSettings":46,"breakAfter":46,"breakBefore":46,"breakInside":46,"columnCount":46,"columnFill":46,"columnGap":46,"columnRule":46,"columnRuleColor":46,"columnRuleStyle":46,"columnRuleWidth":46,"columns":46,"columnSpan":46,"columnWidth":46},"and_uc":{"flex":9.9,"flexBasis":9.9,"flexDirection":9.9,"flexGrow":9.9,"flexFlow":9.9,"flexShrink":9.9,"flexWrap":9.9,"alignContent":9.9,"alignItems":9.9,"alignSelf":9.9,"justifyContent":9.9,"order":9.9,"transition":9.9,"transitionDelay":9.9,"transitionDuration":9.9,"transitionProperty":9.9,"transitionTimingFunction":9.9,"transform":9.9,"transformOrigin":9.9,"transformOriginX":9.9,"transformOriginY":9.9,"backfaceVisibility":9.9,"perspective":9.9,"perspectiveOrigin":9.9,"transformStyle":9.9,"transformOriginZ":9.9,"animation":9.9,"animationDelay":9.9,"animationDirection":9.9,"animationFillMode":9.9,"animationDuration":9.9,"animationIterationCount":9.9,"animationName":9.9,"animationPlayState":9.9,"animationTimingFunction":9.9,"appearance":9.9,"userSelect":9.9,"fontKerning":9.9,"textEmphasisPosition":9.9,"textEmphasis":9.9,"textEmphasisStyle":9.9,"textEmphasisColor":9.9,"maskImage":9.9,"maskMode":9.9,"maskRepeat":9.9,"maskPosition":9.9,"maskClip":9.9,"maskOrigin":9.9,"maskSize":9.9,"maskComposite":9.9,"mask":9.9,"maskBorderSource":9.9,"maskBorderMode":9.9,"maskBorderSlice":9.9,"maskBorderWidth":9.9,"maskBorderOutset":9.9,"maskBorderRepeat":9.9,"maskBorder":9.9,"maskType":9.9,"textSizeAdjust":9.9,"filter":9.9,"hyphens":9.9,"flowInto":9.9,"flowFrom":9.9,"breakBefore":9.9,"breakAfter":9.9,"breakInside":9.9,"regionFragment":9.9,"fontFeatureSettings":9.9,"columnCount":9.9,"columnFill":9.9,"columnGap":9.9,"columnRule":9.9,"columnRuleColor":9.9,"columnRuleStyle":9.9,"columnRuleWidth":9.9,"columns":9.9,"columnSpan":9.9,"columnWidth":9.9},"op_mini":{"borderImage":5,"borderImageOutset":5,"borderImageRepeat":5,"borderImageSlice":5,"borderImageSource":5,"borderImageWidth":5,"tabSize":5,"objectFit":5,"objectPosition":5}}; module.exports = caniuseData
+},{"./Plugins":1,"./caniuseData":3,"./utils/assign":12,"./utils/capitalizeString":14,"./utils/getBrowserInformation":15,"./utils/getPrefixedKeyframes":16,"./utils/warn":17}],3:[function(require,module,exports){
+var caniuseData = {"chrome":{"transform":35,"transformOrigin":35,"transformOriginX":35,"transformOriginY":35,"backfaceVisibility":35,"perspective":35,"perspectiveOrigin":35,"transformStyle":35,"transformOriginZ":35,"animation":42,"animationDelay":42,"animationDirection":42,"animationFillMode":42,"animationDuration":42,"animationIterationCount":42,"animationName":42,"animationPlayState":42,"animationTimingFunction":42,"appearance":50,"userSelect":50,"fontKerning":32,"textEmphasisPosition":50,"textEmphasis":50,"textEmphasisStyle":50,"textEmphasisColor":50,"boxDecorationBreak":50,"clipPath":50,"maskImage":50,"maskMode":50,"maskRepeat":50,"maskPosition":50,"maskClip":50,"maskOrigin":50,"maskSize":50,"maskComposite":50,"mask":50,"maskBorderSource":50,"maskBorderMode":50,"maskBorderSlice":50,"maskBorderWidth":50,"maskBorderOutset":50,"maskBorderRepeat":50,"maskBorder":50,"maskType":50,"textDecorationStyle":50,"textDecorationSkip":50,"textDecorationLine":50,"textDecorationColor":50,"filter":50,"fontFeatureSettings":47,"breakAfter":50,"breakBefore":50,"breakInside":50,"columnCount":50,"columnFill":50,"columnGap":50,"columnRule":50,"columnRuleColor":50,"columnRuleStyle":50,"columnRuleWidth":50,"columns":50,"columnSpan":50,"columnWidth":50},"safari":{"flex":8,"flexBasis":8,"flexDirection":8,"flexGrow":8,"flexFlow":8,"flexShrink":8,"flexWrap":8,"alignContent":8,"alignItems":8,"alignSelf":8,"justifyContent":8,"order":8,"transition":6,"transitionDelay":6,"transitionDuration":6,"transitionProperty":6,"transitionTimingFunction":6,"transform":8,"transformOrigin":8,"transformOriginX":8,"transformOriginY":8,"backfaceVisibility":8,"perspective":8,"perspectiveOrigin":8,"transformStyle":8,"transformOriginZ":8,"animation":8,"animationDelay":8,"animationDirection":8,"animationFillMode":8,"animationDuration":8,"animationIterationCount":8,"animationName":8,"animationPlayState":8,"animationTimingFunction":8,"appearance":9.1,"userSelect":9.1,"backdropFilter":9.1,"fontKerning":9.1,"scrollSnapType":9.1,"scrollSnapPointsX":9.1,"scrollSnapPointsY":9.1,"scrollSnapDestination":9.1,"scrollSnapCoordinate":9.1,"textEmphasisPosition":7,"textEmphasis":7,"textEmphasisStyle":7,"textEmphasisColor":7,"boxDecorationBreak":9.1,"clipPath":9.1,"maskImage":9.1,"maskMode":9.1,"maskRepeat":9.1,"maskPosition":9.1,"maskClip":9.1,"maskOrigin":9.1,"maskSize":9.1,"maskComposite":9.1,"mask":9.1,"maskBorderSource":9.1,"maskBorderMode":9.1,"maskBorderSlice":9.1,"maskBorderWidth":9.1,"maskBorderOutset":9.1,"maskBorderRepeat":9.1,"maskBorder":9.1,"maskType":9.1,"textDecorationStyle":9.1,"textDecorationSkip":9.1,"textDecorationLine":9.1,"textDecorationColor":9.1,"shapeImageThreshold":9.1,"shapeImageMargin":9.1,"shapeImageOutside":9.1,"filter":9,"hyphens":9.1,"flowInto":9.1,"flowFrom":9.1,"breakBefore":8,"breakAfter":8,"breakInside":8,"regionFragment":9.1,"columnCount":8,"columnFill":8,"columnGap":8,"columnRule":8,"columnRuleColor":8,"columnRuleStyle":8,"columnRuleWidth":8,"columns":8,"columnSpan":8,"columnWidth":8},"firefox":{"appearance":46,"userSelect":46,"boxSizing":28,"textAlignLast":46,"textDecorationStyle":35,"textDecorationSkip":35,"textDecorationLine":35,"textDecorationColor":35,"tabSize":46,"hyphens":42,"fontFeatureSettings":33,"breakAfter":46,"breakBefore":46,"breakInside":46,"columnCount":46,"columnFill":46,"columnGap":46,"columnRule":46,"columnRuleColor":46,"columnRuleStyle":46,"columnRuleWidth":46,"columns":46,"columnSpan":46,"columnWidth":46},"opera":{"flex":16,"flexBasis":16,"flexDirection":16,"flexGrow":16,"flexFlow":16,"flexShrink":16,"flexWrap":16,"alignContent":16,"alignItems":16,"alignSelf":16,"justifyContent":16,"order":16,"transform":22,"transformOrigin":22,"transformOriginX":22,"transformOriginY":22,"backfaceVisibility":22,"perspective":22,"perspectiveOrigin":22,"transformStyle":22,"transformOriginZ":22,"animation":29,"animationDelay":29,"animationDirection":29,"animationFillMode":29,"animationDuration":29,"animationIterationCount":29,"animationName":29,"animationPlayState":29,"animationTimingFunction":29,"appearance":36,"userSelect":36,"fontKerning":19,"textEmphasisPosition":36,"textEmphasis":36,"textEmphasisStyle":36,"textEmphasisColor":36,"boxDecorationBreak":36,"clipPath":36,"maskImage":36,"maskMode":36,"maskRepeat":36,"maskPosition":36,"maskClip":36,"maskOrigin":36,"maskSize":36,"maskComposite":36,"mask":36,"maskBorderSource":36,"maskBorderMode":36,"maskBorderSlice":36,"maskBorderWidth":36,"maskBorderOutset":36,"maskBorderRepeat":36,"maskBorder":36,"maskType":36,"filter":36,"fontFeatureSettings":36,"breakAfter":36,"breakBefore":36,"breakInside":36,"columnCount":36,"columnFill":36,"columnGap":36,"columnRule":36,"columnRuleColor":36,"columnRuleStyle":36,"columnRuleWidth":36,"columns":36,"columnSpan":36,"columnWidth":36},"ie":{"flexWrap":10,"touchAction":10,"transformOriginY":9,"gridArea":11,"userSelect":11,"gridColumnEnd":11,"breakInside":11,"scrollSnapCoordinate":11,"gridTemplate":11,"scrollSnapType":11,"regionFragment":11,"gridRowStart":11,"gridRowGap":11,"transformOriginX":9,"breakBefore":11,"flowInto":11,"gridTemplateColumns":11,"flexFlow":10,"gridColumnGap":11,"gridGap":11,"scrollSnapPointsX":11,"wrapThrough":11,"flex":10,"gridColumn":11,"transform":9,"gridColumnStart":11,"gridAutoRows":11,"grid":11,"gridAutoColumns":11,"wrapMargin":11,"transformOrigin":9,"scrollSnapDestination":11,"gridRowEnd":11,"gridRow":11,"flexDirection":10,"wrapFlow":11,"flowFrom":11,"hyphens":11,"gridTemplateRows":11,"gridAutoFlow":11,"breakAfter":11,"gridTemplateAreas":11,"scrollSnapPointsY":11,"textSizeAdjust":11},"edge":{"userSelect":14,"wrapFlow":14,"wrapThrough":14,"wrapMargin":14,"scrollSnapType":14,"scrollSnapPointsX":14,"scrollSnapPointsY":14,"scrollSnapDestination":14,"scrollSnapCoordinate":14,"hyphens":14,"flowInto":14,"flowFrom":14,"breakBefore":14,"breakAfter":14,"breakInside":14,"regionFragment":14,"gridTemplateColumns":14,"gridTemplateRows":14,"gridTemplateAreas":14,"gridTemplate":14,"gridAutoColumns":14,"gridAutoRows":14,"gridAutoFlow":14,"grid":14,"gridRowStart":14,"gridColumnStart":14,"gridRowEnd":14,"gridRow":14,"gridColumn":14,"gridColumnEnd":14,"gridColumnGap":14,"gridRowGap":14,"gridArea":14,"gridGap":14},"ios_saf":{"flex":8.1,"flexBasis":8.1,"flexDirection":8.1,"flexGrow":8.1,"flexFlow":8.1,"flexShrink":8.1,"flexWrap":8.1,"alignContent":8.1,"alignItems":8.1,"alignSelf":8.1,"justifyContent":8.1,"order":8.1,"transition":6,"transitionDelay":6,"transitionDuration":6,"transitionProperty":6,"transitionTimingFunction":6,"transform":8.1,"transformOrigin":8.1,"transformOriginX":8.1,"transformOriginY":8.1,"backfaceVisibility":8.1,"perspective":8.1,"perspectiveOrigin":8.1,"transformStyle":8.1,"transformOriginZ":8.1,"animation":8.1,"animationDelay":8.1,"animationDirection":8.1,"animationFillMode":8.1,"animationDuration":8.1,"animationIterationCount":8.1,"animationName":8.1,"animationPlayState":8.1,"animationTimingFunction":8.1,"appearance":9.3,"userSelect":9.3,"backdropFilter":9.3,"fontKerning":9.3,"scrollSnapType":9.3,"scrollSnapPointsX":9.3,"scrollSnapPointsY":9.3,"scrollSnapDestination":9.3,"scrollSnapCoordinate":9.3,"boxDecorationBreak":9.3,"clipPath":9.3,"maskImage":9.3,"maskMode":9.3,"maskRepeat":9.3,"maskPosition":9.3,"maskClip":9.3,"maskOrigin":9.3,"maskSize":9.3,"maskComposite":9.3,"mask":9.3,"maskBorderSource":9.3,"maskBorderMode":9.3,"maskBorderSlice":9.3,"maskBorderWidth":9.3,"maskBorderOutset":9.3,"maskBorderRepeat":9.3,"maskBorder":9.3,"maskType":9.3,"textSizeAdjust":9.3,"textDecorationStyle":9.3,"textDecorationSkip":9.3,"textDecorationLine":9.3,"textDecorationColor":9.3,"shapeImageThreshold":9.3,"shapeImageMargin":9.3,"shapeImageOutside":9.3,"filter":9,"hyphens":9.3,"flowInto":9.3,"flowFrom":9.3,"breakBefore":8.1,"breakAfter":8.1,"breakInside":8.1,"regionFragment":9.3,"columnCount":8.1,"columnFill":8.1,"columnGap":8.1,"columnRule":8.1,"columnRuleColor":8.1,"columnRuleStyle":8.1,"columnRuleWidth":8.1,"columns":8.1,"columnSpan":8.1,"columnWidth":8.1},"android":{"borderImage":4.2,"borderImageOutset":4.2,"borderImageRepeat":4.2,"borderImageSlice":4.2,"borderImageSource":4.2,"borderImageWidth":4.2,"flex":4.2,"flexBasis":4.2,"flexDirection":4.2,"flexGrow":4.2,"flexFlow":4.2,"flexShrink":4.2,"flexWrap":4.2,"alignContent":4.2,"alignItems":4.2,"alignSelf":4.2,"justifyContent":4.2,"order":4.2,"transition":4.2,"transitionDelay":4.2,"transitionDuration":4.2,"transitionProperty":4.2,"transitionTimingFunction":4.2,"transform":4.4,"transformOrigin":4.4,"transformOriginX":4.4,"transformOriginY":4.4,"backfaceVisibility":4.4,"perspective":4.4,"perspectiveOrigin":4.4,"transformStyle":4.4,"transformOriginZ":4.4,"animation":4.4,"animationDelay":4.4,"animationDirection":4.4,"animationFillMode":4.4,"animationDuration":4.4,"animationIterationCount":4.4,"animationName":4.4,"animationPlayState":4.4,"animationTimingFunction":4.4,"appearance":46,"userSelect":46,"fontKerning":4.4,"textEmphasisPosition":46,"textEmphasis":46,"textEmphasisStyle":46,"textEmphasisColor":46,"boxDecorationBreak":46,"clipPath":46,"maskImage":46,"maskMode":46,"maskRepeat":46,"maskPosition":46,"maskClip":46,"maskOrigin":46,"maskSize":46,"maskComposite":46,"mask":46,"maskBorderSource":46,"maskBorderMode":46,"maskBorderSlice":46,"maskBorderWidth":46,"maskBorderOutset":46,"maskBorderRepeat":46,"maskBorder":46,"maskType":46,"filter":46,"fontFeatureSettings":46,"breakAfter":46,"breakBefore":46,"breakInside":46,"columnCount":46,"columnFill":46,"columnGap":46,"columnRule":46,"columnRuleColor":46,"columnRuleStyle":46,"columnRuleWidth":46,"columns":46,"columnSpan":46,"columnWidth":46},"and_chr":{"appearance":47,"userSelect":47,"textEmphasisPosition":47,"textEmphasis":47,"textEmphasisStyle":47,"textEmphasisColor":47,"boxDecorationBreak":47,"clipPath":47,"maskImage":47,"maskMode":47,"maskRepeat":47,"maskPosition":47,"maskClip":47,"maskOrigin":47,"maskSize":47,"maskComposite":47,"mask":47,"maskBorderSource":47,"maskBorderMode":47,"maskBorderSlice":47,"maskBorderWidth":47,"maskBorderOutset":47,"maskBorderRepeat":47,"maskBorder":47,"maskType":47,"textDecorationStyle":47,"textDecorationSkip":47,"textDecorationLine":47,"textDecorationColor":47,"filter":47,"fontFeatureSettings":47,"breakAfter":47,"breakBefore":47,"breakInside":47,"columnCount":47,"columnFill":47,"columnGap":47,"columnRule":47,"columnRuleColor":47,"columnRuleStyle":47,"columnRuleWidth":47,"columns":47,"columnSpan":47,"columnWidth":47},"and_uc":{"flex":9.9,"flexBasis":9.9,"flexDirection":9.9,"flexGrow":9.9,"flexFlow":9.9,"flexShrink":9.9,"flexWrap":9.9,"alignContent":9.9,"alignItems":9.9,"alignSelf":9.9,"justifyContent":9.9,"order":9.9,"transition":9.9,"transitionDelay":9.9,"transitionDuration":9.9,"transitionProperty":9.9,"transitionTimingFunction":9.9,"transform":9.9,"transformOrigin":9.9,"transformOriginX":9.9,"transformOriginY":9.9,"backfaceVisibility":9.9,"perspective":9.9,"perspectiveOrigin":9.9,"transformStyle":9.9,"transformOriginZ":9.9,"animation":9.9,"animationDelay":9.9,"animationDirection":9.9,"animationFillMode":9.9,"animationDuration":9.9,"animationIterationCount":9.9,"animationName":9.9,"animationPlayState":9.9,"animationTimingFunction":9.9,"appearance":9.9,"userSelect":9.9,"fontKerning":9.9,"textEmphasisPosition":9.9,"textEmphasis":9.9,"textEmphasisStyle":9.9,"textEmphasisColor":9.9,"maskImage":9.9,"maskMode":9.9,"maskRepeat":9.9,"maskPosition":9.9,"maskClip":9.9,"maskOrigin":9.9,"maskSize":9.9,"maskComposite":9.9,"mask":9.9,"maskBorderSource":9.9,"maskBorderMode":9.9,"maskBorderSlice":9.9,"maskBorderWidth":9.9,"maskBorderOutset":9.9,"maskBorderRepeat":9.9,"maskBorder":9.9,"maskType":9.9,"textSizeAdjust":9.9,"filter":9.9,"hyphens":9.9,"flowInto":9.9,"flowFrom":9.9,"breakBefore":9.9,"breakAfter":9.9,"breakInside":9.9,"regionFragment":9.9,"fontFeatureSettings":9.9,"columnCount":9.9,"columnFill":9.9,"columnGap":9.9,"columnRule":9.9,"columnRuleColor":9.9,"columnRuleStyle":9.9,"columnRuleWidth":9.9,"columns":9.9,"columnSpan":9.9,"columnWidth":9.9},"op_mini":{"borderImage":5,"borderImageOutset":5,"borderImageRepeat":5,"borderImageSlice":5,"borderImageSource":5,"borderImageWidth":5,"tabSize":5,"objectFit":5,"objectPosition":5}}; module.exports = caniuseData
 },{}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
+exports['default'] = calc;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var values = ['zoom-in', 'zoom-out', 'grab', 'grabbing'];
+function calc(pluginInterface) {
+  var property = pluginInterface.property;
+  var value = pluginInterface.value;
+  var browserInfo = pluginInterface.browserInfo;
+  var prefix = pluginInterface.prefix;
+  var keepUnprefixed = pluginInterface.keepUnprefixed;
+  var forceRun = pluginInterface.forceRun;
+  var browser = browserInfo.browser;
+  var version = browserInfo.version;
 
-exports['default'] = function (property, value, _ref2, styles, keepUnprefixed, forceRun) {
-  var browser = _ref2.browser;
-  var version = _ref2.version;
-  var prefix = _ref2.prefix;
-
-  if (property === 'cursor' && values.indexOf(value) > -1 && (forceRun || browser === 'firefox' && version < 24 || browser === 'chrome' && version < 37 || browser === 'safari' && version < 9 || browser === 'opera' && version < 24)) {
-    return _defineProperty({}, property, prefix.CSS + value + (keepUnprefixed ? ';' + property + ':' + value : ''));
+  if (value.indexOf('calc(') > -1 && (forceRun || browser === 'firefox' && version < 15 || browser === 'chrome' && version < 25 || browser === 'safari' && version < 6.1 || browser === 'ios_saf' && version < 7)) {
+    var newValue = forceRun ?
+    // prefix all
+    ['-webkit-', '-moz-'].map(function (prefix) {
+      return value.replace(/calc\(/g, prefix + 'calc(');
+    }).join(';' + property + ':') :
+    // default
+    value.replace(/calc\(/g, prefix.css + 'calc(');
+    return _defineProperty({}, property, newValue + (keepUnprefixed ? ';' + property + ':' + value : ''));
   }
-};
+}
 
 module.exports = exports['default'];
 },{}],5:[function(require,module,exports){
@@ -272,20 +317,37 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var values = ['flex', 'inline-flex'];
-
-exports['default'] = function (property, value, _ref2, styles, keepUnprefixed, forceRun) {
-  var browser = _ref2.browser;
-  var version = _ref2.version;
-  var prefix = _ref2.prefix;
-
-  if (property === 'display' && values.indexOf(value) > -1 && (forceRun || browser === 'chrome' && version < 29 && version > 20 || (browser === 'safari' || browser === 'ios_saf') && version < 9 && version > 6 || browser === 'opera' && (version == 15 || version == 16))) {
-    return _defineProperty({}, property, prefix.CSS + value + (keepUnprefixed ? ';' + property + ':' + value : ''));
-  }
+exports['default'] = cursor;
+var values = {
+  'zoom-in': true,
+  'zoom-out': true,
+  grab: true,
+  grabbing: true
 };
+
+function cursor(pluginInterface) {
+  var property = pluginInterface.property;
+  var value = pluginInterface.value;
+  var browserInfo = pluginInterface.browserInfo;
+  var prefix = pluginInterface.prefix;
+  var keepUnprefixed = pluginInterface.keepUnprefixed;
+  var forceRun = pluginInterface.forceRun;
+  var browser = browserInfo.browser;
+  var version = browserInfo.version;
+
+  if (property === 'cursor' && values[value] && (forceRun || browser === 'firefox' && version < 24 || browser === 'chrome' && version < 37 || browser === 'safari' && version < 9 || browser === 'opera' && version < 24)) {
+    var newValue = forceRun ?
+    // prefix all
+    ['-webkit-', '-moz-'].map(function (prefix) {
+      return prefix + value;
+    }).join(';' + property + ':') :
+    // default
+    prefix.css + value;
+    return {
+      cursor: newValue + (keepUnprefixed ? ';' + property + ':' + value : '')
+    };
+  }
+}
 
 module.exports = exports['default'];
 },{}],6:[function(require,module,exports){
@@ -294,6 +356,42 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
+exports['default'] = flex;
+var values = { flex: true, 'inline-flex': true };
+
+function flex(pluginInterface) {
+  var property = pluginInterface.property;
+  var value = pluginInterface.value;
+  var browserInfo = pluginInterface.browserInfo;
+  var prefix = pluginInterface.prefix;
+  var keepUnprefixed = pluginInterface.keepUnprefixed;
+  var forceRun = pluginInterface.forceRun;
+  var browser = browserInfo.browser;
+  var version = browserInfo.version;
+
+  if (property === 'display' && values[value] && (forceRun || browser === 'chrome' && version < 29 && version > 20 || (browser === 'safari' || browser === 'ios_saf') && version < 9 && version > 6 || browser === 'opera' && (version == 15 || version == 16))) {
+    var newValue = forceRun ?
+    // prefix all
+    ['-webkit-box', '-moz-box', '-ms-' + value + 'box', '-webkit-' + value].join(';' + property + ':') :
+    // default
+    '-webkit-' + value;
+    return {
+      display: newValue + (keepUnprefixed ? ';' + property + ':' + value : '')
+    };
+  }
+}
+
+module.exports = exports['default'];
+},{}],7:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+exports['default'] = flexboxIE;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -305,7 +403,6 @@ var alternativeValues = {
   flex: '-ms-flexbox',
   'inline-flex': '-ms-inline-flexbox'
 };
-
 var alternativeProps = {
   alignContent: 'msFlexLinePack',
   alignSelf: 'msFlexItemAlign',
@@ -317,16 +414,26 @@ var alternativeProps = {
   flexBasis: 'msPreferredSize'
 };
 
-var properties = Object.keys(alternativeProps).concat('display');
+var properties = Object.keys(alternativeProps).concat('display').reduce(function (result, prop) {
+  return _extends({}, result, _defineProperty({}, prop, true));
+}, {});
 
-exports['default'] = function (property, value, _ref3, styles, keepUnprefixed, forceRun) {
-  var browser = _ref3.browser;
-  var version = _ref3.version;
+function flexboxIE(pluginInterface) {
+  var property = pluginInterface.property;
+  var value = pluginInterface.value;
+  var styles = pluginInterface.styles;
+  var browserInfo = pluginInterface.browserInfo;
+  var prefix = pluginInterface.prefix;
+  var keepUnprefixed = pluginInterface.keepUnprefixed;
+  var forceRun = pluginInterface.forceRun;
+  var browser = browserInfo.browser;
+  var version = browserInfo.version;
 
-  if (properties.indexOf(property) > -1 && (forceRun || (browser === 'ie_mob' || browser === 'ie') && version == 10)) {
+  if (properties[property] && (forceRun || (browser === 'ie_mob' || browser === 'ie') && version == 10)) {
     if (!keepUnprefixed) {
       delete styles[property];
     }
+
     if (alternativeProps[property]) {
       return _defineProperty({}, alternativeProps[property], alternativeValues[value] || value);
     }
@@ -334,15 +441,19 @@ exports['default'] = function (property, value, _ref3, styles, keepUnprefixed, f
       return _defineProperty({}, property, alternativeValues[value] + (keepUnprefixed ? ';' + property + ':' + value : ''));
     }
   }
-};
+}
 
 module.exports = exports['default'];
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+exports['default'] = flexboxOld;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -363,14 +474,25 @@ var alternativeProps = {
   flexWrap: 'WebkitBoxLines'
 };
 
-var properties = Object.keys(alternativeProps).concat(['alignContent', 'alignSelf', 'display', 'order', 'flexGrow', 'flexShrink', 'flexBasis', 'flexDirection']);
+var properties = Object.keys(alternativeProps).concat(['alignContent', 'alignSelf', 'display', 'order', 'flexGrow', 'flexShrink', 'flexBasis', 'flexDirection']).reduce(function (result, prop) {
+  return _extends({}, result, _defineProperty({}, prop, true));
+}, {});
 
-exports['default'] = function (property, value, _ref3, styles, keepUnprefixed, forceRun) {
-  var browser = _ref3.browser;
-  var version = _ref3.version;
-  var prefix = _ref3.prefix;
+function flexboxOld(pluginInterface) {
+  var property = pluginInterface.property;
+  var value = pluginInterface.value;
+  var styles = pluginInterface.styles;
+  var browserInfo = pluginInterface.browserInfo;
+  var prefix = pluginInterface.prefix;
+  var keepUnprefixed = pluginInterface.keepUnprefixed;
+  var forceRun = pluginInterface.forceRun;
+  var browser = browserInfo.browser;
+  var version = browserInfo.version;
 
-  if (properties.indexOf(property) > -1 && (forceRun || browser === 'firefox' && version < 22 || browser === 'chrome' && version < 21 || (browser === 'safari' || browser === 'ios_saf') && version <= 6.1 || browser === 'android' && version < 4.4 || browser === 'and_uc')) {
+  if (properties[property] && (forceRun || browser === 'firefox' && version < 22 || browser === 'chrome' && version < 21 || (browser === 'safari' || browser === 'ios_saf') && version <= 6.1 || browser === 'android' && version < 4.4 || browser === 'and_uc')) {
+    if (!keepUnprefixed) {
+      delete styles[property];
+    }
     if (property === 'flexDirection') {
       return {
         WebkitBoxOrient: value.indexOf('column') > -1 ? 'vertical' : 'horizontal',
@@ -379,7 +501,7 @@ exports['default'] = function (property, value, _ref3, styles, keepUnprefixed, f
     }
     if (property === 'display' && alternativeValues[value]) {
       return {
-        display: prefix.CSS + alternativeValues[value] + (keepUnprefixed ? ';' + property + ':' + value : '')
+        display: prefix.css + alternativeValues[value] + (keepUnprefixed ? ';' + property + ':' + value : '')
       };
     }
     if (alternativeProps[property]) {
@@ -389,30 +511,7 @@ exports['default'] = function (property, value, _ref3, styles, keepUnprefixed, f
       return _defineProperty({}, property, alternativeValues[value] + (keepUnprefixed ? ';' + property + ':' + value : ''));
     }
   }
-};
-
-module.exports = exports['default'];
-},{}],8:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-var properties = ['background', 'backgroundImage'];
-var values = ['linear-gradient', 'radial-gradient', 'repeating-linear-gradient', 'repeating-radial-gradient'];
-
-exports['default'] = function (property, value, _ref2, styles, keepUnprefixed, forceRun) {
-  var browser = _ref2.browser;
-  var version = _ref2.version;
-  var prefix = _ref2.prefix;
-
-  if (properties.indexOf(property) > -1 && values.indexOf(value) > -1 && (forceRun || browser === 'firefox' && version < 16 || browser === 'chrome' && version < 26 || (browser === 'safari' || browser === 'ios_saf') && version < 7 || (browser === 'opera' || browser === 'op_mini') && version < 12.1 || browser === 'android' && version < 4.4 || browser === 'and_uc')) {
-    return _defineProperty({}, property, prefix.CSS + value + (keepUnprefixed ? ';' + property + ':' + value : ''));
-  }
-};
+}
 
 module.exports = exports['default'];
 },{}],9:[function(require,module,exports){
@@ -421,26 +520,162 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
+exports['default'] = gradient;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var properties = ['maxHeight', 'maxWidth', 'width', 'height', 'columnWidth', 'minWidth', 'minHeight'];
-var values = ['min-content', 'max-content', 'fill-available', 'fit-content', 'contain-floats'];
+var values = /linear-gradient|radial-gradient|repeating-linear-gradient|repeating-radial-gradient/;
 
-exports['default'] = function (property, value, _ref2, styles, keepUnprefixed, forceRun) {
-  var prefix = _ref2.prefix;
+function gradient(pluginInterface) {
+  var property = pluginInterface.property;
+  var value = pluginInterface.value;
+  var browserInfo = pluginInterface.browserInfo;
+  var prefix = pluginInterface.prefix;
+  var keepUnprefixed = pluginInterface.keepUnprefixed;
+  var forceRun = pluginInterface.forceRun;
+  var browser = browserInfo.browser;
+  var version = browserInfo.version;
 
-  /**
-   * This actually is only available with prefixes
-   * NOTE: This might change in the future
-   */
-  if (properties.indexOf(property) > -1 && values.indexOf(value) > -1) {
-    return _defineProperty({}, property, prefix.CSS + value + (keepUnprefixed ? ';' + property + ':' + value : ''));
+  if (typeof value === 'string' && value.match(values) !== null && (forceRun || browser === 'firefox' && version < 16 || browser === 'chrome' && version < 26 || (browser === 'safari' || browser === 'ios_saf') && version < 7 || (browser === 'opera' || browser === 'op_mini') && version < 12.1 || browser === 'android' && version < 4.4 || browser === 'and_uc')) {
+    var newValue = forceRun ?
+    // prefix all
+    ['-webkit-', '-moz-'].map(function (prefix) {
+      return prefix + value;
+    }).join(';' + property + ':') :
+    // default
+    prefix.css + value;
+    return _defineProperty({}, property, newValue + (keepUnprefixed ? ';' + property + ':' + value : ''));
   }
-};
+}
 
 module.exports = exports['default'];
 },{}],10:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+exports['default'] = sizing;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var properties = {
+  maxHeight: true,
+  maxWidth: true,
+  width: true,
+  height: true,
+  columnWidth: true,
+  minWidth: true,
+  minHeight: true
+};
+var values = {
+  'min-content': true,
+  'max-content': true,
+  'fill-available': true,
+  'fit-content': true,
+  'contain-floats': true
+};
+
+function sizing(pluginInterface) {
+  var property = pluginInterface.property;
+  var value = pluginInterface.value;
+  var browserInfo = pluginInterface.browserInfo;
+  var prefix = pluginInterface.prefix;
+  var keepUnprefixed = pluginInterface.keepUnprefixed;
+  var forceRun = pluginInterface.forceRun;
+  var browser = browserInfo.browser;
+  var version = browserInfo.version;
+
+  // This might change in the future
+  // Keep an eye on it
+  if (properties[property] && values[value]) {
+    var newValue = forceRun ?
+    // prefix all
+    ['-webkit-', '-moz-'].map(function (prefix) {
+      return prefix + value;
+    }).join(';' + property + ':') :
+    // default
+    prefix.css + value;
+    return _defineProperty({}, property, newValue + (keepUnprefixed ? ';' + property + ':' + value : ''));
+  }
+}
+
+module.exports = exports['default'];
+},{}],11:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+exports['default'] = calc;
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var _utilsCamelToDashCase = require('../utils/camelToDashCase');
+
+var _utilsCamelToDashCase2 = _interopRequireDefault(_utilsCamelToDashCase);
+
+var _utilsCapitalizeString = require('../utils/capitalizeString');
+
+var _utilsCapitalizeString2 = _interopRequireDefault(_utilsCapitalizeString);
+
+function calc(pluginInterface) {
+  var property = pluginInterface.property;
+  var value = pluginInterface.value;
+  var browserInfo = pluginInterface.browserInfo;
+  var prefix = pluginInterface.prefix;
+  var keepUnprefixed = pluginInterface.keepUnprefixed;
+  var forceRun = pluginInterface.forceRun;
+  var requiresPrefix = pluginInterface.requiresPrefix;
+  var browser = browserInfo.browser;
+  var version = browserInfo.version;
+
+  if (
+  // also check for already prefixed transitions
+  typeof value === 'string' && (property.toLowerCase().indexOf('transition') > -1 || property.toLowerCase().indexOf('transitionproperty') > -1)) {
+    var _ref;
+
+    var _ret = (function () {
+      var requiresPrefixDashCased = Object.keys(requiresPrefix).map(function (property) {
+        return (0, _utilsCamelToDashCase2['default'])(property);
+      });
+      var newValue = value;
+
+      var multipleValues = newValue.split(',');
+
+      requiresPrefixDashCased.forEach(function (property) {
+        multipleValues.forEach(function (val, index) {
+          if (val.indexOf(property) > -1) {
+            var newVal = forceRun ?
+            // prefix all
+            ['-webkit-', '-moz-', '-ms-'].map(function (prefix) {
+              return val.replace(property, prefix + property);
+            }).join(',') :
+            // default
+            val.replace(property, prefix.css + property);
+            multipleValues[index] = newVal + (keepUnprefixed ? ',' + val : '');
+          }
+        });
+      });
+      var outputValue = multipleValues.join(',');
+      if (forceRun) {
+        return {
+          v: (_ref = {}, _defineProperty(_ref, 'Webkit' + (0, _utilsCapitalizeString2['default'])(property), outputValue), _defineProperty(_ref, 'Moz' + (0, _utilsCapitalizeString2['default'])(property), outputValue), _defineProperty(_ref, 'ms' + (0, _utilsCapitalizeString2['default'])(property), outputValue), _defineProperty(_ref, property, outputValue), _ref)
+        };
+      }
+      return {
+        v: _defineProperty({}, property, outputValue)
+      };
+    })();
+
+    if (typeof _ret === 'object') return _ret.v;
+  }
+}
+
+module.exports = exports['default'];
+},{"../utils/camelToDashCase":13,"../utils/capitalizeString":14}],12:[function(require,module,exports){
 // leight polyfill for Object.assign
 "use strict";
 
@@ -458,7 +693,25 @@ exports["default"] = function (base) {
 };
 
 module.exports = exports["default"];
-},{}],11:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
+/**
+ * Converts a camel-case string to a dash-case string
+ * @param {string} str - str that gets converted to dash-case
+ */
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+exports['default'] = function (str) {
+  return str.replace(/([a-z]|^)([A-Z])/g, function (match, p1, p2) {
+    return p1 + '-' + p2.toLowerCase();
+  }).replace('ms-', '-ms-');
+};
+
+module.exports = exports['default'];
+},{}],14:[function(require,module,exports){
 // helper to capitalize strings
 "use strict";
 
@@ -471,7 +724,7 @@ exports["default"] = function (str) {
 };
 
 module.exports = exports["default"];
-},{}],12:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -547,7 +800,7 @@ var getPrefixes = function getPrefixes(browser) {
               if (browserVendors.indexOf(prefixVendor) !== -1) {
                 return {
                   inline: prefix,
-                  CSS: '-' + prefix.toLowerCase() + '-'
+                  css: '-' + prefix.toLowerCase() + '-'
                 };
               }
             }
@@ -598,7 +851,7 @@ var getPrefixes = function getPrefixes(browser) {
     }
   }
 
-  return { inline: '', CSS: '' };
+  return { inline: '', css: '' };
 };
 
 /**
@@ -640,7 +893,7 @@ exports['default'] = function (userAgent) {
       if (info[browser]) {
         info.prefix = {
           inline: prefix,
-          CSS: '-' + prefix.toLowerCase() + '-'
+          css: '-' + prefix.toLowerCase() + '-'
         };
       }
     });
@@ -662,8 +915,8 @@ exports['default'] = function (userAgent) {
   });
 
   info.browser = name;
-  // For cordova IOS 8 the version is missing, set 0 to prevent NaN
-  info.version = info.version ? parseFloat(info.version) : 0;
+  // For cordova IOS 8 the version is missing, set truncated osversion to prevent NaN
+  info.version = info.version ? parseFloat(info.version) : parseInt(parseFloat(info.osversion), 10);
 
   // seperate native android chrome
   // https://github.com/rofrischmann/inline-style-prefixer/issues/45
@@ -683,7 +936,7 @@ exports['default'] = function (userAgent) {
 };
 
 module.exports = exports['default'];
-},{"bowser":15}],13:[function(require,module,exports){
+},{"bowser":18}],16:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -696,14 +949,15 @@ exports['default'] = function (_ref) {
   var prefix = _ref.prefix;
 
   var prefixedKeyframes = 'keyframes';
+
   if (browser === 'chrome' && version < 43 || (browser === 'safari' || browser === 'ios_saf') && version < 9 || browser === 'opera' && version < 30 || browser === 'android' && version <= 4.4 || browser === 'and_uc') {
-    prefixedKeyframes = prefix.CSS + prefixedKeyframes;
+    prefixedKeyframes = prefix.css + prefixedKeyframes;
   }
   return prefixedKeyframes;
 };
 
 module.exports = exports['default'];
-},{}],14:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 (function (process){
 // only throw warnings if devmode is enabled
 'use strict';
@@ -720,7 +974,7 @@ exports['default'] = function () {
 
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"_process":16}],15:[function(require,module,exports){
+},{"_process":19}],18:[function(require,module,exports){
 /*!
   * Bowser - a browser detector
   * https://github.com/ded/bowser
@@ -1013,7 +1267,7 @@ module.exports = exports['default'];
   return bowser
 });
 
-},{}],16:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
