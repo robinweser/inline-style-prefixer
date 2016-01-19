@@ -23,6 +23,11 @@ describe('Prefixing a property', () => {
     const prefixed = { WebkitAppearance: 'test', transition: 'test' }
     expect(new Prefixer({ userAgent: Chrome45 }).prefix(input)).to.eql(prefixed)
   })
+  it('should not break if the value is undefined or false', () => {
+    expect(new Prefixer({ userAgent: Chrome14 }).prefix({
+      width: undefined
+    })).to.not.throw
+  })
 })
 
 describe('Prefixing 2D transforms', () => {

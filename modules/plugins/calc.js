@@ -3,7 +3,7 @@ export default function calc(pluginInterface) {
   const { browser, version } = browserInfo
 
   if (
-    value.indexOf('calc(') > -1 &&
+    typeof value === 'string' && value.indexOf('calc(') > -1 &&
     (
     forceRun ||
     browser === 'firefox' && version < 15 ||

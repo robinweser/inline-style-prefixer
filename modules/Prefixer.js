@@ -88,7 +88,7 @@ export default class Prefixer {
           // generates a new plugin interface with current data
           const resolvedStyles = plugin({
             property: property,
-            value: value.toString(),
+            value: value,
             styles: styles,
             browserInfo: this._browserInfo,
             prefix: {
@@ -149,7 +149,7 @@ export default class Prefixer {
           plugins.forEach(plugin => {
             const resolvedStyles = plugin({
               property: property,
-              value: value.toString(),
+              value: value,
               styles: styles,
               browserInfo: {
                 name: browser,

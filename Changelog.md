@@ -1,6 +1,9 @@
 # Changelog
 
 ## 0.6
+### 0.6.6 (19.01.16)
+* Prevent crashes if a value is `false` or `undefined`
+
 ### 0.6.5 (18.01.16)
 * Plugins won't crash if a `number` value is passed
 * Added default `options`
