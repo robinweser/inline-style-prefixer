@@ -34,12 +34,19 @@ const getPrefixes = browser => {
 
   // Find the prefix for this browser (if any)
   prefixKeys = Object.keys(vendorPrefixes)
-  for (prefix of prefixKeys) {
+  for (let i = 0; i < prefixKeys.length; i++) {
+    prefix = prefixKeys[i]
+
     // Find a matching vendor
     vendors = vendorPrefixes[prefix]
     conditions = browsers[browser]
-    for (prefixVendor of vendors) {
-      for (browserVendors of conditions) {
+
+    for (let j = 0; j < vendors.length; j++) {
+      prefixVendor = vendors[j]
+
+      for (let k = 0; k < conditions.length; k++) {
+        browserVendors = conditions[k]
+
         if (browserVendors.indexOf(prefixVendor) !== -1) {
           return {
             inline: prefix,
