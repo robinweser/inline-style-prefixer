@@ -1,6 +1,10 @@
 # Changelog
 
 ## 0.6
+### 0.6.7 (26.01.16)
+* Fixed a bug that caused `transition` with `cubic-bezier` to resolve false
+* Replaced `for of` in favor of a basic `for` loop to not require `Symbol` to be available
+
 ### 0.6.6 (19.01.16)
 * Prevent crashes if a value is `false` or `undefined`
 
