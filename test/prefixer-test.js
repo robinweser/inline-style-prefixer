@@ -129,6 +129,26 @@ describe('Prefixing transitions', () => {
     expect(new Prefixer({ userAgent: Chrome45 }).prefix(input)).to.eql(prefixed)
   })
 
+  it('should not split cubic-beziers', () => {
+    const input = {
+      transition: 'appearance 200ms cubic-bezier(0.42, 0.0, 1.0, 1.0)'
+    }
+    const prefixed = {
+      transition: '-webkit-appearance 200ms cubic-bezier(0.42, 0.0, 1.0, 1.0)'
+    }
+    expect(new Prefixer({ userAgent: Chrome45 }).prefix(input)).to.eql(prefixed)
+  })
+
+  it('should prefix multiple properties in value but not split cubic-beziers', () => {
+    const input = {
+      transition: 'appearance 200ms cubic-bezier(0.42, 0.0, 1.0, 1.0), user-select 100ms linear'
+    }
+    const prefixed = {
+      transition: '-webkit-appearance 200ms cubic-bezier(0.42, 0.0, 1.0, 1.0), -webkit-user-select 100ms linear'
+    }
+    expect(new Prefixer({ userAgent: Chrome45 }).prefix(input)).to.eql(prefixed)
+  })
+
   it('should add prefixes to multiple properties in value', () => {
     const input = {
       transition: 'appearance 200ms linear, user-select 100ms linear'

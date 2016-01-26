@@ -12,7 +12,8 @@ export default function calc(pluginInterface) {
     const requiresPrefixDashCased = Object.keys(requiresPrefix).map(property => camelToDashCase(property))
     let newValue = value
 
-    const multipleValues = newValue.split(',')
+    // only split multi values, not cubic beziers
+    const multipleValues = newValue.split(/,(?![^()]*(?:\([^()]*\))?\))/g)
 
     requiresPrefixDashCased.forEach(property => {
       multipleValues.forEach((val, index) => {
