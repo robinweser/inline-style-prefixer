@@ -3,7 +3,6 @@ node_js:
   - "5"
 script:
   - npm test
-  - npm run test:coverage
   - npm run coverage
 addons:
   code_climate:
