@@ -101,9 +101,15 @@ describe('Resolving plugins', () => {
 })
 
 describe('Using an invalid userAgent', () => {
-  it('should return the exact input', () => {
-    const input = { appearance: 'test', transition: 'test' }
-    expect(new Prefixer({ userAgent: 'bad userAgent' }).prefix(input)).to.eql(input)
+  it('should use prefixAll as fallback', () => {
+    const input = { appearance: 'test' }
+    const output = {
+      WebkitAppearance: 'test',
+      MozAppearance: 'test',
+      msAppearance: 'test',
+      appearance: 'test'
+    }
+    expect(new Prefixer({ userAgent: 'bad userAgent' }).prefix(input)).to.eql(output)
   })
 })
 
@@ -309,8 +315,8 @@ describe('Combine all supported browser prefixes', () => {
 })
 
 describe('Evaluating unsupported browsers', () => {
-  it('should not prefix any property', () => {
-    expect(new Prefixer({ userAgent: SeaMonkey })._hasPropsRequiringPrefix).to.eql(false)
+  it('should set a fallback flag', () => {
+    expect(new Prefixer({ userAgent: SeaMonkey })._usePrefixAllFallback).to.eql(true)
   })
 })
 
@@ -321,14 +327,10 @@ describe('Passing no userAgent', () => {
   })
 })
 
-describe('Evaluating whitelisted browsers', () => {
-  it('should not return false', () => {
-    expect(new Prefixer({ userAgent: PhantomJS })).to.not.eql(false)
-  })
-  it('should not prefix any property', () => {
-    expect(new Prefixer({ userAgent: PhantomJS })._hasPropsRequiringPrefix).to.eql(false)
-  })
-  it('should add a whitelist flag', () => {
-    expect(new Prefixer({ userAgent: PhantomJS })._isWhitelisted).to.eql(true)
+describe('Prefixing display', () => {
+  it('should not remove display property', () => {
+    expect(new Prefixer({ userAgent: MSIE10 }).prefix({
+      display: 'block'
+    })).to.eql({ display: 'block' })
   })
 })

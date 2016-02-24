@@ -2,11 +2,8 @@ import getBrowserInformation from './utils/getBrowserInformation'
 import getPrefixedKeyframes from './utils/getPrefixedKeyframes'
 import capitalizeString from './utils/capitalizeString'
 import assign from './utils/assign'
-import warn from './utils/warn'
 import caniuseData from './caniuseData'
 import plugins from './Plugins'
-
-const browserWhitelist = ['phantom']
 
 export default class Prefixer {
   /**
@@ -14,11 +11,11 @@ export default class Prefixer {
    * @param {string} userAgent - userAgent to gather prefix information according to caniuse.com
    * @param {string} keepUnprefixed - keeps unprefixed properties and values
    */
-  constructor(options = {}) {
+  constructor(options = { }) {
     const defaultUserAgent = typeof navigator !== 'undefined' ? navigator.userAgent : undefined
 
     this._userAgent = options.userAgent || defaultUserAgent
-    this._keepUnprefixed = options.keepUnprefixed ||  false
+    this._keepUnprefixed = options.keepUnprefixed || false
 
     this._browserInfo = getBrowserInformation(this._userAgent)
 
@@ -29,30 +26,19 @@ export default class Prefixer {
       this.jsPrefix = this._browserInfo.prefix.inline
       this.prefixedKeyframes = getPrefixedKeyframes(this._browserInfo)
     } else {
-      this._hasPropsRequiringPrefix = false
-      warn('Either the global navigator was undefined or an invalid userAgent was provided.', 'Using a valid userAgent? Please let us know and create an issue at https://github.com/rofrischmann/inline-style-prefixer/issues')
+      this._usePrefixAllFallback = true
       return false
     }
 
     let data = this._browserInfo.browser && caniuseData[this._browserInfo.browser]
     if (data) {
-      this._requiresPrefix = Object.keys(data).filter(key => data[key] >= this._browserInfo.version).reduce((result, name) => ({...result, [name]: true}), {})
+      this._requiresPrefix = Object.keys(data).filter(key => data[key] >= this._browserInfo.version).reduce((result, name) => {
+        result[name] = true
+        return result
+      }, { })
       this._hasPropsRequiringPrefix = Object.keys(this._requiresPrefix).length > 0
     } else {
-      // check for whitelisted browsers
-      browserWhitelist.forEach(browser => {
-        if (this._browserInfo[browser]) {
-          this._isWhitelisted = true
-        }
-      })
-      this._hasPropsRequiringPrefix = false
-
-      // Do not throw a warning if whitelisted
-      if (this._isWhitelisted) {
-        return true
-      }
-      warn('Your userAgent seems to be not supported by inline-style-prefixer. Feel free to open an issue.')
-      return false
+      this._usePrefixAllFallback = true
     }
   }
 
@@ -62,12 +48,17 @@ export default class Prefixer {
    * @returns {Object} - Style object with prefixed properties and values
    */
   prefix(styles) {
+    // use prefixAll as fallback if userAgent can not be resolved
+    if (this._usePrefixAllFallback) {
+      return Prefixer.prefixAll(styles)
+    }
+
     // only add prefixes if needed
     if (!this._hasPropsRequiringPrefix) {
       return styles
     }
 
-    styles = assign({}, styles)
+    styles = assign({ }, styles)
 
     Object.keys(styles).forEach(property => {
       let value = styles[property]
@@ -114,7 +105,7 @@ export default class Prefixer {
    * @returns {Object} - Style object with prefixed properties and values
    */
   static prefixAll(styles) {
-    const prefixes = {}
+    const prefixes = { }
     const browserInfo = getBrowserInformation('*')
 
     browserInfo.browsers.forEach(browser => {
@@ -129,7 +120,7 @@ export default class Prefixer {
       return styles
     }
 
-    styles = assign({}, styles)
+    styles = assign({ }, styles)
 
     Object.keys(styles).forEach(property => {
       let value = styles[property]
