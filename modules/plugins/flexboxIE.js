@@ -17,14 +17,17 @@ const alternativeProps = {
   flexBasis: 'msPreferredSize'
 }
 
-const properties = Object.keys(alternativeProps).concat('display').reduce((result, prop) => ({...result, [prop]: true}), {})
+const properties = Object.keys(alternativeProps).reduce((result, prop) => {
+  result[prop] = true
+  return result
+}, { })
 
 export default function flexboxIE(pluginInterface) {
-  const {property, value, styles, browserInfo, prefix, keepUnprefixed, forceRun} = pluginInterface
-  const {browser, version} = browserInfo
+  const { property, value, styles, browserInfo, prefix, keepUnprefixed, forceRun } = pluginInterface
+  const { browser, version } = browserInfo
 
   if (
-    properties[property] &&
+    (properties[property] || property === 'display' && value.indexOf('flex') > -1) &&
     (
     forceRun ||
     (browser === 'ie_mob' || browser === 'ie') && version == 10)

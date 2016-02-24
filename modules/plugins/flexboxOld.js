@@ -15,15 +15,19 @@ const alternativeProps = {
   flexWrap: 'WebkitBoxLines'
 }
 
-const properties = Object.keys(alternativeProps).concat(['alignContent', 'alignSelf', 'display', 'order', 'flexGrow', 'flexShrink', 'flexBasis', 'flexDirection']).reduce((result, prop) => ({...result, [prop]: true}), {})
+const otherProps = [ 'alignContent', 'alignSelf', 'order', 'flexGrow', 'flexShrink', 'flexBasis', 'flexDirection' ]
 
+const properties = Object.keys(alternativeProps).concat(otherProps).reduce((result, prop) => {
+  result[prop] = true
+  return result
+}, { })
 
 export default function flexboxOld(pluginInterface) {
-  const {property, value, styles, browserInfo, prefix, keepUnprefixed, forceRun} = pluginInterface
-  const {browser, version} = browserInfo
+  const { property, value, styles, browserInfo, prefix, keepUnprefixed, forceRun } = pluginInterface
+  const { browser, version } = browserInfo
 
   if (
-    properties[property] &&
+    (properties[property] || property === 'display' && value.indexOf('flex') > -1) &&
     (
     forceRun ||
     browser === 'firefox' && version < 22 ||
