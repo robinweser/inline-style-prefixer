@@ -18,8 +18,7 @@
     "coverage": "codeclimate-test-reporter < coverage/lcov.info",
     "pretest": "npm run clean && npm run babel && npm run generate",
     "release": "npm run build && npm publish",
-    "test": "mocha --recursive --compilers js:babel/register",
-    "test:coverage": "babel-node ./node_modules/isparta/bin/isparta cover ./node_modules/mocha/bin/_mocha -- --recursive"
+    "test": "istanbul cover _mocha -- --recursive --compilers js:babel/register"
   },
   "repository": {
     "type": "git",
@@ -57,7 +56,7 @@
     "esformatter-remove-trailing-commas": "^1.0.1",
     "esformatter-spaced-lined-comment": "^2.0.1",
     "esformatter-var-each": "^2.1.0",
-    "isparta": "^4.0.0",
+    "istanbul": "^0.4.2",
     "mocha": "^2.2.5",
     "object-assign": "^4.0.1",
     "rimraf": "^2.4.2",
