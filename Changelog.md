@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0
+### 1.0.0
+* pulled a bugfix by Khan Academy that dash-cases fallback properties ( https://github.com/Khan/inline-style-prefixer/commit/f41f3040ac27eeec3b7a1fb7450ddce250cac4e4 )
+* using [inline-style-prefix-all](https://github.com/rofrischmann/inline-style-prefix-all) for `prefixAll` now
+* `display` does not get removed anymore ( #65 )
+* not throwing anymore if unsupported `userAgent` is provided ( #62 )
+
 ## 0.6
 ### 0.6.7 (26.01.16)
 * Fixed a bug that caused `transition` with `cubic-bezier` to resolve false
