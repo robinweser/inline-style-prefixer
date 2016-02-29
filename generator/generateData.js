@@ -36,10 +36,10 @@ function gatherInformation() {
   flexPropsIE.forEach(function(prop) {
     delete prefixProperties.ie[prop]
   })
-  return 'var caniuseData = ' + JSON.stringify(prefixProperties) + '; module.exports = caniuseData';
+  return 'export default ' + JSON.stringify(prefixProperties);
 }
 
-fs.writeFile('./lib/caniuseData.js', gatherInformation(), function(err) {
+fs.writeFile('./modules/prefixProps.js', gatherInformation(), function(err) {
   if (err) {
     throw err;
   }

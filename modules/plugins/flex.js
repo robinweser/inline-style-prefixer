@@ -1,25 +1,18 @@
-const values = { flex: true, 'inline-flex': true }
+import camelToDashCase from '../utils/camelToDashCase'
 
-export default function flex(pluginInterface) {
-  const { property, value, browserInfo, prefix, keepUnprefixed, forceRun } = pluginInterface
-  const { browser, version } = browserInfo
+const values = new Set([ 'flex', 'inline-flex' ])
 
+export default function flex({ property, value, browserInfo: { browser, version }, prefix: { css }, keepUnprefixed }) {
   if (
-    property === 'display' && values[value] &&
+    property === 'display' && values.has(value) &&
     (
-    forceRun ||
     browser === 'chrome' && (version < 29 && version > 20) ||
     (browser === 'safari' || browser === 'ios_saf') && (version < 9 && version > 6) ||
     browser === 'opera' && (version == 15 || version == 16)
     )
   ) {
-    let newValue = forceRun ?
-      // prefix all
-      [ '-webkit-box', '-moz-box', '-ms-' + value + 'box', '-webkit-' + value ].join(';' + property + ':') :
-      // default
-      '-webkit-' + value
     return {
-      display: newValue + (keepUnprefixed ? ';' + property + ':' + value : '')
+      display: css + value + (keepUnprefixed ? ';' + camelToDashCase(property) + ':' + value : '')
     }
   }
 }

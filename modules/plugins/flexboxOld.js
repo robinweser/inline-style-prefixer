@@ -1,3 +1,5 @@
+import camelToDashCase from '../utils/camelToDashCase'
+
 const alternativeValues = {
   'space-around': 'justify',
   'space-between': 'justify',
@@ -22,14 +24,10 @@ const properties = Object.keys(alternativeProps).concat(otherProps).reduce((resu
   return result
 }, { })
 
-export default function flexboxOld(pluginInterface) {
-  const { property, value, styles, browserInfo, prefix, keepUnprefixed, forceRun } = pluginInterface
-  const { browser, version } = browserInfo
-
+export default function flexboxOld({ property, value, styles, browserInfo: { browser, version }, prefix: { css }, keepUnprefixed }) {
   if (
     (properties[property] || property === 'display' && value.indexOf('flex') > -1) &&
     (
-    forceRun ||
     browser === 'firefox' && version < 22 ||
     browser === 'chrome' && version < 21 ||
     (browser === 'safari' || browser === 'ios_saf') && version <= 6.1 ||
@@ -48,17 +46,12 @@ export default function flexboxOld(pluginInterface) {
     }
     if (property === 'display' && alternativeValues[value]) {
       return {
-        display: prefix.css + alternativeValues[value] + (keepUnprefixed ? ';' + property + ':' + value : '')
+        display: css + alternativeValues[value] + (keepUnprefixed ? ';' + camelToDashCase(property) + ':' + value : '')
       }
     }
     if (alternativeProps[property]) {
       return {
         [alternativeProps[property]]: alternativeValues[value] || value
-      }
-    }
-    if (alternativeValues[value]) {
-      return {
-        [property]: alternativeValues[value] + (keepUnprefixed ? ';' + property + ':' + value : '')
       }
     }
   }

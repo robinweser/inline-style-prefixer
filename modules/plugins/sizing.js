@@ -1,3 +1,5 @@
+import camelToDashCase from '../utils/camelToDashCase'
+
 const properties = {
   maxHeight: true,
   maxWidth: true,
@@ -15,20 +17,12 @@ const values = {
   'contain-floats': true
 }
 
-export default function sizing(pluginInterface) {
-  const { property, value, browserInfo, prefix, keepUnprefixed, forceRun } = pluginInterface
-  const { browser, version } = browserInfo
-
+export default function sizing({ property, value, prefix: { css }, keepUnprefixed }) {
   // This might change in the future
   // Keep an eye on it
   if (properties[property] && values[value]) {
-    let newValue = forceRun ?
-      // prefix all
-      [ '-webkit-', '-moz-' ].map(prefix => prefix + value).join(';' + property + ':') :
-      // default
-      prefix.css + value
     return {
-      [property]: newValue + (keepUnprefixed ? ';' + property + ':' + value : '')
+      [property]: css + value + (keepUnprefixed ? ';' + camelToDashCase(property) + ':' + value : '')
     }
   }
 }
