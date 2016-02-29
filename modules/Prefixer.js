@@ -1,9 +1,31 @@
+import prefixAll from 'inline-style-prefix-all'
 import getBrowserInformation from './utils/getBrowserInformation'
 import getPrefixedKeyframes from './utils/getPrefixedKeyframes'
 import capitalizeString from './utils/capitalizeString'
 import assign from './utils/assign'
-import caniuseData from './caniuseData'
-import plugins from './Plugins'
+import prefixProps from './prefixProps'
+
+import calc from './plugins/calc'
+import cursor from './plugins/cursor'
+import flex from './plugins/flex'
+import sizing from './plugins/sizing'
+import gradient from './plugins/gradient'
+import transition from './plugins/transition'
+// special flexbox specifications
+import flexboxIE from './plugins/flexboxIE'
+import flexboxOld from './plugins/flexboxOld'
+
+const plugins = [
+  calc,
+  cursor,
+  sizing,
+  gradient,
+  transition,
+  flexboxIE,
+  flexboxOld,
+  // this must be run AFTER the flexbox specs
+  flex
+]
 
 export default class Prefixer {
   /**
@@ -30,7 +52,7 @@ export default class Prefixer {
       return false
     }
 
-    let data = this._browserInfo.browser && caniuseData[this._browserInfo.browser]
+    let data = this._browserInfo.browser && prefixProps[this._browserInfo.browser]
     if (data) {
       this._requiresPrefix = Object.keys(data).filter(key => data[key] >= this._browserInfo.version).reduce((result, name) => {
         result[name] = true
@@ -50,7 +72,7 @@ export default class Prefixer {
   prefix(styles) {
     // use prefixAll as fallback if userAgent can not be resolved
     if (this._usePrefixAllFallback) {
-      return Prefixer.prefixAll(styles)
+      return prefixAll(styles)
     }
 
     // only add prefixes if needed
@@ -88,8 +110,7 @@ export default class Prefixer {
               keyframes: this.prefixedKeyframes
             },
             keepUnprefixed: this._keepUnprefixed,
-            requiresPrefix: this._requiresPrefix,
-            forceRun: false
+            requiresPrefix: this._requiresPrefix
           })
           assign(styles, resolvedStyles)
         })
@@ -105,59 +126,6 @@ export default class Prefixer {
    * @returns {Object} - Style object with prefixed properties and values
    */
   static prefixAll(styles) {
-    const prefixes = { }
-    const browserInfo = getBrowserInformation('*')
-
-    browserInfo.browsers.forEach(browser => {
-      let data = caniuseData[browser]
-      if (data) {
-        assign(prefixes, data)
-      }
-    })
-
-    // there should always be at least one prefixed style, but just incase
-    if (!Object.keys(prefixes).length > 0) {
-      return styles
-    }
-
-    styles = assign({ }, styles)
-
-    Object.keys(styles).forEach(property => {
-      let value = styles[property]
-      if (value instanceof Object) {
-        // recurse through nested style objects
-        styles[property] = Prefixer.prefixAll(value)
-      } else {
-        let browsers = Object.keys(browserInfo.prefixes)
-        browsers.forEach(browser => {
-          let style = browserInfo.prefixes[browser]
-          // add prefixes if needed
-          if (prefixes[property]) {
-            styles[style.inline + capitalizeString(property)] = value
-          }
-
-          // resolve plugins for each browser
-          plugins.forEach(plugin => {
-            const resolvedStyles = plugin({
-              property: property,
-              value: value,
-              styles: styles,
-              browserInfo: {
-                name: browser,
-                prefix: style,
-                version: 0 // assume lowest
-              },
-              prefix: {},
-              keepUnprefixed: true,
-              requiresPrefix: prefixes,
-              forceRun: true
-            })
-            assign(styles, resolvedStyles)
-          })
-        })
-      }
-    })
-
-    return styles
+    return prefixAll(styles)
   }
 }

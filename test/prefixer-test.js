@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import Prefixer from '../lib/Prefixer'
+import Prefixer from '../modules/Prefixer'
 
 const MSIE9 = 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 7.1; Trident/5.0)'
 const MSIE10 = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)'
@@ -27,6 +27,22 @@ describe('Prefixing a property', () => {
     expect(new Prefixer({ userAgent: Chrome14 }).prefix({
       width: undefined
     })).to.not.throw
+  })
+
+  it('should also resolve nested objects', () => {
+    const input = {
+      appearance: 'none',
+      innerStyles: {
+        appearance: 'none'
+      }
+    }
+    const output = {
+      WebkitAppearance: 'none',
+      innerStyles: {
+        WebkitAppearance: 'none'
+      }
+    }
+    expect(new Prefixer({ userAgent: Chrome14 }).prefix(input)).to.eql(output)
   })
 })
 
@@ -81,22 +97,66 @@ describe('Prefixing with MS Edge', () => {
   })
 })
 
-describe('Resolving plugins', () => {
-  it('should resolve properties', () => {
-    const input = { alignItems: 'center' }
-    const output = { msFlexAlign: 'center' }
-    expect(new Prefixer({ userAgent: MSIE10 }).prefix(input)).to.eql(output)
+describe('Resolving calc values', () => {
+  it('should resolve calc values', () => {
+    const input = { width: 'calc(30deg)' }
+    const output = { width: '-webkit-calc(30deg)' }
+    expect(new Prefixer({ userAgent: Chrome14 }).prefix(input)).to.eql(output)
   })
-  it('should resolve values', () => {
+})
+
+describe('Resolving special sizing values', () => {
+  it('should add prefixes', () => {
+    const input = { width: 'min-content' }
+    const output = { width: '-webkit-min-content' }
+    expect(new Prefixer({ userAgent: Chrome14 }).prefix(input)).to.eql(output)
+  })
+})
+
+describe('Resolving old 2009 flexbox specification', () => {
+  it('should prefix display value', () => {
     const input = { display: 'flex' }
     const output = { display: '-webkit-box' }
     expect(new Prefixer({ userAgent: Chrome14 }).prefix(input)).to.eql(output)
   })
 
-  it('should resolve alternatives', () => {
+  it('should replace flexDirection', () => {
+    const input = { flexDirection: 'column-reverse' }
+    const output = {
+      WebkitBoxOrient: 'vertical',
+      WebkitBoxDirection: 'reverse'
+    }
+    expect(new Prefixer({ userAgent: Chrome14 }).prefix(input)).to.eql(output)
+  })
+
+  it('should resolve alternative values', () => {
+    const input2 = { justifyContent: 'space-between' }
+    const output2 = { WebkitBoxPack: 'justify' }
+    expect(new Prefixer({ userAgent: Chrome14 }).prefix(input2)).to.eql(output2)
+  })
+})
+
+describe('Resolving old 2012 flexbox specification', () => {
+  it('should resolve alternative properties', () => {
+    const input = { alignItems: 'center' }
+    const output = { msFlexAlign: 'center' }
+    expect(new Prefixer({ userAgent: MSIE10 }).prefix(input)).to.eql(output)
+  })
+
+  it('should resolve alternative properties and values', () => {
     const input = { justifyContent: 'space-between' }
     const output = { msFlexPack: 'justify' }
     expect(new Prefixer({ userAgent: MSIE10 }).prefix(input)).to.eql(output)
+  })
+})
+
+describe('Resolving special cursor values', () => {
+  it('should add prefixes', () => {
+    const standard = { cursor: 'pointer' }
+    const input = { cursor: 'zoom-in' }
+    const output = { cursor: '-webkit-zoom-in' }
+    expect(new Prefixer({ userAgent: Chrome14 }).prefix(standard)).to.eql(standard)
+    expect(new Prefixer({ userAgent: Chrome14 }).prefix(input)).to.eql(output)
   })
 })
 
@@ -106,7 +166,6 @@ describe('Using an invalid userAgent', () => {
     const output = {
       WebkitAppearance: 'test',
       MozAppearance: 'test',
-      msAppearance: 'test',
       appearance: 'test'
     }
     expect(new Prefixer({ userAgent: 'bad userAgent' }).prefix(input)).to.eql(output)
@@ -134,6 +193,7 @@ describe('Prefixing transitions', () => {
     const prefixed = { transition: '-webkit-appearance 200ms linear' }
     expect(new Prefixer({ userAgent: Chrome45 }).prefix(input)).to.eql(prefixed)
   })
+
 
   it('should not split cubic-beziers', () => {
     const input = {
@@ -235,82 +295,29 @@ describe('Keeping defaults', () => {
     }).prefix({ display: 'flex' })).to.eql({
       display: '-webkit-flex;display:flex'
     })
-  })
-})
 
-describe('Combine all supported browser prefixes', () => {
-  it('should resolve common required vendor properties', () => {
-    const input = {
-      transition: '200ms all linear',
-      height: '100px',
-      width: '200px'
-    }
-    const output = {
-      MozTransition: '200ms all linear',
-      WebkitTransition: '200ms all linear',
-      msTransition: '200ms all linear',
-      transition: '200ms all linear',
-      height: '100px',
-      width: '200px'
-    }
-    expect(Prefixer.prefixAll(input)).to.eql(output)
-  })
-  it('should resolve every plugin by default', () => {
-    const input = {
-      alignItems: 'center',
-      height: '100px',
-      width: '200px'
-    }
-    const output = {
-      MozAlignItems: 'center',
-      WebkitAlignItems: 'center',
-      WebkitBoxAlign: 'center',
-      msAlignItems: 'center',
-      msFlexAlign: 'center',
-      alignItems: 'center',
-      height: '100px',
-      width: '200px'
-    }
-    expect(Prefixer.prefixAll(input)).to.eql(output)
+    expect(new Prefixer({
+      userAgent: MSIE10,
+      keepUnprefixed: true
+    }).prefix({ display: 'flex' })).to.eql({
+      display: '-ms-flexbox;display:flex'
+    })
   })
 
-  it('should prefix every property within transition values', () => {
-    const input = {
-      transition: '200ms linear appearance, 100ms linear width'
-    }
-    const output = {
-      WebkitTransition: '200ms linear -webkit-appearance,200ms linear -moz-appearance,200ms linear -ms-appearance,200ms linear appearance, 100ms linear width',
-      MozTransition: '200ms linear -webkit-appearance,200ms linear -moz-appearance,200ms linear -ms-appearance,200ms linear appearance, 100ms linear width',
-      msTransition: '200ms linear -webkit-appearance,200ms linear -moz-appearance,200ms linear -ms-appearance,200ms linear appearance, 100ms linear width',
-      transition: '200ms linear -webkit-appearance,200ms linear -moz-appearance,200ms linear -ms-appearance,200ms linear appearance, 100ms linear width'
-    }
-    expect(Prefixer.prefixAll(input)).to.eql(output)
-  })
+  it('should use dash-cased fallback properties', () => {
+    expect(new Prefixer({
+      userAgent: Chrome22,
+      keepUnprefixed: true
+    }).prefix({ marginLeft: 'calc(30deg)' })).to.eql({
+      marginLeft: '-webkit-calc(30deg);margin-left:calc(30deg)'
+    })
 
-  it('should add all relevant prefixes for plugins', () => {
-    const input = { width: 'calc(30px)' }
-    const output = {
-      width: '-webkit-calc(30px);width:-moz-calc(30px);width:calc(30px)'
-    }
-    expect(Prefixer.prefixAll(input)).to.eql(output)
-
-    const input2 = { display: 'flex' }
-    const output2 = {
-      display: '-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex'
-    }
-    expect(Prefixer.prefixAll(input2)).to.eql(output2)
-
-    const input3 = { display: 'inline-flex' }
-    const output3 = {
-      display: '-webkit-box;display:-moz-box;display:-ms-inline-flexbox;display:-webkit-inline-flex;display:inline-flex'
-    }
-    expect(Prefixer.prefixAll(input3)).to.eql(output3)
-
-    const input4 = { width: 'min-content' }
-    const output4 = {
-      width: '-webkit-min-content;width:-moz-min-content;width:min-content'
-    }
-    expect(Prefixer.prefixAll(input4)).to.eql(output4)
+    expect(new Prefixer({
+      userAgent: MSIE10,
+      keepUnprefixed: true
+    }).prefix({ display: 'flex' })).to.eql({
+      display: '-ms-flexbox;display:flex'
+    })
   })
 })
 
@@ -332,5 +339,18 @@ describe('Prefixing display', () => {
     expect(new Prefixer({ userAgent: MSIE10 }).prefix({
       display: 'block'
     })).to.eql({ display: 'block' })
+  })
+})
+
+describe('Using Prefixer.prefixAll', () => {
+  it(' should use inline-style-prefix-all', () => {
+    const input = { userSelect: 'none' }
+    const output = {
+      WebkitUserSelect: 'none',
+      MozUserSelect: 'none',
+      msUserSelect: 'none',
+      userSelect: 'none'
+    }
+    expect(Prefixer.prefixAll(input)).to.eql(output)
   })
 })

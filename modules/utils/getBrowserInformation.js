@@ -21,78 +21,12 @@ const browsers = {
 }
 
 /**
- * Returns an object containing prefix data associated with a browser
- * @param {string} browser - browser to find a prefix for
- */
-const getPrefixes = browser => {
-  let prefixKeys
-  let prefix
-  let vendors
-  let conditions
-  let prefixVendor
-  let browserVendors
-
-  // Find the prefix for this browser (if any)
-  prefixKeys = Object.keys(vendorPrefixes)
-  for (let i = 0; i < prefixKeys.length; i++) {
-    prefix = prefixKeys[i]
-
-    // Find a matching vendor
-    vendors = vendorPrefixes[prefix]
-    conditions = browsers[browser]
-
-    for (let j = 0; j < vendors.length; j++) {
-      prefixVendor = vendors[j]
-
-      for (let k = 0; k < conditions.length; k++) {
-        browserVendors = conditions[k]
-
-        if (browserVendors.indexOf(prefixVendor) !== -1) {
-          return {
-            inline: prefix,
-            css: '-' + prefix.toLowerCase() + '-'
-          }
-        }
-      }
-    }
-  }
-
-  // No prefix found for this browser
-  return { inline: '', css: '' }
-}
-
-/**
  * Uses bowser to get default browser information such as version and name
  * Evaluates bowser info and adds vendorPrefix information
  * @param {string} userAgent - userAgent that gets evaluated
  */
 export default userAgent => {
-  if (!userAgent) {
-    return false
-  }
-
-  let info = { }
-
-  // Special user agent, return all supported prefixes
-  // instead of returning a string browser name and a prefix object
-  // we return an array of browser names and map of prefixes for each browser
-  if (userAgent === '*') {
-    // Return an array of supported browsers
-    info.browsers = Object.keys(browsers)
-
-    // Return prefixes associated by browser
-    info.prefixes = { }
-
-    // Iterate browser list, assign prefix to each
-    info.browsers.forEach(browser => {
-      info.prefixes[browser] = getPrefixes(browser)
-    })
-
-    return info
-  }
-
-  // Normal user agent, detect browser
-  info = bowser._detect(userAgent)
+  const info = bowser._detect(userAgent)
 
   Object.keys(vendorPrefixes).forEach(prefix => {
     vendorPrefixes[prefix].forEach(browser => {
