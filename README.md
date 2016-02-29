@@ -6,7 +6,7 @@
 [![npm version](https://badge.fury.io/js/inline-style-prefixer.svg)](http://badge.fury.io/js/inline-style-prefixer)
 [![npm downloads](https://img.shields.io/npm/dm/inline-style-prefixer.svg)](https://img.shields.io/npm/dm/inline-style-prefixer.svg)
 ![Dependencies](https://david-dm.org/rofrischmann/inline-style-prefixer.svg)
-![Gzipped Size](https://img.shields.io/badge/gzipped-~8k-brightgreen.svg)
+![Gzipped Size](https://img.shields.io/badge/gzipped-~9.7k-brightgreen.svg)
 
 **inline-style-prefixer** adds required **vendor prefixes** to your style object. It only adds prefixes if they're actually required by evaluating the browser's `userAgent` against data from [caniuse.com](http://caniuse.com/).
 
@@ -25,9 +25,8 @@ Supports the major browsers with the following versions. <br>For legacy support 
 * Android UC: 9+
 * Android Chrome: 30+
 
-#### Whitelisted Browser
-Some browser e.g. headless browsers are whitelisted to not throw errors and not prefix at all.
-* PhantomJS
+### Fallback
+If using an unsupported browser or even run without any `userAgent`, it will use [inline-style-prefix-all](https://github.com/rofrischmann/inline-style-prefix-all) as a fallback.
 
 # Docs
 If you got any issue using this prefixer, please first check the FAQ's. Most cases are already covered and provide a solid solution.
@@ -38,7 +37,7 @@ If you got any issue using this prefixer, please first check the FAQ's. Most cas
 
 # Usage
 ```bash
-npm install inline-style-prefixer
+npm install inline-style-prefixer --save
 ```
 ## Prefixer([config])
 
@@ -102,7 +101,9 @@ const output = {
 }
 ```
 ## Prefixer.prefixAll (static)
-Sometimes you might to prerender something without knowing the userAgent yet. Use the static `prefixAll` to achieve that.
+> **Deprecated!** Use [inline-style-prefix-all](https://github.com/rofrischmann/inline-style-prefix-all) if you only need static prefixing.
+
+If you want static prefixing for every browser you can use `Prefixer.prefixAll` which uses [inline-style-prefix-all](https://github.com/rofrischmann/inline-style-prefix-all), but this will be removed soon.
 
 ```javascript
 const styles = {alignItems: 'center'}
@@ -112,14 +113,13 @@ const prefixedStyles = Prefixer.prefixAll(styles)
 // the userAgent doesn't matter
 // prefixedStyles === output
 const output = {
-  MozAlignItems: 'center',
-  WebkitAlignItems: 'center',
-  msAlignItems: 'center',
-  alignItems: 'center',
-  // it also adds legacy properties
+  WebkitAlignItems: 'space-around',
+  msAlignItems: 'space-around',
+  alignItems: 'space-around',
+  // it also adds legacy properties and values
   // by running every plugin available
-  WebkitBoxAlign: 'center',
-  msFlexAlign: 'center',
+  WebkitBoxAlign: 'justify',
+  msFlexAlign: 'distribute',
 }
 ```
 
