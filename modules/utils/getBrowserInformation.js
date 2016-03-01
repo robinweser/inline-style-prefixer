@@ -26,6 +26,10 @@ const browsers = {
  * @param {string} userAgent - userAgent that gets evaluated
  */
 export default userAgent => {
+  if (!userAgent) {
+    return false
+  }
+
   const info = bowser._detect(userAgent)
 
   Object.keys(vendorPrefixes).forEach(prefix => {
