@@ -26,7 +26,7 @@ const properties = Object.keys(alternativeProps).concat(otherProps).reduce((resu
 
 export default function flexboxOld({ property, value, styles, browserInfo: { browser, version }, prefix: { css }, keepUnprefixed }) {
   if (
-    (properties[property] || property === 'display' && typeof value==='string' && value.indexOf('flex') > -1) &&
+    (properties[property] || property === 'display' && typeof value === 'string' && value.indexOf('flex') > -1) &&
     (
     browser === 'firefox' && version < 22 ||
     browser === 'chrome' && version < 21 ||
