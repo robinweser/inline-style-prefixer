@@ -26,7 +26,7 @@ const properties = Object.keys(alternativeProps).reduce((result, prop) => {
 
 export default function flexboxIE({ property, value, styles, browserInfo: { browser, version }, prefix: { css }, keepUnprefixed }) {
   if (
-    (properties[property] || property === 'display' && value.indexOf('flex') > -1) &&
+    (properties[property] || property === 'display' && typeof value==='string' && value.indexOf('flex') > -1) &&
     (
     (browser === 'ie_mob' || browser === 'ie') && version == 10)
   ) {
