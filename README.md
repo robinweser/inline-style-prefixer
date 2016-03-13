@@ -11,7 +11,7 @@
 **inline-style-prefixer** adds required **vendor prefixes** to your style object. It only adds prefixes if they're actually required by evaluating the browser's `userAgent` against data from [caniuse.com](http://caniuse.com/).
 
 # Browser Support
-Supports the major browsers with the following versions. <br>For legacy support check [custom build](custom-build--legacy-support).
+Supports the major browsers with the following versions. <br>For legacy support check [custom build](#custom-build--legacy-support).
 * Chrome: 30+
 * Safari: 6+
 * Firefox: 25+
