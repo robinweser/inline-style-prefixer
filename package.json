@@ -9,6 +9,7 @@
     "lib/",
     "dist/"
   ],
+  "engines" : { "node" : ">=0.12" },
   "scripts": {
     "babel": "babel modules/ --out-dir lib",
     "build": "npm run clean && mkdir dist && npm run babel && npm run generate && npm run bundle",
