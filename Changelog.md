@@ -1,6 +1,9 @@
 # Changelog
 
 ## 1.0
+### 1.0.3 (24.03.16)
+* replaced `Set` with ES5 alternative
+
 ### 1.0.2 (07.03.16)
 * fixed a bug that caused crashes if `display` got either `null` or `undefined` assigned ( [#71](https://github.com/rofrischmann/inline-style-prefixer/pull/71#issue-139056802) ) - thanks to [@tintin1343](https://github.com/tintin1343)
 
