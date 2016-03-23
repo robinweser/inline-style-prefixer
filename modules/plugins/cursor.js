@@ -1,10 +1,15 @@
 import camelToDashCase from '../utils/camelToDashCase'
 
-const values = new Set([ 'zoom-in', 'zoom-out', 'grab', 'grabbing' ])
+const values = {
+  'zoom-in': true,
+  'zoom-out': true,
+  'grab': true,
+  'grabbing': true
+}
 
 export default function cursor({ property, value, browserInfo: { browser, version }, prefix: { css }, keepUnprefixed }) {
   if (
-    property === 'cursor' && values.has(value) &&
+    property === 'cursor' && values[value] &&
     (
     browser === 'firefox' && version < 24 ||
     browser === 'chrome' && version < 37 ||
