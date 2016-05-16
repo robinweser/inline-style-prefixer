@@ -1,6 +1,9 @@
 # Changelog
 
 ## 1.0
+### 1.0.4 (16.05.16)
+* updated inline-style-prefix-all dependency to correct fallback value order
+
 ### 1.0.3 (24.03.16)
 * replaced `Set` with ES5 alternative
 
