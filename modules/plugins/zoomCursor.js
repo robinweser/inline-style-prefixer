@@ -2,9 +2,7 @@ import camelToDashCase from '../utils/camelToDashCase'
 
 const values = {
   'zoom-in': true,
-  'zoom-out': true,
-  'grab': true,
-  'grabbing': true
+  'zoom-out': true
 }
 
 export default function cursor({ property, value, browserInfo: { browser, version }, prefix: { css }, keepUnprefixed }) {

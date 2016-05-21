@@ -150,13 +150,25 @@ describe('Resolving old 2012 flexbox specification', () => {
   })
 })
 
-describe('Resolving special cursor values', () => {
-  it('should add prefixes', () => {
+describe('Resolving zoom cursor values', () => {
+  it('should add prefixes when appropriate', () => {
     const standard = { cursor: 'pointer' }
     const input = { cursor: 'zoom-in' }
     const output = { cursor: '-webkit-zoom-in' }
     expect(new Prefixer({ userAgent: Chrome14 }).prefix(standard)).to.eql(standard)
     expect(new Prefixer({ userAgent: Chrome14 }).prefix(input)).to.eql(output)
+    expect(new Prefixer({ userAgent: Chrome49 }).prefix(input)).to.eql(input)
+  })
+})
+
+describe('Resolving grab cursor values', () => {
+  it('should add prefixes when appropriate', () => {
+    const standard = { cursor: 'pointer' }
+    const input = { cursor: 'grab' }
+    const output = { cursor: '-webkit-grab' }
+    expect(new Prefixer({ userAgent: Chrome14 }).prefix(standard)).to.eql(standard)
+    expect(new Prefixer({ userAgent: Chrome14 }).prefix(input)).to.eql(output)
+    expect(new Prefixer({ userAgent: Chrome49 }).prefix(input)).to.eql(output)
   })
 })
 
