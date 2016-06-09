@@ -1,13 +1,13 @@
 import bowser from 'bowser'
 
 const vendorPrefixes = {
-  Webkit: [ 'chrome', 'safari', 'ios', 'android', 'phantom', 'opera', 'webos', 'blackberry', 'bada', 'tizen' ],
+  Webkit: [ 'chrome', 'safari', 'ios', 'android', 'phantom', 'opera', 'webos', 'blackberry', 'bada', 'tizen', 'chromium' ],
   Moz: [ 'firefox', 'seamonkey', 'sailfish' ],
   ms: [ 'msie', 'msedge' ]
 }
 
 const browsers = {
-  chrome: [ [ 'chrome' ] ],
+  chrome: [ [ 'chrome' ], [ 'chromium' ] ],
   safari: [ [ 'safari' ] ],
   firefox: [ [ 'firefox' ] ],
   ie: [ [ 'msie' ] ],
