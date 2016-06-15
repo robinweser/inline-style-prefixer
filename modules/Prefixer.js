@@ -6,7 +6,8 @@ import assign from './utils/assign'
 import prefixProps from './prefixProps'
 
 import calc from './plugins/calc'
-import cursor from './plugins/cursor'
+import zoomCursor from './plugins/zoomCursor'
+import grabCursor from './plugins/grabCursor'
 import flex from './plugins/flex'
 import sizing from './plugins/sizing'
 import gradient from './plugins/gradient'
@@ -17,7 +18,8 @@ import flexboxOld from './plugins/flexboxOld'
 
 const plugins = [
   calc,
-  cursor,
+  zoomCursor,
+  grabCursor,
   sizing,
   gradient,
   transition,

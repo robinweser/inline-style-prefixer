@@ -3,8 +3,10 @@ Sometimes it is not enough to just prefix a property, but you also need to prefi
 
 ### calc
 Adds support for prefixed `calc` values on any property.
-### cursor
-Adds support for prefixed new `cursor` values `zoom-in`, `zoom-out`, `grab`, `grabbing`.
+### zoomCursor
+Adds support for prefixed new `cursor` values `zoom-in` and `zoom-out`.
+### grabCursor
+Adds support for prefixed new `cursor` values `grab` and `grabbing`.
 
 ### flex
 Adds support for prefixed `display` values using `display: flex` or `display: inline-flex`.
