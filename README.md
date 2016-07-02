@@ -72,6 +72,7 @@ const output = {
 }
 ```
 `inline-style-prefixer/static`
+
 ![Gzipped Size](https://img.shields.io/badge/gzipped-2.5kb-brightgreen.svg)
 
 If you only want to use the static version, you can import it directly to reduce file size. It was once shipped as a several package [inline-style-prefix-all](https://github.com/rofrischmann/inline-style-prefix-all).
