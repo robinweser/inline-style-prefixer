@@ -1,6 +1,6 @@
 # API Reference
 
-* [`Prefixer([config])`](#prefixer--config)
+* [`Prefixer([config])`](#prefixerconfig)
   * [`prefix(styles)`](#prefixstyles)
   * [`prefixAll(styles)`](#prefixallstyles)
   * [Properties](#properties)
@@ -23,20 +23,19 @@ import Prefixer from 'inline-style-prefixer'
 const prefixer = new Prefixer()
 ```
 
-### Config
-#### `userAgent`
+##### Configuration
+##### `userAgent`
 *Default: `navigator.userAgent`*
 
 Sometimes your environment does not provide a proper userAgent string e.g. if you are **rendering on server-side**. Therefore optionally just pass a userAgent-string.
 
-##### Example
 ```javascript
 const customUserAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.155 Safari/537.36'
 
 const prefixer = new Prefixer({ userAgent: customUserAgent })
 ```
 
-#### `keepUnprefixed`
+##### `keepUnprefixed`
 *Default: `false`*
 
 Use this option to keep default values. This should be used if you're facing wrong prefixes.
