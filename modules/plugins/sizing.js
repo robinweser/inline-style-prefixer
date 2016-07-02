@@ -1,5 +1,3 @@
-import hyphenateStyleName from 'hyphenate-style-name'
-
 const properties = {
   maxHeight: true,
   maxWidth: true,
@@ -21,8 +19,9 @@ export default function sizing({ property, value, prefix: { css }, keepUnprefixe
   // This might change in the future
   // Keep an eye on it
   if (properties[property] && values[value]) {
+    const prefixedValue = css + value
     return {
-      [property]: css + value + (keepUnprefixed ? ';' + hyphenateStyleName(property) + ':' + value : '')
+      [property]: keepUnprefixed ? [ prefixedValue, value ] : prefixedValue
     }
   }
 }

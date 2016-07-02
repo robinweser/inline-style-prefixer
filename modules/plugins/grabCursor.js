@@ -1,5 +1,3 @@
-import hyphenateStyleName from 'hyphenate-style-name'
-
 const values = { grab: true, grabbing: true }
 
 export default function grabCursor({ property, value, browserInfo: { browser, version }, prefix: { css }, keepUnprefixed }) {
@@ -13,8 +11,9 @@ export default function grabCursor({ property, value, browserInfo: { browser, ve
     browser === 'opera'
     )
   ) {
+    const prefixedValue = css + value
     return {
-      cursor: css + value + (keepUnprefixed ? ';' + hyphenateStyleName(property) + ':' + value : '')
+      cursor: keepUnprefixed ? [ prefixedValue, value ] : prefixedValue
     }
   }
 }

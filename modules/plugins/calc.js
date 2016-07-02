@@ -1,5 +1,3 @@
-import hyphenateStyleName from 'hyphenate-style-name'
-
 export default function calc({ property, value, browserInfo: { browser, version }, prefix: { css }, keepUnprefixed }) {
   if (
     typeof value === 'string' && value.indexOf('calc(') > -1 &&
@@ -10,8 +8,9 @@ export default function calc({ property, value, browserInfo: { browser, version 
     browser === 'ios_saf' && version < 7
     )
   ) {
+    const prefixedValue = value.replace(/calc\(/g, css + 'calc(')
     return {
-      [property]: value.replace(/calc\(/g, css + 'calc(') + (keepUnprefixed ? ';' + hyphenateStyleName(property) + ':' + value : '')
+      [property]: keepUnprefixed ? [ prefixedValue, value ] : prefixedValue
     }
   }
 }

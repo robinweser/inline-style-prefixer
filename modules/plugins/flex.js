@@ -1,5 +1,3 @@
-import hyphenateStyleName from 'hyphenate-style-name'
-
 const values = { flex: true, 'inline-flex': true }
 
 export default function flex({ property, value, browserInfo: { browser, version }, prefix: { css }, keepUnprefixed }) {
@@ -11,8 +9,9 @@ export default function flex({ property, value, browserInfo: { browser, version 
     browser === 'opera' && (version == 15 || version == 16)
     )
   ) {
+    const prefixedValue = css + value
     return {
-      display: css + value + (keepUnprefixed ? ';' + hyphenateStyleName(property) + ':' + value : '')
+      display: keepUnprefixed ? [ prefixedValue, value ] : prefixedValue
     }
   }
 }

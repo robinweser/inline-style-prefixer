@@ -1,5 +1,3 @@
-import hyphenateStyleName from 'hyphenate-style-name'
-
 const alternativeValues = {
   'space-around': 'justify',
   'space-between': 'justify',
@@ -45,8 +43,9 @@ export default function flexboxOld({ property, value, styles, browserInfo: { bro
       }
     }
     if (property === 'display' && alternativeValues[value]) {
+      const prefixedValue = css + alternativeValues[value]
       return {
-        display: css + alternativeValues[value] + (keepUnprefixed ? ';' + hyphenateStyleName(property) + ':' + value : '')
+        display: keepUnprefixed ? [ prefixedValue, value ] : prefixedValue
       }
     }
     if (alternativeProps[property]) {

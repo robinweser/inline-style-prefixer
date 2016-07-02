@@ -54,7 +54,7 @@ export default class Prefixer {
       return false
     }
 
-    let data = this._browserInfo.browser && prefixProps[this._browserInfo.browser]
+    const data = this._browserInfo.browser && prefixProps[this._browserInfo.browser]
     if (data) {
       this._requiresPrefix = Object.keys(data).filter(key => data[key] >= this._browserInfo.version).reduce((result, name) => {
         result[name] = true

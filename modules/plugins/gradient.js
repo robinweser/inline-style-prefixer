@@ -1,5 +1,3 @@
-import hyphenateStyleName from 'hyphenate-style-name'
-
 const values = /linear-gradient|radial-gradient|repeating-linear-gradient|repeating-radial-gradient/
 
 export default function gradient({ property, value, browserInfo: { browser, version }, prefix: { css }, keepUnprefixed }) {
@@ -14,8 +12,9 @@ export default function gradient({ property, value, browserInfo: { browser, vers
     browser === 'and_uc'
     )
   ) {
+    const prefixedValue = css + value
     return {
-      [property]: css + value + (keepUnprefixed ? ';' + hyphenateStyleName(property) + ':' + value : '')
+      [property]: keepUnprefixed ? [ prefixedValue, value ] : prefixedValue
     }
   }
 }

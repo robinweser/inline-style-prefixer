@@ -1,5 +1,3 @@
-import hyphenateStyleName from 'hyphenate-style-name'
-
 const alternativeValues = {
   'space-around': 'distribute',
   'space-between': 'justify',
@@ -34,8 +32,9 @@ export default function flexboxIE({ property, value, styles, browserInfo: { brow
       delete styles[property]
     }
     if (property === 'display' && alternativeValues[value]) {
+      const prefixedValue = css + alternativeValues[value]
       return {
-        display: css + alternativeValues[value] + (keepUnprefixed ? ';' + hyphenateStyleName(property) + ':' + value : '')
+        display: keepUnprefixed ? [ prefixedValue, value ] : prefixedValue
       }
     }
     if (alternativeProps[property]) {

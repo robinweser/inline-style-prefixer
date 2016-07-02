@@ -14,16 +14,13 @@ const Chrome22 = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.2 (KHTML, like Ge
 const Chrome45 = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36'
 const Chrome49 = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2454.85 Safari/537.36'
 const SeaMonkey = 'Mozilla/5.0 (Windows NT 5.2; RW; rv:7.0a1) Gecko/20091211 SeaMonkey/9.23a1pre'
-
+const Chromium = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/50.0.2661.102 Chrome/50.0.2661.102 Safari/537.36'
 const PhantomJS = 'Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.0.0 Safari/538.1'
 
 describe('Prefixing a property', () => {
   it('should only add required prefixes', () => {
     const input = { appearance: 'test', transition: 'test' }
     const prefixed = { WebkitAppearance: 'test', transition: 'test' }
-    console.log(new Prefixer({ userAgent: Chrome45 }).prefix({
-      display: 'flex'
-    }))
     expect(new Prefixer({ userAgent: Chrome45 }).prefix(input)).to.eql(prefixed)
   })
   it('should not break if the value is undefined or false', () => {
@@ -308,14 +305,14 @@ describe('Keeping defaults', () => {
       userAgent: Chrome22,
       keepUnprefixed: true
     }).prefix({ display: 'flex' })).to.eql({
-      display: '-webkit-flex;display:flex'
+      display: [ '-webkit-flex', 'flex' ]
     })
 
     expect(new Prefixer({
       userAgent: MSIE10,
       keepUnprefixed: true
     }).prefix({ display: 'flex' })).to.eql({
-      display: '-ms-flexbox;display:flex'
+      display: [ '-ms-flexbox', 'flex' ]
     })
   })
 
@@ -324,14 +321,14 @@ describe('Keeping defaults', () => {
       userAgent: Chrome22,
       keepUnprefixed: true
     }).prefix({ marginLeft: 'calc(30deg)' })).to.eql({
-      marginLeft: '-webkit-calc(30deg);margin-left:calc(30deg)'
+      marginLeft: [ '-webkit-calc(30deg)', 'calc(30deg)' ]
     })
 
     expect(new Prefixer({
       userAgent: MSIE10,
       keepUnprefixed: true
     }).prefix({ display: 'flex' })).to.eql({
-      display: '-ms-flexbox;display:flex'
+      display: [ '-ms-flexbox', 'flex' ]
     })
   })
 })
@@ -366,7 +363,7 @@ describe('Prefixing display', () => {
 })
 
 describe('Using Prefixer.prefixAll', () => {
-  it(' should use inline-style-prefix-all', () => {
+  it(' should use inline-style-prefixer/static', () => {
     const input = { userSelect: 'none' }
     const output = {
       WebkitUserSelect: 'none',
