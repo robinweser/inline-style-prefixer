@@ -45,7 +45,7 @@ function prefixValue(value) {
       Object.keys(prefixProps[prefix]).forEach(prop => {
         const dashCaseProperty = hyphenateStyleName(prop)
 
-        if (val.indexOf(dashCaseProperty) > -1) {
+        if (val.indexOf(dashCaseProperty) > -1 && dashCaseProperty !== 'order') {
           // join all prefixes and create a new value
           out = val.replace(dashCaseProperty, dashCasePrefix + dashCaseProperty) + ',' + out
         }
