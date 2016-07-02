@@ -1,7 +1,7 @@
 import bowser from 'bowser'
 
 const vendorPrefixes = {
-  Webkit: [ 'chrome', 'safari', 'ios', 'android', 'phantom', 'opera', 'webos', 'blackberry', 'bada', 'tizen', 'chromium' ],
+  Webkit: [ 'chrome', 'safari', 'ios', 'android', 'phantom', 'opera', 'webos', 'blackberry', 'bada', 'tizen', 'chromium', 'vivaldi' ],
   Moz: [ 'firefox', 'seamonkey', 'sailfish' ],
   ms: [ 'msie', 'msedge' ]
 }
@@ -12,7 +12,7 @@ const browsers = {
   firefox: [ [ 'firefox' ] ],
   ie: [ [ 'msie' ] ],
   edge: [ [ 'msedge' ] ],
-  opera: [ [ 'opera' ] ],
+  opera: [ [ 'opera' ], [ 'vivaldi' ] ],
   ios_saf: [ [ 'ios', 'mobile' ], [ 'ios', 'tablet' ] ],
   ie_mob: [ [ 'windowsphone', 'mobile', 'msie' ], [ 'windowsphone', 'tablet', 'msie' ], [ 'windowsphone', 'mobile', 'msedge' ], [ 'windowsphone', 'tablet', 'msedge' ] ],
   op_mini: [ [ 'opera', 'mobile' ], [ 'opera', 'tablet' ] ],
