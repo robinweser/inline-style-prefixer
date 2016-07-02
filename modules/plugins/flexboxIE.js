@@ -1,4 +1,4 @@
-import camelToDashCase from '../utils/camelToDashCase'
+import hyphenateStyleName from 'hyphenate-style-name'
 
 const alternativeValues = {
   'space-around': 'distribute',
@@ -35,7 +35,7 @@ export default function flexboxIE({ property, value, styles, browserInfo: { brow
     }
     if (property === 'display' && alternativeValues[value]) {
       return {
-        display: css + alternativeValues[value] + (keepUnprefixed ? ';' + camelToDashCase(property) + ':' + value : '')
+        display: css + alternativeValues[value] + (keepUnprefixed ? ';' + hyphenateStyleName(property) + ':' + value : '')
       }
     }
     if (alternativeProps[property]) {

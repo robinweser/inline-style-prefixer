@@ -1,4 +1,4 @@
-import hyphenateStyleName from 'hyphenate-style-name'
+import joinPrefixedRules from '../../utils/joinPrefixedRules'
 
 const properties = {
   maxHeight: true,
@@ -17,12 +17,8 @@ const values = {
   'contain-floats': true
 }
 
-export default function sizing({ property, value, prefix: { css }, keepUnprefixed }) {
-  // This might change in the future
-  // Keep an eye on it
+export default function sizing(property, value) {
   if (properties[property] && values[value]) {
-    return {
-      [property]: css + value + (keepUnprefixed ? ';' + hyphenateStyleName(property) + ':' + value : '')
-    }
+    return joinPrefixedRules(property, value)
   }
 }

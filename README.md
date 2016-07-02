@@ -1,4 +1,4 @@
-<h1 align="center"><img src="docs/res/logo.png" width=600></div>
+<h1 align="center"><img src="docs/res/logo.png" width=400></div>
 </h1>
 [![Build Status](https://travis-ci.org/rofrischmann/inline-style-prefixer.svg)](https://travis-ci.org/rofrischmann/inline-style-prefixer)
 [![Test Coverage](https://codeclimate.com/github/rofrischmann/inline-style-prefixer/badges/coverage.svg)](https://codeclimate.com/github/rofrischmann/inline-style-prefixer/coverage)
@@ -6,12 +6,30 @@
 [![npm version](https://badge.fury.io/js/inline-style-prefixer.svg)](http://badge.fury.io/js/inline-style-prefixer)
 [![npm downloads](https://img.shields.io/npm/dm/inline-style-prefixer.svg)](https://img.shields.io/npm/dm/inline-style-prefixer.svg)
 ![Dependencies](https://david-dm.org/rofrischmann/inline-style-prefixer.svg)
-![Gzipped Size](https://img.shields.io/badge/gzipped-~9.7k-brightgreen.svg)
+![Gzipped Size](https://img.shields.io/badge/gzipped-8.6kb-brightgreen.svg)
 
-**inline-style-prefixer** adds required **vendor prefixes** to your style object. It only adds prefixes if they're actually required by evaluating the browser's `userAgent` against data from [caniuse.com](http://caniuse.com/).
+**inline-style-prefixer** adds required **vendor prefixes** to your style object. It only adds prefixes if they're actually required by evaluating the browser's `userAgent` against data from [caniuse.com](http://caniuse.com/).<br>
+Alternatively it ships a static version that adds all available vendor prefixes.
+
+## Installation
+```sh
+npm i --save inline-style-prefixer
+```
+Assuming you are using [npm](https://www.npmjs.com) as your package mananger you can `npm install` all packages. <br>
+Otherwise we also provide [UMD](https://github.com/umdjs/umd) builds for each package within the `dist` folder. You can easily use them via [npmcdn](https://npmcdn.com/).
+```HTML
+<!-- Unminified versions -->
+<script src="https://npmcdn.com/inline-style-prefixer@2.0.0/dist/inline-style-prefixer.js"></script>
+<script src="https://npmcdn.com/inline-style-prefixer@2.0.0/dist/inline-style-prefix-all.js"></script>
+<!-- Minified versions -->
+<script src="https://npmcdn.com/inline-style-prefixer@2.0.0/dist/inline-style-prefixer.min.js"></script>
+<script src="https://npmcdn.com/inline-style-prefixer@2.0.0/dist/inline-style-prefix-all.min.js"></script>
+```
 
 # Browser Support
-Supports the major browsers with the following versions. <br>For legacy support check [custom build](#custom-build--legacy-support).
+Supports the major browsers with the following versions. <br>For legacy support check [custom build](#custom-build--legacy-support). We do not officially support any other browsers.<br>
+It will **only** add prefixes if a property still needs them in one of the following browser versions.This means *e.g. `border-radius`* will not be prefixed at all.
+
 * Chrome: 30+
 * Safari: 6+
 * Firefox: 25+
@@ -26,21 +44,10 @@ Supports the major browsers with the following versions. <br>For legacy support 
 * Android Chrome: 30+
 
 ### Fallback
-If using an unsupported browser or even run without any `userAgent`, it will use [inline-style-prefix-all](https://github.com/rofrischmann/inline-style-prefix-all) as a fallback.
+If using an unsupported browser or even run without any `userAgent`, it will use [`inline-style-prefixer/static`](docs/API.md#pro-tip) as a fallback.
 
-# Docs
-If you got any issue using this prefixer, please first check the FAQ's. Most cases are already covered and provide a solid solution.
 
-* [FAQ](docs/FAQ.md)
-* [Supported Properties](docs/Properties.md)
-* [Special Plugins](docs/Plugins.md)
-
-# Usage
-```bash
-npm install inline-style-prefixer --save
-```
-## Prefixer([config])
-
+## Example
 ```javascript
 import Prefixer from 'inline-style-prefixer'
 
@@ -52,10 +59,9 @@ const styles = {
   color: 'blue'
 }
 
-const prefixer = new Prefixer()
+const prefixer = new Prefixer({ userAgent: 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.2 (KHTML, like Gecko) Chrome/25.0.1216.0 Safari/537.2'})
 const prefixedStyles = prefixer.prefix(styles)
 
-// Assuming you are using e.g. Chrome version 25
 // prefixedStyles === output
 const output = {
   transition: '200ms all linear',
@@ -65,72 +71,46 @@ const output = {
   color: 'blue'
 }
 ```
-### Config
-#### userAgent
-*Default: `navigator.userAgent`*
+`inline-style-prefixer/static`
+![Gzipped Size](https://img.shields.io/badge/gzipped-2.5kb-brightgreen.svg)
 
-Sometimes your environment does not provide a proper userAgent string e.g. if you are **rendering on server-side**. Therefore optionally just pass a userAgent-string.
-
+If you only want to use the static version, you can import it directly to reduce file size. It was once shipped as a several package [inline-style-prefix-all](https://github.com/rofrischmann/inline-style-prefix-all).
 ```javascript
-const customUserAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.155 Safari/537.36'
+import prefixAll from 'inline-style-prefixer/static'
 
-const prefixer = new Prefixer({userAgent: customUserAgent})
-```
-
-#### keepUnprefixed
-*Default: `false`*
-
-Use this option to keep default values. This should be used if you're facing wrong prefixes.
-```javascript
 const styles = {
-  userSelect: 'none',
-  display: 'flex'
+  transition: '200ms all linear',
+  boxSizing: 'border-box',
+  display: 'flex',
+  color: 'blue'
 }
 
-const prefixer = new Prefixer({keepUnprefixed: true})
-const prefixedStyles = prefixer.prefix(styles)
+const prefixedStyles = prefixAll(styles)
 
-// Assuming you are using e.g. Chrome version 22
 // prefixedStyles === output
 const output = {
-  WebkitUserSelect: 'none',  
-  // unprefixed properties do not get removed
-  userSelect: 'none',
-  // unprefixed values will be appended to the string
-  display: '-webkit-flex;display:flex'
-}
-```
-## Prefixer.prefixAll (static)
-> **Deprecated!** Use [inline-style-prefix-all](https://github.com/rofrischmann/inline-style-prefix-all) if you only need static prefixing.
-
-If you want static prefixing for every browser you can use `Prefixer.prefixAll` which uses [inline-style-prefix-all](https://github.com/rofrischmann/inline-style-prefix-all), but this will be removed soon.
-
-```javascript
-const styles = {alignItems: 'center'}
-
-const prefixedStyles = Prefixer.prefixAll(styles)
-
-// the userAgent doesn't matter
-// prefixedStyles === output
-const output = {
-  WebkitAlignItems: 'space-around',
-  msAlignItems: 'space-around',
-  alignItems: 'space-around',
-  // it also adds legacy properties and values
-  // by running every plugin available
-  WebkitBoxAlign: 'justify',
-  msFlexAlign: 'distribute',
+  WebkitTransition: '200ms all linear',
+  // Firefox dropped prefixed transition with version 16
+  // IE never supported prefixed transitions
+  transition: '200ms all linear',
+  MozBoxSizing: 'border-box',
+  // Firefox up to version 28 needs a prefix
+  // Others dropped prefixes out of scope
+  boxSizing: 'border-box',
+  // Fallback/prefixed values get grouped in arrays
+  // The prefixer does not resolve those
+  display: ['-webkit-box', '-moz-box', '-ms-flexbox', '-webkit-flex', 'flex']
+  color: 'blue'
 }
 ```
 
-## Prefix Information
-Every `Prefixer` instance also provides prefix information.
-```javascript
-// e.g. using a Chrome version 40 userAgent
-prefixer.cssPrefix = '-webkit-'
-prefixer.jsPrefix = 'Webkit'
-prefixer.prefixedKeyframes = '-webkit-keyframes'
-```
+## Documentation
+If you got any issue using this prefixer, please first check the FAQ's. Most cases are already covered and provide a solid solution.
+
+* [API Reference](docs/API.md)
+* [Supported Properties](docs/Properties.md)
+* [Special Plugins](docs/Plugins.md)
+* [FAQ](docs/FAQ.md)
 
 # Custom Build & Legacy Support
 You may have to create a custom build if you need older browser versions. Just modify the [config.js](config.js) file which includes all the browser version specifications.
@@ -143,13 +123,3 @@ npm run build
 **inline-style-prefixer** is licensed under the [MIT License](http://opensource.org/licenses/MIT).<br>
 Documentation is licensed under [Creative Common License](http://creativecommons.org/licenses/by/4.0/).<br>
 Created with ♥ by [@rofrischmann](http://rofrischmann.de).
-
-# Contributing
-I would love to see people getting involved.<br>
-If you have a feature request please create an issue. Also if you're even improving inline-style-prefixer by any kind please don't be shy and send a pull request to let everyone benefit.
-
-### Issues
-If you're having any issue please let me know as fast as possible to find a solution a hopefully fix the issue. Try to add as much information as possible such as your environment, exact case, the line of actions to reproduce the issue.
-
-### Pull Requests
-If you are creating a pull request, try to use commit messages that are self-explanatory. Also always add some **tests** unless it's totally senseless (add a reason why it's senseless) and test your code before you commit so Travis won't throw errors.

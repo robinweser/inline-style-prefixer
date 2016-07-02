@@ -1,4 +1,4 @@
-import camelToDashCase from '../utils/camelToDashCase'
+import hyphenateStyleName from 'hyphenate-style-name'
 
 const alternativeValues = {
   'space-around': 'justify',
@@ -46,7 +46,7 @@ export default function flexboxOld({ property, value, styles, browserInfo: { bro
     }
     if (property === 'display' && alternativeValues[value]) {
       return {
-        display: css + alternativeValues[value] + (keepUnprefixed ? ';' + camelToDashCase(property) + ':' + value : '')
+        display: css + alternativeValues[value] + (keepUnprefixed ? ';' + hyphenateStyleName(property) + ':' + value : '')
       }
     }
     if (alternativeProps[property]) {

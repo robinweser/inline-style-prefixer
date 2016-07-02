@@ -1,11 +1,8 @@
-import camelToDashCase from '../utils/camelToDashCase'
+import hyphenateStyleName from 'hyphenate-style-name'
 
-const values = {
-  'grab': true,
-  'grabbing': true
-}
+const values = { grab: true, grabbing: true }
 
-export default function cursor({ property, value, browserInfo: { browser, version }, prefix: { css }, keepUnprefixed }) {
+export default function grabCursor({ property, value, browserInfo: { browser, version }, prefix: { css }, keepUnprefixed }) {
   // adds prefixes for firefox, chrome, safari, and opera regardless of version until a reliable brwoser support info can be found (see: https://github.com/rofrischmann/inline-style-prefixer/issues/79)
   if (
     property === 'cursor' && values[value] &&
@@ -17,7 +14,7 @@ export default function cursor({ property, value, browserInfo: { browser, versio
     )
   ) {
     return {
-      cursor: css + value + (keepUnprefixed ? ';' + camelToDashCase(property) + ':' + value : '')
+      cursor: css + value + (keepUnprefixed ? ';' + hyphenateStyleName(property) + ':' + value : '')
     }
   }
 }

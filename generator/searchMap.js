@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   'border-radius': 'borderRadius',
   'border-image': [ 'borderImage', 'borderImageOutset', 'borderImageRepeat', 'borderImageSlice', 'borderImageSource', 'borderImageWidth' ],
   flexbox: [ 'flex', 'flexBasis', 'flexDirection', 'flexGrow', 'flexFlow', 'flexShrink', 'flexWrap', 'alignContent', 'alignItems', 'alignSelf', 'justifyContent', 'order' ],

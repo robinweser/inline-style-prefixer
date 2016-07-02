@@ -1,9 +1,6 @@
-import camelToDashCase from '../utils/camelToDashCase'
+import hyphenateStyleName from 'hyphenate-style-name'
 
-const values = {
-  'flex': true,
-  'inline-flex': true
-}
+const values = { flex: true, 'inline-flex': true }
 
 export default function flex({ property, value, browserInfo: { browser, version }, prefix: { css }, keepUnprefixed }) {
   if (
@@ -15,7 +12,7 @@ export default function flex({ property, value, browserInfo: { browser, version 
     )
   ) {
     return {
-      display: css + value + (keepUnprefixed ? ';' + camelToDashCase(property) + ':' + value : '')
+      display: css + value + (keepUnprefixed ? ';' + hyphenateStyleName(property) + ':' + value : '')
     }
   }
 }

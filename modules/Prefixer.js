@@ -1,4 +1,4 @@
-import prefixAll from 'inline-style-prefix-all'
+import prefixAll from './static/prefixAll'
 import getBrowserInformation from './utils/getBrowserInformation'
 import getPrefixedKeyframes from './utils/getPrefixedKeyframes'
 import capitalizeString from './utils/capitalizeString'

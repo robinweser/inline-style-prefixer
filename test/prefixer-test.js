@@ -21,6 +21,9 @@ describe('Prefixing a property', () => {
   it('should only add required prefixes', () => {
     const input = { appearance: 'test', transition: 'test' }
     const prefixed = { WebkitAppearance: 'test', transition: 'test' }
+    console.log(new Prefixer({ userAgent: Chrome45 }).prefix({
+      display: 'flex'
+    }))
     expect(new Prefixer({ userAgent: Chrome45 }).prefix(input)).to.eql(prefixed)
   })
   it('should not break if the value is undefined or false', () => {

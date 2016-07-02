@@ -1,4 +1,4 @@
-import camelToDashCase from '../utils/camelToDashCase'
+import hyphenateStyleName from 'hyphenate-style-name'
 
 export default function calc({ property, value, browserInfo: { browser, version }, prefix: { css }, keepUnprefixed }) {
   if (
@@ -11,7 +11,7 @@ export default function calc({ property, value, browserInfo: { browser, version 
     )
   ) {
     return {
-      [property]: value.replace(/calc\(/g, css + 'calc(') + (keepUnprefixed ? ';' + camelToDashCase(property) + ':' + value : '')
+      [property]: value.replace(/calc\(/g, css + 'calc(') + (keepUnprefixed ? ';' + hyphenateStyleName(property) + ':' + value : '')
     }
   }
 }

@@ -1,4 +1,4 @@
-import camelToDashCase from '../utils/camelToDashCase'
+import hyphenateStyleName from 'hyphenate-style-name'
 
 const values = /linear-gradient|radial-gradient|repeating-linear-gradient|repeating-radial-gradient/
 
@@ -15,7 +15,7 @@ export default function gradient({ property, value, browserInfo: { browser, vers
     )
   ) {
     return {
-      [property]: css + value + (keepUnprefixed ? ';' + camelToDashCase(property) + ':' + value : '')
+      [property]: css + value + (keepUnprefixed ? ';' + hyphenateStyleName(property) + ':' + value : '')
     }
   }
 }
