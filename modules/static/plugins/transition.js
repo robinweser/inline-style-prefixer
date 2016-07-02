@@ -14,7 +14,7 @@ export default function transition(property, value) {
   // also check for already prefixed transitions
   if (typeof value === 'string' && properties[property]) {
     const outputValue = prefixValue(value)
-    const webkitOutput = outputValue.split(',').filter(value => value.match(/-moz-|-ms-/) === null).join(',')
+    const webkitOutput = outputValue.split(/,(?![^()]*(?:\([^()]*\))?\))/g).filter(value => value.match(/-moz-|-ms-/) === null).join(',')
 
     // if the property is already prefixed
     if (property.indexOf('Webkit') > -1) {

@@ -172,6 +172,18 @@ describe('Resolving special plugins', () => {
     expect(prefixAll(input)).to.eql(output)
   })
 
+  it('should prefix transitions with cubic beziers', () => {
+    const input = {
+      transition: 'transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000)'
+    }
+    const output = {
+      transition: '-ms-transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000),-webkit-transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000),transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000)',
+      WebkitTransition: '-webkit-transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000),transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000)'
+    }
+    expect(prefixAll(input)).to.eql(output)
+    expect(prefixAll(input)).to.eql(output)
+  })
+
   it('should prefix transition values for prefixed properties', () => {
     const input = { WebkitTransition: '200ms linear appearance' }
     const output = {
