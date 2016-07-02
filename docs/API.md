@@ -103,7 +103,7 @@ const output = {
   // unprefixed properties do not get removed
   userSelect: 'none',
   // unprefixed values will be appended to the string
-  display: '-webkit-flex;display:flex'
+  display: ['-webkit-flex', 'flex']
 }
 ```
 
