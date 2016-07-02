@@ -1,5 +1,21 @@
 # Changelog
 
+## 2.0
+### 2.0.0 (02.07.16)
+##### API Changes
+* merged [inline-style-prefix-all](https://github.com/rofrischmann/inline-style-prefix-all) as `inline-style-prefixer/static`
+
+##### Improvements
+* support for Chromium browser ( [#75](https://github.com/rofrischmann/inline-style-prefixer/pull/86) )
+* support for Vivaldi browser ( [#81](https://github.com/rofrischmann/inline-style-prefixer/pull/81) )
+* support for zoom and grab `cursor` values ( [#82](https://github.com/rofrischmann/inline-style-prefixer/pull/82) )
+* support for prefixing arrays of values ( [@inline-style-prefix-all#16](https://github.com/rofrischmann/inline-style-prefix-all/pull/16) )
+
+##### Bugs
+* fixed a bug where `border` within transitions was treated as `order` ( [@inline-style-prefix-all#15](https://github.com/rofrischmann/inline-style-prefix-all/issues/15) )
+* fixed a bug where prefixed transition values where incorrectly concatenated ( [@inline-style-prefix-all#17](https://github.com/rofrischmann/inline-style-prefix-all/issues/17) )
+
+
 ## 1.0
 ### 1.0.4 (16.05.16)
 * updated inline-style-prefix-all dependency to correct fallback value order
@@ -8,7 +24,7 @@
 * replaced `Set` with ES5 alternative
 
 ### 1.0.2 (07.03.16)
-* fixed a bug that caused crashes if `display` got either `null` or `undefined` assigned ( [#71](https://github.com/rofrischmann/inline-style-prefixer/pull/71#issue-139056802) ) - thanks to [@tintin1343](https://github.com/tintin1343)
+* fixed a bug that caused crashes if `display` got either `null` or `undefined` assigned ( [#71](https://github.com/rofrischmann/inline-style-prefixer/pull/71#issue-139056802) )
 
 ### 1.0.1 (01.03.16)
 * added `undefined` check for `userAgent` to prevent bowser errors
