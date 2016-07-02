@@ -29,28 +29,32 @@ const plugins = [
  * @returns {Object} - Style object with prefixed properties and values
  */
 export default function prefixAll(styles) {
-  return Object.keys(styles).reduce((prefixedStyles, property) => {
+  Object.keys(styles).forEach(property => {
     const value = styles[property]
     if (value instanceof Object && !Array.isArray(value)) {
       // recurse through nested style objects
-      prefixedStyles[property] = prefixAll(value)
+      styles[property] = prefixAll(value)
     } else if (Array.isArray(value)) {
       // prefix fallback arrays
-      assign(prefixedStyles, prefixArray(property, value))
+      assign(styles, prefixArray(property, value))
     } else {
       Object.keys(prefixProperties).forEach(prefix => {
         const properties = prefixProperties[prefix]
         // add prefixes if needed
         if (properties[property]) {
-          prefixedStyles[prefix + capitalizeString(property)] = value
+          styles[prefix + capitalizeString(property)] = value
         }
       })
-      // resolve every special plugins
-      plugins.forEach(plugin => assign(prefixedStyles, plugin(property, value)))
     }
+  })
 
-    return prefixedStyles
-  }, styles)
+  Object.keys(styles).forEach(property => {
+    const value = styles[property]
+    // resolve every special plugins
+    plugins.forEach(plugin => assign(styles, plugin(property, value)))
+  })
+
+  return styles
 }
 
 function prefixArray(property, valueArray) {

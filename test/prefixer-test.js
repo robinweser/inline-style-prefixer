@@ -227,6 +227,12 @@ describe('Prefixing transitions', () => {
     expect(new Prefixer({ userAgent: Chrome45 }).prefix(input)).to.eql(prefixed)
   })
 
+  it('should not prefix transition values with border', () => {
+    const input = { transition: 'border 500ms linear' }
+    const output = { transition: 'border 500ms linear' }
+    expect(new Prefixer({ userAgent: Chrome45 }).prefix(input)).to.eql(output)
+  })
+
   it('should add prefixes to multiple properties in value', () => {
     const input = {
       transition: 'appearance 200ms linear, user-select 100ms linear'

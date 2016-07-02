@@ -97,26 +97,29 @@ export default class Prefixer {
             delete styles[property]
           }
         }
-
-        // resolve plugins
-        plugins.forEach(plugin => {
-          // generates a new plugin interface with current data
-          const resolvedStyles = plugin({
-            property: property,
-            value: value,
-            styles: styles,
-            browserInfo: this._browserInfo,
-            prefix: {
-              js: this.jsPrefix,
-              css: this.cssPrefix,
-              keyframes: this.prefixedKeyframes
-            },
-            keepUnprefixed: this._keepUnprefixed,
-            requiresPrefix: this._requiresPrefix
-          })
-          assign(styles, resolvedStyles)
-        })
       }
+    })
+
+    Object.keys(styles).forEach(property => {
+      const value = styles[property]
+      // resolve plugins
+      plugins.forEach(plugin => {
+        // generates a new plugin interface with current data
+        const resolvedStyles = plugin({
+          property: property,
+          value: value,
+          styles: styles,
+          browserInfo: this._browserInfo,
+          prefix: {
+            js: this.jsPrefix,
+            css: this.cssPrefix,
+            keyframes: this.prefixedKeyframes
+          },
+          keepUnprefixed: this._keepUnprefixed,
+          requiresPrefix: this._requiresPrefix
+        })
+        assign(styles, resolvedStyles)
+      })
     })
 
     return styles

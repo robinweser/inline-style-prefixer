@@ -184,6 +184,17 @@ describe('Resolving special plugins', () => {
     expect(prefixAll(input)).to.eql(output)
   })
 
+
+  it('should prefix transition values with border', () => {
+    const input = { transition: 'border 500ms linear' }
+    const output = {
+      transition: 'border 500ms linear',
+      WebkitTransition: 'border 500ms linear'
+    }
+    expect(prefixAll(input)).to.eql(output)
+    expect(prefixAll(input)).to.eql(output)
+  })
+
   it('should prefix transition values for prefixed properties', () => {
     const input = { WebkitTransition: '200ms linear appearance' }
     const output = {
