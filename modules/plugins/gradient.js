@@ -1,3 +1,5 @@
+import getPrefixedValue from '../utils/getPrefixedValue'
+
 const values = /linear-gradient|radial-gradient|repeating-linear-gradient|repeating-radial-gradient/
 
 export default function gradient({ property, value, browserInfo: { browser, version }, prefix: { css }, keepUnprefixed }) {
@@ -12,9 +14,8 @@ export default function gradient({ property, value, browserInfo: { browser, vers
     browser === 'and_uc'
     )
   ) {
-    const prefixedValue = css + value
     return {
-      [property]: keepUnprefixed ? [ prefixedValue, value ] : prefixedValue
+      [property]: getPrefixedValue(css + value, value, keepUnprefixed)
     }
   }
 }

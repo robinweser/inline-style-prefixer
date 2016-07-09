@@ -9,6 +9,7 @@ export default function transition({ property, value, prefix: { css }, requiresP
   const unprefixedProperty = unprefixProperty(property)
 
   if (typeof value === 'string' && properties[unprefixedProperty]) {
+    // TODO: memoize this array
     const requiresPrefixDashCased = Object.keys(requiresPrefix).map(prop => hyphenateStyleName(prop))
 
     // only split multi values, not cubic beziers

@@ -97,6 +97,35 @@ describe('Prefixing with MS Edge', () => {
   })
 })
 
+describe('Resolving array values', () => {
+  it('should resolve each value', () => {
+    const input = {
+      width: [ 'calc(30deg)', '100%' ],
+      display: [ 'inline-block', '-webkit-flex', 'flex', 'block' ]
+    }
+    const output = {
+      width: [ '-webkit-calc(30deg)', '100%' ],
+      display: [ 'inline-block', '-webkit-flex', '-webkit-box', 'block' ]
+    }
+    expect(new Prefixer({ userAgent: Chrome14 }).prefix(input)).to.eql(output)
+  })
+
+  it('should should keep unprefixed', () => {
+    const input = {
+      width: [ 'calc(30deg)', '100%' ],
+      display: [ 'inline-block', '-webkit-flex', 'flex', 'block' ]
+    }
+    const output = {
+      width: [ '-webkit-calc(30deg)', 'calc(30deg)', '100%' ],
+      display: [ 'inline-block', '-webkit-flex', '-webkit-box', 'flex', 'block' ]
+    }
+    expect(new Prefixer({
+      userAgent: Chrome14,
+      keepUnprefixed: true
+    }).prefix(input)).to.eql(output)
+  })
+})
+
 describe('Resolving calc values', () => {
   it('should resolve calc values', () => {
     const input = { width: 'calc(30deg)' }

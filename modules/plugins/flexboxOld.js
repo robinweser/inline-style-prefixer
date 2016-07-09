@@ -1,3 +1,5 @@
+import getPrefixedValue from '../utils/getPrefixedValue'
+
 const alternativeValues = {
   'space-around': 'justify',
   'space-between': 'justify',
@@ -16,15 +18,11 @@ const alternativeProps = {
 }
 
 const otherProps = [ 'alignContent', 'alignSelf', 'order', 'flexGrow', 'flexShrink', 'flexBasis', 'flexDirection' ]
-
-const properties = Object.keys(alternativeProps).concat(otherProps).reduce((result, prop) => {
-  result[prop] = true
-  return result
-}, { })
+const properties = Object.keys(alternativeProps).concat(otherProps)
 
 export default function flexboxOld({ property, value, styles, browserInfo: { browser, version }, prefix: { css }, keepUnprefixed }) {
   if (
-    (properties[property] || property === 'display' && typeof value === 'string' && value.indexOf('flex') > -1) &&
+    (properties.indexOf(property) > -1 || property === 'display' && typeof value === 'string' && value.indexOf('flex') > -1) &&
     (
     browser === 'firefox' && version < 22 ||
     browser === 'chrome' && version < 21 ||
@@ -33,7 +31,7 @@ export default function flexboxOld({ property, value, styles, browserInfo: { bro
     browser === 'and_uc'
     )
   ) {
-    if (!keepUnprefixed) {
+    if (!keepUnprefixed && !Array.isArray(styles[property])) {
       delete styles[property]
     }
     if (property === 'flexDirection') {
@@ -43,9 +41,8 @@ export default function flexboxOld({ property, value, styles, browserInfo: { bro
       }
     }
     if (property === 'display' && alternativeValues[value]) {
-      const prefixedValue = css + alternativeValues[value]
       return {
-        display: keepUnprefixed ? [ prefixedValue, value ] : prefixedValue
+        display: getPrefixedValue(css + alternativeValues[value], value, keepUnprefixed)
       }
     }
     if (alternativeProps[property]) {

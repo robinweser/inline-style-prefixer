@@ -2,7 +2,6 @@ import prefixAll from './static/prefixAll'
 import getBrowserInformation from './utils/getBrowserInformation'
 import getPrefixedKeyframes from './utils/getPrefixedKeyframes'
 import capitalizeString from './utils/capitalizeString'
-import assign from './utils/assign'
 import prefixProps from './prefixProps'
 
 import calc from './plugins/calc'
@@ -82,11 +81,9 @@ export default class Prefixer {
       return styles
     }
 
-    styles = assign({ }, styles)
-
     Object.keys(styles).forEach(property => {
       let value = styles[property]
-      if (value instanceof Object) {
+      if (value instanceof Object && !Array.isArray(value)) {
         // recurse through nested style objects
         styles[property] = this.prefix(value)
       } else {
@@ -101,24 +98,24 @@ export default class Prefixer {
     })
 
     Object.keys(styles).forEach(property => {
-      const value = styles[property]
-      // resolve plugins
-      plugins.forEach(plugin => {
-        // generates a new plugin interface with current data
-        const resolvedStyles = plugin({
-          property: property,
-          value: value,
-          styles: styles,
-          browserInfo: this._browserInfo,
-          prefix: {
-            js: this.jsPrefix,
-            css: this.cssPrefix,
-            keyframes: this.prefixedKeyframes
-          },
-          keepUnprefixed: this._keepUnprefixed,
-          requiresPrefix: this._requiresPrefix
+      [ ].concat(styles[property]).forEach(value => {
+        // resolve plugins
+        plugins.forEach(plugin => {
+          // generates a new plugin interface with current data
+          assignStyles(styles, plugin({
+            property: property,
+            value: value,
+            styles: styles,
+            browserInfo: this._browserInfo,
+            prefix: {
+              js: this.jsPrefix,
+              css: this.cssPrefix,
+              keyframes: this.prefixedKeyframes
+            },
+            keepUnprefixed: this._keepUnprefixed,
+            requiresPrefix: this._requiresPrefix
+          }), value, this._keepUnprefixed)
         })
-        assign(styles, resolvedStyles)
       })
     })
 
@@ -133,4 +130,19 @@ export default class Prefixer {
   static prefixAll(styles) {
     return prefixAll(styles)
   }
+}
+
+function assignStyles(base, extend = { }, value, keepUnprefixed) {
+  Object.keys(extend).forEach(property => {
+    const baseValue = base[property]
+    if (Array.isArray(baseValue)) {
+      [ ].concat(extend[property]).forEach(val => {
+        if (base[property].indexOf(val) === -1) {
+          base[property].splice(baseValue.indexOf(value), keepUnprefixed ? 0 : 1, val)
+        }
+      })
+    } else {
+      base[property] = extend[property]
+    }
+  })
 }

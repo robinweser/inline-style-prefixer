@@ -1,3 +1,5 @@
+import getPrefixedValue from '../utils/getPrefixedValue'
+
 const properties = {
   maxHeight: true,
   maxWidth: true,
@@ -19,9 +21,8 @@ export default function sizing({ property, value, prefix: { css }, keepUnprefixe
   // This might change in the future
   // Keep an eye on it
   if (properties[property] && values[value]) {
-    const prefixedValue = css + value
     return {
-      [property]: keepUnprefixed ? [ prefixedValue, value ] : prefixedValue
+      [property]: getPrefixedValue(css + value, value, keepUnprefixed)
     }
   }
 }

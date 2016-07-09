@@ -1,3 +1,5 @@
+import getPrefixedValue from '../utils/getPrefixedValue'
+
 const values = { 'zoom-in': true, 'zoom-out': true }
 
 export default function zoomCursor({ property, value, browserInfo: { browser, version }, prefix: { css }, keepUnprefixed }) {
@@ -10,9 +12,8 @@ export default function zoomCursor({ property, value, browserInfo: { browser, ve
     browser === 'opera' && version < 24
     )
   ) {
-    const prefixedValue = css + value
     return {
-      cursor: keepUnprefixed ? [ prefixedValue, value ] : prefixedValue
+      cursor: getPrefixedValue(css + value, value, keepUnprefixed)
     }
   }
 }

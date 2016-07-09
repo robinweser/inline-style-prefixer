@@ -1,3 +1,5 @@
+import getPrefixedValue from '../utils/getPrefixedValue'
+
 const alternativeValues = {
   'space-around': 'distribute',
   'space-between': 'justify',
@@ -17,24 +19,18 @@ const alternativeProps = {
   flexBasis: 'msPreferredSize'
 }
 
-const properties = Object.keys(alternativeProps).reduce((result, prop) => {
-  result[prop] = true
-  return result
-}, { })
-
 export default function flexboxIE({ property, value, styles, browserInfo: { browser, version }, prefix: { css }, keepUnprefixed }) {
   if (
-    (properties[property] || property === 'display' && typeof value === 'string' && value.indexOf('flex') > -1) &&
+    (alternativeProps[property] || property === 'display' && typeof value === 'string' && value.indexOf('flex') > -1) &&
     (
     (browser === 'ie_mob' || browser === 'ie') && version == 10)
   ) {
-    if (!keepUnprefixed) {
+    if (!keepUnprefixed && !Array.isArray(styles[property])) {
       delete styles[property]
     }
     if (property === 'display' && alternativeValues[value]) {
-      const prefixedValue = css + alternativeValues[value]
       return {
-        display: keepUnprefixed ? [ prefixedValue, value ] : prefixedValue
+        display: getPrefixedValue(css + alternativeValues[value], value, keepUnprefixed)
       }
     }
     if (alternativeProps[property]) {

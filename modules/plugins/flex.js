@@ -1,3 +1,5 @@
+import getPrefixedValue from '../utils/getPrefixedValue'
+
 const values = { flex: true, 'inline-flex': true }
 
 export default function flex({ property, value, browserInfo: { browser, version }, prefix: { css }, keepUnprefixed }) {
@@ -9,9 +11,8 @@ export default function flex({ property, value, browserInfo: { browser, version 
     browser === 'opera' && (version == 15 || version == 16)
     )
   ) {
-    const prefixedValue = css + value
     return {
-      display: keepUnprefixed ? [ prefixedValue, value ] : prefixedValue
+      display: getPrefixedValue(css + value, value, keepUnprefixed)
     }
   }
 }
