@@ -57,17 +57,8 @@
       return str.charAt(0).toUpperCase() + str.slice(1);
     });
 
-    // light polyfill for Object.assign
-    var assign = (function (base) {
-      var extend = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-      return Object.keys(extend).reduce(function (out, key) {
-        out[key] = extend[key];
-        return out;
-      }, base);
-    });
-
     // returns a style object with a single concated prefixed value string
-    var joinPrefixedRules = (function (property, value) {
+    var joinPrefixedValue = (function (property, value) {
       var replacer = arguments.length <= 2 || arguments[2] === undefined ? function (prefix, value) {
         return prefix + value;
       } : arguments[2];
@@ -83,12 +74,8 @@
     });
 
     function calc(property, value) {
-      if (typeof value === 'string' && value.indexOf('calc(') > -1) {
-        if (isPrefixedValue(value)) {
-          return;
-        }
-
-        return joinPrefixedRules(property, value, function (prefix, value) {
+      if (typeof value === 'string' && !isPrefixedValue(value) && value.indexOf('calc(') > -1) {
+        return joinPrefixedValue(property, value, function (prefix, value) {
           return value.replace(/calc\(/g, prefix + 'calc(');
         });
       }
@@ -103,7 +90,7 @@
 
     function cursor(property, value) {
       if (property === 'cursor' && values[value]) {
-        return joinPrefixedRules(property, value);
+        return joinPrefixedValue(property, value);
       }
     }
 
@@ -136,19 +123,15 @@
 
     function sizing(property, value) {
       if (properties[property] && values$2[value]) {
-        return joinPrefixedRules(property, value);
+        return joinPrefixedValue(property, value);
       }
     }
 
     var values$3 = /linear-gradient|radial-gradient|repeating-linear-gradient|repeating-radial-gradient/;
 
     function gradient(property, value) {
-      if (typeof value === 'string' && value.match(values$3) !== null) {
-        if (isPrefixedValue(value)) {
-          return;
-        }
-
-        return joinPrefixedRules(property, value);
+      if (typeof value === 'string' && !isPrefixedValue(value) && value.match(values$3) !== null) {
+        return joinPrefixedValue(property, value);
       }
     }
 
@@ -285,9 +268,6 @@
         if (value instanceof Object && !Array.isArray(value)) {
           // recurse through nested style objects
           styles[property] = prefixAll(value);
-        } else if (Array.isArray(value)) {
-          // prefix fallback arrays
-          assign(styles, prefixArray(property, value));
         } else {
           Object.keys(prefixProps).forEach(function (prefix) {
             var properties = prefixProps[prefix];
@@ -300,46 +280,34 @@
       });
 
       Object.keys(styles).forEach(function (property) {
-        var value = styles[property];
-        // resolve every special plugins
-        plugins.forEach(function (plugin) {
-          return assign(styles, plugin(property, value));
+        [].concat(styles[property]).forEach(function (value, index) {
+          // resolve every special plugins
+          plugins.forEach(function (plugin) {
+            return assignStyles(styles, plugin(property, value));
+          });
         });
       });
 
       return styles;
     }
 
-    function prefixArray(property, valueArray) {
-      var result = {};
-      valueArray.forEach(function (value) {
-        plugins.forEach(function (plugin) {
-          var prefixed = plugin(property, value);
-          if (prefixed) {
-            Object.keys(prefixed).forEach(function (prop) {
-              var entry = prefixed[prop];
-              result[prop] = result[prop] ? mergeValues(result[prop], entry) : entry;
-            });
-          }
-        });
-        if (!result[property]) {
-          result[property] = value;
-        }
-      });
-      return result;
-    }
+    function assignStyles(base) {
+      var extend = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
-    function mergeValues(existing, toMerge) {
-      var merged = existing;
-      var valuesToMerge = Array.isArray(toMerge) ? toMerge : [toMerge];
-      valuesToMerge.forEach(function (value) {
-        if (Array.isArray(merged) && merged.indexOf(value) === -1) {
-          merged.push(value);
-        } else if (merged !== value) {
-          merged = [merged, value];
+      Object.keys(extend).forEach(function (property) {
+        var baseValue = base[property];
+        if (Array.isArray(baseValue)) {
+          [].concat(extend[property]).forEach(function (value) {
+            var valueIndex = baseValue.indexOf(value);
+            if (valueIndex > -1) {
+              base[property].splice(valueIndex, 1);
+            }
+            base[property].push(value);
+          });
+        } else {
+          base[property] = extend[property];
         }
       });
-      return merged;
     }
 
     return prefixAll;

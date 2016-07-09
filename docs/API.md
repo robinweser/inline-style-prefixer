@@ -146,7 +146,7 @@ If you only want to use the static prefixing, you can directly import it from  `
 ```javascript
 import prefixAll from 'inline-style-prefixer/static'
 
-const styles = {alignItems: 'center'}
+const styles = { alignItems: 'center' }
 
 const prefixedStyles = prefixAll(styles)
 

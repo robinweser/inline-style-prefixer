@@ -1,14 +1,15 @@
-# <img src="docs/res/logo.png" width=400></div>
+# inline-style-prefixer
+
+**inline-style-prefixer** adds required **vendor prefixes** to your style object. It only adds prefixes if they're actually required by evaluating the browser's `userAgent` against data from [caniuse.com](http://caniuse.com/).
+<br>
+
+Alternatively it ships a static version that adds all available vendor prefixes.
 
 [![Build Status](https://travis-ci.org/rofrischmann/inline-style-prefixer.svg)](https://travis-ci.org/rofrischmann/inline-style-prefixer)
 [![Test Coverage](https://codeclimate.com/github/rofrischmann/inline-style-prefixer/badges/coverage.svg)](https://codeclimate.com/github/rofrischmann/inline-style-prefixer/coverage)
-[![npm version](https://badge.fury.io/js/inline-style-prefixer.svg)](http://badge.fury.io/js/inline-style-prefixer)
 [![npm downloads](https://img.shields.io/npm/dm/inline-style-prefixer.svg)](https://img.shields.io/npm/dm/inline-style-prefixer.svg)
 ![Dependencies](https://david-dm.org/rofrischmann/inline-style-prefixer.svg)
-![Gzipped Size](https://img.shields.io/badge/gzipped-8.6kb-brightgreen.svg)
-
-**inline-style-prefixer** adds required **vendor prefixes** to your style object. It only adds prefixes if they're actually required by evaluating the browser's `userAgent` against data from [caniuse.com](http://caniuse.com/).<br>
-Alternatively it ships a static version that adds all available vendor prefixes.
+![Gzipped Size](https://img.shields.io/badge/gzipped-8.50kb-brightgreen.svg)
 
 ## Installation
 ```sh
@@ -72,7 +73,7 @@ const output = {
 ```
 `inline-style-prefixer/static`
 
-![Gzipped Size](https://img.shields.io/badge/gzipped-2.5kb-brightgreen.svg)
+![Gzipped Size](https://img.shields.io/badge/gzipped-2.40kb-brightgreen.svg)
 
 If you only want to use the static version, you can import it directly to reduce file size. It was once shipped as a several package [inline-style-prefix-all](https://github.com/rofrischmann/inline-style-prefix-all).
 ```javascript
