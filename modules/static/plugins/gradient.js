@@ -1,14 +1,10 @@
-import joinPrefixedRules from '../../utils/joinPrefixedRules'
+import joinPrefixedValue from '../../utils/joinPrefixedValue'
 import isPrefixedValue from '../../utils/isPrefixedValue'
 
 const values = /linear-gradient|radial-gradient|repeating-linear-gradient|repeating-radial-gradient/
 
 export default function gradient(property, value) {
-  if (typeof value === 'string' && value.match(values) !== null) {
-    if (isPrefixedValue(value)) {
-      return
-    }
-
-    return joinPrefixedRules(property, value)
+  if (typeof value === 'string' && !isPrefixedValue(value) && value.match(values) !== null) {
+    return joinPrefixedValue(property, value)
   }
 }

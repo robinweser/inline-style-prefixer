@@ -1,6 +1,5 @@
 import prefixProperties from './prefixProps'
 import capitalizeString from '../utils/capitalizeString'
-import assign from '../utils/assign'
 
 import calc from './plugins/calc'
 import cursor from './plugins/cursor'
@@ -34,9 +33,6 @@ export default function prefixAll(styles) {
     if (value instanceof Object && !Array.isArray(value)) {
       // recurse through nested style objects
       styles[property] = prefixAll(value)
-    } else if (Array.isArray(value)) {
-      // prefix fallback arrays
-      assign(styles, prefixArray(property, value))
     } else {
       Object.keys(prefixProperties).forEach(prefix => {
         const properties = prefixProperties[prefix]
@@ -49,42 +45,28 @@ export default function prefixAll(styles) {
   })
 
   Object.keys(styles).forEach(property => {
-    const value = styles[property]
-    // resolve every special plugins
-    plugins.forEach(plugin => assign(styles, plugin(property, value)))
+    [ ].concat(styles[property]).forEach((value, index) => {
+      // resolve every special plugins
+      plugins.forEach(plugin => assignStyles(styles, plugin(property, value)))
+    })
   })
 
   return styles
 }
 
-function prefixArray(property, valueArray) {
-  let result = { }
-  valueArray.forEach(value => {
-    plugins.forEach(plugin => {
-      let prefixed = plugin(property, value)
-      if (prefixed) {
-        Object.keys(prefixed).forEach(prop => {
-          const entry = prefixed[prop]
-          result[prop] = result[prop] ? mergeValues(result[prop], entry) : entry
-        })
-      }
-    })
-    if (!result[property]) {
-      result[property] = value
+function assignStyles(base, extend = { }) {
+  Object.keys(extend).forEach(property => {
+    const baseValue = base[property]
+    if (Array.isArray(baseValue)) {
+      [ ].concat(extend[property]).forEach(value => {
+        const valueIndex = baseValue.indexOf(value)
+        if (valueIndex > -1) {
+          base[property].splice(valueIndex, 1)
+        }
+        base[property].push(value)
+      })
+    } else {
+      base[property] = extend[property]
     }
   })
-  return result
-}
-
-function mergeValues(existing, toMerge) {
-  let merged = existing
-  let valuesToMerge = Array.isArray(toMerge) ? toMerge : [ toMerge ]
-  valuesToMerge.forEach(value => {
-    if (Array.isArray(merged) && merged.indexOf(value) === -1) {
-      merged.push(value)
-    } else if (merged !== value) {
-      merged = [ merged, value ]
-    }
-  })
-  return merged
 }

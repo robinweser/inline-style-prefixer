@@ -227,6 +227,15 @@ describe('Resolving special plugins', () => {
   })
 
   it('should prefix special sizing values', () => {
+    const input = { width: [ 'min-content', '100%' ] }
+    const output = {
+      width: [ '100%', '-webkit-min-content', '-moz-min-content', 'min-content' ]
+    }
+    expect(prefixAll(input)).to.eql(output)
+    expect(prefixAll(input)).to.eql(output)
+  })
+
+  it('should prefix special sizing values', () => {
     const input = { width: [ 'calc(100%)', 'min-content' ] }
     const output = {
       width: [ '-webkit-calc(100%)', '-moz-calc(100%)', 'calc(100%)', '-webkit-min-content', '-moz-min-content', 'min-content' ]
@@ -252,5 +261,4 @@ describe('Resolving special plugins', () => {
     expect(prefixAll(input)).to.eql(output)
     expect(prefixAll(input)).to.eql(output)
   })
-
 })

@@ -1,4 +1,4 @@
-import joinPrefixedRules from '../../utils/joinPrefixedRules'
+import joinPrefixedValue from '../../utils/joinPrefixedValue'
 
 const values = {
   'zoom-in': true,
@@ -9,6 +9,6 @@ const values = {
 
 export default function cursor(property, value) {
   if (property === 'cursor' && values[value]) {
-    return joinPrefixedRules(property, value)
+    return joinPrefixedValue(property, value)
   }
 }

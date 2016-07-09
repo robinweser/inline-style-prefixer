@@ -1,4 +1,4 @@
-import joinPrefixedRules from '../../utils/joinPrefixedRules'
+import joinPrefixedValue from '../../utils/joinPrefixedValue'
 
 const properties = {
   maxHeight: true,
@@ -19,6 +19,6 @@ const values = {
 
 export default function sizing(property, value) {
   if (properties[property] && values[value]) {
-    return joinPrefixedRules(property, value)
+    return joinPrefixedValue(property, value)
   }
 }
