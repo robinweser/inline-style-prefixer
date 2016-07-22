@@ -67,6 +67,8 @@
     "esformatter-remove-trailing-commas": "^1.0.1",
     "esformatter-spaced-lined-comment": "^2.0.1",
     "esformatter-var-each": "^2.1.0",
+    "eslint": "^2.2.0",
+    "eslint-config-rackt": "^1.1.1",
     "istanbul": "1.0.0-alpha.2",
     "mocha": "^2.2.5",
     "object-assign": "^4.0.1",

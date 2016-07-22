@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import fs from 'fs'
 import searchMap from './searchMap'
 import config from '../config'
@@ -28,7 +30,7 @@ const prefixProperties = Object.keys(prefixBrowsers).reduce((out, browser) => {
 
     properties.forEach(prop => {
       if (versions[browser].x >= config[browser]) {
-        out[prefix][prop] = true;
+        out[prefix][prop] = true
       }
     })
   })
@@ -43,7 +45,7 @@ flexPropsIE.forEach(prop => {
   prefixProperties.ms[prop] = false
 })
 
-const file = 'export default ' + JSON.stringify(prefixProperties).replace(new RegExp(/\[/, 'g'), '{').replace(new RegExp(/\]/, 'g'), '}');
+const file = 'export default ' + JSON.stringify(prefixProperties).replace(new RegExp(/\[/, 'g'), '{').replace(new RegExp(/\]/, 'g'), '}')
 
 fs.writeFile('./modules/static/prefixProps.js', file, err => {
   if (err) {
@@ -53,24 +55,22 @@ fs.writeFile('./modules/static/prefixProps.js', file, err => {
 })
 
 
-var browsers = [ 'chrome', 'safari', 'firefox', 'opera', 'ie', 'edge', 'ios_saf', 'android', 'and_chr', 'and_uc', 'op_mini', 'ie_mob' ]
+const browsers = [ 'chrome', 'safari', 'firefox', 'opera', 'ie', 'edge', 'ios_saf', 'android', 'and_chr', 'and_uc', 'op_mini', 'ie_mob' ]
 
 function gatherInformation() {
-  var prefixProperties = { }
-  browsers.forEach(function(browser) {
+  const prefixProperties = { }
+  browsers.forEach(function (browser) {
     prefixProperties[browser] = { }
   })
 
-  var search
-  for (search in searchMap) {
-    var properties = searchMap[search]
-    var versions = caniuse.getSupport(search, true)
+  for (const search in searchMap) {
+    let properties = searchMap[search]
+    const versions = caniuse.getSupport(search, true)
     if (properties instanceof Array !== true) {
       properties = [ properties ]
     }
-    properties.forEach(function(prop) {
-      var prefix
-      for (prefix in prefixProperties) {
+    properties.forEach(function (prop) {
+      for (const prefix in prefixProperties) {
         if (versions[prefix].x >= config[prefix]) {
           prefixProperties[prefix][prop] = versions[prefix].x
         }
@@ -81,13 +81,13 @@ function gatherInformation() {
 
   prefixProperties.ie = assign({ }, prefixProperties.ie, prefixProperties.ie_mob)
   delete prefixProperties.ie_mob
-  flexPropsIE.forEach(function(prop) {
+  flexPropsIE.forEach(function (prop) {
     delete prefixProperties.ie[prop]
   })
   return 'export default ' + JSON.stringify(prefixProperties)
 }
 
-fs.writeFile('./modules/prefixProps.js', gatherInformation(), function(err) {
+fs.writeFile('./modules/prefixProps.js', gatherInformation(), function (err) {
   if (err) {
     throw err
   }

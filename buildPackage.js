@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import rollup from 'rollup'
 import babel from 'rollup-plugin-babel'
 import uglify from 'rollup-plugin-uglify'
