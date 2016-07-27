@@ -1,5 +1,4 @@
 import hyphenateStyleName from 'hyphenate-style-name'
-import capitalizeString from '../utils/capitalizeString'
 import unprefixProperty from '../utils/unprefixProperty'
 
 const properties = { transition: true, transitionProperty: true }

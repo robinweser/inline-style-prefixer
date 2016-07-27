@@ -3,7 +3,6 @@ import Prefixer from '../modules/Prefixer'
 
 const MSIE9 = 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 7.1; Trident/5.0)'
 const MSIE10 = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)'
-const MSIE11 = 'Mozilla/5.0 (Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko'
 const MSEdge12 = 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10136'
 
 const Android4_4_4 = 'Mozilla/5.0 (Linux; Android 4.4.4; One Build/KTU84L.H4) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Mobile Safari/537.36'
@@ -187,6 +186,8 @@ describe('Resolving zoom cursor values', () => {
     expect(new Prefixer({ userAgent: Chrome14 }).prefix(standard)).to.eql(standard)
     expect(new Prefixer({ userAgent: Chrome14 }).prefix(input)).to.eql(output)
     expect(new Prefixer({ userAgent: Chrome49 }).prefix(input)).to.eql(input)
+    expect(new Prefixer({ userAgent: Chromium }).prefix(input)).to.eql(input)
+    expect(new Prefixer({ userAgent: PhantomJS }).prefix(input)).to.eql(input)
   })
 })
 
@@ -198,6 +199,8 @@ describe('Resolving grab cursor values', () => {
     expect(new Prefixer({ userAgent: Chrome14 }).prefix(standard)).to.eql(standard)
     expect(new Prefixer({ userAgent: Chrome14 }).prefix(input)).to.eql(output)
     expect(new Prefixer({ userAgent: Chrome49 }).prefix(input)).to.eql(output)
+    expect(new Prefixer({ userAgent: Chromium }).prefix(input)).to.eql(input)
+    expect(new Prefixer({ userAgent: PhantomJS }).prefix(input)).to.eql(input)
   })
 })
 
@@ -217,6 +220,8 @@ describe('Prefixing keyframes', () => {
   it('should return the correct keyframes string', () => {
     expect(new Prefixer({ userAgent: Chrome14 }).prefixedKeyframes).to.eql('-webkit-keyframes')
     expect(new Prefixer({ userAgent: Chrome49 }).prefixedKeyframes).to.eql('keyframes')
+    expect(new Prefixer({ userAgent: Chromium }).prefixedKeyframes).to.eql('keyframes')
+    expect(new Prefixer({ userAgent: PhantomJS }).prefixedKeyframes).to.eql('keyframes')
   })
 })
 

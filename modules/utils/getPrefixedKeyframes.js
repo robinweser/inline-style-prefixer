@@ -1,4 +1,4 @@
-export default ({browser, version, prefix}) => {
+export default ({ browser, version, prefix }) => {
   let prefixedKeyframes = 'keyframes'
 
   if (
