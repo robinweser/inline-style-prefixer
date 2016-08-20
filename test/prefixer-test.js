@@ -6,6 +6,7 @@ const MSEdge12 = 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like 
 const Android4_4_4 = 'Mozilla/5.0 (Linux; Android 4.4.4; One Build/KTU84L.H4) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Mobile Safari/537.36'
 const CordovaIOS8_4 = 'Mozilla/5.0 (iPhone; CPU iPhone OS 8_4 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Mobile/12H141'
 const Android4_2_2Chrome47 = 'Mozilla/5.0 (Linux; Android 4.2.2; Galaxy Nexus Build/JDQ39) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.83 Mobile Safari/537.36'
+const Android4_2_2Firefox48 = 'Mozilla/5.0 (Android 4.2.2; Mobile; rv:48.0) Gecko/48.0 Firefox/48.0'
 const iOSChrome47 = 'Mozilla/5.0 (iPad; CPU OS 8_4_1 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) CriOS/47.0.2526.107 Mobile/12H321 Safari/600.1.4'
 const Chrome14 = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.812.0 Safari/535.1'
 const Chrome22 = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.2 (KHTML, like Gecko) Chrome/22.0.1216.0 Safari/537.2'
@@ -66,6 +67,13 @@ describe('Running on android < 4.4', () => {
     })
     expect(andPrefixer._browserInfo.osversion).to.eql(4.2)
     expect(andPrefixer._browserInfo.version).to.eql(47)
+  })
+  it('Should use firefox version on android 4.2.2', () => {
+        const andPrefixer = new Prefixer({
+          userAgent: Android4_2_2Firefox48
+        })
+        expect(andPrefixer._browserInfo.osversion).to.eql(4.2)
+        expect(andPrefixer._browserInfo.version).to.eql(48)
   })
 })
 describe('Running on iOS', () => {
