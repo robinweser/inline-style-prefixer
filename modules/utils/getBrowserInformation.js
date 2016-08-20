@@ -17,6 +17,28 @@ const browsers = {
   and_uc: [ [ 'android', 'mobile' ], [ 'android', 'tablet' ] ],
   android: [ [ 'android', 'mobile' ], [ 'android', 'tablet' ] ]
 }
+
+const browserByInfo = (info) => {
+  if (info['firefox']) {
+      return 'firefox';
+  }
+  let name = '';
+  Object.keys(browsers).forEach(browser => {
+    browsers[browser].forEach(condition => {
+      let match = 0
+      condition.forEach(single => {
+        if (info[single]) {
+          match += 1
+        }
+      })
+      if (condition.length === match) {
+        name = browser;
+      }
+    })
+  })
+  return name;
+}
+
 /**
  * Uses bowser to get default browser information such as version and name
  * Evaluates bowser info and adds vendorPrefix information
@@ -27,6 +49,7 @@ export default userAgent => {
     return false
   }
   const info = bowser._detect(userAgent)
+
   Object.keys(vendorPrefixes).forEach(prefix => {
     vendorPrefixes[prefix].forEach(browser => {
       if (info[browser]) {
@@ -37,25 +60,13 @@ export default userAgent => {
       }
     })
   })
-  let name = ''
-  Object.keys(browsers).forEach(browser => {
-    browsers[browser].forEach(condition => {
-      let match = 0
-      condition.forEach(single => {
-        if (info[single]) {
-          match += 1
-        }
-      })
-      if (condition.length === match) {
-        name = browser
-      }
-    })
-  })
-  info.browser = name
+
+  info.browser = browserByInfo(info);
 
   // For cordova IOS 8 the version is missing, set truncated osversion to prevent NaN
   info.version = info.version ? parseFloat(info.version) : parseInt(parseFloat(info.osversion), 10)
   info.osversion = parseFloat(info.osversion)
+
 
   // iOS forces all browsers to use Safari under the hood
   // as the Safari version seems to match the iOS version
@@ -65,6 +76,7 @@ export default userAgent => {
     info.version = info.osversion
     info.safari = true
   }
+
 
   // seperate native android chrome
   // https://github.com/rofrischmann/inline-style-prefixer/issues/45
