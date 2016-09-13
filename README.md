@@ -16,14 +16,14 @@ Alternatively it ships a static version that adds all available vendor prefixes.
 npm i --save inline-style-prefixer
 ```
 Assuming you are using [npm](https://www.npmjs.com) as your package mananger you can `npm install` all packages. <br>
-Otherwise we also provide [UMD](https://github.com/umdjs/umd) builds for each package within the `dist` folder. You can easily use them via [npmcdn](https://npmcdn.com/).
+Otherwise we also provide [UMD](https://github.com/umdjs/umd) builds for each package within the `dist` folder. You can easily use them via [unpkg](https://unpkg.com/).
 ```HTML
 <!-- Unminified versions -->
-<script src="https://npmcdn.com/inline-style-prefixer@2.0.0/dist/inline-style-prefixer.js"></script>
-<script src="https://npmcdn.com/inline-style-prefixer@2.0.0/dist/inline-style-prefix-all.js"></script>
+<script src="https://unpkg.com/inline-style-prefixer@2.0.0/dist/inline-style-prefixer.js"></script>
+<script src="https://unpkg.com/inline-style-prefixer@2.0.0/dist/inline-style-prefix-all.js"></script>
 <!-- Minified versions -->
-<script src="https://npmcdn.com/inline-style-prefixer@2.0.0/dist/inline-style-prefixer.min.js"></script>
-<script src="https://npmcdn.com/inline-style-prefixer@2.0.0/dist/inline-style-prefix-all.min.js"></script>
+<script src="https://unpkg.com/inline-style-prefixer@2.0.0/dist/inline-style-prefixer.min.js"></script>
+<script src="https://unpkg.com/inline-style-prefixer@2.0.0/dist/inline-style-prefix-all.min.js"></script>
 ```
 
 # Browser Support
