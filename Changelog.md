@@ -1,6 +1,11 @@
 # Changelog
 
 ## 2.0
+
+### 2.0.2
+* fixed a bug that used the prefixAll fallback for Windows Phone browsers ( [#97](https://github.com/rofrischmann/inline-style-prefixer/issues/97) )
+* fixed a bug preventing Firefox on Android to correct prefixes ( [#95]((https://github.com/rofrischmann/inline-style-prefixer/issues/95) )
+
 ### 2.0.1
 * fixed a bug that removed array values ( [#89](https://github.com/rofrischmann/inline-style-prefixer/issues/89) )
 * added array prefixing to the dynamic version
