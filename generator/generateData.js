@@ -25,7 +25,7 @@ const prefixBrowsers = {
 const prefixProperties = Object.keys(prefixBrowsers).reduce((out, browser) => {
   const prefix = prefixBrowsers[browser]
   Object.keys(searchMap).forEach(searchKey => {
-    const versions = caniuse.getSupport(searchKey, true)
+    const versions = caniuse.getSupport(searchKey)
     const properties = [ ].concat(searchMap[searchKey])
 
     properties.forEach(prop => {

@@ -2,6 +2,9 @@
 
 ## 2.0
 
+### 2.0.3
+* fixed updated caniuse-api search keys
+
 ### 2.0.2
 * fixed a bug that used the prefixAll fallback for Windows Phone browsers ( [#97](https://github.com/rofrischmann/inline-style-prefixer/issues/97) )
 * fixed a bug preventing Firefox on Android to correct prefixes ( [#95]((https://github.com/rofrischmann/inline-style-prefixer/issues/95) )
