@@ -8,21 +8,21 @@ const browsers = {
   chrome: [ [ 'chrome' ], [ 'chromium' ] ],
   safari: [ [ 'safari' ] ],
   firefox: [ [ 'firefox' ] ],
-  ie: [ [ 'msie' ] ],
   edge: [ [ 'msedge' ] ],
   opera: [ [ 'opera' ], [ 'vivaldi' ] ],
   ios_saf: [ [ 'ios', 'mobile' ], [ 'ios', 'tablet' ] ],
-  ie_mob: [ [ 'windowsphone', 'mobile', 'msie' ], [ 'windowsphone', 'tablet', 'msie' ], [ 'windowsphone', 'mobile', 'msedge' ], [ 'windowsphone', 'tablet', 'msedge' ] ],
+  ie: [ [ 'msie' ] ],
   op_mini: [ [ 'opera', 'mobile' ], [ 'opera', 'tablet' ] ],
   and_uc: [ [ 'android', 'mobile' ], [ 'android', 'tablet' ] ],
   android: [ [ 'android', 'mobile' ], [ 'android', 'tablet' ] ]
 }
 
-const browserByInfo = (info) => {
-  if (info['firefox']) {
-      return 'firefox';
+const browserByInfo = info => {
+  if (info.firefox) {
+    return 'firefox'
   }
-  let name = '';
+  let name = ''
+
   Object.keys(browsers).forEach(browser => {
     browsers[browser].forEach(condition => {
       let match = 0
@@ -32,11 +32,12 @@ const browserByInfo = (info) => {
         }
       })
       if (condition.length === match) {
-        name = browser;
+        name = browser
       }
     })
   })
-  return name;
+
+  return name
 }
 
 /**

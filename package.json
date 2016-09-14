@@ -17,7 +17,6 @@
     "babel": "babel modules/ --out-dir lib",
     "build": "npm run clean && mkdir dist && npm run babel && npm run generate && npm run dist",
     "clean": "rimraf lib dist coverage",
-    "coverage": "codeclimate-test-reporter < coverage/lcov.info",
     "dist": "cross-env NODE_ENV=production babel-node buildPackage && cross-env NODE_ENV=development babel-node buildPackage",
     "generate": "babel-node generator/generateData.js",
     "pretest": "npm run clean && npm run babel && npm run generate",

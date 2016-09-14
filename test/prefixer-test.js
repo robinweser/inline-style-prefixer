@@ -15,6 +15,7 @@ const Chrome49 = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML,
 const SeaMonkey = 'Mozilla/5.0 (Windows NT 5.2; RW; rv:7.0a1) Gecko/20091211 SeaMonkey/9.23a1pre'
 const Chromium = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/50.0.2661.102 Chrome/50.0.2661.102 Safari/537.36'
 const PhantomJS = 'Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.0.0 Safari/538.1'
+
 describe('Prefixing a property', () => {
   it('should only add required prefixes', () => {
     const input = { appearance: 'test', transition: 'test' }
@@ -45,6 +46,7 @@ describe('Prefixing a property', () => {
 describe('Prefixing 2D transforms', () => {
   const input = { transform: 'rotate(30deg)' }
   const prefixed = { msTransform: 'rotate(30deg)' }
+
   it('should be prefixed on IE 9', () => {
     expect(new Prefixer({ userAgent: MSIE9 }).prefix(input)).to.eql(prefixed)
   })
@@ -69,11 +71,11 @@ describe('Running on android < 4.4', () => {
     expect(andPrefixer._browserInfo.version).to.eql(47)
   })
   it('Should use firefox version on android 4.2.2', () => {
-        const andPrefixer = new Prefixer({
-          userAgent: Android4_2_2Firefox48
-        })
-        expect(andPrefixer._browserInfo.osversion).to.eql(4.2)
-        expect(andPrefixer._browserInfo.version).to.eql(48)
+    const andPrefixer = new Prefixer({
+      userAgent: Android4_2_2Firefox48
+    })
+    expect(andPrefixer._browserInfo.osversion).to.eql(4.2)
+    expect(andPrefixer._browserInfo.version).to.eql(48)
   })
 })
 describe('Running on iOS', () => {

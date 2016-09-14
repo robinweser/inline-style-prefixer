@@ -59,7 +59,7 @@ const browsers = [ 'chrome', 'safari', 'firefox', 'opera', 'ie', 'edge', 'ios_sa
 
 function gatherInformation() {
   const prefixProperties = { }
-  browsers.forEach(function (browser) {
+  browsers.forEach(function(browser) {
     prefixProperties[browser] = { }
   })
 
@@ -69,7 +69,7 @@ function gatherInformation() {
     if (properties instanceof Array !== true) {
       properties = [ properties ]
     }
-    properties.forEach(function (prop) {
+    properties.forEach(function(prop) {
       for (const prefix in prefixProperties) {
         if (versions[prefix].x >= config[prefix]) {
           prefixProperties[prefix][prop] = versions[prefix].x
@@ -78,16 +78,15 @@ function gatherInformation() {
     })
   }
 
-
   prefixProperties.ie = assign({ }, prefixProperties.ie, prefixProperties.ie_mob)
   delete prefixProperties.ie_mob
-  flexPropsIE.forEach(function (prop) {
+  flexPropsIE.forEach(function(prop) {
     delete prefixProperties.ie[prop]
   })
   return 'export default ' + JSON.stringify(prefixProperties)
 }
 
-fs.writeFile('./modules/prefixProps.js', gatherInformation(), function (err) {
+fs.writeFile('./modules/prefixProps.js', gatherInformation(), function(err) {
   if (err) {
     throw err
   }
