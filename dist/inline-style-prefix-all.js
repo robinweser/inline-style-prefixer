@@ -244,7 +244,7 @@
     };
 
     function flexboxOld(property, value) {
-      if (property === 'flexDirection') {
+      if (property === 'flexDirection' && typeof value === 'string') {
         return {
           WebkitBoxOrient: value.indexOf('column') > -1 ? 'vertical' : 'horizontal',
           WebkitBoxDirection: value.indexOf('reverse') > -1 ? 'reverse' : 'normal'

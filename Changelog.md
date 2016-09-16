@@ -1,6 +1,8 @@
 # Changelog
 
 ## 2.0
+### 2.0.4
+* added type checks for `flexDirection` specification alternatives
 
 ### 2.0.3
 * fixed updated caniuse-api search keys
