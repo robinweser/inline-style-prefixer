@@ -27,5 +27,5 @@ For both I also recommend enabling the `keepUnprefixed` option.
 > I hope that we will be able to support those out of the box as soon as possible.
 
 ## 4. Static version
-The prefixer has a total of 9.5kb file size gzipped which is quite big compared to its benefit. If you're only using the static version anyways, you can directly import only the static subset to reduce file size drastically down to 2.5kb.<br>
+The prefixer has a total of 8.5kb file size gzipped which is quite big compared to its benefit. If you're only using the static version anyways, you can directly import only the static subset to reduce file size drastically down to 2.4kb.<br>
 Check the [API Reference](API.md#pro-tip) to learn how to do it.
