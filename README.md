@@ -100,7 +100,7 @@ const output = {
   boxSizing: 'border-box',
   // Fallback/prefixed values get grouped in arrays
   // The prefixer does not resolve those
-  display: ['-webkit-box', '-moz-box', '-ms-flexbox', '-webkit-flex', 'flex']
+  display: [ '-webkit-box', '-moz-box', '-ms-flexbox', '-webkit-flex', 'flex' ]
   color: 'blue'
 }
 ```
