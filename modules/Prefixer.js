@@ -2,8 +2,10 @@ import prefixAll from './static/prefixAll'
 import getBrowserInformation from './utils/getBrowserInformation'
 import getPrefixedKeyframes from './utils/getPrefixedKeyframes'
 import capitalizeString from './utils/capitalizeString'
+import sortPrefixedStyle from './utils/sortPrefixedStyle'
 import prefixProps from './prefixProps'
 
+import position from './plugins/position'
 import calc from './plugins/calc'
 import zoomCursor from './plugins/zoomCursor'
 import grabCursor from './plugins/grabCursor'
@@ -16,6 +18,7 @@ import flexboxIE from './plugins/flexboxIE'
 import flexboxOld from './plugins/flexboxOld'
 
 const plugins = [
+  position,
   calc,
   zoomCursor,
   grabCursor,
@@ -119,7 +122,7 @@ export default class Prefixer {
       })
     })
 
-    return styles
+    return sortPrefixedStyle(styles)
   }
 
   /**

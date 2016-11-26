@@ -1,6 +1,7 @@
 import prefixProperties from './prefixProps'
 import capitalizeString from '../utils/capitalizeString'
 
+import position from './plugins/position'
 import calc from './plugins/calc'
 import cursor from './plugins/cursor'
 import flex from './plugins/flex'
@@ -12,6 +13,7 @@ import flexboxIE from './plugins/flexboxIE'
 import flexboxOld from './plugins/flexboxOld'
 
 const plugins = [
+  position,
   calc,
   cursor,
   sizing,
@@ -51,7 +53,7 @@ export default function prefixAll(styles) {
     })
   })
 
-  return styles
+  return sortPrefixedStyle(styles)
 }
 
 function assignStyles(base, extend = { }) {

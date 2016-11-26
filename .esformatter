@@ -1,6 +1,5 @@
 {
    "plugins":[
-      "esformatter-jsx",
       "esformatter-quotes",
       "esformatter-literal-notation",
       "esformatter-parseint",
@@ -14,22 +13,6 @@
    ],
    "quotes":{
       "type":"single"
-   },
-   "jsx":{
-      "formatJSX":true,
-      "attrsOnSameLineAsTag":true,
-      "maxAttrsOnTag":4,
-      "firstAttributeOnSameLine":false,
-      "alignWithFirstAttribute":false,
-      "spaceInJSXExpressionContainers":"",
-      "htmlOptions":{
-         "brace_style":"collapse",
-         "indent_char":" ",
-         "indent_size":2,
-         "max_preserve_newlines":4,
-         "preserve_newlines":true,
-         "wrap_line_length":250
-      }
    },
    "indent":{
       "value":"  ",
