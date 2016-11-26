@@ -1,5 +1,6 @@
 import prefixProperties from './prefixProps'
 import capitalizeString from '../utils/capitalizeString'
+import sortPrefixedStyle from '../utils/sortPrefixedStyle'
 
 import position from './plugins/position'
 import calc from './plugins/calc'
