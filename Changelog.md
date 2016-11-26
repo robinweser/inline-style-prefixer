@@ -1,6 +1,10 @@
 # Changelog
 
 ## 2.0
+### 2.0.5
+* added style sorting to prepend prefixed properties ( [#105](https://github.com/rofrischmann/inline-style-prefixer/issues/105) )
+* support for `position: -webkit-sticky` ( [#103](https://github.com/rofrischmann/inline-style-prefixer/issues/103) )
+
 ### 2.0.4
 * added type checks for `flexDirection` specification alternatives
 

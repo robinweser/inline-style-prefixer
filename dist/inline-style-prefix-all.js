@@ -57,6 +57,30 @@
       return str.charAt(0).toUpperCase() + str.slice(1);
     });
 
+    var isPrefixedProperty = (function (property) {
+      return property.match(/^(Webkit|Moz|O|ms)/) !== null;
+    });
+
+    function sortPrefixedStyle(style) {
+      return Object.keys(style).sort(function (left, right) {
+        if (isPrefixedProperty(left) && !isPrefixedProperty(right)) {
+          return -1;
+        } else if (!isPrefixedProperty(left) && isPrefixedProperty(right)) {
+          return 1;
+        }
+        return 0;
+      }).reduce(function (sortedStyle, prop) {
+        sortedStyle[prop] = style[prop];
+        return sortedStyle;
+      }, {});
+    }
+
+    function position(property, value) {
+      if (property === 'position' && value === 'sticky') {
+        return { position: ['-webkit-sticky', 'sticky'] };
+      }
+    }
+
     // returns a style object with a single concated prefixed value string
     var joinPrefixedValue = (function (property, value) {
       var replacer = arguments.length <= 2 || arguments[2] === undefined ? function (prefix, value) {
@@ -255,7 +279,7 @@
       }
     }
 
-    var plugins = [calc, cursor, sizing, gradient, transition, flexboxIE, flexboxOld, flex];
+    var plugins = [position, calc, cursor, sizing, gradient, transition, flexboxIE, flexboxOld, flex];
 
     /**
      * Returns a prefixed version of the style object using all vendor prefixes
@@ -288,7 +312,7 @@
         });
       });
 
-      return styles;
+      return sortPrefixedStyle(styles);
     }
 
     function assignStyles(base) {
