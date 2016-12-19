@@ -1,0 +1,20 @@
+{
+  "scripts": {
+    "bench:static": "babel-node static",
+    "bench:dynamic": "babel-node dynamic",
+    "bench": "npm run bench:dynamic && npm run bench:static",
+    "bundle": "babel-node size"
+  },
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.18.2",
+    "babel-eslint": "^7.1.1",
+    "babel-loader": "^6.2.10",
+    "babel-preset-node6": "^11.0.0",
+    "babel-preset-react": "^6.16.0",
+    "beautify-benchmark": "^0.2.4",
+    "benchmark": "^2.1.2",
+    "webpack": "^1.14.0"
+  }
+}
