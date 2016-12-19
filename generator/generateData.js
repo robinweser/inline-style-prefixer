@@ -42,10 +42,24 @@ const prefixProperties = Object.keys(prefixBrowsers).reduce((out, browser) => {
 const flexPropsIE = [ 'alignContent', 'alignSelf', 'alignItems', 'justifyContent', 'order', 'flexGrow', 'flexShrink', 'flexBasis' ]
 
 flexPropsIE.forEach(prop => {
-  prefixProperties.ms[prop] = false
+  delete prefixProperties.ms[prop]
 })
 
-const file = 'export default ' + JSON.stringify(prefixProperties).replace(new RegExp(/\[/, 'g'), '{').replace(new RegExp(/\]/, 'g'), '}')
+delete prefixProperties.Webkit.transition
+
+const propertyPrefixes = Object.keys(prefixProperties).reduce((prefixes, prefix) => {
+  Object.keys(prefixProperties[prefix]).forEach(property => {
+    if (!prefixes[property]) {
+      prefixes[property] = [ ]
+    }
+
+    prefixes[property].push(prefix)
+  })
+  return prefixes
+}, { })
+
+let file = 'export default ' + JSON.stringify(propertyPrefixes)
+
 
 fs.writeFile('./modules/static/prefixProps.js', file, err => {
   if (err) {
@@ -53,7 +67,6 @@ fs.writeFile('./modules/static/prefixProps.js', file, err => {
   }
   console.log('Successfully generated static property vendor-prefix data based on before generated caniuse data mapping.')
 })
-
 
 const browsers = [ 'chrome', 'safari', 'firefox', 'opera', 'ie', 'edge', 'ios_saf', 'android', 'and_chr', 'and_uc', 'op_mini', 'ie_mob' ]
 

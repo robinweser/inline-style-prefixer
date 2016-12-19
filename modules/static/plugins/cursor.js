@@ -1,4 +1,4 @@
-import joinPrefixedValue from '../../utils/joinPrefixedValue'
+const prefixes = [ '-webkit-', '-moz-', '' ]
 
 const values = {
   'zoom-in': true,
@@ -9,6 +9,6 @@ const values = {
 
 export default function cursor(property, value) {
   if (property === 'cursor' && values[value]) {
-    return joinPrefixedValue(property, value)
+    return prefixes.map(prefix => prefix + value)
   }
 }

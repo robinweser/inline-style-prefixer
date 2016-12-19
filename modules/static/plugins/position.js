@@ -1,5 +1,5 @@
-export default function position(property, value) {
+export default function position(property, value, style) {
   if (property === 'position' && value === 'sticky') {
-    return { position: [ '-webkit-sticky', 'sticky' ] }
+    style.position = [ '-webkit-sticky', 'sticky' ]
   }
 }

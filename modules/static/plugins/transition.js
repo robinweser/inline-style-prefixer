@@ -1,4 +1,5 @@
 import hyphenateStyleName from 'hyphenate-style-name'
+
 import capitalizeString from '../../utils/capitalizeString'
 import isPrefixedValue from '../../utils/isPrefixedValue'
 import prefixProps from '../prefixProps'
@@ -10,7 +11,13 @@ const properties = {
   WebkitTransitionProperty: true
 }
 
-export default function transition(property, value) {
+const prefixMapping = {
+  Webkit: '-webkit-',
+  Moz: '-moz-',
+  ms: '-ms-'
+}
+
+export default function transition(property, value, style) {
   // also check for already prefixed transitions
   if (typeof value === 'string' && properties[property]) {
     const outputValue = prefixValue(value)
@@ -18,13 +25,10 @@ export default function transition(property, value) {
 
     // if the property is already prefixed
     if (property.indexOf('Webkit') > -1) {
-      return { [ property]: webkitOutput }
+      return webkitOutput
     }
-
-    return {
-      ['Webkit' + capitalizeString(property)]: webkitOutput,
-      [property]: outputValue
-    }
+    style['Webkit' + capitalizeString(property)] = webkitOutput
+    return outputValue
   }
 }
 
@@ -36,23 +40,23 @@ function prefixValue(value) {
   // only split multi values, not cubic beziers
   const multipleValues = value.split(/,(?![^()]*(?:\([^()]*\))?\))/g)
 
-  // iterate each single value and check for transitioned properties
-  // that need to be prefixed as well
-  multipleValues.forEach((val, index) => {
-    multipleValues[index] = Object.keys(prefixProps).reduce((out, prefix) => {
-      const dashCasePrefix = '-' + prefix.toLowerCase() + '-'
+  for (let i = 0, len = multipleValues.length; i < len; ++i) {
+    const singleValue = multipleValues[i]
+    const values = [ singleValue ]
+    for (let property in prefixProps) {
+      const dashCaseProperty = hyphenateStyleName(property)
 
-      Object.keys(prefixProps[prefix]).forEach(prop => {
-        const dashCaseProperty = hyphenateStyleName(prop)
-
-        if (val.indexOf(dashCaseProperty) > -1 && dashCaseProperty !== 'order') {
+      if (singleValue.indexOf(dashCaseProperty) > -1 && dashCaseProperty !== 'order') {
+        const prefixes = prefixProps[property]
+        for (let j = 0, pLen = prefixes.length; j < pLen; ++j) {
           // join all prefixes and create a new value
-          out = val.replace(dashCaseProperty, dashCasePrefix + dashCaseProperty) + ',' + out
+          values.unshift(singleValue.replace(dashCaseProperty, prefixMapping[prefixes[j]] + dashCaseProperty))
         }
-      })
-      return out
-    }, val)
-  })
+      }
+    }
+
+    multipleValues[i] = values.join(',')
+  }
 
   return multipleValues.join(',')
 }

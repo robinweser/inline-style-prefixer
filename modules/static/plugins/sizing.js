@@ -1,4 +1,4 @@
-import joinPrefixedValue from '../../utils/joinPrefixedValue'
+const prefixes = [ '-webkit-', '-moz-', '' ]
 
 const properties = {
   maxHeight: true,
@@ -19,6 +19,6 @@ const values = {
 
 export default function sizing(property, value) {
   if (properties[property] && values[value]) {
-    return joinPrefixedValue(property, value)
+    return prefixes.map(prefix => prefix + value)
   }
 }

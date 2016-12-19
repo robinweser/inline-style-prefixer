@@ -39,8 +39,8 @@
   "author": "Robin Frischmann",
   "license": "MIT",
   "dependencies": {
-    "bowser": "^1.0.0",
-    "hyphenate-style-name": "^1.0.1"
+    "bowser": "^1.6.0",
+    "hyphenate-style-name": "1.0.2"
   },
   "devDependencies": {
     "babel": "^6.5.2",

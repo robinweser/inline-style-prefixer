@@ -13,16 +13,12 @@ const alternativeProps = {
   flexWrap: 'WebkitBoxLines'
 }
 
-export default function flexboxOld(property, value) {
+export default function flexboxOld(property, value, style) {
   if (property === 'flexDirection' && typeof value === 'string') {
-    return {
-      WebkitBoxOrient: value.indexOf('column') > -1 ? 'vertical' : 'horizontal',
-      WebkitBoxDirection: value.indexOf('reverse') > -1 ? 'reverse' : 'normal'
-    }
+    style.WebkitBoxOrient = value.indexOf('column') > -1 ? 'vertical' : 'horizontal',
+    style.WebkitBoxDirection = value.indexOf('reverse') > -1 ? 'reverse' : 'normal'
   }
   if (alternativeProps[property]) {
-    return {
-      [alternativeProps[property]]: alternativeValues[value] || value
-    }
+    style[alternativeProps[property]] = alternativeValues[value] || value
   }
 }

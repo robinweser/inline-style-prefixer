@@ -1,6 +1,5 @@
-import prefixProperties from './prefixProps'
 import capitalizeString from '../utils/capitalizeString'
-import sortPrefixedStyle from '../utils/sortPrefixedStyle'
+import prefixProperties from './prefixProps'
 
 import position from './plugins/position'
 import calc from './plugins/calc'
@@ -25,51 +24,60 @@ const plugins = [
   flex
 ]
 
-/**
- * Returns a prefixed version of the style object using all vendor prefixes
- * @param {Object} styles - Style object that gets prefixed properties added
- * @returns {Object} - Style object with prefixed properties and values
- */
-export default function prefixAll(styles) {
-  Object.keys(styles).forEach(property => {
-    const value = styles[property]
-    if (value instanceof Object && !Array.isArray(value)) {
-      // recurse through nested style objects
-      styles[property] = prefixAll(value)
-    } else {
-      Object.keys(prefixProperties).forEach(prefix => {
-        const properties = prefixProperties[prefix]
-        // add prefixes if needed
-        if (properties[property]) {
-          styles[prefix + capitalizeString(property)] = value
-        }
-      })
+function runPluginsOnValue(property, value, style, callback) {
+  let callbackCalled = false
+
+  for (let i = 0, len = plugins.length; i < len; ++i) {
+    const newValue = plugins[i](property, value, style)
+
+    if (newValue) {
+      callbackCalled = true
+      callback(newValue)
     }
-  })
+  }
 
-  Object.keys(styles).forEach(property => {
-    [ ].concat(styles[property]).forEach((value, index) => {
-      // resolve every special plugins
-      plugins.forEach(plugin => assignStyles(styles, plugin(property, value)))
-    })
-  })
-
-  return sortPrefixedStyle(styles)
+  return callbackCalled
 }
 
-function assignStyles(base, extend = { }) {
-  Object.keys(extend).forEach(property => {
-    const baseValue = base[property]
-    if (Array.isArray(baseValue)) {
-      [ ].concat(extend[property]).forEach(value => {
-        const valueIndex = baseValue.indexOf(value)
-        if (valueIndex > -1) {
-          base[property].splice(valueIndex, 1)
-        }
-        base[property].push(value)
-      })
+
+export default function prefixAll(style) {
+  for (let property in style) {
+    const value = style[property]
+    if (value instanceof Object && !Array.isArray(value)) {
+      style[property] = prefixAll(value)
     } else {
-      base[property] = extend[property]
+      if (Array.isArray(value)) {
+        const combinedValue = [ ]
+
+        for (let i = 0, len = value.length; i < len; ++i) {
+          const called = runPluginsOnValue(property, value[i], style, newValue => {
+            [ ].concat(newValue).forEach(val => {
+              if (combinedValue.indexOf(val) === -1) {
+                combinedValue.push(val)
+              }
+            })
+          })
+
+          if (!called && combinedValue.indexOf(value[i]) === -1) {
+            combinedValue.push(value[i])
+          }
+        }
+
+        style[property] = combinedValue
+      } else {
+        runPluginsOnValue(property, value, style, newValue => {
+          style[property] = newValue
+        })
+      }
+
+      const requiredPrefixes = prefixProperties[property]
+      if (requiredPrefixes) {
+        for (let i = 0, len = requiredPrefixes.length; i < len; ++i) {
+          style[requiredPrefixes[i] + capitalizeString(property)] = style[property]
+        }
+      }
     }
-  })
+  }
+
+  return style
 }
