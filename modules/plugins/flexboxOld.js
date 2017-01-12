@@ -36,7 +36,7 @@ export default function flexboxOld({ property, value, styles, browserInfo: { bro
     }
     if (property === 'flexDirection' && typeof value === 'string') {
       return {
-        WebkitBoxOrient: value.indexOf('column') > -1 ? 'vertical' : 'horizontal',
+        WebkitBoxOrient: value.indexOf('column') > -1 ? 'block-axis' : 'inline-axis',
         WebkitBoxDirection: value.indexOf('reverse') > -1 ? 'reverse' : 'normal'
       }
     }
