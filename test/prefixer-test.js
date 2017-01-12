@@ -155,7 +155,7 @@ describe('Resolving old 2009 flexbox specification', () => {
   it('should replace flexDirection', () => {
     const input = { flexDirection: 'column-reverse' }
     const output = {
-      WebkitBoxOrient: 'vertical',
+      WebkitBoxOrient: 'block-axis',
       WebkitBoxDirection: 'reverse'
     }
     expect(new Prefixer({ userAgent: Chrome14 }).prefix(input)).to.eql(output)
