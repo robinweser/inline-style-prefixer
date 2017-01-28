@@ -1,16 +1,21 @@
-import capitalizeString from '../utils/capitalizeString'
+/* @flow */
+import prefixProperty from '../utils/prefixProperty'
+import prefixValue from '../utils/prefixValue'
+
+import addNewValuesOnly from '../utils/addNewValuesOnly'
+import isObject from '../utils/isObject'
+
 import prefixProperties from './prefixProps'
 
-import position from './plugins/position'
 import calc from './plugins/calc'
 import cursor from './plugins/cursor'
 import flex from './plugins/flex'
-import sizing from './plugins/sizing'
-import gradient from './plugins/gradient'
-import transition from './plugins/transition'
-// special flexbox specifications
 import flexboxIE from './plugins/flexboxIE'
 import flexboxOld from './plugins/flexboxOld'
+import gradient from './plugins/gradient'
+import position from './plugins/position'
+import sizing from './plugins/sizing'
+import transition from './plugins/transition'
 
 const plugins = [
   position,
@@ -24,58 +29,37 @@ const plugins = [
   flex
 ]
 
-function runPluginsOnValue(property, value, style, callback) {
-  let callbackCalled = false
-
-  for (let i = 0, len = plugins.length; i < len; ++i) {
-    const newValue = plugins[i](property, value, style)
-
-    if (newValue) {
-      callbackCalled = true
-      callback(newValue)
-    }
-  }
-
-  return callbackCalled
-}
-
-
-export default function prefixAll(style) {
-  for (let property in style) {
+export default function prefixAll(style: Object): Object {
+  for (const property in style) {
     const value = style[property]
-    if (value instanceof Object && !Array.isArray(value)) {
+
+    // handle nested objects
+    if (isObject(value)) {
       style[property] = prefixAll(value)
-    } else {
-      if (Array.isArray(value)) {
-        const combinedValue = [ ]
+      // handle array values
+    } else if (Array.isArray(value)) {
+      const combinedValue = []
 
-        for (let i = 0, len = value.length; i < len; ++i) {
-          const called = runPluginsOnValue(property, value[i], style, newValue => {
-            [ ].concat(newValue).forEach(val => {
-              if (combinedValue.indexOf(val) === -1) {
-                combinedValue.push(val)
-              }
-            })
-          })
+      for (let i = 0, len = value.length; i < len; ++i) {
+        const processedValue = prefixValue(plugins, property, value[i], style)
+        addNewValuesOnly(combinedValue, processedValue || value[i])
+      }
 
-          if (!called && combinedValue.indexOf(value[i]) === -1) {
-            combinedValue.push(value[i])
-          }
-        }
-
+      // only modify the value if it was touched
+      // by any plugin to prevent unnecessary mutations
+      if (combinedValue.length > 0) {
         style[property] = combinedValue
-      } else {
-        runPluginsOnValue(property, value, style, newValue => {
-          style[property] = newValue
-        })
+      }
+    } else {
+      const processedValue = prefixValue(plugins, property, value, style)
+
+      // only modify the value if it was touched
+      // by any plugin to prevent unnecessary mutations
+      if (processedValue) {
+        style[property] = processedValue
       }
 
-      const requiredPrefixes = prefixProperties[property]
-      if (requiredPrefixes) {
-        for (let i = 0, len = requiredPrefixes.length; i < len; ++i) {
-          style[requiredPrefixes[i] + capitalizeString(property)] = style[property]
-        }
-      }
+      prefixProperty(prefixProperties, property, style)
     }
   }
 

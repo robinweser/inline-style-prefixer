@@ -1,5 +1,6 @@
-export default function position(property, value, style) {
+/* @flow */
+export default function position(property: string, value: any): ?Array<string> {
   if (property === 'position' && value === 'sticky') {
-    style.position = [ '-webkit-sticky', 'sticky' ]
+    return ['-webkit-sticky', 'sticky']
   }
 }

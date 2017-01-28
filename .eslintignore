@@ -1,4 +1,4 @@
 lib/**/*
 coverage/**/*
-modules/prefixProps.js
+modules/dynamic/prefixProps.js
 modules/static/prefixProps.js

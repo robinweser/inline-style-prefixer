@@ -1,5 +1,10 @@
-export default value => {
-  if (Array.isArray(value)) value = value.join(',')
+/* @flow */
 
-  return value.match(/-webkit-|-moz-|-ms-/) !== null
+const regex = /-webkit-|-moz-|-ms-/
+export default function isPrefixedValue(value: any): boolean {
+  if (Array.isArray(value)) {
+    value = value.join(',')
+  }
+
+  return value.match(regex) !== null
 }

@@ -1,20 +1,20 @@
-import webpack from 'webpack';
-import path from 'path';
-import fs from 'fs';
-import rimraf from 'rimraf';
+import webpack from 'webpack'
+import path from 'path'
+import fs from 'fs'
+import rimraf from 'rimraf'
 
-const testBundle = (name) => new Promise((resolve, reject) => {
+const testBundle = name => new Promise((resolve, reject) => {
   const compiler = webpack({
     context: __dirname,
-    entry: {
-      [name]: [ `./${name}.js` ]
-    },
+    entry: { [name]: [`./${name}.js`] },
     module: {
       loaders: [
         {
           test: /\.js$/,
           loader: 'babel-loader',
-          query: JSON.parse(fs.readFileSync(path.join(__dirname, '../..', '.babelrc'))),
+          query: JSON.parse(
+            fs.readFileSync(path.join(__dirname, '../..', '.babelrc'))
+          ),
           include: __dirname,
           exclude: path.join(__dirname, '../..', 'node_modules')
         }
@@ -27,9 +27,7 @@ const testBundle = (name) => new Promise((resolve, reject) => {
     plugins: [
       new webpack.optimize.UglifyJsPlugin({
         sourceMap: false,
-        mangle: {
-          screw_ie8: true
-        },
+        mangle: { screw_ie8: true },
         output: {
           screw_ie8: true,
           comments: false
@@ -40,32 +38,37 @@ const testBundle = (name) => new Promise((resolve, reject) => {
         }
       })
     ]
-  });
+  })
 
   compiler.run((err) => {
     if (err) {
-      reject(err);
+      reject(err)
     } else {
-      console.log(`Size ${name}`, (
-        fs.statSync(path.join(__dirname, 'dist', `${name}.js`)).size / 1000.0
-        ) + 'KB');
-      resolve();
+      console.log(
+        `Size ${name}`,
+        `${fs.statSync(path.join(__dirname, 'dist', `${name}.js`)).size /
+          1000.0}KB`
+      )
+      resolve()
     }
-  });
-});
+  })
+})
 
-Promise.all([
-  testBundle('new'),
-  testBundle('new_static'),
-  testBundle('old'),
-  testBundle('old_static')
-]).then(() => {
-  rimraf(path.join(__dirname, 'dist'), (err) => {
-    if (err) {
-      throw err;
-    }
-  });
-}).catch((err) => {
-  console.error(err);
-  throw err;
-});
+Promise
+  .all([
+    testBundle('205-static'),
+    testBundle('300-static'),
+    testBundle('205-dynamic'),
+    testBundle('300-dynamic')
+  ])
+  .then(() => {
+    rimraf(path.join(__dirname, 'dist'), (err) => {
+      if (err) {
+        throw err
+      }
+    })
+  })
+  .catch((err) => {
+    console.error(err)
+    throw err
+  })

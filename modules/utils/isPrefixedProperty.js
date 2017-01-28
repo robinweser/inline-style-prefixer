@@ -1,1 +1,6 @@
-export default property => property.match(/^(Webkit|Moz|O|ms)/) !== null
+/* @flow */
+const regex = /^(Webkit|Moz|O|ms)/
+
+export default function isPrefixedProperty(property: string): boolean {
+  return property.match(regex) !== null
+}

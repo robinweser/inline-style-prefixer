@@ -1,2 +1,2 @@
-export * from './newDynamic';
-export * from './oldDynamic';
+export * from './205-dynamic'
+export * from './300-dynamic'

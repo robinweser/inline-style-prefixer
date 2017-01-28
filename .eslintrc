@@ -1,11 +1,39 @@
 {
-  "extends": "eslint-config-rackt",
-  "env": {
+  "extends": [ "airbnb" ],
+  "parser": "babel-eslint",
+   "env": {
     "browser": true,
-    "mocha": true,
-    "node": true
+    "node": true,
+    "mocha": true
   },
+  "plugins": [
+    "flowtype"
+  ],
   "rules": {
-    "eol-last": 0
+    "semi": [ 2, "never" ],
+    "object-curly-newline": ["error" ],
+    "object-property-newline": ["error", {
+      "allowMultiplePropertiesPerLine": false
+    }],
+    "comma-dangle": [ 2, "never" ],
+    "react/jsx-filename-extension": [2, {
+      "extensions": [".js", ".jsx"]
+    }],
+    "import/no-extraneous-dependencies": [ 0 ],
+    "react/prop-types": [ 0 ],
+    "no-confusing-arrow": [ 0 ],
+    "no-underscore-dangle": [ 0 ],
+    "no-param-reassign": [ 1 ],
+    "react/forbid-prop-types": [ 0 ],
+    "no-plusplus": [ 0 ],
+    "guard-for-in": [ 0 ],
+    "no-restricted-syntax": [ 1 ],
+    "no-continue": [ 1 ],
+    "no-prototype-builtins": [ 1 ],
+    "max-len": [ 2, 100 ],
+    "no-mixed-operators": [ 1 ],
+    "no-lonely-if": [ 1 ],
+    "no-bitwise": [ 0 ],
+    "consistent-return": [ 1 ]
   }
 }

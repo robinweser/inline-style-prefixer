@@ -1,4 +1,5 @@
-const prefixes = [ '-webkit-', '-moz-', '' ]
+/* @flow */
+const prefixes = ['-webkit-', '-moz-', '']
 
 const properties = {
   maxHeight: true,
@@ -17,7 +18,7 @@ const values = {
   'contain-floats': true
 }
 
-export default function sizing(property, value) {
+export default function sizing(property: string, value: any): ?Array<any> {
   if (properties[property] && values[value]) {
     return prefixes.map(prefix => prefix + value)
   }

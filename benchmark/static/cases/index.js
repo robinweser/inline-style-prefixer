@@ -1,2 +1,2 @@
-export * from './newStatic';
-export * from './oldStatic';
+export * from './205-static'
+export * from './300-static'

@@ -1,96 +1,117 @@
+/* @flow */
 import bowser from 'bowser'
-const vendorPrefixes = {
-  Webkit: [ 'chrome', 'safari', 'ios', 'android', 'phantom', 'opera', 'webos', 'blackberry', 'bada', 'tizen', 'chromium', 'vivaldi' ],
-  Moz: [ 'firefox', 'seamonkey', 'sailfish' ],
-  ms: [ 'msie', 'msedge' ]
-}
-const browsers = {
-  chrome: [ [ 'chrome' ], [ 'chromium' ] ],
-  safari: [ [ 'safari' ] ],
-  firefox: [ [ 'firefox' ] ],
-  edge: [ [ 'msedge' ] ],
-  opera: [ [ 'opera' ], [ 'vivaldi' ] ],
-  ios_saf: [ [ 'ios', 'mobile' ], [ 'ios', 'tablet' ] ],
-  ie: [ [ 'msie' ] ],
-  op_mini: [ [ 'opera', 'mobile' ], [ 'opera', 'tablet' ] ],
-  and_uc: [ [ 'android', 'mobile' ], [ 'android', 'tablet' ] ],
-  android: [ [ 'android', 'mobile' ], [ 'android', 'tablet' ] ]
+
+const prefixByBrowser = {
+  chrome: 'Webkit',
+  safari: 'Webkit',
+  ios: 'Webkit',
+  android: 'Webkit',
+  phantom: 'Webkit',
+  opera: 'Webkit',
+  webos: 'Webkit',
+  blackberry: 'Webkit',
+  bada: 'Webkit',
+  tizen: 'Webkit',
+  chromium: 'Webkit',
+  vivaldi: 'Webkit',
+  firefox: 'Moz',
+  seamoney: 'Moz',
+  sailfish: 'Moz',
+  msie: 'ms',
+  msedge: 'ms'
 }
 
-const browserByInfo = info => {
-  if (info.firefox) {
+const browserByCanIuseAlias = {
+  chrome: 'chrome',
+  chromium: 'chrome',
+  safari: 'safari',
+  firfox: 'firefox',
+  msedge: 'edge',
+  opera: 'opera',
+  vivaldi: 'opera',
+  msie: 'ie'
+}
+
+function getBrowserName(browserInfo: Object): ?string {
+  if (browserInfo.firefox) {
     return 'firefox'
   }
-  let name = ''
 
-  Object.keys(browsers).forEach(browser => {
-    browsers[browser].forEach(condition => {
-      let match = 0
-      condition.forEach(single => {
-        if (info[single]) {
-          match += 1
-        }
-      })
-      if (condition.length === match) {
-        name = browser
-      }
-    })
-  })
+  if (browserInfo.mobile || browserInfo.tablet) {
+    if (browserInfo.ios) {
+      return 'ios_saf'
+    } else if (browserInfo.android) {
+      return 'android'
+    } else if (browserInfo.opera) {
+      return 'op_mini'
+    }
+  }
 
-  return name
+  for (const browser in browserByCanIuseAlias) {
+    if (browserInfo[browser]) {
+      return browserByCanIuseAlias[browser]
+    }
+  }
 }
 
 /**
- * Uses bowser to get default browser information such as version and name
- * Evaluates bowser info and adds vendorPrefix information
+ * Uses bowser to get default browser browserInformation such as version and name
+ * Evaluates bowser browserInfo and adds vendorPrefix browserInformation
  * @param {string} userAgent - userAgent that gets evaluated
  */
-export default userAgent => {
-  if (!userAgent) {
-    return false
+export default function getBrowserInformation(userAgent: string): Object | boolean {
+  const browserInfo = bowser._detect(userAgent)
+
+  for (const browser in prefixByBrowser) {
+    if (browserInfo[browser]) {
+      const prefix = prefixByBrowser[browser]
+
+      browserInfo.jsPrefix = prefix
+      browserInfo.cssPrefix = `-${prefix.toLowerCase()}-`
+      break
+    }
   }
-  const info = bowser._detect(userAgent)
 
-  Object.keys(vendorPrefixes).forEach(prefix => {
-    vendorPrefixes[prefix].forEach(browser => {
-      if (info[browser]) {
-        info.prefix = {
-          inline: prefix,
-          css: '-' + prefix.toLowerCase() + '-'
-        }
-      }
-    })
-  })
-
-  info.browser = browserByInfo(info);
+  browserInfo.browserName = getBrowserName(browserInfo)
 
   // For cordova IOS 8 the version is missing, set truncated osversion to prevent NaN
-  info.version = info.version ? parseFloat(info.version) : parseInt(parseFloat(info.osversion), 10)
-  info.osversion = parseFloat(info.osversion)
+  if (browserInfo.version) {
+    browserInfo.browserVersion = parseFloat(browserInfo.version)
+  } else {
+    browserInfo.browserVersion = parseInt(parseFloat(browserInfo.osversion), 10)
+  }
 
+  browserInfo.osVersion = parseFloat(browserInfo.osversion)
 
   // iOS forces all browsers to use Safari under the hood
   // as the Safari version seems to match the iOS version
   // we just explicitely use the osversion instead
   // https://github.com/rofrischmann/inline-style-prefixer/issues/72
-  if (info.browser === 'ios_saf' && info.version > info.osversion) {
-    info.version = info.osversion
-    info.safari = true
+  if (browserInfo.browserName === 'ios_saf' && browserInfo.browserVersion > browserInfo.osVersion) {
+    browserInfo.browserVersion = browserInfo.osVersion
   }
-
 
   // seperate native android chrome
   // https://github.com/rofrischmann/inline-style-prefixer/issues/45
-  if (info.browser === 'android' && info.chrome && info.version > 37) {
-    info.browser = 'and_chr'
+  if (
+    browserInfo.browserName === 'android' && browserInfo.chrome && browserInfo.browserVersion > 37
+  ) {
+    browserInfo.browserName = 'and_chr'
   }
 
   // For android < 4.4 we want to check the osversion
   // not the chrome version, see issue #26
   // https://github.com/rofrischmann/inline-style-prefixer/issues/26
-  if (info.browser === 'android' && info.osversion < 5) {
-    info.version = info.osversion
+  if (browserInfo.browserName === 'android' && browserInfo.osVersion < 5) {
+    browserInfo.browserVersion = browserInfo.osVersion
   }
 
-  return info
+  // Samsung browser are basically build on Chrome > 44
+  // https://github.com/rofrischmann/inline-style-prefixer/issues/102
+  if (browserInfo.browserName === 'android' && browserInfo.samsungBrowser) {
+    browserInfo.browserName = 'and_chr'
+    browserInfo.browserVersion = 44
+  }
+
+  return browserInfo
 }

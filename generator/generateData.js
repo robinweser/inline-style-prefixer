@@ -24,11 +24,11 @@ const prefixBrowsers = {
 
 const prefixProperties = Object.keys(prefixBrowsers).reduce((out, browser) => {
   const prefix = prefixBrowsers[browser]
-  Object.keys(searchMap).forEach(searchKey => {
+  Object.keys(searchMap).forEach((searchKey) => {
     const versions = caniuse.getSupport(searchKey)
-    const properties = [ ].concat(searchMap[searchKey])
+    const properties = [].concat(searchMap[searchKey])
 
-    properties.forEach(prop => {
+    properties.forEach((prop) => {
       if (versions[browser].x >= config[browser]) {
         out[prefix][prop] = true
       }
@@ -36,53 +36,83 @@ const prefixProperties = Object.keys(prefixBrowsers).reduce((out, browser) => {
   })
 
   return out
-}, { Webkit: { }, Moz: { }, ms: { } })
+}, {
+  Webkit: {},
+  Moz: {},
+  ms: {}
+})
 
 // remove flexprops from IE
-const flexPropsIE = [ 'alignContent', 'alignSelf', 'alignItems', 'justifyContent', 'order', 'flexGrow', 'flexShrink', 'flexBasis' ]
+const flexPropsIE = [
+  'alignContent',
+  'alignSelf',
+  'alignItems',
+  'justifyContent',
+  'order',
+  'flexGrow',
+  'flexShrink',
+  'flexBasis'
+]
 
-flexPropsIE.forEach(prop => {
+flexPropsIE.forEach((prop) => {
   delete prefixProperties.ms[prop]
 })
 
 delete prefixProperties.Webkit.transition
 
-const propertyPrefixes = Object.keys(prefixProperties).reduce((prefixes, prefix) => {
-  Object.keys(prefixProperties[prefix]).forEach(property => {
+const propertyPrefixes = Object.keys(prefixProperties).reduce((
+  prefixes,
+  prefix
+) => {
+  Object.keys(prefixProperties[prefix]).forEach((property) => {
     if (!prefixes[property]) {
-      prefixes[property] = [ ]
+      prefixes[property] = []
     }
 
     prefixes[property].push(prefix)
   })
   return prefixes
-}, { })
+}, {})
 
-let file = 'export default ' + JSON.stringify(propertyPrefixes)
+const file = `export default ${JSON.stringify(propertyPrefixes)}`
 
-
-fs.writeFile('./modules/static/prefixProps.js', file, err => {
+fs.writeFile('./modules/static/prefixProps.js', file, (err) => {
   if (err) {
     throw err
   }
-  console.log('Successfully generated static property vendor-prefix data based on before generated caniuse data mapping.')
+  console.log(
+    'Successfully generated static property vendor-prefix data based on before generated caniuse data mapping.'
+  )
 })
 
-const browsers = [ 'chrome', 'safari', 'firefox', 'opera', 'ie', 'edge', 'ios_saf', 'android', 'and_chr', 'and_uc', 'op_mini', 'ie_mob' ]
+const browsers = [
+  'chrome',
+  'safari',
+  'firefox',
+  'opera',
+  'ie',
+  'edge',
+  'ios_saf',
+  'android',
+  'and_chr',
+  'and_uc',
+  'op_mini',
+  'ie_mob'
+]
 
 function gatherInformation() {
-  const prefixProperties = { }
-  browsers.forEach(function(browser) {
-    prefixProperties[browser] = { }
+  const prefixProperties = {}
+  browsers.forEach((browser) => {
+    prefixProperties[browser] = {}
   })
 
   for (const search in searchMap) {
     let properties = searchMap[search]
     const versions = caniuse.getSupport(search, true)
     if (properties instanceof Array !== true) {
-      properties = [ properties ]
+      properties = [properties]
     }
-    properties.forEach(function(prop) {
+    properties.forEach((prop) => {
       for (const prefix in prefixProperties) {
         if (versions[prefix].x >= config[prefix]) {
           prefixProperties[prefix][prop] = versions[prefix].x
@@ -91,18 +121,24 @@ function gatherInformation() {
     })
   }
 
-  prefixProperties.ie = assign({ }, prefixProperties.ie, prefixProperties.ie_mob)
+  prefixProperties.ie = assign(
+    {},
+    prefixProperties.ie,
+    prefixProperties.ie_mob
+  )
   delete prefixProperties.ie_mob
-  flexPropsIE.forEach(function(prop) {
+  flexPropsIE.forEach((prop) => {
     delete prefixProperties.ie[prop]
   })
-  return 'export default ' + JSON.stringify(prefixProperties)
+  return `export default ${JSON.stringify(prefixProperties)}`
 }
 
-fs.writeFile('./modules/prefixProps.js', gatherInformation(), function(err) {
+fs.writeFile('./modules/dynamic/prefixProps.js', gatherInformation(), (err) => {
   if (err) {
     throw err
   }
-  console.log('Successfully generated CSS property vendor-prefix data using latest caniuse.com data.')
+  console.log(
+    'Successfully generated CSS property vendor-prefix data using latest caniuse.com data.'
+  )
   console.log('Support following browser: ', browsers.join(', '))
 })

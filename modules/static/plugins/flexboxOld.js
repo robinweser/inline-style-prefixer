@@ -1,3 +1,4 @@
+/* @flow */
 const alternativeValues = {
   'space-around': 'justify',
   'space-between': 'justify',
@@ -13,10 +14,22 @@ const alternativeProps = {
   flexWrap: 'WebkitBoxLines'
 }
 
-export default function flexboxOld(property, value, style) {
+export default function flexboxOld(
+  property: string,
+  value: any,
+  style: Object
+): void {
   if (property === 'flexDirection' && typeof value === 'string') {
-    style.WebkitBoxOrient = value.indexOf('column') > -1 ? 'vertical' : 'horizontal',
-    style.WebkitBoxDirection = value.indexOf('reverse') > -1 ? 'reverse' : 'normal'
+    if (value.indexOf('column') > -1) {
+      style.WebkitBoxOrient = 'vertical'
+    } else {
+      style.WebkitBoxOrient = 'horizontal'
+    }
+    if (value.indexOf('reverse') > -1) {
+      style.WebkitBoxDirection = 'reverse'
+    } else {
+      style.WebkitBoxDirection = 'normal'
+    }
   }
   if (alternativeProps[property]) {
     style[alternativeProps[property]] = alternativeValues[value] || value

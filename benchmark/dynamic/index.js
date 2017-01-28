@@ -1,26 +1,28 @@
-import { Suite } from 'benchmark';
-import beautifyBenchmark from 'beautify-benchmark';
-import { oldDynamic, newDynamic } from './cases';
+import { Suite } from 'benchmark'
+import beautifyBenchmark from 'beautify-benchmark'
+import { dynamic205, dynamic300 } from './cases'
 
 export const run = () => {
-    console.log('Running dynamic test.');
+  console.log('Running dynamic test.')
 
-    const jssSuite = new Suite();
+  const testSuite = new Suite()
 
-    jssSuite.add('newDynamic', () => newDynamic());
-    jssSuite.add('oldDynamic', () => oldDynamic());
+  testSuite.add('2.0.5', () => dynamic205())
+  testSuite.add('3.0.0', () => dynamic300())
 
-    jssSuite.on('cycle', (e) => {
-        beautifyBenchmark.add(e.target);
-    });
+  testSuite.on('cycle', (e) => {
+    beautifyBenchmark.add(e.target)
+  })
 
-    jssSuite.on('complete', function() {
-        beautifyBenchmark.log();
-        console.log(`Fastest is: ${this.filter('fastest').map('name')}\n`);
-        console.log('Improvement: ' + (Math.round(this[0].hz / this[1].hz * 100)/100) + 'x faster');
-    });
+  testSuite.on('complete', function () {
+    beautifyBenchmark.log()
+    console.log(`Fastest is: ${this.filter('fastest').map('name')}\n`)
+    console.log(
+      `Improvement: ${Math.round(this[1].hz / this[0].hz * 100) / 100}x faster`
+    )
+  })
 
-    return jssSuite.run({ async: true });
-};
+  return testSuite.run({ async: true })
+}
 
-run();
+run()
