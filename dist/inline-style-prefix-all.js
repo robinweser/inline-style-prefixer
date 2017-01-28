@@ -127,26 +127,7 @@
 
   var propertyPrefixMap = { "appearance": ["Webkit", "Moz"], "userSelect": ["Webkit", "Moz", "ms"], "textEmphasisPosition": ["Webkit"], "textEmphasis": ["Webkit"], "textEmphasisStyle": ["Webkit"], "textEmphasisColor": ["Webkit"], "boxDecorationBreak": ["Webkit"], "clipPath": ["Webkit"], "maskImage": ["Webkit"], "maskMode": ["Webkit"], "maskRepeat": ["Webkit"], "maskPosition": ["Webkit"], "maskClip": ["Webkit"], "maskOrigin": ["Webkit"], "maskSize": ["Webkit"], "maskComposite": ["Webkit"], "mask": ["Webkit"], "maskBorderSource": ["Webkit"], "maskBorderMode": ["Webkit"], "maskBorderSlice": ["Webkit"], "maskBorderWidth": ["Webkit"], "maskBorderOutset": ["Webkit"], "maskBorderRepeat": ["Webkit"], "maskBorder": ["Webkit"], "maskType": ["Webkit"], "textDecorationStyle": ["Webkit", "Moz"], "textDecorationSkip": ["Webkit", "Moz"], "textDecorationLine": ["Webkit", "Moz"], "textDecorationColor": ["Webkit", "Moz"], "filter": ["Webkit"], "fontFeatureSettings": ["Webkit", "Moz"], "breakAfter": ["Webkit", "Moz", "ms"], "breakBefore": ["Webkit", "Moz", "ms"], "breakInside": ["Webkit", "Moz", "ms"], "columnCount": ["Webkit", "Moz"], "columnFill": ["Webkit", "Moz"], "columnGap": ["Webkit", "Moz"], "columnRule": ["Webkit", "Moz"], "columnRuleColor": ["Webkit", "Moz"], "columnRuleStyle": ["Webkit", "Moz"], "columnRuleWidth": ["Webkit", "Moz"], "columns": ["Webkit", "Moz"], "columnSpan": ["Webkit", "Moz"], "columnWidth": ["Webkit", "Moz"], "flex": ["Webkit", "Moz"], "flexBasis": ["Webkit"], "flexDirection": ["Webkit"], "flexGrow": ["Webkit"], "flexFlow": ["Webkit", "Moz"], "flexShrink": ["Webkit"], "flexWrap": ["Webkit", "Moz"], "alignContent": ["Webkit"], "alignItems": ["Webkit"], "alignSelf": ["Webkit"], "justifyContent": ["Webkit"], "order": ["Webkit"], "transform": ["Webkit", "Moz"], "transformOrigin": ["Webkit", "Moz"], "transformOriginX": ["Webkit", "Moz"], "transformOriginY": ["Webkit", "Moz"], "backfaceVisibility": ["Webkit", "Moz"], "perspective": ["Webkit", "Moz"], "perspectiveOrigin": ["Webkit", "Moz"], "transformStyle": ["Webkit", "Moz"], "transformOriginZ": ["Webkit", "Moz"], "animation": ["Webkit", "Moz"], "animationDelay": ["Webkit", "Moz"], "animationDirection": ["Webkit", "Moz"], "animationFillMode": ["Webkit", "Moz"], "animationDuration": ["Webkit", "Moz"], "animationIterationCount": ["Webkit", "Moz"], "animationName": ["Webkit", "Moz"], "animationPlayState": ["Webkit", "Moz"], "animationTimingFunction": ["Webkit", "Moz"], "backdropFilter": ["Webkit"], "fontKerning": ["Webkit"], "scrollSnapType": ["Webkit", "ms"], "scrollSnapPointsX": ["Webkit", "ms"], "scrollSnapPointsY": ["Webkit", "ms"], "scrollSnapDestination": ["Webkit", "ms"], "scrollSnapCoordinate": ["Webkit", "ms"], "shapeImageThreshold": ["Webkit"], "shapeImageMargin": ["Webkit"], "shapeImageOutside": ["Webkit"], "hyphens": ["Webkit", "Moz", "ms"], "flowInto": ["Webkit", "ms"], "flowFrom": ["Webkit", "ms"], "regionFragment": ["Webkit", "ms"], "borderRadius": ["Moz"], "borderImage": ["Moz"], "borderImageOutset": ["Moz"], "borderImageRepeat": ["Moz"], "borderImageSlice": ["Moz"], "borderImageSource": ["Moz"], "borderImageWidth": ["Moz"], "transitionDelay": ["Moz", "Webkit"], "transitionDuration": ["Moz", "Webkit"], "transitionProperty": ["Moz", "Webkit"], "transitionTimingFunction": ["Moz", "Webkit"], "boxSizing": ["Moz"], "textAlignLast": ["Moz"], "tabSize": ["Moz"], "resize": ["Moz"], "backgroundClip": ["Moz"], "backgroundOrigin": ["Moz"], "backgroundSize": ["Moz"], "boxShadow": ["Moz"], "wrapFlow": ["ms"], "wrapThrough": ["ms"], "wrapMargin": ["ms"], "gridTemplateColumns": ["ms"], "gridTemplateRows": ["ms"], "gridTemplateAreas": ["ms"], "gridTemplate": ["ms"], "gridAutoColumns": ["ms"], "gridAutoRows": ["ms"], "gridAutoFlow": ["ms"], "grid": ["ms"], "gridRowStart": ["ms"], "gridColumnStart": ["ms"], "gridRowEnd": ["ms"], "gridRow": ["ms"], "gridColumn": ["ms"], "gridColumnEnd": ["ms"], "gridColumnGap": ["ms"], "gridRowGap": ["ms"], "gridArea": ["ms"], "gridGap": ["ms"], "textSizeAdjust": ["Webkit", "ms"] };
 
-  var regex = /-webkit-|-moz-|-ms-/;
-  function isPrefixedValue(value) {
-    if (Array.isArray(value)) {
-      value = value.join(',');
-    }
-
-    return value.match(regex) !== null;
-  }
-
   var prefixes = ['-webkit-', '-moz-', ''];
-
-  function calc(property, value) {
-    if (typeof value === 'string' && !isPrefixedValue(value) && value.indexOf('calc(') > -1) {
-      return prefixes.map(function (prefix) {
-        return value.replace(/calc\(/g, prefix + 'calc(');
-      });
-    }
-  }
-
-  var prefixes$1 = ['-webkit-', '-moz-', ''];
 
   var values = {
     'zoom-in': true,
@@ -157,29 +138,38 @@
 
   function cursor(property, value) {
     if (property === 'cursor' && values[value]) {
-      return prefixes$1.map(function (prefix) {
+      return prefixes.map(function (prefix) {
         return prefix + value;
       });
     }
   }
 
+  var regex = /-webkit-|-moz-|-ms-/;
+  function isPrefixedValue(value) {
+    if (Array.isArray(value)) {
+      value = value.join(',');
+    }
+
+    return value.match(regex) !== null;
+  }
+
   // http://caniuse.com/#search=cross-fade
-  var prefixes$2 = ['-webkit-', ''];
+  var prefixes$1 = ['-webkit-', ''];
 
   function crossFade(property, value) {
     if (typeof value === 'string' && !isPrefixedValue(value) && value.indexOf('cross-fade(') > -1) {
-      return prefixes$2.map(function (prefix) {
+      return prefixes$1.map(function (prefix) {
         return value.replace(/cross-fade\(/g, prefix + 'cross-fade(');
       });
     }
   }
 
   // http://caniuse.com/#feat=css-filter-function
-  var prefixes$3 = ['-webkit-', ''];
+  var prefixes$2 = ['-webkit-', ''];
 
   function filter(property, value) {
     if (typeof value === 'string' && !isPrefixedValue(value) && value.indexOf('filter(') > -1) {
-      return prefixes$3.map(function (prefix) {
+      return prefixes$2.map(function (prefix) {
         return value.replace(/filter\(/g, prefix + 'filter(');
       });
     }
@@ -197,29 +187,6 @@
   }
 
   var alternativeValues = {
-    'space-around': 'distribute',
-    'space-between': 'justify',
-    'flex-start': 'start',
-    'flex-end': 'end'
-  };
-  var alternativeProps = {
-    alignContent: 'msFlexLinePack',
-    alignSelf: 'msFlexItemAlign',
-    alignItems: 'msFlexAlign',
-    justifyContent: 'msFlexPack',
-    order: 'msFlexOrder',
-    flexGrow: 'msFlexPositive',
-    flexShrink: 'msFlexNegative',
-    flexBasis: 'msPreferredSize'
-  };
-
-  function flexboxIE(property, value, style) {
-    if (alternativeProps[property]) {
-      style[alternativeProps[property]] = alternativeValues[value] || value;
-    }
-  }
-
-  var alternativeValues$1 = {
     'space-around': 'justify',
     'space-between': 'justify',
     'flex-start': 'start',
@@ -228,7 +195,7 @@
     wrap: 'multiple'
   };
 
-  var alternativeProps$1 = {
+  var alternativeProps = {
     alignItems: 'WebkitBoxAlign',
     justifyContent: 'WebkitBoxPack',
     flexWrap: 'WebkitBoxLines'
@@ -247,28 +214,28 @@
         style.WebkitBoxDirection = 'normal';
       }
     }
-    if (alternativeProps$1[property]) {
-      style[alternativeProps$1[property]] = alternativeValues$1[value] || value;
+    if (alternativeProps[property]) {
+      style[alternativeProps[property]] = alternativeValues[value] || value;
     }
   }
 
-  var prefixes$4 = ['-webkit-', '-moz-', ''];
+  var prefixes$3 = ['-webkit-', '-moz-', ''];
   var values$2 = /linear-gradient|radial-gradient|repeating-linear-gradient|repeating-radial-gradient/;
 
   function gradient(property, value) {
     if (typeof value === 'string' && !isPrefixedValue(value) && value.match(values$2) !== null) {
-      return prefixes$4.map(function (prefix) {
+      return prefixes$3.map(function (prefix) {
         return prefix + value;
       });
     }
   }
 
   // http://caniuse.com/#feat=css-image-set
-  var prefixes$5 = ['-webkit-', ''];
+  var prefixes$4 = ['-webkit-', ''];
 
   function imageSet(property, value) {
     if (typeof value === 'string' && !isPrefixedValue(value) && value.indexOf('image-set(') > -1) {
-      return prefixes$5.map(function (prefix) {
+      return prefixes$4.map(function (prefix) {
         return value.replace(/image-set\(/g, prefix + 'image-set(');
       });
     }
@@ -280,7 +247,7 @@
     }
   }
 
-  var prefixes$6 = ['-webkit-', '-moz-', ''];
+  var prefixes$5 = ['-webkit-', '-moz-', ''];
 
   var properties = {
     maxHeight: true,
@@ -301,7 +268,7 @@
 
   function sizing(property, value) {
     if (properties[property] && values$3[value]) {
-      return prefixes$6.map(function (prefix) {
+      return prefixes$5.map(function (prefix) {
         return prefix + value;
       });
     }
@@ -394,7 +361,7 @@
     }
   }
 
-  var plugins = [position, calc, imageSet, crossFade, filter, cursor, sizing, gradient, transition, flexboxIE, flexboxOld, flex];
+  var plugins = [crossFade, cursor, filter, flexboxOld, gradient, imageSet, position, sizing, transition, flex];
 
   var index = createPrefixer(propertyPrefixMap, plugins);
 

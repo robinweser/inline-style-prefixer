@@ -12,7 +12,7 @@ const properties = {
 }
 
 let requiresPrefixDashCased: Array<string>
-// TODO: extract population
+
 export default function transition(
   property: string,
   value: any,
@@ -22,9 +22,7 @@ export default function transition(
   if (typeof value === 'string' && properties[property]) {
     // memoize the prefix array for later use
     if (!requiresPrefixDashCased) {
-      requiresPrefixDashCased = Object
-        .keys(requiresPrefix)
-        .map(prop => hyphenateStyleName(prop))
+      requiresPrefixDashCased = Object.keys(requiresPrefix).map(prop => hyphenateStyleName(prop))
     }
 
     // only split multi values, not cubic beziers

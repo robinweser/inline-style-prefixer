@@ -29,6 +29,7 @@ var values = {
   'contain-floats': true
 };
 
+// TODO: chrome & opera support it
 function sizing(property, value, style, _ref) {
   var cssPrefix = _ref.cssPrefix,
       keepUnprefixed = _ref.keepUnprefixed;

@@ -2,7 +2,9 @@
 // .getBrowserScope to check for available browsers
 // .find to see all keywords
 import { getSupport } from 'caniuse-api'
+
 import propertyKeywordMap from './propertyKeywordMap'
+import pluginVersionMap from './pluginVersionMap'
 
 const prefixBrowserMap = {
   chrome: 'Webkit',
@@ -120,10 +122,29 @@ export function generateDynamicPrefixPropertyMap(browserList: Object): Object {
   // remove flexProps from IE due to alternative syntax
   for (let i = 0, len = flexPropsIE.length; i < len; ++i) {
     delete prefixPropertyMap.ie[flexPropsIE[i]]
-    // delete prefixPropertyMap.ie[flexPropsIE[i]]
   }
 
   return prefixPropertyMap
+}
+
+export function getRecommendedPlugins(browserList: Object): Array<string> {
+  const recommendedPlugins = {}
+
+  for (const plugin in pluginVersionMap) {
+    const browserSupportByPlugin = pluginVersionMap[plugin]
+
+    for (const browser in browserSupportByPlugin) {
+      if (browserList[browser]) {
+        const browserVersion = browserSupportByPlugin[browser]
+
+        if (browserList[browser] < browserVersion) {
+          recommendedPlugins[plugin] = true
+        }
+      }
+    }
+  }
+
+  return Object.keys(recommendedPlugins)
 }
 
 export function savePrefixPropertyMap(

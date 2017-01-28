@@ -20,6 +20,7 @@ const values = {
   'contain-floats': true
 }
 
+// TODO: chrome & opera support it
 export default function sizing(
   property: string,
   value: any,

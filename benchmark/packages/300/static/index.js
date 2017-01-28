@@ -12,11 +12,49 @@ var _propertyPrefixMap = require('./propertyPrefixMap');
 
 var _propertyPrefixMap2 = _interopRequireDefault(_propertyPrefixMap);
 
-var _plugins = require('./plugins');
+var _cursor = require('./plugins/cursor');
 
-var _plugins2 = _interopRequireDefault(_plugins);
+var _cursor2 = _interopRequireDefault(_cursor);
+
+var _crossFade = require('./plugins/crossFade');
+
+var _crossFade2 = _interopRequireDefault(_crossFade);
+
+var _filter = require('./plugins/filter');
+
+var _filter2 = _interopRequireDefault(_filter);
+
+var _flex = require('./plugins/flex');
+
+var _flex2 = _interopRequireDefault(_flex);
+
+var _flexboxOld = require('./plugins/flexboxOld');
+
+var _flexboxOld2 = _interopRequireDefault(_flexboxOld);
+
+var _gradient = require('./plugins/gradient');
+
+var _gradient2 = _interopRequireDefault(_gradient);
+
+var _imageSet = require('./plugins/imageSet');
+
+var _imageSet2 = _interopRequireDefault(_imageSet);
+
+var _position = require('./plugins/position');
+
+var _position2 = _interopRequireDefault(_position);
+
+var _sizing = require('./plugins/sizing');
+
+var _sizing2 = _interopRequireDefault(_sizing);
+
+var _transition = require('./plugins/transition');
+
+var _transition2 = _interopRequireDefault(_transition);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = (0, _createPrefixer2.default)(_propertyPrefixMap2.default, _plugins2.default);
+var plugins = [_crossFade2.default, _cursor2.default, _filter2.default, _flexboxOld2.default, _gradient2.default, _imageSet2.default, _position2.default, _sizing2.default, _transition2.default, _flex2.default];
+
+exports.default = (0, _createPrefixer2.default)(_propertyPrefixMap2.default, plugins);
 module.exports = exports['default'];

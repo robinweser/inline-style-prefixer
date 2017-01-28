@@ -24,7 +24,7 @@ var properties = {
 };
 
 var requiresPrefixDashCased = void 0;
-// TODO: extract population
+
 function transition(property, value, style, _ref) {
   var cssPrefix = _ref.cssPrefix,
       keepUnprefixed = _ref.keepUnprefixed,

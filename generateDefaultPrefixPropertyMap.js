@@ -1,6 +1,7 @@
 import {
   generateStaticPrefixPropertyMap,
   generateDynamicPrefixPropertyMap,
+  getRecommendedPlugins,
   savePrefixPropertyMap
 } from './modules/generator'
 
@@ -19,20 +20,14 @@ const defaultBrowserSupport = {
   and_chr: 46
 }
 
+console.log(getRecommendedPlugins(defaultBrowserSupport))
+
 function generateDefaultPrefixPropertyMap() {
   const staticMap = generateStaticPrefixPropertyMap(defaultBrowserSupport)
   const dynamicMap = generateDynamicPrefixPropertyMap(defaultBrowserSupport)
 
-  savePrefixPropertyMap(
-    staticMap,
-    `${__dirname}/modules/static/propertyPrefixMap.js`,
-    false
-  )
-  savePrefixPropertyMap(
-    dynamicMap,
-    `${__dirname}/modules/dynamic/propertyPrefixMap.js`,
-    false
-  )
+  savePrefixPropertyMap(staticMap, `${__dirname}/modules/static/propertyPrefixMap.js`, false)
+  savePrefixPropertyMap(dynamicMap, `${__dirname}/modules/dynamic/propertyPrefixMap.js`, false)
 }
 
 generateDefaultPrefixPropertyMap()
