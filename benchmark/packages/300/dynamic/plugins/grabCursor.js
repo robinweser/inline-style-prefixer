@@ -20,7 +20,9 @@ function grabCursor(property, value, style, _ref) {
       cssPrefix = _ref.cssPrefix,
       keepUnprefixed = _ref.keepUnprefixed;
 
-  // adds prefixes for firefox, chrome, safari, and opera regardless of version until a reliable brwoser support info can be found (see: https://github.com/rofrischmann/inline-style-prefixer/issues/79)
+  // adds prefixes for firefox, chrome, safari, and opera regardless of
+  // version until a reliable brwoser support info can be found
+  // see: https://github.com/rofrischmann/inline-style-prefixer/issues/79
   if (property === 'cursor' && values[value] && (browserName === 'firefox' || browserName === 'chrome' || browserName === 'safari' || browserName === 'opera')) {
     return (0, _getPrefixedValue2.default)(cssPrefix + value, value, keepUnprefixed);
   }

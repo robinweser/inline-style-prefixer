@@ -1,4 +1,7 @@
-lib/**/*
+static/**/*
+dynamic/**/*
+generator/**/*
+utils/**/*
 coverage/**/*
-modules/dynamic/prefixProps.js
-modules/static/prefixProps.js
+modules/dynamic/propertyPrefixMap.js
+modules/static/propertyPrefixMap.js

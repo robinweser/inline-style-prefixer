@@ -36,9 +36,12 @@ function flexboxOld(property, value, style, _ref) {
   var browserName = _ref.browserName,
       browserVersion = _ref.browserVersion,
       cssPrefix = _ref.cssPrefix,
-      keepUnprefixed = _ref.keepUnprefixed;
+      keepUnprefixed = _ref.keepUnprefixed,
+      requiresPrefix = _ref.requiresPrefix;
 
   if ((properties.indexOf(property) > -1 || property === 'display' && typeof value === 'string' && value.indexOf('flex') > -1) && (browserName === 'firefox' && browserVersion < 22 || browserName === 'chrome' && browserVersion < 21 || (browserName === 'safari' || browserName === 'ios_saf') && browserVersion <= 6.1 || browserName === 'android' && browserVersion < 4.4 || browserName === 'and_uc')) {
+    delete requiresPrefix[property];
+
     if (!keepUnprefixed && !Array.isArray(style[property])) {
       delete style[property];
     }

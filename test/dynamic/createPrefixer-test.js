@@ -1,5 +1,3 @@
-import { expect } from 'chai'
-import Prefixer from '../modules/dynamic/Prefixer'
 const MSIE9 = 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 7.1; Trident/5.0)'
 const MSIE10 = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)'
 const MSEdge12 = 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10136'
@@ -17,7 +15,7 @@ const Chromium = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, lik
 const PhantomJS = 'Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.0.0 Safari/538.1'
 const Samsung = 'Mozilla/5.0 (Linux; Android 6.0.1; SAMSUNG SM-G900F Build/MMB29M) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/4.0 Chrome/44.0.2403.133 Mobile Safari/537.36'
 
-describe('inline-style-prefixer', () => {
+describe('Dynamic Prefixer', () => {
   describe('Prefixing a property', () => {
     it('should only add required prefixes', () => {
       const input = {
@@ -57,15 +55,20 @@ describe('inline-style-prefixer', () => {
     })
   })
   describe('Running on android < 4.4', () => {
-    it('should use the osversion if its the native browser to check for required props', () => {
-      const andPrefixer = new Prefixer({ userAgent: Android4_4_4 })
-      console.log(andPrefixer._browserInfo)
-      expect(andPrefixer._browserInfo.browserVersion).to.eql(andPrefixer._browserInfo.osVersion)
-      expect(andPrefixer._browserInfo.browserVersion).to.eql(4.4)
-      const transform = { transform: 'rotate(40deg)' }
-      const output = { WebkitTransform: 'rotate(40deg)' }
-      expect(new Prefixer({ userAgent: Android4_4_4 }).prefix(transform)).to.eql(output)
-    })
+    it(
+      'should use the osversion if its the native browser to check for required props',
+      () => {
+        const andPrefixer = new Prefixer({ userAgent: Android4_4_4 })
+        console.log(andPrefixer._browserInfo)
+        expect(
+          andPrefixer._browserInfo.browserVersion
+        ).to.eql(andPrefixer._browserInfo.osVersion)
+        expect(andPrefixer._browserInfo.browserVersion).to.eql(4.4)
+        const transform = { transform: 'rotate(40deg)' }
+        const output = { WebkitTransform: 'rotate(40deg)' }
+        expect(new Prefixer({ userAgent: Android4_4_4 }).prefix(transform)).to.eql(output)
+      }
+    )
     it('should use the chrome version if its chrome to check for required props', () => {
       const andPrefixer = new Prefixer({ userAgent: Android4_2_2Chrome47 })
       expect(andPrefixer._browserInfo.osVersion).to.eql(4.2)
@@ -81,7 +84,9 @@ describe('inline-style-prefixer', () => {
     it('always force Safari prefixing as iOS forces to use Safari under the hood', () => {
       const iosPrefixer = new Prefixer({ userAgent: iOSChrome47 })
       console.log(iosPrefixer._browserInfo)
-      expect(iosPrefixer._browserInfo.browserVersion).to.eql(iosPrefixer._browserInfo.osVersion)
+      expect(
+        iosPrefixer._browserInfo.browserVersion
+      ).to.eql(iosPrefixer._browserInfo.osVersion)
       const input = { display: 'flex' }
       const output = { display: '-webkit-flex' }
       expect(iosPrefixer.prefix(input)).to.eql(output)
@@ -218,7 +223,9 @@ describe('inline-style-prefixer', () => {
   })
   describe('Prefixing keyframes', () => {
     it('should return the correct keyframes string', () => {
-      expect(new Prefixer({ userAgent: Chrome14 }).prefixedKeyframes).to.eql('-webkit-keyframes')
+      expect(
+        new Prefixer({ userAgent: Chrome14 }).prefixedKeyframes
+      ).to.eql('-webkit-keyframes')
       expect(new Prefixer({ userAgent: Chrome49 }).prefixedKeyframes).to.eql('keyframes')
       expect(new Prefixer({ userAgent: Chromium }).prefixedKeyframes).to.eql('keyframes')
       expect(new Prefixer({ userAgent: PhantomJS }).prefixedKeyframes).to.eql('keyframes')
@@ -315,6 +322,21 @@ describe('inline-style-prefixer', () => {
         }).prefix(input)
       ).to.eql(prefixed)
     })
+
+    it('should add alternatives and keep defaults', () => {
+      const input2 = { justifyContent: 'space-between' }
+      const output2 = {
+        WebkitBoxPack: 'justify',
+        justifyContent: 'space-between'
+      }
+      expect(
+        new Prefixer({
+          userAgent: Chrome14,
+          keepUnprefixed: true
+        }).prefix(input2)
+      ).to.eql(output2)
+    })
+
     it('should keep default values', () => {
       expect(
         new Prefixer({
@@ -362,7 +384,9 @@ describe('inline-style-prefixer', () => {
       ).to.eql({ display: 'block' })
     })
     it('should not throw if display is null or undefined', () => {
-      expect(new Prefixer({ userAgent: Chrome45 }).prefix({ display: null })).to.eql({ display: null })
+      expect(
+        new Prefixer({ userAgent: Chrome45 }).prefix({ display: null })
+      ).to.eql({ display: null })
       expect(
         new Prefixer({ userAgent: Chrome45 }).prefix({ display: undefined })
       ).to.eql({ display: undefined })

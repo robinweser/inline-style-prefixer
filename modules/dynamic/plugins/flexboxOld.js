@@ -35,17 +35,22 @@ export default function flexboxOld(
   property: string,
   value: any,
   style: Object,
-  { browserName, browserVersion, cssPrefix, keepUnprefixed }: PluginMetaData
+  { browserName, browserVersion, cssPrefix, keepUnprefixed, requiresPrefix }: PluginMetaData
 ): ?Array<any> | ?any {
   if (
     (properties.indexOf(property) > -1 ||
-      property === 'display' && typeof value === 'string' && value.indexOf('flex') > -1) &&
+      property === 'display' &&
+        typeof value === 'string' &&
+        value.indexOf('flex') > -1) &&
       (browserName === 'firefox' && browserVersion < 22 ||
         browserName === 'chrome' && browserVersion < 21 ||
-        (browserName === 'safari' || browserName === 'ios_saf') && browserVersion <= 6.1 ||
+        (browserName === 'safari' || browserName === 'ios_saf') &&
+          browserVersion <= 6.1 ||
         browserName === 'android' && browserVersion < 4.4 ||
         browserName === 'and_uc')
   ) {
+    delete requiresPrefix[property]
+
     if (!keepUnprefixed && !Array.isArray(style[property])) {
       delete style[property]
     }
@@ -62,7 +67,11 @@ export default function flexboxOld(
       }
     }
     if (property === 'display' && alternativeValues[value]) {
-      return getPrefixedValue(cssPrefix + alternativeValues[value], value, keepUnprefixed)
+      return getPrefixedValue(
+        cssPrefix + alternativeValues[value],
+        value,
+        keepUnprefixed
+      )
     }
     if (alternativeProps[property]) {
       style[alternativeProps[property]] = alternativeValues[value] || value

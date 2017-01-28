@@ -1,4 +1,4 @@
-import prefixAll from '../../packages/300/static/prefixAll'
+import prefixAll from '../../packages/300/static'
 
 export const static300 = () => {
   const styles = {

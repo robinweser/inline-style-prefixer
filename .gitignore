@@ -19,7 +19,12 @@ Thumbs.db
 *.sw?
 *.vi
 
-/lib
+/static
+/dynamic
+/utils
+/generator
 node_modules/
 npm-debug.log
 coverage
+/modules/dynamic/prefixPropertyMap.js
+/modules/static/prefixPropertyMap.js

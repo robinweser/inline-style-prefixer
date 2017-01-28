@@ -1,1 +1,1 @@
-import InlineStylePrefixer from '../packages/300/dynamic/Prefixer'
+import InlineStylePrefixer from '../packages/300/dynamic/index'

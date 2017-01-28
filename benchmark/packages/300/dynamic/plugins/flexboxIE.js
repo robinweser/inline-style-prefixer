@@ -35,9 +35,12 @@ function flexboxIE(property, value, style, _ref) {
   var browserName = _ref.browserName,
       browserVersion = _ref.browserVersion,
       cssPrefix = _ref.cssPrefix,
-      keepUnprefixed = _ref.keepUnprefixed;
+      keepUnprefixed = _ref.keepUnprefixed,
+      requiresPrefix = _ref.requiresPrefix;
 
-  if ((alternativeProps[property] || property === 'display' && typeof value === 'string' && value.indexOf('flex') > -1) && (browserName === 'ie_mob' || browserName === 'ie') && browserVersion == 10) {
+  if ((alternativeProps[property] || property === 'display' && typeof value === 'string' && value.indexOf('flex') > -1) && (browserName === 'ie_mob' || browserName === 'ie') && browserVersion === 10) {
+    delete requiresPrefix[property];
+
     if (!keepUnprefixed && !Array.isArray(style[property])) {
       delete style[property];
     }

@@ -9,7 +9,7 @@ var values = {
   'inline-flex': true
 };
 
-function flex(property, value, style) {
+function flex(property, value) {
   if (property === 'display' && values[value]) {
     return ['-webkit-box', '-moz-box', '-ms-' + value + 'box', '-webkit-' + value, value];
   }

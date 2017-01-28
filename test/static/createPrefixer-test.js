@@ -1,12 +1,10 @@
-import { expect } from 'chai'
-import prefixAll from '../modules/static/prefixAll'
-
-describe('inline-style-prefixer/static', () => {
+describe('Static Prefixer', () => {
   describe('Prefixing all properties', () => {
     it('should only add prefixes if browsers need it', () => {
       const input = { transition: '200ms all linear' }
       const output = {
         WebkitTransition: '200ms all linear',
+        MozTransition: '200ms all linear',
         transition: '200ms all linear'
       }
       expect(prefixAll(input)).to.eql(output)
@@ -35,9 +33,11 @@ describe('inline-style-prefixer/static', () => {
         innerStyles: { transition: '300ms all ease-in' }
       }
       const output = {
+        MozTransition: '200ms all linear',
         WebkitTransition: '200ms all linear',
         transition: '200ms all linear',
         innerStyles: {
+          MozTransition: '300ms all ease-in',
           WebkitTransition: '300ms all ease-in',
           transition: '300ms all ease-in'
         }
@@ -74,20 +74,17 @@ describe('inline-style-prefixer/static', () => {
       expect(prefixAll(input)).to.eql(output)
     })
 
-    it(
-      'should resolve alternative values for all flexbox specification',
-      () => {
-        const input = { justifyContent: 'space-around' }
-        const output = {
-          WebkitBoxPack: 'justify',
-          WebkitJustifyContent: 'space-around',
-          justifyContent: 'space-around',
-          msFlexPack: 'distribute'
-        }
-        expect(prefixAll(input)).to.eql(output)
-        expect(prefixAll(input)).to.eql(output)
+    it('should resolve alternative values for all flexbox specification', () => {
+      const input = { justifyContent: 'space-around' }
+      const output = {
+        WebkitBoxPack: 'justify',
+        WebkitJustifyContent: 'space-around',
+        justifyContent: 'space-around',
+        msFlexPack: 'distribute'
       }
-    )
+      expect(prefixAll(input)).to.eql(output)
+      expect(prefixAll(input)).to.eql(output)
+    })
 
     it('should resolve flexbox variants', () => {
       const input = {
@@ -133,15 +130,7 @@ describe('inline-style-prefixer/static', () => {
 
     it('should add all flexbox display types', () => {
       const input = { display: 'flex' }
-      const output = {
-        display: [
-          '-webkit-box',
-          '-moz-box',
-          '-ms-flexbox',
-          '-webkit-flex',
-          'flex'
-        ]
-      }
+      const output = { display: ['-webkit-box', '-moz-box', '-ms-flexbox', '-webkit-flex', 'flex'] }
       expect(prefixAll(input)).to.eql(output)
       expect(prefixAll(input)).to.eql(output)
     })
@@ -172,6 +161,7 @@ describe('inline-style-prefixer/static', () => {
       const input = { transition: '200ms linear appearance, 100ms linear width' }
       const output = {
         WebkitTransition: '200ms linear -webkit-appearance,200ms linear appearance, 100ms linear width',
+        MozTransition: '200ms linear -moz-appearance,200ms linear appearance, 100ms linear width',
         transition: '200ms linear -moz-appearance,200ms linear -webkit-appearance,200ms linear appearance, 100ms linear width'
       }
       expect(prefixAll(input)).to.eql(output)
@@ -181,8 +171,9 @@ describe('inline-style-prefixer/static', () => {
     it('should prefix transitions with cubic beziers', () => {
       const input = { transition: 'transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000)' }
       const output = {
-        transition: '-ms-transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000),-webkit-transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000),transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000)',
-        WebkitTransition: '-webkit-transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000),transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000)'
+        transition: '-ms-transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000),-moz-transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000),-webkit-transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000),transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000)',
+        WebkitTransition: '-webkit-transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000),transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000)',
+        MozTransition: '-moz-transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000),transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000)'
       }
       expect(prefixAll(input)).to.eql(output)
       expect(prefixAll(input)).to.eql(output)
@@ -192,7 +183,8 @@ describe('inline-style-prefixer/static', () => {
       const input = { transition: 'border 500ms linear' }
       const output = {
         transition: 'border 500ms linear',
-        WebkitTransition: 'border 500ms linear'
+        WebkitTransition: 'border 500ms linear',
+        MozTransition: 'border 500ms linear'
       }
       expect(prefixAll(input)).to.eql(output)
       expect(prefixAll(input)).to.eql(output)
@@ -243,14 +235,7 @@ describe('inline-style-prefixer/static', () => {
 
     it('should prefix multiple array values and keep others', () => {
       const input = { width: ['min-content', '100%'] }
-      const output = {
-        width: [
-          '-webkit-min-content',
-          '-moz-min-content',
-          'min-content',
-          '100%'
-        ]
-      }
+      const output = { width: ['-webkit-min-content', '-moz-min-content', 'min-content', '100%'] }
       expect(prefixAll(input)).to.eql(output)
       expect(prefixAll(input)).to.eql(output)
     })

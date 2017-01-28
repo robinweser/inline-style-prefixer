@@ -11,7 +11,7 @@ var _getPrefixedValue2 = _interopRequireDefault(_getPrefixedValue);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function position(property, value, style, _ref) {
+function position(property, value, _ref) {
   var browserName = _ref.browserName,
       cssPrefix = _ref.cssPrefix,
       keepUnprefixed = _ref.keepUnprefixed;

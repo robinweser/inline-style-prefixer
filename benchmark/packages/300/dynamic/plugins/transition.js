@@ -8,36 +8,29 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 exports.default = transition;
 
-var _getPrefixedValue = require('../../utils/getPrefixedValue');
-
-var _getPrefixedValue2 = _interopRequireDefault(_getPrefixedValue);
-
 var _hyphenateStyleName = require('hyphenate-style-name');
 
 var _hyphenateStyleName2 = _interopRequireDefault(_hyphenateStyleName);
-
-var _unprefixProperty = require('../../utils/unprefixProperty');
-
-var _unprefixProperty2 = _interopRequireDefault(_unprefixProperty);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var properties = {
   transition: true,
-  transitionProperty: true
+  transitionProperty: true,
+  WebkitTransition: true,
+  WebkitTransitionProperty: true,
+  MozTransition: true,
+  MozTransitionProperty: true
 };
 
 var requiresPrefixDashCased = void 0;
-
+// TODO: extract population
 function transition(property, value, style, _ref) {
   var cssPrefix = _ref.cssPrefix,
       keepUnprefixed = _ref.keepUnprefixed,
       requiresPrefix = _ref.requiresPrefix;
 
-  // also check for already prefixed transitions
-  var unprefixedProperty = (0, _unprefixProperty2.default)(property);
-
-  if (typeof value === 'string' && properties[unprefixedProperty]) {
+  if (typeof value === 'string' && properties[property]) {
     var _ret = function () {
       // memoize the prefix array for later use
       if (!requiresPrefixDashCased) {

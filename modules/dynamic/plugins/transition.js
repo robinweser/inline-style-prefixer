@@ -1,30 +1,30 @@
 /* @flow */
 import hyphenateStyleName from 'hyphenate-style-name'
-
-import unprefixProperty from '../../utils/unprefixProperty'
-
 import type { PluginMetaData } from '../../../flowtypes/PluginMetaData'
 
 const properties = {
   transition: true,
-  transitionProperty: true
+  transitionProperty: true,
+  WebkitTransition: true,
+  WebkitTransitionProperty: true,
+  MozTransition: true,
+  MozTransitionProperty: true
 }
 
 let requiresPrefixDashCased: Array<string>
-
+// TODO: extract population
 export default function transition(
   property: string,
   value: any,
   style: Object,
   { cssPrefix, keepUnprefixed, requiresPrefix }: PluginMetaData
 ): ?Array<any> | ?any {
-  // also check for already prefixed transitions
-  const unprefixedProperty = unprefixProperty(property)
-
-  if (typeof value === 'string' && properties[unprefixedProperty]) {
+  if (typeof value === 'string' && properties[property]) {
     // memoize the prefix array for later use
     if (!requiresPrefixDashCased) {
-      requiresPrefixDashCased = Object.keys(requiresPrefix).map(prop => hyphenateStyleName(prop))
+      requiresPrefixDashCased = Object
+        .keys(requiresPrefix)
+        .map(prop => hyphenateStyleName(prop))
     }
 
     // only split multi values, not cubic beziers
