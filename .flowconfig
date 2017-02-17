@@ -1,0 +1,7 @@
+[ignore]
+
+# Disable module with broken flow types.
+# .*/node_modules/babylon/*.*
+
+[version]
+^0.38.0

@@ -1,1 +1,11 @@
-export default (prefixedValue, value, keepUnprefixed) => keepUnprefixed ? [ prefixedValue, value ] : prefixedValue
+/* @flow */
+export default function getPrefixedValue(
+  prefixedValue: any,
+  value: any,
+  keepUnprefixed: boolean
+): Array<any> | any {
+  if (keepUnprefixed) {
+    return [prefixedValue, value]
+  }
+  return prefixedValue
+}

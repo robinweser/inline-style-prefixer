@@ -19,7 +19,11 @@ Thumbs.db
 *.sw?
 *.vi
 
-/lib
-/node_modules/
+/static
+/dynamic
+/utils
+/generator
+node_modules/
 npm-debug.log
 coverage
+_book

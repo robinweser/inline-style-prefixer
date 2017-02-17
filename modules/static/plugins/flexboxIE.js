@@ -1,3 +1,4 @@
+/* @flow */
 const alternativeValues = {
   'space-around': 'distribute',
   'space-between': 'justify',
@@ -15,10 +16,8 @@ const alternativeProps = {
   flexBasis: 'msPreferredSize'
 }
 
-export default function flexboxIE(property, value) {
+export default function flexboxIE(property: string, value: any, style: Object): void {
   if (alternativeProps[property]) {
-    return {
-      [alternativeProps[property]]: alternativeValues[value] || value
-    }
+    style[alternativeProps[property]] = alternativeValues[value] || value
   }
 }

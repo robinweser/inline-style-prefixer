@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.0
+### 3.0.0
+
+#### Complete Rewrite
+* introducing new core prefixer that perform up to 4.5x faster
+* added a whole new generator to create your custom prefixer
+* added 4 new plugins to prefix special values
+* new documentation using gitbook
+* integrated flowtype
+
 ## 2.0
 ### 2.0.5
 * added style sorting to prepend prefixed properties ( [#105](https://github.com/rofrischmann/inline-style-prefixer/issues/105) )
