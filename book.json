@@ -1,0 +1,23 @@
+{
+  "gitbook": "3.1.0",
+  "title": "inline-style-prefixer",
+  "author": "Robin Frischmann <robin@rofrischmann.de>",
+  "description": "Official inline-style-prefixer documentation",
+  "language": "en",
+  "plugins": [
+    "edit-link",
+    "prism",
+    "-highlight",
+    "github",
+    "anker-enable"
+  ],
+  "pluginsConfig": {
+    "edit-link": {
+      "base": "https://github.com/rofrischmann/inline-style-prefixer/tree/master",
+      "label": "Edit This Page"
+    },
+    "github": {
+      "url": "https://github.com/rofrischmann/inline-style-prefixer/"
+    }
+  }
+}

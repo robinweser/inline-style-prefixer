@@ -1,11 +1,11 @@
 const chai = require('chai')
 const createDynamicPrefixer = require('../../modules/dynamic/createPrefixer')
-const dynamicPlugins = require('../../modules/dynamic/plugins').default
+const dynamicPlugins = require('../../modules/dynamic/plugins')
 
 const createStaticPrefixer = require('../../modules/static/createPrefixer')
-const staticPlugins = require('../../modules/static/plugins').default
+const staticPlugins = require('../../modules/static/plugins')
 
-const generator = require('../../modules/generator')
+const generateData = require('../../modules/generator')
 
 const browserList = {
   chrome: 0,
@@ -22,17 +22,22 @@ const browserList = {
   and_chr: 0
 }
 
-const fallback = createStaticPrefixer(
-  generator.generateStaticPrefixPropertyMap(browserList),
-  staticPlugins
-)
+const data = generateData(browserList)
 
+console.log(data, staticPlugins)
+
+const prefixAll = createStaticPrefixer({
+  prefixMap: data.static,
+  plugins: staticPlugins
+})
 const Prefixer = createDynamicPrefixer(
-  generator.generateDynamicPrefixPropertyMap(browserList),
-  dynamicPlugins,
-  fallback
+  {
+    prefixMap: data.dynamic,
+    plugins: dynamicPlugins
+  },
+  prefixAll
 )
 
 global.expect = chai.expect
-global.prefixAll = fallback
+global.prefixAll = prefixAll
 global.Prefixer = Prefixer

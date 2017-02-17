@@ -26,5 +26,6 @@ Thumbs.db
 node_modules/
 npm-debug.log
 coverage
-/modules/dynamic/prefixPropertyMap.js
-/modules/static/prefixPropertyMap.js
+/modules/dynamic/dynamicData.js
+/modules/static/staticData.js
+_book
