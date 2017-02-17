@@ -13,7 +13,7 @@ var _capitalizeString = require('../../utils/capitalizeString');
 
 var _capitalizeString2 = _interopRequireDefault(_capitalizeString);
 
-var _isPrefixedValue = require('../../utils/isPrefixedValue');
+var _isPrefixedValue = require('css-in-js-utils/lib/isPrefixedValue');
 
 var _isPrefixedValue2 = _interopRequireDefault(_isPrefixedValue);
 

@@ -3,7 +3,6 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.flex = exports.flexboxOld = exports.flexboxIE = exports.transition = exports.gradient = exports.filter = exports.crossFade = exports.imageSet = exports.sizing = exports.cursor = exports.calc = exports.position = undefined;
 
 var _calc = require('./calc');
 
@@ -56,15 +55,4 @@ var _transition2 = _interopRequireDefault(_transition);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = [_position2.default, _calc2.default, _imageSet2.default, _crossFade2.default, _filter2.default, _cursor2.default, _sizing2.default, _gradient2.default, _transition2.default, _flexboxIE2.default, _flexboxOld2.default, _flex2.default];
-exports.position = _position2.default;
-exports.calc = _calc2.default;
-exports.cursor = _cursor2.default;
-exports.sizing = _sizing2.default;
-exports.imageSet = _imageSet2.default;
-exports.crossFade = _crossFade2.default;
-exports.filter = _filter2.default;
-exports.gradient = _gradient2.default;
-exports.transition = _transition2.default;
-exports.flexboxIE = _flexboxIE2.default;
-exports.flexboxOld = _flexboxOld2.default;
-exports.flex = _flex2.default;
+module.exports = exports['default'];

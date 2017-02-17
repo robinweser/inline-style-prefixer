@@ -23,8 +23,9 @@ var _isObject2 = _interopRequireDefault(_isObject);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function createPrefixer(propertyPrefixMap) {
-  var plugins = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+function createPrefixer(_ref) {
+  var prefixMap = _ref.prefixMap,
+      plugins = _ref.plugins;
 
   function prefixAll(style) {
     for (var property in style) {
@@ -38,7 +39,7 @@ function createPrefixer(propertyPrefixMap) {
         var combinedValue = [];
 
         for (var i = 0, len = value.length; i < len; ++i) {
-          var processedValue = (0, _prefixValue2.default)(plugins, property, value[i], style, propertyPrefixMap);
+          var processedValue = (0, _prefixValue2.default)(plugins, property, value[i], style, prefixMap);
           (0, _addNewValuesOnly2.default)(combinedValue, processedValue || value[i]);
         }
 
@@ -48,7 +49,7 @@ function createPrefixer(propertyPrefixMap) {
           style[property] = combinedValue;
         }
       } else {
-        var _processedValue = (0, _prefixValue2.default)(plugins, property, value, style, propertyPrefixMap);
+        var _processedValue = (0, _prefixValue2.default)(plugins, property, value, style, prefixMap);
 
         // only modify the value if it was touched
         // by any plugin to prevent unnecessary mutations
@@ -56,7 +57,7 @@ function createPrefixer(propertyPrefixMap) {
           style[property] = _processedValue;
         }
 
-        (0, _prefixProperty2.default)(propertyPrefixMap, property, style);
+        (0, _prefixProperty2.default)(prefixMap, property, style);
       }
     }
 

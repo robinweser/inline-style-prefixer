@@ -8,9 +8,7 @@ var _createPrefixer = require('./createPrefixer');
 
 var _createPrefixer2 = _interopRequireDefault(_createPrefixer);
 
-var _propertyPrefixMap = require('./propertyPrefixMap');
-
-var _propertyPrefixMap2 = _interopRequireDefault(_propertyPrefixMap);
+var _staticData = require('./staticData');
 
 var _cursor = require('./plugins/cursor');
 
@@ -56,5 +54,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var plugins = [_crossFade2.default, _cursor2.default, _filter2.default, _flexboxOld2.default, _gradient2.default, _imageSet2.default, _position2.default, _sizing2.default, _transition2.default, _flex2.default];
 
-exports.default = (0, _createPrefixer2.default)(_propertyPrefixMap2.default, plugins);
+exports.default = (0, _createPrefixer2.default)({
+  prefixMap: _staticData.prefixMap,
+  plugins: plugins
+});
 module.exports = exports['default'];

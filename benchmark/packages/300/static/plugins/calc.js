@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = calc;
 
-var _isPrefixedValue = require('../../utils/isPrefixedValue');
+var _isPrefixedValue = require('css-in-js-utils/lib/isPrefixedValue');
 
 var _isPrefixedValue2 = _interopRequireDefault(_isPrefixedValue);
 

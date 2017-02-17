@@ -8,14 +8,6 @@ var _createPrefixer = require('./createPrefixer');
 
 var _createPrefixer2 = _interopRequireDefault(_createPrefixer);
 
-var _static = require('../static');
-
-var _static2 = _interopRequireDefault(_static);
-
-var _propertyPrefixMap = require('./propertyPrefixMap');
-
-var _propertyPrefixMap2 = _interopRequireDefault(_propertyPrefixMap);
-
 var _cursor = require('./plugins/cursor');
 
 var _cursor2 = _interopRequireDefault(_cursor);
@@ -56,9 +48,19 @@ var _transition = require('./plugins/transition');
 
 var _transition2 = _interopRequireDefault(_transition);
 
+var _static = require('../static');
+
+var _static2 = _interopRequireDefault(_static);
+
+var _dynamicData = require('./dynamicData');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var plugins = [_crossFade2.default, _cursor2.default, _filter2.default, _flexboxOld2.default, _gradient2.default, _imageSet2.default, _position2.default, _sizing2.default, _transition2.default, _flex2.default];
 
-exports.default = (0, _createPrefixer2.default)(_propertyPrefixMap2.default, plugins, _static2.default);
+var Prefixer = (0, _createPrefixer2.default)({
+  prefixMap: _dynamicData.prefixMap,
+  plugins: plugins
+}, _static2.default);
+exports.default = Prefixer;
 module.exports = exports['default'];

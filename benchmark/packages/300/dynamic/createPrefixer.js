@@ -36,9 +36,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function createPrefixer(propertyPrefixMap) {
-  var plugins = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-  var fallback = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : function (style) {
+function createPrefixer(_ref) {
+  var prefixMap = _ref.prefixMap,
+      plugins = _ref.plugins;
+  var fallback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function (style) {
     return style;
   };
 
@@ -70,7 +71,7 @@ function createPrefixer(propertyPrefixMap) {
         return false;
       }
 
-      var prefixData = this._browserInfo.browserName && propertyPrefixMap[this._browserInfo.browserName];
+      var prefixData = this._browserInfo.browserName && prefixMap[this._browserInfo.browserName];
       if (prefixData) {
         this._requiresPrefix = {};
 
