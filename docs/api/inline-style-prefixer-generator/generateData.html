@@ -1,0 +1,598 @@
+
+<!DOCTYPE HTML>
+<html lang="en" >
+    <head>
+        <title>3.3.1. generateData · inline-style-prefixer</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.1.0">
+        <meta name="author" content="Robin Frischmann <robin@rofrischmann.de>">
+        
+        
+    
+    <link rel="stylesheet" href="../../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-prism/prism.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../../FAQ.html" />
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../../">
+            
+                <a href="../../../">
+            
+                    
+                    Read Me
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../../UsageGuides.html">
+            
+                <a href="../../UsageGuides.html">
+            
+                    
+                    1. Usage Guides
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../../guides/ClientServerPrefixing.html">
+            
+                <a href="../../guides/ClientServerPrefixing.html">
+            
+                    
+                    1.1. Client / Server Prefixing
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../../guides/ResolvingArrays.html">
+            
+                <a href="../../guides/ResolvingArrays.html">
+            
+                    
+                    1.2. Resolving Array Values
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../../guides/CustomPrefixer.html">
+            
+                <a href="../../guides/CustomPrefixer.html">
+            
+                    
+                    1.3. Creating your own Prefixer
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../../guides/CustomPrefixAll.html">
+            
+                <a href="../../guides/CustomPrefixAll.html">
+            
+                    
+                    1.4. Creating your own prefixAll
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../../DataReference.html">
+            
+                <a href="../../DataReference.html">
+            
+                    
+                    2. Data Reference
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../../data/SupportedProperties.html">
+            
+                <a href="../../data/SupportedProperties.html">
+            
+                    
+                    2.1. Supported Properties
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../../data/SpecialPlugins.html">
+            
+                <a href="../../data/SpecialPlugins.html">
+            
+                    
+                    2.2. Special Plugins
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../../API.html">
+            
+                <a href="../../API.html">
+            
+                    
+                    3. API Reference
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" >
+            
+                <span>
+            
+                    
+                    3.1. inline-style-prefixer
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1.1" data-path="../inline-style-prefixer/Prefixer.html">
+            
+                <a href="../inline-style-prefixer/Prefixer.html">
+            
+                    
+                    3.1.1. Prefixer
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.1.2" data-path="../inline-style-prefixer/createPrefixer.html">
+            
+                <a href="../inline-style-prefixer/createPrefixer.html">
+            
+                    
+                    3.1.2. createPrefixer
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" >
+            
+                <span>
+            
+                    
+                    3.2. inline-style-prefixer/static
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.2.1" data-path="../inline-style-prefixer-static/prefixAll.html">
+            
+                <a href="../inline-style-prefixer-static/prefixAll.html">
+            
+                    
+                    3.2.1. prefixAll
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2.2" data-path="../inline-style-prefixer-static/createPrefixer.html">
+            
+                <a href="../inline-style-prefixer-static/createPrefixer.html">
+            
+                    
+                    3.2.2. createPrefixer
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" >
+            
+                <span>
+            
+                    
+                    3.3. inline-style-prefixer/generator
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.4.3.1" data-path="generateData.html">
+            
+                <a href="generateData.html">
+            
+                    
+                    3.3.1. generateData
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../../FAQ.html">
+            
+                <a href="../../FAQ.html">
+            
+                    
+                    4. FAQ
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../../.." >3.3.1. generateData</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="generatedatabrowserlist-options"><code>generateData(browserList, options)</code></h1>
+<p>Generates all the data needed to create your own prefixer. It uses a list of browser versions to determine the required prefixes. It also writes the data to files if <code>staticPath</code> and/or <code>dynamicPath</code> is provided. The files are directly written in valid JavaScript, so that they can be imported and used as is.</p>
+<p>The files always have the following shape (ES2015 example):</p>
+<pre class="language-"><code class="lang-javascript"><span class="token comment" spellcheck="true">// 1-n plugins if options.plugins !== false</span>
+<span class="token comment" spellcheck="true">// type is either &apos;static&apos; or &apos;dynamic&apos;</span>
+<span class="token keyword">import</span> PLUGIN_NAME <span class="token keyword">from</span> <span class="token string">&apos;inline-style-prefixer/{type}/plugins/PLUGIN_NAME&apos;</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  <span class="token comment" spellcheck="true">// contains all the prefix data for each browser/prefix</span>
+  <span class="token comment" spellcheck="true">// as long as options.prefixMap !== false</span>
+  prefixMap<span class="token punctuation">:</span> <span class="token punctuation">{</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token comment" spellcheck="true">// an array containing all plugins if options.plugisn !== false</span>
+  plugins<span class="token punctuation">:</span> <span class="token punctuation">[</span> PLUGIN_NAME <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h2 id="arguments">Arguments</h2>
+<ol>
+<li><code>browserList</code> (<em>Object</em>): An object containing a browser:version mapping used to generate the required prefixes</li>
+<li><code>options</code> (<em>Object</em>): An object containing the generator configurations</li>
+</ol>
+<h2 id="returns">Returns</h2>
+<p>(<em>Object</em>): Returns the generated data as an object with the keys <code>plugins</code>, <code>static</code> and <code>dynamic</code>.</p>
+<h2 id="options">Options</h2>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Value</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>staticPath</td>
+<td><em>(string)</em></td>
+<td></td>
+<td>Filepaths where the generated static data is saved</td>
+</tr>
+<tr>
+<td>dynamicPath</td>
+<td><em>(string)</em></td>
+<td></td>
+<td>Filepaths where the generated dynamic data is saved</td>
+</tr>
+<tr>
+<td>compatibility</td>
+<td><em>(boolean)</em></td>
+<td><code>false</code></td>
+<td>Save the data in valid ES5 syntax <em>(default is ES2015)</em></td>
+</tr>
+<tr>
+<td>prefixMap</td>
+<td><em>(boolean)</em></td>
+<td><code>true</code></td>
+<td>Generate (and save) the prefixMap</td>
+</tr>
+<tr>
+<td>plugins</td>
+<td><em>(boolean)</em></td>
+<td><code>true</code></td>
+<td>Generate (and save) the plugin list</td>
+</tr>
+</tbody>
+</table>
+<h2 id="example">Example</h2>
+<pre class="language-"><code class="lang-javascript"><span class="token keyword">import</span> generateData <span class="token keyword">from</span> <span class="token string">&apos;inline-style-prefixer/generator&apos;</span>
+
+<span class="token keyword">const</span> browserList <span class="token operator">=</span> <span class="token punctuation">{</span>
+  chrome<span class="token punctuation">:</span> <span class="token number">46</span><span class="token punctuation">,</span>
+  android<span class="token punctuation">:</span> <span class="token number">4</span><span class="token punctuation">,</span>
+  firefox<span class="token punctuation">:</span> <span class="token number">40</span><span class="token punctuation">,</span>
+  ios_saf<span class="token punctuation">:</span> <span class="token number">8</span><span class="token punctuation">,</span>
+  safari<span class="token punctuation">:</span> <span class="token number">8</span><span class="token punctuation">,</span>
+  ie<span class="token punctuation">:</span> <span class="token number">11</span><span class="token punctuation">,</span>
+  ie_mob<span class="token punctuation">:</span> <span class="token number">11</span><span class="token punctuation">,</span>
+  edge<span class="token punctuation">:</span> <span class="token number">12</span><span class="token punctuation">,</span>
+  opera<span class="token punctuation">:</span> <span class="token number">16</span><span class="token punctuation">,</span>
+  op_mini<span class="token punctuation">:</span> <span class="token number">12</span><span class="token punctuation">,</span>
+  and_uc<span class="token punctuation">:</span> <span class="token number">9</span><span class="token punctuation">,</span>
+  and_chr<span class="token punctuation">:</span> <span class="token number">46</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">generateData</span><span class="token punctuation">(</span>browserList<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+  staticPath<span class="token punctuation">:</span> <span class="token template-string"><span class="token string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>__dirname<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">/prefixData/static.js`</span></span><span class="token punctuation">,</span>
+  dynamicPath<span class="token punctuation">:</span> <span class="token template-string"><span class="token string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>__dirname<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">/prefixData/dynamic.js`</span></span><span class="token punctuation">,</span>
+
+  compatibility<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+  prefixMap<span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  plugins<span class="token punctuation">:</span> <span class="token boolean">false</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                
+                <a href="../../FAQ.html" class="navigation navigation-next navigation-unique" aria-label="Next page: 4. FAQ">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"3.3.1. generateData","level":"1.4.3.1","depth":3,"next":{"title":"4. FAQ","level":"1.5","depth":1,"path":"docs/FAQ.md","ref":"docs/FAQ.md","articles":[]},"previous":{"title":"3.3. inline-style-prefixer/generator","level":"1.4.3","depth":2,"ref":"","articles":[{"title":"3.3.1. generateData","level":"1.4.3.1","depth":3,"path":"docs/api/inline-style-prefixer-generator/generateData.md","ref":"docs/api/inline-style-prefixer-generator/generateData.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["edit-link","prism","-highlight","github","anker-enable"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"prism":{},"github":{"url":"https://github.com/rofrischmann/inline-style-prefixer/"},"anker-enable":{},"search":{},"lunr":{"maxIndexSize":1000000},"fontsettings":{"theme":"white","family":"sans","size":2},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"edit-link":{"base":"https://github.com/rofrischmann/inline-style-prefixer/tree/master","label":"Edit This Page"},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Robin Frischmann <robin@rofrischmann.de>","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"inline-style-prefixer","language":"en","gitbook":"3.1.0","description":"Official inline-style-prefixer documentation"},"file":{"path":"docs/api/inline-style-prefixer-generator/generateData.md","mtime":"2017-02-17T13:05:46.000Z","type":"markdown"},"gitbook":{"version":"3.1.0","time":"2017-02-17T19:54:00.507Z"},"basePath":"../../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../../gitbook/gitbook.js"></script>
+    <script src="../../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-edit-link/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-github/plugin.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-anker-enable/anker.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
