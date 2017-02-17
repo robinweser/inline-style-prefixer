@@ -1,6 +1,6 @@
 # Supported Properties
-The following list shows all supported properties that get evaluated.<br>
-They are grouped in caniuse groups.
+The following list shows all supported properties that might get prefixed depending on your browser settings.
+> They are grouped in their respective caniuse keyword-groups
 
 * animation, animationDelay, animationDirection, animationFillMode, animationDuration, animationIterationCount, animationName, animationPlayState, animationTimingFunction
 * appearance
