@@ -1,5 +1,5 @@
 /* @flow */
-import isPrefixedValue from '../../utils/isPrefixedValue'
+import isPrefixedValue from 'css-in-js-utils/lib/isPrefixedValue'
 
 const prefixes = ['-webkit-', '-moz-', '']
 const values = /linear-gradient|radial-gradient|repeating-linear-gradient|repeating-radial-gradient/

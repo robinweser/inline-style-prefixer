@@ -1,5 +1,5 @@
 /* @flow */
-import isPrefixedValue from '../../utils/isPrefixedValue'
+import isPrefixedValue from 'css-in-js-utils/lib/isPrefixedValue'
 
 // http://caniuse.com/#feat=css-filter-function
 const prefixes = ['-webkit-', '']

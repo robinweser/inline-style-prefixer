@@ -1,5 +1,5 @@
 /* @flow */
-import hyphenateStyleName from 'hyphenate-style-name'
+import hyphenateProperty from 'css-in-js-utils/lib/hyphenateProperty'
 import type { PluginMetaData } from '../../../flowtypes/PluginMetaData'
 
 const properties = {
@@ -22,7 +22,7 @@ export default function transition(
   if (typeof value === 'string' && properties[property]) {
     // memoize the prefix array for later use
     if (!requiresPrefixDashCased) {
-      requiresPrefixDashCased = Object.keys(requiresPrefix).map(prop => hyphenateStyleName(prop))
+      requiresPrefixDashCased = Object.keys(requiresPrefix).map(prop => hyphenateProperty(prop))
     }
 
     // only split multi values, not cubic beziers

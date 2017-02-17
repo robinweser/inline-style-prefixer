@@ -26,13 +26,18 @@ export default function flexboxIE(
   property: string,
   value: any,
   style: Object,
-  { browserName, browserVersion, cssPrefix, keepUnprefixed, requiresPrefix }: PluginMetaData
+  {
+    browserName,
+    browserVersion,
+    cssPrefix,
+    keepUnprefixed,
+    requiresPrefix
+  }:
+PluginMetaData
 ): ?Array<any> | ?any {
   if (
     (alternativeProps[property] ||
-      property === 'display' &&
-        typeof value === 'string' &&
-        value.indexOf('flex') > -1) &&
+      property === 'display' && typeof value === 'string' && value.indexOf('flex') > -1) &&
       ((browserName === 'ie_mob' || browserName === 'ie') && browserVersion === 10)
   ) {
     delete requiresPrefix[property]
@@ -41,11 +46,7 @@ export default function flexboxIE(
       delete style[property]
     }
     if (property === 'display' && alternativeValues[value]) {
-      return getPrefixedValue(
-        cssPrefix + alternativeValues[value],
-        value,
-        keepUnprefixed
-      )
+      return getPrefixedValue(cssPrefix + alternativeValues[value], value, keepUnprefixed)
     }
     if (alternativeProps[property]) {
       style[alternativeProps[property]] = alternativeValues[value] || value

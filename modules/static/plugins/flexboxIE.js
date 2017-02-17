@@ -16,11 +16,7 @@ const alternativeProps = {
   flexBasis: 'msPreferredSize'
 }
 
-export default function flexboxIE(
-  property: string,
-  value: any,
-  style: Object
-): void {
+export default function flexboxIE(property: string, value: any, style: Object): void {
   if (alternativeProps[property]) {
     style[alternativeProps[property]] = alternativeValues[value] || value
   }

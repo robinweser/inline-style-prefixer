@@ -5,9 +5,12 @@ import addNewValuesOnly from '../utils/addNewValuesOnly'
 import isObject from '../utils/isObject'
 import prefixValue from '../utils/prefixValue'
 
+type DynamicData = {
+  prefixMap: Object,
+  plugins: Array<Function>
+};
 export default function createPrefixer(
-  propertyPrefixMap: Object,
-  plugins: ?Array<Function> = [],
+  { prefixMap, plugins }: DynamicData,
   fallback: ?Function = style => style
 ) {
   return class Prefixer {
@@ -38,8 +41,7 @@ export default function createPrefixer(
         return false
       }
 
-      const prefixData = this._browserInfo.browserName &&
-        propertyPrefixMap[this._browserInfo.browserName]
+      const prefixData = this._browserInfo.browserName && prefixMap[this._browserInfo.browserName]
       if (prefixData) {
         this._requiresPrefix = {}
 

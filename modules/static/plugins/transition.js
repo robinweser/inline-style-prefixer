@@ -1,8 +1,8 @@
 /* @flow */
-import hyphenateStyleName from 'hyphenate-style-name'
+import hyphenateProperty from 'css-in-js-utils/lib/hyphenateProperty'
+import isPrefixedValue from 'css-in-js-utils/lib/isPrefixedValue'
 
 import capitalizeString from '../../utils/capitalizeString'
-import isPrefixedValue from '../../utils/isPrefixedValue'
 
 const properties = {
   transition: true,
@@ -31,7 +31,7 @@ function prefixValue(value: string, propertyPrefixMap: Object): string {
     const singleValue = multipleValues[i]
     const values = [singleValue]
     for (const property in propertyPrefixMap) {
-      const dashCaseProperty = hyphenateStyleName(property)
+      const dashCaseProperty = hyphenateProperty(property)
 
       if (singleValue.indexOf(dashCaseProperty) > -1 && dashCaseProperty !== 'order') {
         const prefixes = propertyPrefixMap[property]

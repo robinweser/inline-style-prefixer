@@ -1,8 +1,5 @@
 import createPrefixer from './createPrefixer'
 
-import fallback from '../static'
-import propertyPrefixMap from './propertyPrefixMap'
-
 import cursor from './plugins/cursor'
 import crossFade from './plugins/crossFade'
 import filter from './plugins/filter'
@@ -27,4 +24,14 @@ const plugins = [
   flex
 ]
 
-export default createPrefixer(propertyPrefixMap, plugins, fallback)
+import prefixAll from '../static'
+import { prefixMap } from './dynamicData'
+
+const Prefixer = createPrefixer(
+  {
+    prefixMap,
+    plugins
+  },
+  prefixAll
+)
+export default Prefixer

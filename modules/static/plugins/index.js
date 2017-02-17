@@ -25,18 +25,3 @@ export default [
   flexboxOld,
   flex
 ]
-
-export {
-  position,
-  calc,
-  cursor,
-  sizing,
-  imageSet,
-  crossFade,
-  filter,
-  gradient,
-  transition,
-  flexboxIE,
-  flexboxOld,
-  flex
-}

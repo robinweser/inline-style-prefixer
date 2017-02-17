@@ -14,11 +14,7 @@ const alternativeProps = {
   flexWrap: 'WebkitBoxLines'
 }
 
-export default function flexboxOld(
-  property: string,
-  value: any,
-  style: Object
-): void {
+export default function flexboxOld(property: string, value: any, style: Object): void {
   if (property === 'flexDirection' && typeof value === 'string') {
     if (value.indexOf('column') > -1) {
       style.WebkitBoxOrient = 'vertical'
