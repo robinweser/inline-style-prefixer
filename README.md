@@ -18,11 +18,11 @@ If you're still using npm, you may run `npm i --save inline-style-prefixer`.
 We also provide [UMD](https://github.com/umdjs/umd) builds for each package in the `dist` folder. You can easily use them via [unpkg](https://unpkg.com/).
 ```HTML
 <!-- Unminified versions -->
-<script src="https://unpkg.com/inline-style-prefixer@2.0.4/dist/inline-style-prefixer.js"></script>
-<script src="https://unpkg.com/inline-style-prefixer@2.0.4/dist/inline-style-prefix-all.js"></script>
+<script src="https://unpkg.com/inline-style-prefixer@3.0.0/dist/inline-style-prefixer.js"></script>
+<script src="https://unpkg.com/inline-style-prefixer@3.0.0/dist/inline-style-prefix-all.js"></script>
 <!-- Minified versions -->
-<script src="https://unpkg.com/inline-style-prefixer@2.0.4/dist/inline-style-prefixer.min.js"></script>
-<script src="https://unpkg.com/inline-style-prefixer@2.0.4/dist/inline-style-prefix-all.min.js"></script>
+<script src="https://unpkg.com/inline-style-prefixer@3.0.0/dist/inline-style-prefixer.min.js"></script>
+<script src="https://unpkg.com/inline-style-prefixer@3.0.0/dist/inline-style-prefix-all.min.js"></script>
 ```
 
 ## Browser Support
