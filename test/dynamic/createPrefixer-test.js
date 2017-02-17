@@ -55,20 +55,15 @@ describe('Dynamic Prefixer', () => {
     })
   })
   describe('Running on android < 4.4', () => {
-    it(
-      'should use the osversion if its the native browser to check for required props',
-      () => {
-        const andPrefixer = new Prefixer({ userAgent: Android4_4_4 })
-        console.log(andPrefixer._browserInfo)
-        expect(
-          andPrefixer._browserInfo.browserVersion
-        ).to.eql(andPrefixer._browserInfo.osVersion)
-        expect(andPrefixer._browserInfo.browserVersion).to.eql(4.4)
-        const transform = { transform: 'rotate(40deg)' }
-        const output = { WebkitTransform: 'rotate(40deg)' }
-        expect(new Prefixer({ userAgent: Android4_4_4 }).prefix(transform)).to.eql(output)
-      }
-    )
+    it('should use the osversion if its the native browser to check for required props', () => {
+      const andPrefixer = new Prefixer({ userAgent: Android4_4_4 })
+      console.log(andPrefixer._browserInfo)
+      expect(andPrefixer._browserInfo.browserVersion).to.eql(andPrefixer._browserInfo.osVersion)
+      expect(andPrefixer._browserInfo.browserVersion).to.eql(4.4)
+      const transform = { transform: 'rotate(40deg)' }
+      const output = { WebkitTransform: 'rotate(40deg)' }
+      expect(new Prefixer({ userAgent: Android4_4_4 }).prefix(transform)).to.eql(output)
+    })
     it('should use the chrome version if its chrome to check for required props', () => {
       const andPrefixer = new Prefixer({ userAgent: Android4_2_2Chrome47 })
       expect(andPrefixer._browserInfo.osVersion).to.eql(4.2)
@@ -84,9 +79,7 @@ describe('Dynamic Prefixer', () => {
     it('always force Safari prefixing as iOS forces to use Safari under the hood', () => {
       const iosPrefixer = new Prefixer({ userAgent: iOSChrome47 })
       console.log(iosPrefixer._browserInfo)
-      expect(
-        iosPrefixer._browserInfo.browserVersion
-      ).to.eql(iosPrefixer._browserInfo.osVersion)
+      expect(iosPrefixer._browserInfo.browserVersion).to.eql(iosPrefixer._browserInfo.osVersion)
       const input = { display: 'flex' }
       const output = { display: '-webkit-flex' }
       expect(iosPrefixer.prefix(input)).to.eql(output)
@@ -223,9 +216,7 @@ describe('Dynamic Prefixer', () => {
   })
   describe('Prefixing keyframes', () => {
     it('should return the correct keyframes string', () => {
-      expect(
-        new Prefixer({ userAgent: Chrome14 }).prefixedKeyframes
-      ).to.eql('-webkit-keyframes')
+      expect(new Prefixer({ userAgent: Chrome14 }).prefixedKeyframes).to.eql('-webkit-keyframes')
       expect(new Prefixer({ userAgent: Chrome49 }).prefixedKeyframes).to.eql('keyframes')
       expect(new Prefixer({ userAgent: Chromium }).prefixedKeyframes).to.eql('keyframes')
       expect(new Prefixer({ userAgent: PhantomJS }).prefixedKeyframes).to.eql('keyframes')
@@ -238,6 +229,7 @@ describe('Dynamic Prefixer', () => {
       expect(new Prefixer({ userAgent: Chrome22 }).prefix(input)).to.eql(prefixed)
     })
   })
+
   describe('Prefixing transitions', () => {
     it('should add prefixes to properties in value', () => {
       const input = { transition: 'appearance 200ms linear' }
@@ -379,17 +371,11 @@ describe('Dynamic Prefixer', () => {
   })
   describe('Prefixing display', () => {
     it('should not remove display property', () => {
-      expect(
-        new Prefixer({ userAgent: MSIE10 }).prefix({ display: 'block' })
-      ).to.eql({ display: 'block' })
+      expect(new Prefixer({ userAgent: MSIE10 }).prefix({ display: 'block' })).to.eql({ display: 'block' })
     })
     it('should not throw if display is null or undefined', () => {
-      expect(
-        new Prefixer({ userAgent: Chrome45 }).prefix({ display: null })
-      ).to.eql({ display: null })
-      expect(
-        new Prefixer({ userAgent: Chrome45 }).prefix({ display: undefined })
-      ).to.eql({ display: undefined })
+      expect(new Prefixer({ userAgent: Chrome45 }).prefix({ display: null })).to.eql({ display: null })
+      expect(new Prefixer({ userAgent: Chrome45 }).prefix({ display: undefined })).to.eql({ display: undefined })
     })
   })
   describe('Using Prefixer.prefixAll', () => {

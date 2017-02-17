@@ -19,8 +19,6 @@ const prefixBrowserMap = {
   ie_mob: 'ms'
 }
 
-const browsers = Object.keys(prefixBrowserMap)
-
 // remove flexprops from IE
 const flexPropsIE = [
   'alignContent',

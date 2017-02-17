@@ -3,5 +3,5 @@ dynamic/**/*
 generator/**/*
 utils/**/*
 coverage/**/*
-modules/dynamic/propertyPrefixMap.js
-modules/static/propertyPrefixMap.js
+modules/dynamic/dynamicData.js
+modules/static/staticData.js

@@ -11,6 +11,9 @@ import position from './plugins/position'
 import sizing from './plugins/sizing'
 import transition from './plugins/transition'
 
+import prefixAll from '../static'
+import { prefixMap } from './dynamicData'
+
 const plugins = [
   crossFade,
   cursor,
@@ -23,9 +26,6 @@ const plugins = [
   transition,
   flex
 ]
-
-import prefixAll from '../static'
-import { prefixMap } from './dynamicData'
 
 const Prefixer = createPrefixer(
   {

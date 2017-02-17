@@ -32,14 +32,6 @@ const flexPropsIE = [
   'flexBasis'
 ]
 
-function filterAndRemoveIfEmpty(map: Object, property: string, filter: Function): void {
-  map[property] = map[property].filter(filter)
-
-  if (map[property].length === 0) {
-    delete map[property]
-  }
-}
-
 export default function generateDynamicPrefixMap(browserList: Object): Object {
   const prefixMap = {}
 
