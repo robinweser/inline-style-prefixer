@@ -81,7 +81,7 @@ const output = {
 
 The **static prefixer**, on the other hand, adds all required prefixes according the above mentioned browser versions. Removing the browser detection makes it both smaller and fast, but also drastically increases the output.
 
-![Gzipped Size](https://img.shields.io/badge/gzipped-2.40kb-brightgreen.svg)
+![Gzipped Size](https://img.shields.io/badge/gzipped-2.70kb-brightgreen.svg)
 
 ```javascript
 import prefixAll from 'inline-style-prefixer/static'

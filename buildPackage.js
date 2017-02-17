@@ -8,11 +8,11 @@ import nodeResolver from 'rollup-plugin-node-resolve'
 const packages = {
   'inline-style-prefixer': {
     name: 'InlineStylePrefixer',
-    entry: '/dynamic/index.js'
+    entry: 'dynamic/index.js'
   },
   'inline-style-prefix-all': {
     name: 'InlineStylePrefixAll',
-    entry: '/static/index.js'
+    entry: 'static/index.js'
   }
 }
 
@@ -58,9 +58,7 @@ function buildPackage(pkg) {
   rollup
     .rollup(rollupConfig(pkg, packages[pkg], process.env.NODE_ENV === 'production'))
     .then((bundle) => {
-      bundle.write(
-        bundleConfig(pkg, packages[pkg], process.env.NODE_ENV === 'production')
-      )
+      bundle.write(bundleConfig(pkg, packages[pkg], process.env.NODE_ENV === 'production'))
       console.log(
         `Successfully bundled ${packages[pkg].name}${process.env.NODE_ENV === 'production'
           ? ' (minified).'

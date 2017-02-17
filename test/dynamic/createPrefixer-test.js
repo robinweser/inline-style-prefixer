@@ -57,7 +57,6 @@ describe('Dynamic Prefixer', () => {
   describe('Running on android < 4.4', () => {
     it('should use the osversion if its the native browser to check for required props', () => {
       const andPrefixer = new Prefixer({ userAgent: Android4_4_4 })
-      console.log(andPrefixer._browserInfo)
       expect(andPrefixer._browserInfo.browserVersion).to.eql(andPrefixer._browserInfo.osVersion)
       expect(andPrefixer._browserInfo.browserVersion).to.eql(4.4)
       const transform = { transform: 'rotate(40deg)' }
@@ -78,7 +77,6 @@ describe('Dynamic Prefixer', () => {
   describe('Running on iOS', () => {
     it('always force Safari prefixing as iOS forces to use Safari under the hood', () => {
       const iosPrefixer = new Prefixer({ userAgent: iOSChrome47 })
-      console.log(iosPrefixer._browserInfo)
       expect(iosPrefixer._browserInfo.browserVersion).to.eql(iosPrefixer._browserInfo.osVersion)
       const input = { display: 'flex' }
       const output = { display: '-webkit-flex' }
@@ -88,7 +86,6 @@ describe('Dynamic Prefixer', () => {
   describe('Running on cordova ios <= 8.4', () => {
     it('should be prefixed if the version is missing', () => {
       const cdv8_4Prefixer = new Prefixer({ userAgent: CordovaIOS8_4 })
-      console.log(cdv8_4Prefixer._browserInfo)
       const transform = { transform: 'rotate(40deg)' }
       const output = { WebkitTransform: 'rotate(40deg)' }
       expect(cdv8_4Prefixer.prefix(transform)).to.eql(output)

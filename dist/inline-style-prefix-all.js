@@ -5,6 +5,11 @@
 }(this, function () { 'use strict';
 
   var babelHelpers = {};
+  babelHelpers.typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+    return typeof obj;
+  } : function (obj) {
+    return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+  };
 
   babelHelpers.classCallCheck = function (instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -82,8 +87,9 @@
     return value instanceof Object && !Array.isArray(value);
   }
 
-  function createPrefixer(propertyPrefixMap) {
-    var plugins = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+  function createPrefixer(_ref) {
+    var prefixMap = _ref.prefixMap,
+        plugins = _ref.plugins;
 
     function prefixAll(style) {
       for (var property in style) {
@@ -97,7 +103,7 @@
           var combinedValue = [];
 
           for (var i = 0, len = value.length; i < len; ++i) {
-            var processedValue = prefixValue(plugins, property, value[i], style, propertyPrefixMap);
+            var processedValue = prefixValue(plugins, property, value[i], style, prefixMap);
             addNewValuesOnly(combinedValue, processedValue || value[i]);
           }
 
@@ -107,7 +113,7 @@
             style[property] = combinedValue;
           }
         } else {
-          var _processedValue = prefixValue(plugins, property, value, style, propertyPrefixMap);
+          var _processedValue = prefixValue(plugins, property, value, style, prefixMap);
 
           // only modify the value if it was touched
           // by any plugin to prevent unnecessary mutations
@@ -115,7 +121,7 @@
             style[property] = _processedValue;
           }
 
-          prefixProperty(propertyPrefixMap, property, style);
+          prefixProperty(prefixMap, property, style);
         }
       }
 
@@ -125,7 +131,10 @@
     return prefixAll;
   }
 
-  var propertyPrefixMap = { "appearance": ["Webkit", "Moz"], "userSelect": ["Webkit", "Moz", "ms"], "textEmphasisPosition": ["Webkit"], "textEmphasis": ["Webkit"], "textEmphasisStyle": ["Webkit"], "textEmphasisColor": ["Webkit"], "boxDecorationBreak": ["Webkit"], "clipPath": ["Webkit"], "maskImage": ["Webkit"], "maskMode": ["Webkit"], "maskRepeat": ["Webkit"], "maskPosition": ["Webkit"], "maskClip": ["Webkit"], "maskOrigin": ["Webkit"], "maskSize": ["Webkit"], "maskComposite": ["Webkit"], "mask": ["Webkit"], "maskBorderSource": ["Webkit"], "maskBorderMode": ["Webkit"], "maskBorderSlice": ["Webkit"], "maskBorderWidth": ["Webkit"], "maskBorderOutset": ["Webkit"], "maskBorderRepeat": ["Webkit"], "maskBorder": ["Webkit"], "maskType": ["Webkit"], "textDecorationStyle": ["Webkit", "Moz"], "textDecorationSkip": ["Webkit", "Moz"], "textDecorationLine": ["Webkit", "Moz"], "textDecorationColor": ["Webkit", "Moz"], "filter": ["Webkit"], "fontFeatureSettings": ["Webkit", "Moz"], "breakAfter": ["Webkit", "Moz", "ms"], "breakBefore": ["Webkit", "Moz", "ms"], "breakInside": ["Webkit", "Moz", "ms"], "columnCount": ["Webkit", "Moz"], "columnFill": ["Webkit", "Moz"], "columnGap": ["Webkit", "Moz"], "columnRule": ["Webkit", "Moz"], "columnRuleColor": ["Webkit", "Moz"], "columnRuleStyle": ["Webkit", "Moz"], "columnRuleWidth": ["Webkit", "Moz"], "columns": ["Webkit", "Moz"], "columnSpan": ["Webkit", "Moz"], "columnWidth": ["Webkit", "Moz"], "flex": ["Webkit", "Moz"], "flexBasis": ["Webkit"], "flexDirection": ["Webkit"], "flexGrow": ["Webkit"], "flexFlow": ["Webkit", "Moz"], "flexShrink": ["Webkit"], "flexWrap": ["Webkit", "Moz"], "alignContent": ["Webkit"], "alignItems": ["Webkit"], "alignSelf": ["Webkit"], "justifyContent": ["Webkit"], "order": ["Webkit"], "transform": ["Webkit", "Moz"], "transformOrigin": ["Webkit", "Moz"], "transformOriginX": ["Webkit", "Moz"], "transformOriginY": ["Webkit", "Moz"], "backfaceVisibility": ["Webkit", "Moz"], "perspective": ["Webkit", "Moz"], "perspectiveOrigin": ["Webkit", "Moz"], "transformStyle": ["Webkit", "Moz"], "transformOriginZ": ["Webkit", "Moz"], "animation": ["Webkit", "Moz"], "animationDelay": ["Webkit", "Moz"], "animationDirection": ["Webkit", "Moz"], "animationFillMode": ["Webkit", "Moz"], "animationDuration": ["Webkit", "Moz"], "animationIterationCount": ["Webkit", "Moz"], "animationName": ["Webkit", "Moz"], "animationPlayState": ["Webkit", "Moz"], "animationTimingFunction": ["Webkit", "Moz"], "backdropFilter": ["Webkit"], "fontKerning": ["Webkit"], "scrollSnapType": ["Webkit", "ms"], "scrollSnapPointsX": ["Webkit", "ms"], "scrollSnapPointsY": ["Webkit", "ms"], "scrollSnapDestination": ["Webkit", "ms"], "scrollSnapCoordinate": ["Webkit", "ms"], "shapeImageThreshold": ["Webkit"], "shapeImageMargin": ["Webkit"], "shapeImageOutside": ["Webkit"], "hyphens": ["Webkit", "Moz", "ms"], "flowInto": ["Webkit", "ms"], "flowFrom": ["Webkit", "ms"], "regionFragment": ["Webkit", "ms"], "borderRadius": ["Moz"], "borderImage": ["Moz"], "borderImageOutset": ["Moz"], "borderImageRepeat": ["Moz"], "borderImageSlice": ["Moz"], "borderImageSource": ["Moz"], "borderImageWidth": ["Moz"], "transitionDelay": ["Moz", "Webkit"], "transitionDuration": ["Moz", "Webkit"], "transitionProperty": ["Moz", "Webkit"], "transitionTimingFunction": ["Moz", "Webkit"], "boxSizing": ["Moz"], "textAlignLast": ["Moz"], "tabSize": ["Moz"], "resize": ["Moz"], "backgroundClip": ["Moz"], "backgroundOrigin": ["Moz"], "backgroundSize": ["Moz"], "boxShadow": ["Moz"], "wrapFlow": ["ms"], "wrapThrough": ["ms"], "wrapMargin": ["ms"], "gridTemplateColumns": ["ms"], "gridTemplateRows": ["ms"], "gridTemplateAreas": ["ms"], "gridTemplate": ["ms"], "gridAutoColumns": ["ms"], "gridAutoRows": ["ms"], "gridAutoFlow": ["ms"], "grid": ["ms"], "gridRowStart": ["ms"], "gridColumnStart": ["ms"], "gridRowEnd": ["ms"], "gridRow": ["ms"], "gridColumn": ["ms"], "gridColumnEnd": ["ms"], "gridColumnGap": ["ms"], "gridRowGap": ["ms"], "gridArea": ["ms"], "gridGap": ["ms"], "textSizeAdjust": ["Webkit", "ms"] };
+  var staticData = {
+    plugins: [],
+    prefixMap: { "appearance": ["Webkit", "Moz"], "userSelect": ["Webkit", "Moz", "ms"], "textEmphasisPosition": ["Webkit"], "textEmphasis": ["Webkit"], "textEmphasisStyle": ["Webkit"], "textEmphasisColor": ["Webkit"], "boxDecorationBreak": ["Webkit"], "clipPath": ["Webkit"], "maskImage": ["Webkit"], "maskMode": ["Webkit"], "maskRepeat": ["Webkit"], "maskPosition": ["Webkit"], "maskClip": ["Webkit"], "maskOrigin": ["Webkit"], "maskSize": ["Webkit"], "maskComposite": ["Webkit"], "mask": ["Webkit"], "maskBorderSource": ["Webkit"], "maskBorderMode": ["Webkit"], "maskBorderSlice": ["Webkit"], "maskBorderWidth": ["Webkit"], "maskBorderOutset": ["Webkit"], "maskBorderRepeat": ["Webkit"], "maskBorder": ["Webkit"], "maskType": ["Webkit"], "textDecorationStyle": ["Webkit"], "textDecorationSkip": ["Webkit"], "textDecorationLine": ["Webkit"], "textDecorationColor": ["Webkit"], "filter": ["Webkit"], "fontFeatureSettings": ["Webkit"], "breakAfter": ["Webkit", "Moz", "ms"], "breakBefore": ["Webkit", "Moz", "ms"], "breakInside": ["Webkit", "Moz", "ms"], "columnCount": ["Webkit", "Moz"], "columnFill": ["Webkit", "Moz"], "columnGap": ["Webkit", "Moz"], "columnRule": ["Webkit", "Moz"], "columnRuleColor": ["Webkit", "Moz"], "columnRuleStyle": ["Webkit", "Moz"], "columnRuleWidth": ["Webkit", "Moz"], "columns": ["Webkit", "Moz"], "columnSpan": ["Webkit", "Moz"], "columnWidth": ["Webkit", "Moz"], "flex": ["Webkit"], "flexBasis": ["Webkit"], "flexDirection": ["Webkit"], "flexGrow": ["Webkit"], "flexFlow": ["Webkit"], "flexShrink": ["Webkit"], "flexWrap": ["Webkit"], "alignContent": ["Webkit"], "alignItems": ["Webkit"], "alignSelf": ["Webkit"], "justifyContent": ["Webkit"], "order": ["Webkit"], "transform": ["Webkit"], "transformOrigin": ["Webkit"], "transformOriginX": ["Webkit"], "transformOriginY": ["Webkit"], "backfaceVisibility": ["Webkit"], "perspective": ["Webkit"], "perspectiveOrigin": ["Webkit"], "transformStyle": ["Webkit"], "transformOriginZ": ["Webkit"], "animation": ["Webkit"], "animationDelay": ["Webkit"], "animationDirection": ["Webkit"], "animationFillMode": ["Webkit"], "animationDuration": ["Webkit"], "animationIterationCount": ["Webkit"], "animationName": ["Webkit"], "animationPlayState": ["Webkit"], "animationTimingFunction": ["Webkit"], "backdropFilter": ["Webkit"], "fontKerning": ["Webkit"], "scrollSnapType": ["Webkit", "ms"], "scrollSnapPointsX": ["Webkit", "ms"], "scrollSnapPointsY": ["Webkit", "ms"], "scrollSnapDestination": ["Webkit", "ms"], "scrollSnapCoordinate": ["Webkit", "ms"], "shapeImageThreshold": ["Webkit"], "shapeImageMargin": ["Webkit"], "shapeImageOutside": ["Webkit"], "hyphens": ["Webkit", "Moz", "ms"], "flowInto": ["Webkit", "ms"], "flowFrom": ["Webkit", "ms"], "regionFragment": ["Webkit", "ms"], "textAlignLast": ["Moz"], "tabSize": ["Moz"], "wrapFlow": ["ms"], "wrapThrough": ["ms"], "wrapMargin": ["ms"], "gridTemplateColumns": ["ms"], "gridTemplateRows": ["ms"], "gridTemplateAreas": ["ms"], "gridTemplate": ["ms"], "gridAutoColumns": ["ms"], "gridAutoRows": ["ms"], "gridAutoFlow": ["ms"], "grid": ["ms"], "gridRowStart": ["ms"], "gridColumnStart": ["ms"], "gridRowEnd": ["ms"], "gridRow": ["ms"], "gridColumn": ["ms"], "gridColumnEnd": ["ms"], "gridColumnGap": ["ms"], "gridRowGap": ["ms"], "gridArea": ["ms"], "gridGap": ["ms"], "textSizeAdjust": ["Webkit", "ms"], "transitionDelay": ["Webkit"], "transitionDuration": ["Webkit"], "transitionProperty": ["Webkit"], "transitionTimingFunction": ["Webkit"] }
+  };
 
   var prefixes = ['-webkit-', '-moz-', ''];
 
@@ -144,20 +153,29 @@
     }
   }
 
-  var regex = /-webkit-|-moz-|-ms-/;
-  function isPrefixedValue(value) {
-    if (Array.isArray(value)) {
-      value = value.join(',');
-    }
+  var isPrefixedValue = __commonjs(function (module, exports) {
+  'use strict';
 
-    return value.match(regex) !== null;
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = isPrefixedValue;
+
+  var regex = /-webkit-|-moz-|-ms-/;
+
+  function isPrefixedValue(value) {
+    return typeof value === 'string' && value.match(regex) !== null;
   }
+  module.exports = exports['default'];
+  });
+
+  var isPrefixedValue$1 = (isPrefixedValue && typeof isPrefixedValue === 'object' && 'default' in isPrefixedValue ? isPrefixedValue['default'] : isPrefixedValue);
 
   // http://caniuse.com/#search=cross-fade
   var prefixes$1 = ['-webkit-', ''];
 
   function crossFade(property, value) {
-    if (typeof value === 'string' && !isPrefixedValue(value) && value.indexOf('cross-fade(') > -1) {
+    if (typeof value === 'string' && !isPrefixedValue$1(value) && value.indexOf('cross-fade(') > -1) {
       return prefixes$1.map(function (prefix) {
         return value.replace(/cross-fade\(/g, prefix + 'cross-fade(');
       });
@@ -168,7 +186,7 @@
   var prefixes$2 = ['-webkit-', ''];
 
   function filter(property, value) {
-    if (typeof value === 'string' && !isPrefixedValue(value) && value.indexOf('filter(') > -1) {
+    if (typeof value === 'string' && !isPrefixedValue$1(value) && value.indexOf('filter(') > -1) {
       return prefixes$2.map(function (prefix) {
         return value.replace(/filter\(/g, prefix + 'filter(');
       });
@@ -223,7 +241,7 @@
   var values$2 = /linear-gradient|radial-gradient|repeating-linear-gradient|repeating-radial-gradient/;
 
   function gradient(property, value) {
-    if (typeof value === 'string' && !isPrefixedValue(value) && value.match(values$2) !== null) {
+    if (typeof value === 'string' && !isPrefixedValue$1(value) && value.match(values$2) !== null) {
       return prefixes$3.map(function (prefix) {
         return prefix + value;
       });
@@ -234,7 +252,7 @@
   var prefixes$4 = ['-webkit-', ''];
 
   function imageSet(property, value) {
-    if (typeof value === 'string' && !isPrefixedValue(value) && value.indexOf('image-set(') > -1) {
+    if (typeof value === 'string' && !isPrefixedValue$1(value) && value.indexOf('image-set(') > -1) {
       return prefixes$4.map(function (prefix) {
         return value.replace(/image-set\(/g, prefix + 'image-set(');
       });
@@ -288,7 +306,31 @@
   module.exports = hyphenateStyleName;
   });
 
-  var hyphenateStyleName = (index$1 && typeof index$1 === 'object' && 'default' in index$1 ? index$1['default'] : index$1);
+  var require$$0 = (index$1 && typeof index$1 === 'object' && 'default' in index$1 ? index$1['default'] : index$1);
+
+  var hyphenateProperty = __commonjs(function (module, exports) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = hyphenateProperty;
+
+  var _hyphenateStyleName = require$$0;
+
+  var _hyphenateStyleName2 = _interopRequireDefault(_hyphenateStyleName);
+
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : { default: obj };
+  }
+
+  function hyphenateProperty(property) {
+    return (0, _hyphenateStyleName2.default)(property);
+  }
+  module.exports = exports['default'];
+  });
+
+  var hyphenateProperty$1 = (hyphenateProperty && typeof hyphenateProperty === 'object' && 'default' in hyphenateProperty ? hyphenateProperty['default'] : hyphenateProperty);
 
   var properties$1 = {
     transition: true,
@@ -306,7 +348,7 @@
   };
 
   function prefixValue$1(value, propertyPrefixMap) {
-    if (isPrefixedValue(value)) {
+    if (isPrefixedValue$1(value)) {
       return value;
     }
 
@@ -317,7 +359,7 @@
       var singleValue = multipleValues[i];
       var values = [singleValue];
       for (var property in propertyPrefixMap) {
-        var dashCaseProperty = hyphenateStyleName(property);
+        var dashCaseProperty = hyphenateProperty$1(property);
 
         if (singleValue.indexOf(dashCaseProperty) > -1 && dashCaseProperty !== 'order') {
           var prefixes = propertyPrefixMap[property];
@@ -363,7 +405,10 @@
 
   var plugins = [crossFade, cursor, filter, flexboxOld, gradient, imageSet, position, sizing, transition, flex];
 
-  var index = createPrefixer(propertyPrefixMap, plugins);
+  var index = createPrefixer({
+    prefixMap: staticData.prefixMap,
+    plugins: plugins
+  });
 
   return index;
 

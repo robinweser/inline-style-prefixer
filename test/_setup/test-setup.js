@@ -24,8 +24,6 @@ const browserList = {
 
 const data = generateData(browserList)
 
-console.log(data, staticPlugins)
-
 const prefixAll = createStaticPrefixer({
   prefixMap: data.static,
   plugins: staticPlugins

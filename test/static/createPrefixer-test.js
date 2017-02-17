@@ -74,20 +74,17 @@ describe('Static Prefixer', () => {
       expect(prefixAll(input)).to.eql(output)
     })
 
-    it(
-      'should resolve alternative values for all flexbox specification',
-      () => {
-        const input = { justifyContent: 'space-around' }
-        const output = {
-          WebkitBoxPack: 'justify',
-          WebkitJustifyContent: 'space-around',
-          justifyContent: 'space-around',
-          msFlexPack: 'distribute'
-        }
-        expect(prefixAll(input)).to.eql(output)
-        expect(prefixAll(input)).to.eql(output)
+    it('should resolve alternative values for all flexbox specification', () => {
+      const input = { justifyContent: 'space-around' }
+      const output = {
+        WebkitBoxPack: 'justify',
+        WebkitJustifyContent: 'space-around',
+        justifyContent: 'space-around',
+        msFlexPack: 'distribute'
       }
-    )
+      expect(prefixAll(input)).to.eql(output)
+      expect(prefixAll(input)).to.eql(output)
+    })
 
     it('should resolve flexbox variants', () => {
       const input = {
@@ -133,15 +130,7 @@ describe('Static Prefixer', () => {
 
     it('should add all flexbox display types', () => {
       const input = { display: 'flex' }
-      const output = {
-        display: [
-          '-webkit-box',
-          '-moz-box',
-          '-ms-flexbox',
-          '-webkit-flex',
-          'flex'
-        ]
-      }
+      const output = { display: ['-webkit-box', '-moz-box', '-ms-flexbox', '-webkit-flex', 'flex'] }
       expect(prefixAll(input)).to.eql(output)
       expect(prefixAll(input)).to.eql(output)
     })
@@ -246,14 +235,7 @@ describe('Static Prefixer', () => {
 
     it('should prefix multiple array values and keep others', () => {
       const input = { width: ['min-content', '100%'] }
-      const output = {
-        width: [
-          '-webkit-min-content',
-          '-moz-min-content',
-          'min-content',
-          '100%'
-        ]
-      }
+      const output = { width: ['-webkit-min-content', '-moz-min-content', 'min-content', '100%'] }
       expect(prefixAll(input)).to.eql(output)
       expect(prefixAll(input)).to.eql(output)
     })
