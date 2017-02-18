@@ -109,10 +109,10 @@ const output = {
 ## Documentation
 If you got any issue using this prefixer, please first check the FAQ's. Most cases are already covered and provide a solid solution.
 
-* [Usage Guides]()
-* [Data Reference]()
-* [API Reference]()
-* [FAQ]()
+* [Usage Guides](docs/UsageGuides.md)
+* [Data Reference](docs/DataReference.md)
+* [API Reference](docs/API.md)
+* [FAQ](docs/FAQ.md)
 
 ## Community
 Here are some popular users of this library:
