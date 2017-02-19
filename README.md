@@ -109,10 +109,10 @@ const output = {
 ## Documentation
 If you got any issue using this prefixer, please first check the FAQ's. Most cases are already covered and provide a solid solution.
 
-* [Usage Guides]()
-* [Data Reference]()
-* [API Reference]()
-* [FAQ]()
+* [Usage Guides](https://inline-style-prefixer.js.org/docs/UsageGuides.html)
+* [Data Reference](https://inline-style-prefixer.js.org/docs/DataReference.html)
+* [API Reference](https://inline-style-prefixer.js.org/docs/API.html)
+* [FAQ](https://inline-style-prefixer.js.org/docs/FAQ.html)
 
 ## Community
 Here are some popular users of this library:
