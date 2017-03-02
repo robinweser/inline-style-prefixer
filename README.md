@@ -43,7 +43,7 @@ It supports all major browsers with the following versions. For other, unsupport
 It will **only** add prefixes if a property still needs them in one of the above mentioned versions.<br> Therefore, e.g. `border-radius` will not be prefixed at all.
 
 > **Need to support legacy browser versions?**<br>
-Don't worry - we got you covered. Check [this guide](foo).
+Don't worry - we got you covered. Check [this guide](https://github.com/rofrischmann/inline-style-prefixer/blob/master/docs/guides/CustomPrefixer.md).
 
 
 ## Dynamic vs. Static
