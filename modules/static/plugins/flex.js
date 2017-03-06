@@ -5,7 +5,7 @@ const values = {
 }
 
 export default function flex(property: string, value: any): ?Array<string> {
-  if (property === 'display' && values[value]) {
+  if (property === 'display' && values.hasOwnProperty(value)) {
     return ['-webkit-box', '-moz-box', `-ms-${value}box`, `-webkit-${value}`, value]
   }
 }

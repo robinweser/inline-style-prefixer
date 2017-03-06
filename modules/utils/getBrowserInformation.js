@@ -48,7 +48,7 @@ function getBrowserName(browserInfo: Object): ?string {
   }
 
   for (const browser in browserByCanIuseAlias) {
-    if (browserInfo[browser]) {
+    if (browserInfo.hasOwnProperty(browser)) {
       return browserByCanIuseAlias[browser]
     }
   }
@@ -63,7 +63,7 @@ export default function getBrowserInformation(userAgent: string): Object | boole
   const browserInfo = bowser._detect(userAgent)
 
   for (const browser in prefixByBrowser) {
-    if (browserInfo[browser]) {
+    if (browserInfo.hasOwnProperty(browser)) {
       const prefix = prefixByBrowser[browser]
 
       browserInfo.jsPrefix = prefix

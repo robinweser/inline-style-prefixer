@@ -19,7 +19,7 @@ export default function transition(
   style: Object,
   { cssPrefix, keepUnprefixed, requiresPrefix }: PluginMetaData
 ): ?Array<any> | ?any {
-  if (typeof value === 'string' && properties[property]) {
+  if (typeof value === 'string' && properties.hasOwnProperty(property)) {
     // memoize the prefix array for later use
     if (!requiresPrefixDashCased) {
       requiresPrefixDashCased = Object.keys(requiresPrefix).map(prop => hyphenateProperty(prop))

@@ -27,7 +27,7 @@ export default function flexboxOld(property: string, value: any, style: Object):
       style.WebkitBoxDirection = 'normal'
     }
   }
-  if (alternativeProps[property]) {
+  if (alternativeProps.hasOwnProperty(property)) {
     style[alternativeProps[property]] = alternativeValues[value] || value
   }
 }
