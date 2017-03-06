@@ -1,8 +1,8 @@
-import Prefixer from '../../packages/301/dynamic'
+import Prefixer from '../../packages/300/dynamic'
 
 const CHROME45 = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36'
 
-export const dynamic300 = () => {
+export const dynamic301 = () => {
   const styles = {
     color: 'red',
     display: 'flex',

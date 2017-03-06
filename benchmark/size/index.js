@@ -58,8 +58,11 @@ Promise
   .all([
     testBundle('205-static'),
     testBundle('300-static'),
+	testBundle('301-static'),
     testBundle('205-dynamic'),
-    testBundle('300-dynamic')
+    testBundle('300-dynamic'),
+	testBundle('301-dynamic')
+	  
   ])
   .then(() => {
     rimraf(path.join(__dirname, 'dist'), (err) => {

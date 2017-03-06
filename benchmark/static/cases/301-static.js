@@ -1,8 +1,6 @@
-import Prefixer from '../../packages/301/dynamic'
+import prefixAll from '../../packages/301/static'
 
-const CHROME45 = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36'
-
-export const dynamic300 = () => {
+export const static301 = () => {
   const styles = {
     color: 'red',
     display: 'flex',
@@ -20,6 +18,6 @@ export const dynamic300 = () => {
     }
   }
 
-  const prefixer = new Prefixer({ userAgent: CHROME45 })
-  return prefixer.prefix(styles)
+  const prefixed = prefixAll(styles)
+  return prefixed
 }
