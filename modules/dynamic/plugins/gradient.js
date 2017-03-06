@@ -13,7 +13,7 @@ export default function gradient(
 ): ?Array<any> | ?any {
   if (
     typeof value === 'string' &&
-      value.match(values) !== null &&
+      values.test(value) &&
       (browserName === 'firefox' && browserVersion < 16 ||
         browserName === 'chrome' && browserVersion < 26 ||
         (browserName === 'safari' || browserName === 'ios_saf') && browserVersion < 7 ||
