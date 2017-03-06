@@ -17,7 +17,7 @@ const alternativeProps = {
 }
 
 export default function flexboxIE(property: string, value: any, style: Object): void {
-  if (alternativeProps[property]) {
+  if (alternativeProps.hasOwnProperty(property)) {
     style[alternativeProps[property]] = alternativeValues[value] || value
   }
 }

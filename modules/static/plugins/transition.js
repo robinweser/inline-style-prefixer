@@ -57,7 +57,7 @@ export default function transition(
   propertyPrefixMap: Object
 ): ?string {
   // also check for already prefixed transitions
-  if (typeof value === 'string' && properties[property]) {
+  if (typeof value === 'string' && properties.hasOwnProperty(property)) {
     const outputValue = prefixValue(value, propertyPrefixMap)
     // if the property is already prefixed
     const webkitOutput = outputValue

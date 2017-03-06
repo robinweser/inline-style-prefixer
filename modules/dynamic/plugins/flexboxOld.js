@@ -70,10 +70,10 @@ PluginMetaData
         style.WebkitBoxDirection = 'normal'
       }
     }
-    if (property === 'display' && alternativeValues[value]) {
+    if (property === 'display' && alternativeValues.hasOwnProperty(value)) {
       return getPrefixedValue(cssPrefix + alternativeValues[value], value, keepUnprefixed)
     }
-    if (alternativeProps[property]) {
+    if (alternativeProps.hasOwnProperty(property)) {
       style[alternativeProps[property]] = alternativeValues[value] || value
     }
   }
