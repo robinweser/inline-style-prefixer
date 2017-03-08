@@ -30,7 +30,7 @@ describe('Static Prefixer', () => {
         'userSelect'
       ]
       expect(Object.keys(prefixAll(input))).to.eql(order)
-    });
+    })
 
     it('does not mess up the order of other styles', () => {
       const input = {
@@ -47,7 +47,7 @@ describe('Static Prefixer', () => {
         'border'
       ]
       expect(Object.keys(prefixAll(input))).to.eql(order)
-    });
+    })
 
     it('should use dash-cased alternative values in array', () => {
       const input = { marginLeft: 'calc(30deg)' }

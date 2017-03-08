@@ -3,8 +3,7 @@
   "parser": "babel-eslint",
    "env": {
     "browser": true,
-    "node": true,
-    "mocha": true
+    "node": true
   },
   "plugins": [
     "flowtype"
@@ -30,7 +29,6 @@
     "no-restricted-syntax": [ 1 ],
     "no-continue": [ 1 ],
     "no-prototype-builtins": [ 1 ],
-    "max-len": [ 2, 100 ],
     "no-mixed-operators": [ 1 ],
     "no-lonely-if": [ 1 ],
     "no-bitwise": [ 0 ],

@@ -21,7 +21,7 @@
     "docs": "gitbook install && gitbook build && gh-pages -d _book",
     "flow": "flow",
     "generate": "babel-node generateDefaultData",
-    "lint": "eslint modules",
+    "lint": "eslint .",
     "release": "npm run build && npm publish && npm run docs",
     "test": "istanbul cover node_modules/mocha/bin/_mocha -- --opts test/_setup/mocha.opts"
   },
