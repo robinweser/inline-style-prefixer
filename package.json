@@ -1,6 +1,6 @@
 {
   "name": "inline-style-prefixer",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Run-time Autoprefixer for JavaScript style objects",
   "main": "dynamic/index.js",
   "files": [
@@ -39,7 +39,7 @@
   "license": "MIT",
   "dependencies": {
     "bowser": "^1.6.0",
-    "css-in-js-utils": "^1.0.0"
+    "css-in-js-utils": "^1.0.3"
   },
   "devDependencies": {
     "babel": "^6.5.2",
@@ -64,6 +64,8 @@
     "eslint-plugin-react": "^6.9.0",
     "flow-bin": "^0.38.0",
     "gh-pages": "^0.12.0",
+    "gitbook": "^3.2.2",
+    "gitbook-cli": "^2.3.0",
     "istanbul": "1.0.0-alpha.2",
     "mocha": "^2.4.5",
     "rimraf": "^2.4.2",

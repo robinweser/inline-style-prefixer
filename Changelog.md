@@ -1,6 +1,11 @@
 # Changelog
 
 ## 3.0
+
+### 3.0.1
+* performance improvements (~10% faster) ( [#115](https://github.com/rofrischmann/inline-style-prefixer/pull/115) ) ( [#116](https://github.com/rofrischmann/inline-style-prefixer/pull/116) )
+* ordering prefixed properties correctly ( [#117](https://github.com/rofrischmann/inline-style-prefixer/pull/117) )
+
 ### 3.0.0
 
 #### Complete Rewrite
@@ -9,6 +14,8 @@
 * added 4 new plugins to prefix special values
 * new documentation using gitbook
 * integrated flowtype
+
+------
 
 ## 2.0
 ### 2.0.5

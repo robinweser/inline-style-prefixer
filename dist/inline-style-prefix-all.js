@@ -46,13 +46,28 @@
   }
 
   function prefixProperty(prefixProperties, property, style) {
-    var requiredPrefixes = prefixProperties[property];
-
-    if (requiredPrefixes) {
-      for (var i = 0, len = requiredPrefixes.length; i < len; ++i) {
-        style[requiredPrefixes[i] + capitalizeString(property)] = style[property];
-      }
+    if (!prefixProperties.hasOwnProperty(property)) {
+      return style;
     }
+
+    // We need to preserve the order of the styles while inserting new prefixed
+    // styles. Object order is not guaranteed, but this is better than nothing.
+    // Note that this is brittle and is likely to break in older versions of
+    // Node (e.g. Node 4).
+    var newStyle = {};
+    Object.keys(style).forEach(function (styleProperty) {
+      if (styleProperty === property) {
+        // We've found the style we need to prefix.
+        var requiredPrefixes = prefixProperties[property];
+        for (var i = 0, len = requiredPrefixes.length; i < len; ++i) {
+          newStyle[requiredPrefixes[i] + capitalizeString(property)] = style[property];
+        }
+      }
+
+      newStyle[styleProperty] = style[styleProperty];
+    });
+
+    return newStyle;
   }
 
   function prefixValue(plugins, property, value, style, metaData) {
@@ -121,7 +136,7 @@
             style[property] = _processedValue;
           }
 
-          prefixProperty(prefixMap, property, style);
+          style = prefixProperty(prefixMap, property, style);
         }
       }
 
@@ -146,7 +161,7 @@
   };
 
   function cursor(property, value) {
-    if (property === 'cursor' && values[value]) {
+    if (property === 'cursor' && values.hasOwnProperty(value)) {
       return prefixes.map(function (prefix) {
         return prefix + value;
       });
@@ -164,7 +179,7 @@
   var regex = /-webkit-|-moz-|-ms-/;
 
   function isPrefixedValue(value) {
-    return typeof value === 'string' && value.match(regex) !== null;
+    return typeof value === 'string' && regex.test(value);
   }
   module.exports = exports['default'];
   });
@@ -199,7 +214,7 @@
   };
 
   function flex(property, value) {
-    if (property === 'display' && values$1[value]) {
+    if (property === 'display' && values$1.hasOwnProperty(value)) {
       return ['-webkit-box', '-moz-box', '-ms-' + value + 'box', '-webkit-' + value, value];
     }
   }
@@ -232,7 +247,7 @@
         style.WebkitBoxDirection = 'normal';
       }
     }
-    if (alternativeProps[property]) {
+    if (alternativeProps.hasOwnProperty(property)) {
       style[alternativeProps[property]] = alternativeValues[value] || value;
     }
   }
@@ -241,7 +256,7 @@
   var values$2 = /linear-gradient|radial-gradient|repeating-linear-gradient|repeating-radial-gradient/;
 
   function gradient(property, value) {
-    if (typeof value === 'string' && !isPrefixedValue$1(value) && value.match(values$2) !== null) {
+    if (typeof value === 'string' && !isPrefixedValue$1(value) && values$2.test(value)) {
       return prefixes$3.map(function (prefix) {
         return prefix + value;
       });
@@ -285,7 +300,7 @@
   };
 
   function sizing(property, value) {
-    if (properties[property] && values$3[value]) {
+    if (properties.hasOwnProperty(property) && values$3.hasOwnProperty(value)) {
       return prefixes$5.map(function (prefix) {
         return prefix + value;
       });
@@ -378,11 +393,11 @@
 
   function transition(property, value, style, propertyPrefixMap) {
     // also check for already prefixed transitions
-    if (typeof value === 'string' && properties$1[property]) {
+    if (typeof value === 'string' && properties$1.hasOwnProperty(property)) {
       var outputValue = prefixValue$1(value, propertyPrefixMap);
       // if the property is already prefixed
       var webkitOutput = outputValue.split(/,(?![^()]*(?:\([^()]*\))?\))/g).filter(function (val) {
-        return val.match(/-moz-|-ms-/) === null;
+        return !/-moz-|-ms-/.test(val);
       }).join(',');
 
       if (property.indexOf('Webkit') > -1) {
@@ -390,7 +405,7 @@
       }
 
       var mozOutput = outputValue.split(/,(?![^()]*(?:\([^()]*\))?\))/g).filter(function (val) {
-        return val.match(/-webkit-|-ms-/) === null;
+        return !/-webkit-|-ms-/.test(val);
       }).join(',');
 
       if (property.indexOf('Moz') > -1) {

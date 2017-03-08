@@ -57,7 +57,7 @@ function createPrefixer(_ref) {
           style[property] = _processedValue;
         }
 
-        (0, _prefixProperty2.default)(prefixMap, property, style);
+        style = (0, _prefixProperty2.default)(prefixMap, property, style);
       }
     }
 

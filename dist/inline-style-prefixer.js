@@ -604,7 +604,7 @@
     }
 
     for (var browser in browserByCanIuseAlias) {
-      if (browserInfo[browser]) {
+      if (browserInfo.hasOwnProperty(browser)) {
         return browserByCanIuseAlias[browser];
       }
     }
@@ -619,7 +619,7 @@
     var browserInfo = bowser$1._detect(userAgent);
 
     for (var browser in prefixByBrowser) {
-      if (browserInfo[browser]) {
+      if (browserInfo.hasOwnProperty(browser)) {
         var prefix = prefixByBrowser[browser];
 
         browserInfo.jsPrefix = prefix;
@@ -822,7 +822,7 @@
               }
 
               // add prefixes to properties
-              if (this._requiresPrefix[property]) {
+              if (this._requiresPrefix.hasOwnProperty(property)) {
                 style[this._browserInfo.jsPrefix + capitalizeString(property)] = value;
                 if (!this._keepUnprefixed) {
                   delete style[property];
@@ -968,10 +968,10 @@
           style.WebkitBoxDirection = 'normal';
         }
       }
-      if (property === 'display' && alternativeValues[value]) {
+      if (property === 'display' && alternativeValues.hasOwnProperty(value)) {
         return getPrefixedValue(cssPrefix + alternativeValues[value], value, keepUnprefixed);
       }
-      if (alternativeProps[property]) {
+      if (alternativeProps.hasOwnProperty(property)) {
         style[alternativeProps[property]] = alternativeValues[value] || value;
       }
     }
@@ -985,7 +985,7 @@
         cssPrefix = _ref.cssPrefix,
         keepUnprefixed = _ref.keepUnprefixed;
 
-    if (typeof value === 'string' && value.match(values$1) !== null && (browserName === 'firefox' && browserVersion < 16 || browserName === 'chrome' && browserVersion < 26 || (browserName === 'safari' || browserName === 'ios_saf') && browserVersion < 7 || (browserName === 'opera' || browserName === 'op_mini') && browserVersion < 12.1 || browserName === 'android' && browserVersion < 4.4 || browserName === 'and_uc')) {
+    if (typeof value === 'string' && values$1.test(value) && (browserName === 'firefox' && browserVersion < 16 || browserName === 'chrome' && browserVersion < 26 || (browserName === 'safari' || browserName === 'ios_saf') && browserVersion < 7 || (browserName === 'opera' || browserName === 'op_mini') && browserVersion < 12.1 || browserName === 'android' && browserVersion < 4.4 || browserName === 'and_uc')) {
       return getPrefixedValue(cssPrefix + value, value, keepUnprefixed);
     }
   }
@@ -1034,7 +1034,7 @@
 
     // This might change in the future
     // Keep an eye on it
-    if (properties$1[property] && values$2[value]) {
+    if (properties$1.hasOwnProperty(property) && values$2.hasOwnProperty(value)) {
       return getPrefixedValue(cssPrefix + value, value, keepUnprefixed);
     }
   }
@@ -1095,7 +1095,7 @@
         keepUnprefixed = _ref.keepUnprefixed,
         requiresPrefix = _ref.requiresPrefix;
 
-    if (typeof value === 'string' && properties$2[property]) {
+    if (typeof value === 'string' && properties$2.hasOwnProperty(property)) {
       var _ret = function () {
         // memoize the prefix array for later use
         if (!requiresPrefixDashCased) {
@@ -1125,13 +1125,28 @@
   }
 
   function prefixProperty(prefixProperties, property, style) {
-    var requiredPrefixes = prefixProperties[property];
-
-    if (requiredPrefixes) {
-      for (var i = 0, len = requiredPrefixes.length; i < len; ++i) {
-        style[requiredPrefixes[i] + capitalizeString(property)] = style[property];
-      }
+    if (!prefixProperties.hasOwnProperty(property)) {
+      return style;
     }
+
+    // We need to preserve the order of the styles while inserting new prefixed
+    // styles. Object order is not guaranteed, but this is better than nothing.
+    // Note that this is brittle and is likely to break in older versions of
+    // Node (e.g. Node 4).
+    var newStyle = {};
+    Object.keys(style).forEach(function (styleProperty) {
+      if (styleProperty === property) {
+        // We've found the style we need to prefix.
+        var requiredPrefixes = prefixProperties[property];
+        for (var i = 0, len = requiredPrefixes.length; i < len; ++i) {
+          newStyle[requiredPrefixes[i] + capitalizeString(property)] = style[property];
+        }
+      }
+
+      newStyle[styleProperty] = style[styleProperty];
+    });
+
+    return newStyle;
   }
 
   function createPrefixer$1(_ref) {
@@ -1168,7 +1183,7 @@
             style[property] = _processedValue;
           }
 
-          prefixProperty(prefixMap, property, style);
+          style = prefixProperty(prefixMap, property, style);
         }
       }
 
@@ -1193,7 +1208,7 @@
   };
 
   function cursor$1(property, value) {
-    if (property === 'cursor' && values$3[value]) {
+    if (property === 'cursor' && values$3.hasOwnProperty(value)) {
       return prefixes.map(function (prefix) {
         return prefix + value;
       });
@@ -1211,7 +1226,7 @@
   var regex = /-webkit-|-moz-|-ms-/;
 
   function isPrefixedValue(value) {
-    return typeof value === 'string' && value.match(regex) !== null;
+    return typeof value === 'string' && regex.test(value);
   }
   module.exports = exports['default'];
   });
@@ -1246,7 +1261,7 @@
   };
 
   function flex$1(property, value) {
-    if (property === 'display' && values$4[value]) {
+    if (property === 'display' && values$4.hasOwnProperty(value)) {
       return ['-webkit-box', '-moz-box', '-ms-' + value + 'box', '-webkit-' + value, value];
     }
   }
@@ -1279,7 +1294,7 @@
         style.WebkitBoxDirection = 'normal';
       }
     }
-    if (alternativeProps$1[property]) {
+    if (alternativeProps$1.hasOwnProperty(property)) {
       style[alternativeProps$1[property]] = alternativeValues$1[value] || value;
     }
   }
@@ -1288,7 +1303,7 @@
   var values$5 = /linear-gradient|radial-gradient|repeating-linear-gradient|repeating-radial-gradient/;
 
   function gradient$1(property, value) {
-    if (typeof value === 'string' && !isPrefixedValue$1(value) && value.match(values$5) !== null) {
+    if (typeof value === 'string' && !isPrefixedValue$1(value) && values$5.test(value)) {
       return prefixes$3.map(function (prefix) {
         return prefix + value;
       });
@@ -1332,7 +1347,7 @@
   };
 
   function sizing$1(property, value) {
-    if (properties$3[property] && values$6[value]) {
+    if (properties$3.hasOwnProperty(property) && values$6.hasOwnProperty(value)) {
       return prefixes$5.map(function (prefix) {
         return prefix + value;
       });
@@ -1385,11 +1400,11 @@
 
   function transition$1(property, value, style, propertyPrefixMap) {
     // also check for already prefixed transitions
-    if (typeof value === 'string' && properties$4[property]) {
+    if (typeof value === 'string' && properties$4.hasOwnProperty(property)) {
       var outputValue = prefixValue$1(value, propertyPrefixMap);
       // if the property is already prefixed
       var webkitOutput = outputValue.split(/,(?![^()]*(?:\([^()]*\))?\))/g).filter(function (val) {
-        return val.match(/-moz-|-ms-/) === null;
+        return !/-moz-|-ms-/.test(val);
       }).join(',');
 
       if (property.indexOf('Webkit') > -1) {
@@ -1397,7 +1412,7 @@
       }
 
       var mozOutput = outputValue.split(/,(?![^()]*(?:\([^()]*\))?\))/g).filter(function (val) {
-        return val.match(/-webkit-|-ms-/) === null;
+        return !/-webkit-|-ms-/.test(val);
       }).join(',');
 
       if (property.indexOf('Moz') > -1) {
