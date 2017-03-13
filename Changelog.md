@@ -2,6 +2,9 @@
 
 ## 3.0
 
+### 3.0.2
+* performance improvements (up to 30% faster)
+
 ### 3.0.1
 * performance improvements (~10% faster) ( [#115](https://github.com/rofrischmann/inline-style-prefixer/pull/115) ) ( [#116](https://github.com/rofrischmann/inline-style-prefixer/pull/116) )
 * ordering prefixed properties correctly ( [#117](https://github.com/rofrischmann/inline-style-prefixer/pull/117) )

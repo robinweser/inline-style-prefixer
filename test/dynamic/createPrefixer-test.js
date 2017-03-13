@@ -386,33 +386,5 @@ describe('Dynamic Prefixer', () => {
       }
       expect(Prefixer.prefixAll(input)).to.eql(output)
     })
-
-    it('puts the prefixes in the correct order', () => {
-      const input = { userSelect: 'none' }
-      const order = [
-        'WebkitUserSelect',
-        'MozUserSelect',
-        'msUserSelect',
-        'userSelect'
-      ]
-      expect(Object.keys(Prefixer.prefixAll(input))).to.eql(order)
-    });
-
-    it('does not mess up the order of other styles', () => {
-      const input = {
-        color: 'red',
-        userSelect: 'none',
-        border: 0
-      }
-      const order = [
-        'color',
-        'WebkitUserSelect',
-        'MozUserSelect',
-        'msUserSelect',
-        'userSelect',
-        'border'
-      ]
-      expect(Object.keys(Prefixer.prefixAll(input))).to.eql(order)
-    });
   })
 })
