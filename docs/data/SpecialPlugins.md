@@ -13,6 +13,6 @@ Sometimes it is not enough to just prefix a property, but you also need to prefi
 | flexboxOld | Adds trasformators for the old 2009 flexbox specification used in old Webkit-based browsers. |
 | gradient | Adds support for prefixed `background` and `backgroundImage` values `linear-gradient()`, `radial-gradient()`, `repeating-linear-gradient()` and `repeating-radial-gradient()`. |
 | imagetSet | Adds support for prefixed `imaget-set()` values. |
-| sizing | Adds support for prefixed `maxHeight`, `maxWidth`, `width`, `height`, `columnWidth`,`minWidth`, `minHeight` intrinsic & extrinsic sizing values `min-content`, `max-content`, `fill-available`, `fit-content`, `contain-floats`. |
 | position | Adds support for the prefixed `position` value on `sticky`. |
+| sizing | Adds support for prefixed `maxHeight`, `maxWidth`, `width`, `height`, `columnWidth`,`minWidth`, `minHeight` intrinsic & extrinsic sizing values `min-content`, `max-content`, `fill-available`, `fit-content`, `contain-floats`. |
 | transition | Adds support for prefixed CSS properties on `transition` and `transitionProperty` values. |

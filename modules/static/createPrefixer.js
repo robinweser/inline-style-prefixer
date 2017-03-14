@@ -43,7 +43,7 @@ StaticData
           style[property] = processedValue
         }
 
-        style = prefixProperty(prefixMap, property, style)
+        prefixProperty(prefixMap, property, style)
       }
     }
 
