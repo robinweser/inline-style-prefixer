@@ -1,0 +1,10 @@
+{
+  "env": {
+    "mocha": true
+  },
+  "globals": {
+    "expect": false,
+    "prefixAll": false,
+    "Prefixer": false
+  }
+}

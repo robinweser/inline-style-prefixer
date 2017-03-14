@@ -5,3 +5,6 @@ utils/**/*
 coverage/**/*
 modules/dynamic/dynamicData.js
 modules/static/staticData.js
+node_modules
+benchmark
+dist

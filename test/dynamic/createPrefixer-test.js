@@ -1,3 +1,4 @@
+/* eslint camelcase: 1 */
 const MSIE9 = 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 7.1; Trident/5.0)'
 const MSIE10 = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)'
 const MSEdge12 = 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10136'
@@ -13,7 +14,6 @@ const Chrome49 = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML,
 const SeaMonkey = 'Mozilla/5.0 (Windows NT 5.2; RW; rv:7.0a1) Gecko/20091211 SeaMonkey/9.23a1pre'
 const Chromium = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/50.0.2661.102 Chrome/50.0.2661.102 Safari/537.36'
 const PhantomJS = 'Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.0.0 Safari/538.1'
-const Samsung = 'Mozilla/5.0 (Linux; Android 6.0.1; SAMSUNG SM-G900F Build/MMB29M) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/4.0 Chrome/44.0.2403.133 Mobile Safari/537.36'
 
 describe('Dynamic Prefixer', () => {
   describe('Prefixing a property', () => {
@@ -29,7 +29,7 @@ describe('Dynamic Prefixer', () => {
       expect(new Prefixer({ userAgent: Chrome45 }).prefix(input)).to.eql(prefixed)
     })
     it('should not break if the value is undefined or false', () => {
-      expect(new Prefixer({ userAgent: Chrome14 }).prefix({ width: undefined })).to.not.throw
+      expect(new Prefixer({ userAgent: Chrome14 }).prefix({ width: undefined })).to.not.throw()
     })
     it('should also resolve nested objects', () => {
       const input = {
@@ -371,8 +371,10 @@ describe('Dynamic Prefixer', () => {
       expect(new Prefixer({ userAgent: MSIE10 }).prefix({ display: 'block' })).to.eql({ display: 'block' })
     })
     it('should not throw if display is null or undefined', () => {
-      expect(new Prefixer({ userAgent: Chrome45 }).prefix({ display: null })).to.eql({ display: null })
-      expect(new Prefixer({ userAgent: Chrome45 }).prefix({ display: undefined })).to.eql({ display: undefined })
+      expect(new Prefixer({ userAgent: Chrome45 }).prefix({ display: null }))
+        .to.eql({ display: null })
+      expect(new Prefixer({ userAgent: Chrome45 }).prefix({ display: undefined }))
+        .to.eql({ display: undefined })
     })
   })
   describe('Using Prefixer.prefixAll', () => {
