@@ -8,3 +8,4 @@ modules/static/staticData.js
 node_modules
 benchmark
 dist
+flow-typed
