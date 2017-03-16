@@ -1,8 +1,8 @@
-static/**/*
-dynamic/**/*
-generator/**/*
-utils/**/*
-coverage/**/*
+static
+dynamic
+generator
+utils
+coverage
 modules/dynamic/dynamicData.js
 modules/static/staticData.js
 node_modules
