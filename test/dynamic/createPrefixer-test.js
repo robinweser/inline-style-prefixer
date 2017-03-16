@@ -29,7 +29,7 @@ describe('Dynamic Prefixer', () => {
       expect(new Prefixer({ userAgent: Chrome45 }).prefix(input)).to.eql(prefixed)
     })
     it('should not break if the value is undefined or false', () => {
-      expect(new Prefixer({ userAgent: Chrome14 }).prefix({ width: undefined })).to.not.throw()
+      expect(new Prefixer({ userAgent: Chrome14 }).prefix({ width: undefined })).to.eql({ width: undefined })
     })
     it('should also resolve nested objects', () => {
       const input = {
@@ -371,10 +371,8 @@ describe('Dynamic Prefixer', () => {
       expect(new Prefixer({ userAgent: MSIE10 }).prefix({ display: 'block' })).to.eql({ display: 'block' })
     })
     it('should not throw if display is null or undefined', () => {
-      expect(new Prefixer({ userAgent: Chrome45 }).prefix({ display: null }))
-        .to.eql({ display: null })
-      expect(new Prefixer({ userAgent: Chrome45 }).prefix({ display: undefined }))
-        .to.eql({ display: undefined })
+      expect(new Prefixer({ userAgent: Chrome45 }).prefix({ display: null })).to.eql({ display: null })
+      expect(new Prefixer({ userAgent: Chrome45 }).prefix({ display: undefined })).to.eql({ display: undefined })
     })
   })
   describe('Using Prefixer.prefixAll', () => {
