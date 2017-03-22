@@ -41,6 +41,9 @@
     "bowser": "^1.6.0",
     "css-in-js-utils": "^1.0.3"
   },
+  "peerDependencies": {
+    "caniuse-api": "^1.5.2"
+  },
   "devDependencies": {
     "babel": "^6.5.2",
     "babel-cli": "^6.6.0",
