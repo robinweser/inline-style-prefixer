@@ -8,7 +8,7 @@ export default function getRecommendedPlugins(browserList: Object): Array<string
     const browserSupportByPlugin = pluginMap[plugin]
 
     for (const browser in browserSupportByPlugin) {
-      if (browserList[browser]) {
+      if (browserList.hasOwnProperty(browser)) {
         const browserVersion = browserSupportByPlugin[browser]
 
         if (browserList[browser] < browserVersion) {

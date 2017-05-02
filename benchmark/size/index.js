@@ -12,9 +12,7 @@ const testBundle = name => new Promise((resolve, reject) => {
         {
           test: /\.js$/,
           loader: 'babel-loader',
-          query: JSON.parse(
-            fs.readFileSync(path.join(__dirname, '../..', '.babelrc'))
-          ),
+          query: JSON.parse(fs.readFileSync(path.join(__dirname, '../..', '.babelrc'))),
           include: __dirname,
           exclude: path.join(__dirname, '../..', 'node_modules')
         }
@@ -46,8 +44,7 @@ const testBundle = name => new Promise((resolve, reject) => {
     } else {
       console.log(
         `Size ${name}`,
-        `${fs.statSync(path.join(__dirname, 'dist', `${name}.js`)).size /
-          1000.0}KB`
+        `${fs.statSync(path.join(__dirname, 'dist', `${name}.js`)).size / 1000.0}KB`
       )
       resolve()
     }
@@ -58,8 +55,12 @@ Promise
   .all([
     testBundle('205-static'),
     testBundle('300-static'),
+    testBundle('301-static'),
+    testBundle('302-static'),
     testBundle('205-dynamic'),
-    testBundle('300-dynamic')
+    testBundle('300-dynamic'),
+    testBundle('301-dynamic'),
+    testBundle('302-dynamic')
   ])
   .then(() => {
     rimraf(path.join(__dirname, 'dist'), (err) => {

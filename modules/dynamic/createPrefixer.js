@@ -111,7 +111,7 @@ export default function createPrefixer(
           }
 
           // add prefixes to properties
-          if (this._requiresPrefix[property]) {
+          if (this._requiresPrefix.hasOwnProperty(property)) {
             style[this._browserInfo.jsPrefix + capitalizeString(property)] = value
             if (!this._keepUnprefixed) {
               delete style[property]

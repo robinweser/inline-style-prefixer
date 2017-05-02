@@ -29,7 +29,7 @@ export default function sizing(
 ): ?Array<any> | ?any {
   // This might change in the future
   // Keep an eye on it
-  if (properties[property] && values[value]) {
+  if (properties.hasOwnProperty(property) && values.hasOwnProperty(value)) {
     return getPrefixedValue(cssPrefix + value, value, keepUnprefixed)
   }
 }

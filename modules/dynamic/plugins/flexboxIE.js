@@ -36,7 +36,7 @@ export default function flexboxIE(
 PluginMetaData
 ): ?Array<any> | ?any {
   if (
-    (alternativeProps[property] ||
+    (alternativeProps.hasOwnProperty(property) ||
       property === 'display' && typeof value === 'string' && value.indexOf('flex') > -1) &&
       ((browserName === 'ie_mob' || browserName === 'ie') && browserVersion === 10)
   ) {
@@ -45,10 +45,10 @@ PluginMetaData
     if (!keepUnprefixed && !Array.isArray(style[property])) {
       delete style[property]
     }
-    if (property === 'display' && alternativeValues[value]) {
+    if (property === 'display' && alternativeValues.hasOwnProperty(value)) {
       return getPrefixedValue(cssPrefix + alternativeValues[value], value, keepUnprefixed)
     }
-    if (alternativeProps[property]) {
+    if (alternativeProps.hasOwnProperty(property)) {
       style[alternativeProps[property]] = alternativeValues[value] || value
     }
   }

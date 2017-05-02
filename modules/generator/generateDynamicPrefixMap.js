@@ -37,7 +37,7 @@ export default function generateDynamicPrefixMap(browserList: Object): Object {
 
   for (let i = 0, len = browsers.length; i < len; ++i) {
     const browser = browsers[i]
-    if (!prefixMap[browser]) {
+    if (!prefixMap.hasOwnProperty(browser)) {
       prefixMap[browser] = {}
     }
 

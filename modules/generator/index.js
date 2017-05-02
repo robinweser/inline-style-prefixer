@@ -19,6 +19,33 @@ function generateFile(prefixMap, pluginList, compatibility, pluginPath) {
   const pluginExport = `[${pluginList.join(',')}]`
   const prefixMapExport = JSON.stringify(prefixMap)
 
+  if (pluginPath === 'static') {
+    const prefixVariables = [
+      'var w = ["Webkit"];',
+      'var m = ["Moz"];',
+      'var ms = ["ms"];',
+      'var wm = ["Webkit","Moz"];',
+      'var wms = ["Webkit","ms"];',
+      'var wmms = ["Webkit","Moz","ms"];',
+    ].join('\n');
+
+    return `${pluginImports}
+${prefixVariables}
+
+${moduleExporter} {
+  plugins: ${pluginExport},
+  prefixMap: ${
+    prefixMapExport
+      .replace(/\["Webkit"\]/g, 'w')
+      .replace(/\["Moz"\]/g, 'm')
+      .replace(/\["ms"\]/g, 'ms')
+      .replace(/\["Webkit","Moz"\]/g, 'wm')
+      .replace(/\["Webkit","ms"\]/g, 'wms')
+      .replace(/\["Webkit","Moz","ms"\]/g, 'wmms')
+  }
+}`;
+  }
+
   return `${pluginImports}
 
 ${moduleExporter} {

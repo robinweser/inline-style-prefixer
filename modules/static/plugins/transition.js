@@ -57,12 +57,12 @@ export default function transition(
   propertyPrefixMap: Object
 ): ?string {
   // also check for already prefixed transitions
-  if (typeof value === 'string' && properties[property]) {
+  if (typeof value === 'string' && properties.hasOwnProperty(property)) {
     const outputValue = prefixValue(value, propertyPrefixMap)
     // if the property is already prefixed
     const webkitOutput = outputValue
       .split(/,(?![^()]*(?:\([^()]*\))?\))/g)
-      .filter(val => val.match(/-moz-|-ms-/) === null)
+      .filter(val => !/-moz-|-ms-/.test(val))
       .join(',')
 
     if (property.indexOf('Webkit') > -1) {
@@ -71,7 +71,7 @@ export default function transition(
 
     const mozOutput = outputValue
       .split(/,(?![^()]*(?:\([^()]*\))?\))/g)
-      .filter(val => val.match(/-webkit-|-ms-/) === null)
+      .filter(val => !/-webkit-|-ms-/.test(val))
       .join(',')
 
     if (property.indexOf('Moz') > -1) {
