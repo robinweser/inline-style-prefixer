@@ -2,6 +2,12 @@
 
 ## 3.0
 
+### 3.0.4
+* removed `caniuse-api` as a `devDependency`
+
+### 3.0.3
+* data update
+
 ### 3.0.2
 * performance improvements (up to 30% faster)
 
