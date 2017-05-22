@@ -60,7 +60,11 @@ function getBrowserName(browserInfo: Object): ?string {
  * @param {string} userAgent - userAgent that gets evaluated
  */
 export default function getBrowserInformation(userAgent: string): Object | boolean {
-  const browserInfo = bowser._detect(userAgent)
+  let browserInfo = bowser._detect(userAgent)
+
+  if (browserInfo.yandexbrowser) {
+    browserInfo = bowser._detect(userAgent.replace(/YaBrowser\/[0-9.]*/, ''))
+  }
 
   for (const browser in prefixByBrowser) {
     if (browserInfo.hasOwnProperty(browser)) {
