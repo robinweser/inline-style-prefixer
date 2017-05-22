@@ -2,6 +2,9 @@
 
 ## 3.0
 
+### 3.0.5
+* use Chrome data for Yandex browser ( [#127](https://github.com/rofrischmann/inline-style-prefixer/issues/127) )
+
 ### 3.0.4
 * removed `caniuse-api` as a `devDependency`
 
