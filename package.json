@@ -1,6 +1,6 @@
 {
   "name": "inline-style-prefixer",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "Run-time Autoprefixer for JavaScript style objects",
   "main": "dynamic/index.js",
   "files": [
@@ -41,9 +41,6 @@
     "bowser": "^1.6.0",
     "css-in-js-utils": "^1.0.3"
   },
-  "peerDependencies": {
-    "caniuse-api": "^1.5.2"
-  },
   "devDependencies": {
     "babel": "^6.5.2",
     "babel-cli": "^6.6.0",
@@ -55,7 +52,7 @@
     "babel-preset-es2015-rollup": "^1.1.1",
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
-    "caniuse-api": "^1.5.2",
+    "caniuse-api": "^2.0.0",
     "chai": "^3.2.0",
     "codeclimate-test-reporter": "^0.1.1",
     "cross-env": "^1.0.8",

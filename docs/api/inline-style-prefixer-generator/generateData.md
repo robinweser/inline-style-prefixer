@@ -1,5 +1,11 @@
 # `generateData(browserList, options)`
 
+> You need to have the `caniuse-api` package installed.
+
+```sh
+yarn add caniuse-api --dev
+```
+
 Generates all the data needed to create your own prefixer. It uses a list of browser versions to determine the required prefixes. It also writes the data to files if `staticPath` and/or `dynamicPath` is provided. The files are directly written in valid JavaScript, so that they can be imported and used as is.
 
 The files always have the following shape (ES2015 example):

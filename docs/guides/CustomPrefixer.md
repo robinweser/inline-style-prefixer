@@ -3,6 +3,12 @@
 If your application requires different browser version support, you might consider creating your own `Prefixer`. To make it as simple as possible, we provide two different tools to get there. First of all, we have the [inline-style-prefixer/generator](../api/inline-style-prefixer-generator/generateData.md) that helps to generate the required prefixing data. Then, you can use [`createPrefixer`](../api/inline-style-prefixer/createPrefixer.md) to plug it all together.
 
 ## Generating dynamic data
+First of all we need to install the `caniuse-api`.
+
+```sh
+yarn add caniuse-api --dev
+```
+
 Each Prefixer needs to know which properties to prefix and which plugins to use. This data can be generated using [`generateData`](../api/inline-style-prefixer-generator/generateData.md).
 You need to provide a `browserList` containing all the minimum browser versions that should be supported.
 

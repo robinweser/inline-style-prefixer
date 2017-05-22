@@ -4,6 +4,12 @@ This guide is quite similar to [Creating your own Prefixer](CustomPrefixer.md), 
 Make sure to read it first, as it describes the concepts with much more detail, as not everything is repeated here as well.
 
 ## Generating static data
+First of all we need to install the `caniuse-api`.
+
+```sh
+yarn add caniuse-api --dev
+```
+
 Again, we are using [`generateData`](../api/inline-style-prefixer-generator/generateData.md) and a `browserList` to get our static data. This we will save the data to the `staticPath`.
 
 ```javascript
