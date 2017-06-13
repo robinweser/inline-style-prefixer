@@ -1,11 +1,23 @@
 /* @flow */
 const values = {
-  flex: true,
-  'inline-flex': true
+  flex: [
+    '-webkit-box',
+    '-moz-box',
+    '-ms-flexbox',
+    '-webkit-flex',
+    'flex'
+  ],
+  'inline-flex': [
+    '-webkit-inline-box',
+    '-moz-inline-box',
+    '-ms-inline-flexbox',
+    '-webkit-inline-flex',
+    'inline-flex'
+  ]
 }
 
 export default function flex(property: string, value: any): ?Array<string> {
   if (property === 'display' && values.hasOwnProperty(value)) {
-    return ['-webkit-box', '-moz-box', `-ms-${value}box`, `-webkit-${value}`, value]
+    return values[value]
   }
 }

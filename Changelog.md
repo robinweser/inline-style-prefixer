@@ -2,6 +2,9 @@
 
 ## 3.0
 
+### 3.0.6
+* fix legacy display prefixing for `inline-flex` ( [#132](https://github.com/rofrischmann/inline-style-prefixer/issues/132) )
+
 ### 3.0.5
 * use Chrome data for Yandex browser ( [#127](https://github.com/rofrischmann/inline-style-prefixer/issues/127) )
 
