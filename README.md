@@ -106,6 +106,26 @@ const output = {
 }
 ```
 
+## Usage with TypeScript
+You can use TypeScript definition from [DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/inline-style-prefixer) using [@types/inline-style-prefixer](https://www.npmjs.com/package/@types/inline-style-prefixer)
+
+```sh
+npm install --save @types/inline-style-prefixer
+```
+
+Then import in your code:
+
+```typescript
+import prefixAll = require('inline-style-prefixer/static');
+
+const prefixedStyle = prefixAll({
+  transition: '200ms all linear',
+  boxSizing: 'border-box',
+  display: 'flex',
+  color: 'blue'
+});
+```
+
 ## Documentation
 If you got any issue using this prefixer, please first check the FAQ's. Most cases are already covered and provide a solid solution.
 
