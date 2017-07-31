@@ -2,6 +2,18 @@
 
 ## 3.0
 
+### 3.0.6
+* fix legacy display prefixing for `inline-flex` ( [#132](https://github.com/rofrischmann/inline-style-prefixer/issues/132) )
+
+### 3.0.5
+* use Chrome data for Yandex browser ( [#127](https://github.com/rofrischmann/inline-style-prefixer/issues/127) )
+
+### 3.0.4
+* removed `caniuse-api` as a `devDependency`
+
+### 3.0.3
+* data update
+
 ### 3.0.2
 * performance improvements (up to 30% faster)
 

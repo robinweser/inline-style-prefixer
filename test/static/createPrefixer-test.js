@@ -139,8 +139,8 @@ describe('Static Prefixer', () => {
       const input = { display: 'inline-flex' }
       const output = {
         display: [
-          '-webkit-box',
-          '-moz-box',
+          '-webkit-inline-box',
+          '-moz-inline-box',
           '-ms-inline-flexbox',
           '-webkit-inline-flex',
           'inline-flex'
