@@ -109,9 +109,13 @@ function transformValue (value: string): string {
 
 export default function gradient(property: string, value: any): ?Array<string> {
   if (typeof value === 'string' && !isPrefixedValue(value) && values.test(value)) {
-    // TODO:  support repeating-linear-gradient
     const insertPrefixFlag = '@@@'
-    const newValue = value.replace(/(linear-gradient|radial-gradient|repeating-linear-gradient|repeating-radial-gradient)\(([^)]+)\)/g,
+    const reg = new RegExp(
+      `(${values.toString().substr(1).replace(/\/$/, '')})\\\(([^)]+)\\\)`,
+      'g'
+    )
+    const newValue = value.replace(
+      reg,
       function ($0, $1, $2) {
         return `${insertPrefixFlag}${$1}(${transformValue($2)})`
       })
