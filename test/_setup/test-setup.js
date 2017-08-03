@@ -7,6 +7,8 @@ const staticPlugins = require('../../modules/static/plugins')
 
 const generateData = require('../../modules/generator')
 
+const gradientData = require('../data/gradient.json').gradient
+
 const browserList = {
   chrome: 0,
   android: 0,
@@ -39,3 +41,6 @@ const Prefixer = createDynamicPrefixer(
 global.expect = chai.expect
 global.prefixAll = prefixAll
 global.Prefixer = Prefixer
+
+// data for tests.
+global._data = { gradient: gradientData }

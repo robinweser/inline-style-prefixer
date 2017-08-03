@@ -115,17 +115,14 @@ describe('Static Prefixer', () => {
       expect(prefixAll(input)).to.eql(output)
     })
 
-    it('should prefix gradients', () => {
-      const input = { background: 'linear-gradient(to bottom right, red, yellow)' }
-      const output = {
-        background: [
-          '-webkit-linear-gradient(to bottom right, red, yellow)',
-          '-moz-linear-gradient(to bottom right, red, yellow)',
-          'linear-gradient(to bottom right, red, yellow)'
-        ]
+    describe('prefix gradients', () => {
+      const ioArr = global._data.gradient
+      for (const io of ioArr) {
+        it ('should pass ' + io.name, () => {
+          expect(prefixAll(io.input)).to.eql(io.output)
+          expect(prefixAll(io.input)).to.eql(io.output)
+        })
       }
-      expect(prefixAll(input)).to.eql(output)
-      expect(prefixAll(input)).to.eql(output)
     })
 
     it('should add all flexbox display types', () => {
