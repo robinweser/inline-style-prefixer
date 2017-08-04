@@ -154,5 +154,6 @@ export default {
     'columnSpan',
     'columnWidth',
     'columnGap'
-  ]
+  ],
+  'css-writing-mode': ['writingMode']
 }
