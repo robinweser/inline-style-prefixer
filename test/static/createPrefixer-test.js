@@ -246,5 +246,16 @@ describe('Static Prefixer', () => {
       expect(prefixAll(input)).to.eql(output)
       expect(prefixAll(input)).to.eql(output)
     })
+
+    it('should prefix writingMode', () => {
+      const input = { writingMode: 'horizontal-tb' }
+      const output = {
+        writingMode: 'horizontal-tb',
+        msWritingMode: 'horizontal-tb',
+        WebkitWritingMode: 'horizontal-tb'
+      }
+      expect(prefixAll(input)).to.eql(output)
+      expect(prefixAll(input)).to.eql(output)
+    })
   })
 })
