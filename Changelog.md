@@ -1,6 +1,9 @@
 # Changelog
 
 ## 3.0
+### 3.0.8
+* added support for `writing-mode` [#139](https://github.com/rofrischmann/inline-style-prefixer/issues/139) )
+
 ### 3.0.7
 * fix `flexBasis` fallback for legacy IE 10 (`msPreferredSize` to `msFlexPreferredSize`) ( [#134](https://github.com/rofrischmann/inline-style-prefixer/issues/134) )
 

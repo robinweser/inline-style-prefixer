@@ -1,6 +1,6 @@
 {
   "name": "inline-style-prefixer",
-  "version": "3.0.7",
+  "version": "3.0.8",
   "description": "Run-time Autoprefixer for JavaScript style objects",
   "main": "dynamic/index.js",
   "files": [
@@ -38,8 +38,8 @@
   "author": "Robin Frischmann",
   "license": "MIT",
   "dependencies": {
-    "bowser": "^1.6.0",
-    "css-in-js-utils": "^1.0.3"
+    "bowser": "^1.7.3",
+    "css-in-js-utils": "^2.0.0"
   },
   "devDependencies": {
     "babel": "^6.5.2",

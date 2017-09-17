@@ -10,8 +10,6 @@ Alternatively it ships a static version that adds all available vendor prefixes.
 [![npm downloads](https://img.shields.io/npm/dm/inline-style-prefixer.svg)](https://img.shields.io/npm/dm/inline-style-prefixer.svg)
 ![Dependencies](https://david-dm.org/rofrischmann/inline-style-prefixer.svg)
 
-<a href="https://app.codesponsor.io/link/pCQU3wY7qzomx7oGR27YYg5s/rofrischmann/inline-style-prefixer" rel="nofollow"><img src="https://app.codesponsor.io/embed/pCQU3wY7qzomx7oGR27YYg5s/rofrischmann/inline-style-prefixer.svg" style="width: 888px; height: 68px;" alt="Sponsor" /></a>
-
 ## Installation
 ```sh
 yarn add inline-style-prefixer
