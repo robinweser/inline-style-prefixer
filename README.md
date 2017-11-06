@@ -11,7 +11,7 @@ Alternatively it ships a static version that adds all available vendor prefixes.
 ![Dependencies](https://david-dm.org/rofrischmann/inline-style-prefixer.svg)
 
 ## Support Us
-Support Robin Frischmann's work on Fela and its ecosystem (inline-style-prefixer) directly via [**Patreon**](https://www.patreon.com/rofrischmann).
+Support Robin Frischmann's work on [Fela](https://github.com/rofrischmann/fela) and its ecosystem (inline-style-prefixer) directly via [**Patreon**](https://www.patreon.com/rofrischmann).
 
 Or support us on [**Open Collective**](https://opencollective.com/fela) to fund community work. This also includes inline-style-prefixer as well.<br>
 Thank you to all our backers!
