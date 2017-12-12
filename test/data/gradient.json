@@ -1,0 +1,234 @@
+{
+  "gradient": [
+    {
+      "name": "a",
+      "input": {
+        "background": "linear-gradient(350.5deg, white, black), linear-gradient(-130deg, black, white), linear-gradient(45deg, black, white)"
+      },
+      "output": {
+        "background": [
+          "-webkit-linear-gradient(99.5deg, white, black), -webkit-linear-gradient(220deg, black, white), -webkit-linear-gradient(45deg, black, white)",
+          "-moz-linear-gradient(99.5deg, white, black), -moz-linear-gradient(220deg, black, white), -moz-linear-gradient(45deg, black, white)",
+          "linear-gradient(350.5deg, white, black), linear-gradient(-130deg, black, white), linear-gradient(45deg, black, white)"
+        ]
+      }
+    },
+    {
+      "name": "b",
+      "input": {
+        "background-image": "linear-gradient(rgba(0,0,0,1), white), linear-gradient(white, black)"
+      },
+      "output": {
+        "background-image": [
+          "-webkit-linear-gradient(rgba(0,0,0,1), white), -webkit-linear-gradient(white, black)",
+          "-moz-linear-gradient(rgba(0,0,0,1), white), -moz-linear-gradient(white, black)",
+          "linear-gradient(rgba(0,0,0,1), white), linear-gradient(white, black)"
+        ]
+      }
+    },
+    {
+      "name": "strong",
+      "input": {
+        "background": "linear-gradient(to top, transparent, rgba(0, 0, 0, 0.8) 20px, #000 30px, #000) no-repeat"
+      },
+      "output": {
+        "background": [
+          "-webkit-linear-gradient(bottom, transparent, rgba(0, 0, 0, 0.8) 20px, #000 30px, #000) no-repeat",
+          "-moz-linear-gradient(bottom, transparent, rgba(0, 0, 0, 0.8) 20px, #000 30px, #000) no-repeat",
+          "linear-gradient(to top, transparent, rgba(0, 0, 0, 0.8) 20px, #000 30px, #000) no-repeat"
+        ]
+      }
+    },
+    {
+      "name": "div",
+      "input": {
+        "background-image": "radial-gradient(to left, white, black), repeating-linear-gradient(to bottom right, black, white), repeating-radial-gradient(to top, aqua, red)"
+      },
+      "output": {
+        "background-image": [
+          "-webkit-radial-gradient(right, white, black), -webkit-repeating-linear-gradient(top left, black, white), -webkit-repeating-radial-gradient(bottom, aqua, red)",
+          "-moz-radial-gradient(right, white, black), -moz-repeating-linear-gradient(top left, black, white), -moz-repeating-radial-gradient(bottom, aqua, red)",
+          "radial-gradient(to left, white, black), repeating-linear-gradient(to bottom right, black, white), repeating-radial-gradient(to top, aqua, red)"
+        ]
+      }
+    },
+    {
+      "name": ".radial",
+      "input": {
+        "background": "radial-gradient(ellipse farthest-corner, black, white)"
+      },
+      "output": {
+        "background": [
+          "-webkit-radial-gradient(ellipse farthest-corner, black, white)",
+          "-moz-radial-gradient(ellipse farthest-corner, black, white)",
+          "radial-gradient(ellipse farthest-corner, black, white)"
+        ]
+      }
+    },
+    {
+      "name": ".simple1",
+      "input": {
+        "background": "linear-gradient(black, white)"
+      },
+      "output": {
+        "background": [
+          "-webkit-linear-gradient(black, white)",
+          "-moz-linear-gradient(black, white)",
+          "linear-gradient(black, white)"
+        ]
+      }
+    },
+    {
+      "name": ".simple2",
+      "input": {
+        "background": "linear-gradient(to left, black 0%, rgba(0, 0, 0, 0.5)50%, white 100%)"
+      },
+      "output": {
+        "background": [
+          "-webkit-linear-gradient(right, black 0%, rgba(0, 0, 0, 0.5)50%, white 100%)",
+          "-moz-linear-gradient(right, black 0%, rgba(0, 0, 0, 0.5)50%, white 100%)",
+          "linear-gradient(to left, black 0%, rgba(0, 0, 0, 0.5)50%, white 100%)"
+        ]
+      }
+    },
+    {
+      "name": ".simple3",
+      "input": {
+        "background": "linear-gradient(to left, black 50%, white 100%)"
+      },
+      "output": {
+        "background": [
+          "-webkit-linear-gradient(right, black 50%, white 100%)",
+          "-moz-linear-gradient(right, black 50%, white 100%)",
+          "linear-gradient(to left, black 50%, white 100%)"
+        ]
+      }
+    },
+    {
+      "name": ".simple4",
+      "input": {
+        "background": "linear-gradient(to right top, black, white)"
+      },
+      "output": {
+        "background": [
+          "-webkit-linear-gradient(left bottom, black, white)",
+          "-moz-linear-gradient(left bottom, black, white)",
+          "linear-gradient(to right top, black, white)"
+        ]
+      }
+    },
+    {
+      "name": ".direction",
+      "input": {
+        "background": "linear-gradient(top left, black, rgba(0, 0, 0, 0.5), white)"
+      },
+      "output": {
+        "background": [
+          "-webkit-linear-gradient(top left, black, rgba(0, 0, 0, 0.5), white)",
+          "-moz-linear-gradient(top left, black, rgba(0, 0, 0, 0.5), white)",
+          "linear-gradient(top left, black, rgba(0, 0, 0, 0.5), white)"
+        ]
+      }
+    },
+    {
+      "name": ".silent",
+      "input": {
+        "background": "-webkit-linear-gradient(top left, black, white)"
+      },
+      "output": {
+        "background": "-webkit-linear-gradient(top left, black, white)"
+      }
+    },
+    {
+      "name": ".radial",
+      "input": {
+        "background": "radial-gradient(farthest-side at 0 50%, white, black)"
+      },
+      "output": {
+        "background": [
+          "-webkit-radial-gradient(0 50%, farthest-side, white, black)",
+          "-moz-radial-gradient(0 50%, farthest-side, white, black)",
+          "radial-gradient(farthest-side at 0 50%, white, black)"
+        ]
+      }
+    },
+    {
+      "name": ".px",
+      "input": {
+        "background": "linear-gradient(black 0, white 100px)"
+      },
+      "output": {
+        "background": [
+          "-webkit-linear-gradient(black 0, white 100px)",
+          "-moz-linear-gradient(black 0, white 100px)",
+          "linear-gradient(black 0, white 100px)"
+        ]
+      }
+    },
+    {
+      "name": ".list",
+      "input": {
+        "list-style-image": "linear-gradient(white, black)"
+      },
+      "output": {
+        "list-style-image": [
+          "-webkit-linear-gradient(white, black)",
+          "-moz-linear-gradient(white, black)",
+          "linear-gradient(white, black)"
+        ]
+      }
+    },
+    {
+      "name": ".convert",
+      "input": {
+        "background": "linear-gradient(270deg, white, black)"
+      },
+      "output": {
+        "background": [
+          "-webkit-linear-gradient(right, white, black)",
+          "-moz-linear-gradient(right, white, black)",
+          "linear-gradient(270deg, white, black)"
+        ]
+      }
+    },
+    {
+      "name": ".rad",
+      "input": {
+        "background": "linear-gradient(1rad, white, black)"
+      },
+      "output": {
+        "background": [
+          "-webkit-linear-gradient(32.704deg, white, black)",
+          "-moz-linear-gradient(32.704deg, white, black)",
+          "linear-gradient(1rad, white, black)"
+        ]
+      }
+    },
+    {
+      "name": ".turn",
+      "input": {
+        "background": "linear-gradient(0.3turn, white, black)"
+      },
+      "output": {
+        "background": [
+          "-webkit-linear-gradient(342deg, white, black)",
+          "-moz-linear-gradient(342deg, white, black)",
+          "linear-gradient(0.3turn, white, black)"
+        ]
+      }
+    },
+    {
+      "name": ".norm",
+      "input": {
+        "background": "linear-gradient(-90deg, white, black)"
+      },
+      "output": {
+        "background": [
+          "-webkit-linear-gradient(right, white, black)",
+          "-moz-linear-gradient(right, white, black)",
+          "linear-gradient(-90deg, white, black)"
+        ]
+      }
+    }
+  ]
+}
