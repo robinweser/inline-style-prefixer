@@ -44,14 +44,14 @@ We also provide [UMD](https://github.com/umdjs/umd) builds for each package in t
 
 ## Browser Support
 It supports all major browsers with the following versions. For other, unsupported browses, we automatically use a fallback.
-* Chrome: 46+
-* Android (Chrome): 46+
-* Android (Stock Browser): 4+
-* Android (UC): 9+
-* Firefox: 40+
-* Safari: 8+
-* iOS (Safari): 8+
-* Opera: 16+
+* Chrome: 55+
+* Android (Chrome): 55+
+* Android (Stock Browser): 5+
+* Android (UC): 11+
+* Firefox: 52+
+* Safari: 9+
+* iOS (Safari): 9+
+* Opera: 30+
 * Opera (Mini): 12+
 * IE: 11+
 * IE (Mobile): 11+
@@ -173,5 +173,3 @@ We also love to get feedback.
 **inline-style-prefixer** is licensed under the [MIT License](http://opensource.org/licenses/MIT).<br>
 Documentation is licensed under [Creative Common License](http://creativecommons.org/licenses/by/4.0/).<br>
 Created with ♥ by [@rofrischmann](http://rofrischmann.de) and all contributors.
-
-<a href="https://app.codesponsor.io/link/pCQU3wY7qzomx7oGR27YYg5s/rofrischmann/inline-style-prefixer" rel="nofollow"><img src="https://app.codesponsor.io/embed/pCQU3wY7qzomx7oGR27YYg5s/rofrischmann/inline-style-prefixer.svg" style="width: 888px; height: 68px;" alt="Sponsor" /></a>
