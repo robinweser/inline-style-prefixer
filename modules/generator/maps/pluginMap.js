@@ -1,5 +1,5 @@
 // values are "up-to"
-const maximumVersion = 9999
+const maximumVersion = 9999;
 
 export default {
   calc: {
@@ -85,4 +85,4 @@ export default {
     firefox: maximumVersion,
     op_mini: maximumVersion
   }
-}
+};
