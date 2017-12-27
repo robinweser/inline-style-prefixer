@@ -1,6 +1,6 @@
 {
   "name": "inline-style-prefixer",
-  "version": "3.0.8",
+  "version": "4.0.0",
   "description": "Run-time Autoprefixer for JavaScript style objects",
   "main": "dynamic/index.js",
   "files": [
@@ -15,11 +15,12 @@
   "scripts": {
     "babel": "babel modules/ --out-dir .",
     "build": "npm run check && mkdir dist && npm run generate && npm run babel && npm run dist",
-    "check": "npm run clean && npm run lint && npm test && npm run flow",
+    "check": "npm run clean && npm run format && npm run lint && npm test && npm run flow",
     "clean": "rimraf static dynamic generator utils dist coverage",
     "dist": "cross-env NODE_ENV=production babel-node buildPackage && cross-env NODE_ENV=development babel-node buildPackage",
     "docs": "gitbook install && gitbook build && gh-pages -d _book",
     "flow": "flow",
+    "format": "prettier --write \"./modules/**/*.js\"",
     "generate": "babel-node generateDefaultData",
     "lint": "eslint .",
     "release": "npm run build && npm publish && npm run docs",

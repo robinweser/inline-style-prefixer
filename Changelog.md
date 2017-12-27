@@ -1,7 +1,12 @@
 # Changelog
 
-## 3.0
+## 4.0
 
+### 4.0.0
+* prefixed style objects are now reordered correctly [#147](https://github.com/rofrischmann/inline-style-prefixer/issues/147) )
+* default browser versions have been bumped to meet new usage percentages
+
+## 3.0
 ### 3.0.8
 * added support for `writing-mode` [#139](https://github.com/rofrischmann/inline-style-prefixer/issues/139) )
 
