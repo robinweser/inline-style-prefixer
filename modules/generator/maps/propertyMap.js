@@ -169,5 +169,5 @@ export default {
     "columnGap"
   ],
   "css-writing-mode": ["writingMode"],
-  "css-text-orientation": ["textOrientation"]  
+  "css-text-orientation": ["textOrientation"]
 };
