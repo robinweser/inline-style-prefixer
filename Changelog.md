@@ -2,13 +2,16 @@
 
 ## 4.0
 
+### 4.0.1
+* added support for the CSS `text-orientation` property ( [#150](https://github.com/rofrischmann/inline-style-prefixer/pull/150) )
+
 ### 4.0.0
-* prefixed style objects are now reordered correctly [#147](https://github.com/rofrischmann/inline-style-prefixer/issues/147) )
+* prefixed style objects are now reordered correctly ( [#147](https://github.com/rofrischmann/inline-style-prefixer/issues/147) )
 * default browser versions have been bumped to meet new usage percentages
 
 ## 3.0
 ### 3.0.8
-* added support for `writing-mode` [#139](https://github.com/rofrischmann/inline-style-prefixer/issues/139) )
+* added support for `writing-mode` ( [#139](https://github.com/rofrischmann/inline-style-prefixer/issues/139) )
 
 ### 3.0.7
 * fix `flexBasis` fallback for legacy IE 10 (`msPreferredSize` to `msFlexPreferredSize`) ( [#134](https://github.com/rofrischmann/inline-style-prefixer/issues/134) )

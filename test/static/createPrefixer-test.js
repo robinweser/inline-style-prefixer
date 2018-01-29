@@ -257,5 +257,15 @@ describe('Static Prefixer', () => {
       expect(prefixAll(input)).to.eql(output)
       expect(prefixAll(input)).to.eql(output)
     })
+
+    it('should prefix textOrientation', () => {
+      const input = { textOrientation: 'upright' }
+      const output = {
+        textOrientation: 'upright',
+        WebkitTextOrientation: 'upright'
+      }
+      expect(prefixAll(input)).to.eql(output)
+      expect(prefixAll(input)).to.eql(output)
+    })
   })
 })
