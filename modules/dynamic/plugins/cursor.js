@@ -1,17 +1,17 @@
 /* @flow */
-import getPrefixedValue from "../../utils/getPrefixedValue";
+import getPrefixedValue from '../../utils/getPrefixedValue'
 
-import type { PluginMetaData } from "../../../flowtypes/PluginMetaData";
+import type { PluginMetaData } from '../../../flowtypes/PluginMetaData'
 
 const grabValues = {
   grab: true,
-  grabbing: true
-};
+  grabbing: true,
+}
 
 const zoomValues = {
-  "zoom-in": true,
-  "zoom-out": true
-};
+  'zoom-in': true,
+  'zoom-out': true,
+}
 
 export default function cursor(
   property: string,
@@ -23,24 +23,24 @@ export default function cursor(
   // version until a reliable browser support info can be found
   // see: https://github.com/rofrischmann/inline-style-prefixer/issues/79
   if (
-    property === "cursor" &&
+    property === 'cursor' &&
     grabValues[value] &&
-    (browserName === "firefox" ||
-      browserName === "chrome" ||
-      browserName === "safari" ||
-      browserName === "opera")
+    (browserName === 'firefox' ||
+      browserName === 'chrome' ||
+      browserName === 'safari' ||
+      browserName === 'opera')
   ) {
-    return getPrefixedValue(cssPrefix + value, value, keepUnprefixed);
+    return getPrefixedValue(cssPrefix + value, value, keepUnprefixed)
   }
 
   if (
-    property === "cursor" &&
+    property === 'cursor' &&
     zoomValues[value] &&
-    ((browserName === "firefox" && browserVersion < 24) ||
-      (browserName === "chrome" && browserVersion < 37) ||
-      (browserName === "safari" && browserVersion < 9) ||
-      (browserName === "opera" && browserVersion < 24))
+    ((browserName === 'firefox' && browserVersion < 24) ||
+      (browserName === 'chrome' && browserVersion < 37) ||
+      (browserName === 'safari' && browserVersion < 9) ||
+      (browserName === 'opera' && browserVersion < 24))
   ) {
-    return getPrefixedValue(cssPrefix + value, value, keepUnprefixed);
+    return getPrefixedValue(cssPrefix + value, value, keepUnprefixed)
   }
 }

@@ -1,12 +1,12 @@
 /* @flow */
-import getPrefixedValue from "../../utils/getPrefixedValue";
+import getPrefixedValue from '../../utils/getPrefixedValue'
 
-import type { PluginMetaData } from "../../../flowtypes/PluginMetaData";
+import type { PluginMetaData } from '../../../flowtypes/PluginMetaData'
 
 const values = {
   flex: true,
-  "inline-flex": true
-};
+  'inline-flex': true,
+}
 
 export default function flex(
   property: string,
@@ -15,15 +15,15 @@ export default function flex(
   { browserName, browserVersion, cssPrefix, keepUnprefixed }: PluginMetaData
 ): ?Array<any> | ?any {
   if (
-    property === "display" &&
+    property === 'display' &&
     values[value] &&
-    ((browserName === "chrome" &&
+    ((browserName === 'chrome' &&
       (browserVersion < 29 && browserVersion > 20)) ||
-      ((browserName === "safari" || browserName === "ios_saf") &&
+      ((browserName === 'safari' || browserName === 'ios_saf') &&
         (browserVersion < 9 && browserVersion > 6)) ||
-      (browserName === "opera" &&
+      (browserName === 'opera' &&
         (browserVersion === 15 || browserVersion === 16)))
   ) {
-    return getPrefixedValue(cssPrefix + value, value, keepUnprefixed);
+    return getPrefixedValue(cssPrefix + value, value, keepUnprefixed)
   }
 }

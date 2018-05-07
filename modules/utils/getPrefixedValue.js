@@ -5,7 +5,7 @@ export default function getPrefixedValue(
   keepUnprefixed: boolean
 ): Array<any> | any {
   if (keepUnprefixed) {
-    return [prefixedValue, value];
+    return [prefixedValue, value]
   }
-  return prefixedValue;
+  return prefixedValue
 }

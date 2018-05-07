@@ -1,24 +1,24 @@
 /* @flow */
-import pluginMap from "./maps/pluginMap";
+import pluginMap from './maps/pluginMap'
 
 export default function getRecommendedPlugins(
   browserList: Object
 ): Array<string> {
-  const recommendedPlugins = {};
+  const recommendedPlugins = {}
 
   for (const plugin in pluginMap) {
-    const browserSupportByPlugin = pluginMap[plugin];
+    const browserSupportByPlugin = pluginMap[plugin]
 
     for (const browser in browserSupportByPlugin) {
       if (browserList.hasOwnProperty(browser)) {
-        const browserVersion = browserSupportByPlugin[browser];
+        const browserVersion = browserSupportByPlugin[browser]
 
         if (browserList[browser] < browserVersion) {
-          recommendedPlugins[plugin] = true;
+          recommendedPlugins[plugin] = true
         }
       }
     }
   }
 
-  return Object.keys(recommendedPlugins);
+  return Object.keys(recommendedPlugins)
 }

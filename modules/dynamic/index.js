@@ -1,18 +1,18 @@
-import createPrefixer from "./createPrefixer";
+import createPrefixer from './createPrefixer'
 
-import cursor from "./plugins/cursor";
-import crossFade from "./plugins/crossFade";
-import filter from "./plugins/filter";
-import flex from "./plugins/flex";
-import flexboxOld from "./plugins/flexboxOld";
-import gradient from "./plugins/gradient";
-import imageSet from "./plugins/imageSet";
-import position from "./plugins/position";
-import sizing from "./plugins/sizing";
-import transition from "./plugins/transition";
+import cursor from './plugins/cursor'
+import crossFade from './plugins/crossFade'
+import filter from './plugins/filter'
+import flex from './plugins/flex'
+import flexboxOld from './plugins/flexboxOld'
+import gradient from './plugins/gradient'
+import imageSet from './plugins/imageSet'
+import position from './plugins/position'
+import sizing from './plugins/sizing'
+import transition from './plugins/transition'
 
-import prefixAll from "../static";
-import dynamicData from "./dynamicData";
+import prefixAll from '../static'
+import dynamicData from './dynamicData'
 
 const plugins = [
   crossFade,
@@ -24,14 +24,14 @@ const plugins = [
   position,
   sizing,
   transition,
-  flex
-];
+  flex,
+]
 
 const Prefixer = createPrefixer(
   {
     prefixMap: dynamicData.prefixMap,
-    plugins
+    plugins,
   },
   prefixAll
-);
-export default Prefixer;
+)
+export default Prefixer

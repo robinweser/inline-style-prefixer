@@ -1,22 +1,22 @@
 /* @flow */
-import prefixProperty from "../utils/prefixProperty";
-import prefixValue from "../utils/prefixValue";
+import prefixProperty from '../utils/prefixProperty'
+import prefixValue from '../utils/prefixValue'
 
-import addNewValuesOnly from "../utils/addNewValuesOnly";
-import isObject from "../utils/isObject";
+import addNewValuesOnly from '../utils/addNewValuesOnly'
+import isObject from '../utils/isObject'
 
-type StaticData = { prefixMap: Object, plugins: Array<Function> };
+type StaticData = { prefixMap: Object, plugins: Array<Function> }
 export default function createPrefixer({ prefixMap, plugins }: StaticData) {
   function prefixAll(style: Object): Object {
     for (const property in style) {
-      const value = style[property];
+      const value = style[property]
 
       // handle nested objects
       if (isObject(value)) {
-        style[property] = prefixAll(value);
+        style[property] = prefixAll(value)
         // handle array values
       } else if (Array.isArray(value)) {
-        const combinedValue = [];
+        const combinedValue = []
 
         for (let i = 0, len = value.length; i < len; ++i) {
           const processedValue = prefixValue(
@@ -25,14 +25,14 @@ export default function createPrefixer({ prefixMap, plugins }: StaticData) {
             value[i],
             style,
             prefixMap
-          );
-          addNewValuesOnly(combinedValue, processedValue || value[i]);
+          )
+          addNewValuesOnly(combinedValue, processedValue || value[i])
         }
 
         // only modify the value if it was touched
         // by any plugin to prevent unnecessary mutations
         if (combinedValue.length > 0) {
-          style[property] = combinedValue;
+          style[property] = combinedValue
         }
       } else {
         const processedValue = prefixValue(
@@ -41,20 +41,20 @@ export default function createPrefixer({ prefixMap, plugins }: StaticData) {
           value,
           style,
           prefixMap
-        );
+        )
 
         // only modify the value if it was touched
         // by any plugin to prevent unnecessary mutations
         if (processedValue) {
-          style[property] = processedValue;
+          style[property] = processedValue
         }
 
-        style = prefixProperty(prefixMap, property, style);
+        style = prefixProperty(prefixMap, property, style)
       }
     }
 
-    return style;
+    return style
   }
 
-  return prefixAll;
+  return prefixAll
 }
