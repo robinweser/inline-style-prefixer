@@ -19,19 +19,19 @@ const browserList = {
   opera: 0,
   op_mini: 0,
   and_uc: 0,
-  and_chr: 0
+  and_chr: 0,
 }
 
 const data = generateData(browserList)
 
 const prefixAll = createStaticPrefixer({
   prefixMap: data.static,
-  plugins: staticPlugins
+  plugins: staticPlugins,
 })
 const Prefixer = createDynamicPrefixer(
   {
     prefixMap: data.dynamic,
-    plugins: dynamicPlugins
+    plugins: dynamicPlugins,
   },
   prefixAll
 )

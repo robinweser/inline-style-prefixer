@@ -6,6 +6,7 @@
 .*/node_modules/npm/*.*
 .*/node_modules/config-chain/*.*
 .*/node_modules/lunr/*.*
+.*/node_modules/chalk/*.*
 
 [version]
 ^0.38.0

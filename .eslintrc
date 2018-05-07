@@ -14,7 +14,7 @@
     "object-property-newline": [ 2, {
       "allowMultiplePropertiesPerLine": false
     }],
-    "comma-dangle": [ 2, "never" ],
+    "comma-dangle": [ 0 ],
     "react/jsx-filename-extension": [2, {
       "extensions": [".js", ".jsx"]
     }],

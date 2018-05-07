@@ -1,45 +1,64 @@
 /* eslint camelcase: 1 */
 const MSIE9 = 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 7.1; Trident/5.0)'
-const MSIE10 = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)'
-const MSEdge12 = 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10136'
-const Android4_4_4 = 'Mozilla/5.0 (Linux; Android 4.4.4; One Build/KTU84L.H4) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Mobile Safari/537.36'
-const CordovaIOS8_4 = 'Mozilla/5.0 (iPhone; CPU iPhone OS 8_4 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Mobile/12H141'
-const Android4_2_2Chrome47 = 'Mozilla/5.0 (Linux; Android 4.2.2; Galaxy Nexus Build/JDQ39) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.83 Mobile Safari/537.36'
-const Android4_2_2Firefox48 = 'Mozilla/5.0 (Android 4.2.2; Mobile; rv:48.0) Gecko/48.0 Firefox/48.0'
-const iOSChrome47 = 'Mozilla/5.0 (iPad; CPU OS 8_0_0 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) CriOS/47.0.2526.107 Mobile/12H321 Safari/600.1.4'
-const Chrome14 = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.812.0 Safari/535.1'
-const Chrome22 = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.2 (KHTML, like Gecko) Chrome/22.0.1216.0 Safari/537.2'
-const Chrome45 = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36'
-const Chrome49 = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2454.85 Safari/537.36'
-const SeaMonkey = 'Mozilla/5.0 (Windows NT 5.2; RW; rv:7.0a1) Gecko/20091211 SeaMonkey/9.23a1pre'
-const Chromium = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/50.0.2661.102 Chrome/50.0.2661.102 Safari/537.36'
-const PhantomJS = 'Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.0.0 Safari/538.1'
-const Yandex = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.137 YaBrowser/17.4.1.718 Yowser/2.5 Safari/537.36'
+const MSIE10 =
+  'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)'
+const MSEdge12 =
+  'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10136'
+const Android4_4_4 =
+  'Mozilla/5.0 (Linux; Android 4.4.4; One Build/KTU84L.H4) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/33.0.0.0 Mobile Safari/537.36'
+const CordovaIOS8_4 =
+  'Mozilla/5.0 (iPhone; CPU iPhone OS 8_4 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) Mobile/12H141'
+const Android4_2_2Chrome47 =
+  'Mozilla/5.0 (Linux; Android 4.2.2; Galaxy Nexus Build/JDQ39) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.83 Mobile Safari/537.36'
+const Android4_2_2Firefox48 =
+  'Mozilla/5.0 (Android 4.2.2; Mobile; rv:48.0) Gecko/48.0 Firefox/48.0'
+const iOSChrome47 =
+  'Mozilla/5.0 (iPad; CPU OS 8_0_0 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) CriOS/47.0.2526.107 Mobile/12H321 Safari/600.1.4'
+const Chrome14 =
+  'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/14.0.812.0 Safari/535.1'
+const Chrome22 =
+  'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.2 (KHTML, like Gecko) Chrome/22.0.1216.0 Safari/537.2'
+const Chrome45 =
+  'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36'
+const Chrome49 =
+  'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2454.85 Safari/537.36'
+const SeaMonkey =
+  'Mozilla/5.0 (Windows NT 5.2; RW; rv:7.0a1) Gecko/20091211 SeaMonkey/9.23a1pre'
+const Chromium =
+  'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/50.0.2661.102 Chrome/50.0.2661.102 Safari/537.36'
+const PhantomJS =
+  'Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.0.0 Safari/538.1'
+const Yandex =
+  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.137 YaBrowser/17.4.1.718 Yowser/2.5 Safari/537.36'
 
 describe('Dynamic Prefixer', () => {
   describe('Prefixing a property', () => {
     it('should only add required prefixes', () => {
       const input = {
         appearance: 'test',
-        transition: 'test'
+        transition: 'test',
       }
       const prefixed = {
         WebkitAppearance: 'test',
-        transition: 'test'
+        transition: 'test',
       }
-      expect(new Prefixer({ userAgent: Chrome45 }).prefix(input)).to.eql(prefixed)
+      expect(new Prefixer({ userAgent: Chrome45 }).prefix(input)).to.eql(
+        prefixed
+      )
     })
     it('should not break if the value is undefined or false', () => {
-      expect(new Prefixer({ userAgent: Chrome14 }).prefix({ width: undefined })).to.eql({ width: undefined })
+      expect(
+        new Prefixer({ userAgent: Chrome14 }).prefix({ width: undefined })
+      ).to.eql({ width: undefined })
     })
     it('should also resolve nested objects', () => {
       const input = {
         appearance: 'none',
-        innerStyles: { appearance: 'none' }
+        innerStyles: { appearance: 'none' },
       }
       const output = {
         WebkitAppearance: 'none',
-        innerStyles: { WebkitAppearance: 'none' }
+        innerStyles: { WebkitAppearance: 'none' },
       }
       expect(new Prefixer({ userAgent: Chrome14 }).prefix(input)).to.eql(output)
     })
@@ -57,18 +76,26 @@ describe('Dynamic Prefixer', () => {
   })
   describe('Running on Yandex', () => {
     it('should use Chrome version', () => {
-      expect(new Prefixer({ userAgent: Yandex })._browserInfo.browserVersion).to.eql(57)
-      expect(new Prefixer({ userAgent: Yandex })._browserInfo.browserName).to.eql('chrome')
+      expect(
+        new Prefixer({ userAgent: Yandex })._browserInfo.browserVersion
+      ).to.eql(57)
+      expect(
+        new Prefixer({ userAgent: Yandex })._browserInfo.browserName
+      ).to.eql('chrome')
     })
   })
   describe('Running on android < 4.4', () => {
     it('should use the osversion if its the native browser to check for required props', () => {
       const andPrefixer = new Prefixer({ userAgent: Android4_4_4 })
-      expect(andPrefixer._browserInfo.browserVersion).to.eql(andPrefixer._browserInfo.osVersion)
+      expect(andPrefixer._browserInfo.browserVersion).to.eql(
+        andPrefixer._browserInfo.osVersion
+      )
       expect(andPrefixer._browserInfo.browserVersion).to.eql(4.4)
       const transform = { transform: 'rotate(40deg)' }
       const output = { WebkitTransform: 'rotate(40deg)' }
-      expect(new Prefixer({ userAgent: Android4_4_4 }).prefix(transform)).to.eql(output)
+      expect(
+        new Prefixer({ userAgent: Android4_4_4 }).prefix(transform)
+      ).to.eql(output)
     })
     it('should use the chrome version if its chrome to check for required props', () => {
       const andPrefixer = new Prefixer({ userAgent: Android4_2_2Chrome47 })
@@ -84,7 +111,9 @@ describe('Dynamic Prefixer', () => {
   describe('Running on iOS', () => {
     it('always force Safari prefixing as iOS forces to use Safari under the hood', () => {
       const iosPrefixer = new Prefixer({ userAgent: iOSChrome47 })
-      expect(iosPrefixer._browserInfo.browserVersion).to.eql(iosPrefixer._browserInfo.osVersion)
+      expect(iosPrefixer._browserInfo.browserVersion).to.eql(
+        iosPrefixer._browserInfo.osVersion
+      )
       const input = { display: 'flex' }
       const output = { display: '-webkit-flex' }
       expect(iosPrefixer.prefix(input)).to.eql(output)
@@ -103,7 +132,7 @@ describe('Dynamic Prefixer', () => {
     it('should not add -webkit- prefixes', () => {
       const input = {
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
       }
       expect(new Prefixer({ userAgent: MSEdge12 }).prefix(input)).to.eql(input)
     })
@@ -112,27 +141,33 @@ describe('Dynamic Prefixer', () => {
     it('should resolve each value', () => {
       const input = {
         width: ['calc(30deg)', '100%'],
-        display: ['inline-block', '-webkit-flex', 'flex', 'block']
+        display: ['inline-block', '-webkit-flex', 'flex', 'block'],
       }
       const output = {
         width: ['-webkit-calc(30deg)', '100%'],
-        display: ['inline-block', '-webkit-flex', '-webkit-box', 'block']
+        display: ['inline-block', '-webkit-flex', '-webkit-box', 'block'],
       }
       expect(new Prefixer({ userAgent: Chrome14 }).prefix(input)).to.eql(output)
     })
     it('should should keep unprefixed', () => {
       const input = {
         width: ['calc(30deg)', '100%'],
-        display: ['inline-block', '-webkit-flex', 'flex', 'block']
+        display: ['inline-block', '-webkit-flex', 'flex', 'block'],
       }
       const output = {
         width: ['-webkit-calc(30deg)', 'calc(30deg)', '100%'],
-        display: ['inline-block', '-webkit-flex', '-webkit-box', 'flex', 'block']
+        display: [
+          'inline-block',
+          '-webkit-flex',
+          '-webkit-box',
+          'flex',
+          'block',
+        ],
       }
       expect(
         new Prefixer({
           userAgent: Chrome14,
-          keepUnprefixed: true
+          keepUnprefixed: true,
         }).prefix(input)
       ).to.eql(output)
     })
@@ -161,14 +196,16 @@ describe('Dynamic Prefixer', () => {
       const input = { flexDirection: 'column-reverse' }
       const output = {
         WebkitBoxOrient: 'vertical',
-        WebkitBoxDirection: 'reverse'
+        WebkitBoxDirection: 'reverse',
       }
       expect(new Prefixer({ userAgent: Chrome14 }).prefix(input)).to.eql(output)
     })
     it('should resolve alternative values', () => {
       const input2 = { justifyContent: 'space-between' }
       const output2 = { WebkitBoxPack: 'justify' }
-      expect(new Prefixer({ userAgent: Chrome14 }).prefix(input2)).to.eql(output2)
+      expect(new Prefixer({ userAgent: Chrome14 }).prefix(input2)).to.eql(
+        output2
+      )
     })
   })
   describe('Resolving old 2012 flexbox specification', () => {
@@ -188,7 +225,9 @@ describe('Dynamic Prefixer', () => {
       const standard = { cursor: 'pointer' }
       const input = { cursor: 'zoom-in' }
       const output = { cursor: '-webkit-zoom-in' }
-      expect(new Prefixer({ userAgent: Chrome14 }).prefix(standard)).to.eql(standard)
+      expect(new Prefixer({ userAgent: Chrome14 }).prefix(standard)).to.eql(
+        standard
+      )
       expect(new Prefixer({ userAgent: Chrome14 }).prefix(input)).to.eql(output)
       expect(new Prefixer({ userAgent: Chrome49 }).prefix(input)).to.eql(input)
       expect(new Prefixer({ userAgent: Chromium }).prefix(input)).to.eql(input)
@@ -200,7 +239,9 @@ describe('Dynamic Prefixer', () => {
       const standard = { cursor: 'pointer' }
       const input = { cursor: 'grab' }
       const output = { cursor: '-webkit-grab' }
-      expect(new Prefixer({ userAgent: Chrome14 }).prefix(standard)).to.eql(standard)
+      expect(new Prefixer({ userAgent: Chrome14 }).prefix(standard)).to.eql(
+        standard
+      )
       expect(new Prefixer({ userAgent: Chrome14 }).prefix(input)).to.eql(output)
       expect(new Prefixer({ userAgent: Chrome49 }).prefix(input)).to.eql(output)
       expect(new Prefixer({ userAgent: Chromium }).prefix(input)).to.eql(input)
@@ -213,24 +254,36 @@ describe('Dynamic Prefixer', () => {
       const output = {
         WebkitAppearance: 'test',
         MozAppearance: 'test',
-        appearance: 'test'
+        appearance: 'test',
       }
-      expect(new Prefixer({ userAgent: 'bad userAgent' }).prefix(input)).to.eql(output)
+      expect(new Prefixer({ userAgent: 'bad userAgent' }).prefix(input)).to.eql(
+        output
+      )
     })
   })
   describe('Prefixing keyframes', () => {
     it('should return the correct keyframes string', () => {
-      expect(new Prefixer({ userAgent: Chrome14 }).prefixedKeyframes).to.eql('-webkit-keyframes')
-      expect(new Prefixer({ userAgent: Chrome49 }).prefixedKeyframes).to.eql('keyframes')
-      expect(new Prefixer({ userAgent: Chromium }).prefixedKeyframes).to.eql('keyframes')
-      expect(new Prefixer({ userAgent: PhantomJS }).prefixedKeyframes).to.eql('keyframes')
+      expect(new Prefixer({ userAgent: Chrome14 }).prefixedKeyframes).to.eql(
+        '-webkit-keyframes'
+      )
+      expect(new Prefixer({ userAgent: Chrome49 }).prefixedKeyframes).to.eql(
+        'keyframes'
+      )
+      expect(new Prefixer({ userAgent: Chromium }).prefixedKeyframes).to.eql(
+        'keyframes'
+      )
+      expect(new Prefixer({ userAgent: PhantomJS }).prefixedKeyframes).to.eql(
+        'keyframes'
+      )
     })
   })
   describe('Prefixing gradients', () => {
     it('should add prefixes', () => {
       const input = { background: 'linear-gradient()' }
       const prefixed = { background: '-webkit-linear-gradient()' }
-      expect(new Prefixer({ userAgent: Chrome22 }).prefix(input)).to.eql(prefixed)
+      expect(new Prefixer({ userAgent: Chrome22 }).prefix(input)).to.eql(
+        prefixed
+      )
     })
   })
 
@@ -238,17 +291,34 @@ describe('Dynamic Prefixer', () => {
     it('should add prefixes to properties in value', () => {
       const input = { transition: 'appearance 200ms linear' }
       const prefixed = { transition: '-webkit-appearance 200ms linear' }
-      expect(new Prefixer({ userAgent: Chrome45 }).prefix(input)).to.eql(prefixed)
+      expect(new Prefixer({ userAgent: Chrome45 }).prefix(input)).to.eql(
+        prefixed
+      )
     })
     it('should not split cubic-beziers', () => {
-      const input = { transition: 'appearance 200ms cubic-bezier(0.42, 0.0, 1.0, 1.0)' }
-      const prefixed = { transition: '-webkit-appearance 200ms cubic-bezier(0.42, 0.0, 1.0, 1.0)' }
-      expect(new Prefixer({ userAgent: Chrome45 }).prefix(input)).to.eql(prefixed)
+      const input = {
+        transition: 'appearance 200ms cubic-bezier(0.42, 0.0, 1.0, 1.0)',
+      }
+      const prefixed = {
+        transition:
+          '-webkit-appearance 200ms cubic-bezier(0.42, 0.0, 1.0, 1.0)',
+      }
+      expect(new Prefixer({ userAgent: Chrome45 }).prefix(input)).to.eql(
+        prefixed
+      )
     })
     it('should prefix multiple properties in value but not split cubic-beziers', () => {
-      const input = { transition: 'appearance 200ms cubic-bezier(0.42, 0.0, 1.0, 1.0), user-select 100ms linear' }
-      const prefixed = { transition: '-webkit-appearance 200ms cubic-bezier(0.42, 0.0, 1.0, 1.0), -webkit-user-select 100ms linear' }
-      expect(new Prefixer({ userAgent: Chrome45 }).prefix(input)).to.eql(prefixed)
+      const input = {
+        transition:
+          'appearance 200ms cubic-bezier(0.42, 0.0, 1.0, 1.0), user-select 100ms linear',
+      }
+      const prefixed = {
+        transition:
+          '-webkit-appearance 200ms cubic-bezier(0.42, 0.0, 1.0, 1.0), -webkit-user-select 100ms linear',
+      }
+      expect(new Prefixer({ userAgent: Chrome45 }).prefix(input)).to.eql(
+        prefixed
+      )
     })
     it('should not prefix transition values with border', () => {
       const input = { transition: 'border 500ms linear' }
@@ -256,20 +326,33 @@ describe('Dynamic Prefixer', () => {
       expect(new Prefixer({ userAgent: Chrome45 }).prefix(input)).to.eql(output)
     })
     it('should add prefixes to multiple properties in value', () => {
-      const input = { transition: 'appearance 200ms linear, user-select 100ms linear' }
-      const prefixed = { transition: '-webkit-appearance 200ms linear, -webkit-user-select 100ms linear' }
-      expect(new Prefixer({ userAgent: Chrome45 }).prefix(input)).to.eql(prefixed)
+      const input = {
+        transition: 'appearance 200ms linear, user-select 100ms linear',
+      }
+      const prefixed = {
+        transition:
+          '-webkit-appearance 200ms linear, -webkit-user-select 100ms linear',
+      }
+      expect(new Prefixer({ userAgent: Chrome45 }).prefix(input)).to.eql(
+        prefixed
+      )
       const input2 = { transitionProperty: 'appearance, user-select' }
-      const prefixed2 = { transitionProperty: '-webkit-appearance, -webkit-user-select' }
-      expect(new Prefixer({ userAgent: Chrome45 }).prefix(input2)).to.eql(prefixed2)
+      const prefixed2 = {
+        transitionProperty: '-webkit-appearance, -webkit-user-select',
+      }
+      expect(new Prefixer({ userAgent: Chrome45 }).prefix(input2)).to.eql(
+        prefixed2
+      )
     })
     it('should keep unprefixed properties', () => {
       const input = { transition: 'appearance 200ms linear' }
-      const prefixed = { transition: '-webkit-appearance 200ms linear,appearance 200ms linear' }
+      const prefixed = {
+        transition: '-webkit-appearance 200ms linear,appearance 200ms linear',
+      }
       expect(
         new Prefixer({
           userAgent: Chrome45,
-          keepUnprefixed: true
+          keepUnprefixed: true,
         }).prefix(input)
       ).to.eql(prefixed)
       const input2 = { transitionProperty: 'appearance' }
@@ -277,25 +360,32 @@ describe('Dynamic Prefixer', () => {
       expect(
         new Prefixer({
           userAgent: Chrome45,
-          keepUnprefixed: true
+          keepUnprefixed: true,
         }).prefix(input2)
       ).to.eql(prefixed2)
     })
     it('should keep unprefixed properties with multiple properties in value', () => {
-      const input = { transition: 'appearance 200ms linear, user-select 100ms linear' }
-      const prefixed = { transition: '-webkit-appearance 200ms linear,appearance 200ms linear, -webkit-user-select 100ms linear, user-select 100ms linear' }
+      const input = {
+        transition: 'appearance 200ms linear, user-select 100ms linear',
+      }
+      const prefixed = {
+        transition:
+          '-webkit-appearance 200ms linear,appearance 200ms linear, -webkit-user-select 100ms linear, user-select 100ms linear',
+      }
       expect(
         new Prefixer({
           userAgent: Chrome45,
-          keepUnprefixed: true
+          keepUnprefixed: true,
         }).prefix(input)
       ).to.eql(prefixed)
       const input2 = { transitionProperty: 'appearance, width' }
-      const prefixed2 = { transitionProperty: '-webkit-appearance,appearance, width' }
+      const prefixed2 = {
+        transitionProperty: '-webkit-appearance,appearance, width',
+      }
       expect(
         new Prefixer({
           userAgent: Chrome45,
-          keepUnprefixed: true
+          keepUnprefixed: true,
         }).prefix(input2)
       ).to.eql(prefixed2)
     })
@@ -304,17 +394,17 @@ describe('Dynamic Prefixer', () => {
     it('should not delete defaults properties', () => {
       const input = {
         appearance: 'test',
-        transition: 'test'
+        transition: 'test',
       }
       const prefixed = {
         WebkitAppearance: 'test',
         appearance: 'test',
-        transition: 'test'
+        transition: 'test',
       }
       expect(
         new Prefixer({
           userAgent: Chrome45,
-          keepUnprefixed: true
+          keepUnprefixed: true,
         }).prefix(input)
       ).to.eql(prefixed)
     })
@@ -323,12 +413,12 @@ describe('Dynamic Prefixer', () => {
       const input2 = { justifyContent: 'space-between' }
       const output2 = {
         WebkitBoxPack: 'justify',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
       }
       expect(
         new Prefixer({
           userAgent: Chrome14,
-          keepUnprefixed: true
+          keepUnprefixed: true,
         }).prefix(input2)
       ).to.eql(output2)
     })
@@ -337,13 +427,13 @@ describe('Dynamic Prefixer', () => {
       expect(
         new Prefixer({
           userAgent: Chrome22,
-          keepUnprefixed: true
+          keepUnprefixed: true,
         }).prefix({ display: 'flex' })
       ).to.eql({ display: ['-webkit-flex', 'flex'] })
       expect(
         new Prefixer({
           userAgent: MSIE10,
-          keepUnprefixed: true
+          keepUnprefixed: true,
         }).prefix({ display: 'flex' })
       ).to.eql({ display: ['-ms-flexbox', 'flex'] })
     })
@@ -351,13 +441,13 @@ describe('Dynamic Prefixer', () => {
       expect(
         new Prefixer({
           userAgent: Chrome22,
-          keepUnprefixed: true
+          keepUnprefixed: true,
         }).prefix({ marginLeft: 'calc(30deg)' })
       ).to.eql({ marginLeft: ['-webkit-calc(30deg)', 'calc(30deg)'] })
       expect(
         new Prefixer({
           userAgent: MSIE10,
-          keepUnprefixed: true
+          keepUnprefixed: true,
         }).prefix({ display: 'flex' })
       ).to.eql({ display: ['-ms-flexbox', 'flex'] })
     })
@@ -375,11 +465,17 @@ describe('Dynamic Prefixer', () => {
   })
   describe('Prefixing display', () => {
     it('should not remove display property', () => {
-      expect(new Prefixer({ userAgent: MSIE10 }).prefix({ display: 'block' })).to.eql({ display: 'block' })
+      expect(
+        new Prefixer({ userAgent: MSIE10 }).prefix({ display: 'block' })
+      ).to.eql({ display: 'block' })
     })
     it('should not throw if display is null or undefined', () => {
-      expect(new Prefixer({ userAgent: Chrome45 }).prefix({ display: null })).to.eql({ display: null })
-      expect(new Prefixer({ userAgent: Chrome45 }).prefix({ display: undefined })).to.eql({ display: undefined })
+      expect(
+        new Prefixer({ userAgent: Chrome45 }).prefix({ display: null })
+      ).to.eql({ display: null })
+      expect(
+        new Prefixer({ userAgent: Chrome45 }).prefix({ display: undefined })
+      ).to.eql({ display: undefined })
     })
   })
   describe('Using Prefixer.prefixAll', () => {
@@ -389,7 +485,7 @@ describe('Dynamic Prefixer', () => {
         WebkitUserSelect: 'none',
         MozUserSelect: 'none',
         msUserSelect: 'none',
-        userSelect: 'none'
+        userSelect: 'none',
       }
       expect(Prefixer.prefixAll(input)).to.eql(output)
     })
