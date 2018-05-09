@@ -6,12 +6,15 @@ const alternativeValues = {
   'flex-end': 'end',
   'wrap-reverse': 'multiple',
   wrap: 'multiple',
+  flex: 'box',
+  'inline-flex': 'inline-box',
 }
 
 const alternativeProps = {
   alignItems: 'WebkitBoxAlign',
   justifyContent: 'WebkitBoxPack',
   flexWrap: 'WebkitBoxLines',
+  flexGrow: 'WebkitBoxFlex',
 }
 
 export default function flexboxOld(
