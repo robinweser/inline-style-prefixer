@@ -2,6 +2,11 @@
 
 ## 4.0
 
+### 4.0.2
+* added missing alternative values to the legacy flexbox plugins ( [#153](https://github.com/rofrischmann/inline-style-prefixer/issues/153) )
+* added missing props to the dynamic version of the legacy flexbox plugin in order to align with the static version ( [#153](https://github.com/rofrischmann/inline-style-prefixer/issues/153) )
+* updated browser versions and caniuse data
+
 ### 4.0.1
 * added support for the CSS `text-orientation` property ( [#150](https://github.com/rofrischmann/inline-style-prefixer/pull/150) )
 

@@ -1,6 +1,6 @@
 {
   "name": "inline-style-prefixer",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "Run-time Autoprefixer for JavaScript style objects",
   "main": "dynamic/index.js",
   "files": [
