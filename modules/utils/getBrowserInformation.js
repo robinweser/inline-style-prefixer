@@ -66,6 +66,8 @@ export default function getBrowserInformation(
 
   if (browserInfo.yandexbrowser) {
     browserInfo = bowser._detect(userAgent.replace(/YaBrowser\/[0-9.]*/, ''))
+  } else if (browserInfo.webos && browserInfo.blink) {
+    browserInfo = bowser._detect(userAgent.replace('Web0S', ''));
   }
 
   for (const browser in prefixByBrowser) {
