@@ -1,21 +1,21 @@
-# Creating your own Prefixer
+# Creating your own prefixer
 
-If your application requires different browser version support, you might consider creating your own `Prefixer`. To make it as simple as possible, we provide two different tools to get there. First of all, we have the [inline-style-prefixer/generator](../api/inline-style-prefixer-generator/generateData.md) that helps to generate the required prefixing data. Then, you can use [`createPrefixer`](../api/inline-style-prefixer/createPrefixer.md) to plug it all together.
+If your application requires different browser version support, you might consider creating your own prefix function. To make it as simple as possible, we provide two different tools to get there. First of all, we use the [generateData](../api/generator/generateData.md) API that helps to generate the required prefixing data. Then, we use the [createPrefixer](../api/createPrefixer.md) API to plug it all together.
 
-## Generating dynamic data
+## Generating the data
 First of all we need to install the `caniuse-api`.
 
 ```sh
 yarn add caniuse-api --dev
 ```
 
-Each Prefixer needs to know which properties to prefix and which plugins to use. This data can be generated using [`generateData`](../api/inline-style-prefixer-generator/generateData.md).
+Our prefix method needs to know which properties to prefix and which plugins to use. This data can be generated using the [generateData](../api/generator/generateData.md) API.
 You need to provide a `browserList` containing all the minimum browser versions that should be supported.
 
-It will then generate the required data and save it to `dynamicPath`. Check out the [`generateData` API reference](../api/inline-style-prefixer-generator/generateData.md) for detailed information on all the options and advanced settings.
+It will then generate the required data and save it to `path`. Check out the [generateData API reference](../api/geneartor/generateData.md) for detailed information on all the options and advanced settings.
 
 ```javascript
-import generateData from './modules/generator'
+import generateData from 'inline-style-prefixer/lib/generator'
 
 const browserList = {
   chrome: 46,
@@ -33,21 +33,17 @@ const browserList = {
 }
 
 generateData(browserList, {
-  dynamicPath: `${__dirname}/modules/dynamic/dynamicData.js`
+  path: `PATH_TO_ASSETS/prefixData.js`
 })
 ```
 
-## Creating the Prefixer
-Now that we have the data, we simply need to use the `createPrefixer` helper.
-> As the dynamic prefixer uses the static prefixer as a fallback, we also need to provide a static fallback. We recommend to [generate your own `prefixAll`](CustomPrefixAll.md)-method using the same `browserList` for compatibility reasons.
+## Creating the prefix function
+Now that we have the data, we pass it over to the [createPrefixer](../api/createPrefixer) API.
 
 ```javascript
-import createPrefixer from 'inline-style-prefixer/dynamic/createPrefixer'
+import { createPrefixer } from 'inline-style-prefixer'
 
-import dynamicData from './modules/dynamic/dynamicData'
-import prefixAll from './modules/static/prefixAll'
+import prefixData from 'PATH_TO_ASSETS/prefixData'
 
-const Prefixer = createPrefixer(dynamicData, prefixAll)
-
-const prefixer = new Prefixer()
+const prefix = createPrefixer(prefixData)
 ```

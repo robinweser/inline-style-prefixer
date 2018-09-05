@@ -1,3 +1,29 @@
+import createPrefixer from '../createPrefixer'
+import generateData from '../generator'
+import plugins from '../plugins'
+
+const browserList = {
+  chrome: 0,
+  android: 0,
+  firefox: 0,
+  ios_saf: 0,
+  safari: 0,
+  ie: 0,
+  ie_mob: 0,
+  edge: 0,
+  opera: 0,
+  op_mini: 0,
+  and_uc: 0,
+  and_chr: 0,
+}
+
+const { prefixMap } = generateData(browserList)
+
+const prefix = createPrefixer({
+  prefixMap,
+  plugins,
+})
+
 describe('Static Prefixer', () => {
   describe('Prefixing all properties', () => {
     it('should only add prefixes if browsers need it', () => {
@@ -7,7 +33,7 @@ describe('Static Prefixer', () => {
         MozTransition: '200ms all linear',
         transition: '200ms all linear',
       }
-      expect(prefixAll(input)).to.eql(output)
+      expect(prefix(input)).toEqual(output)
     })
 
     it('should add all prefixes', () => {
@@ -18,7 +44,7 @@ describe('Static Prefixer', () => {
         msUserSelect: 'none',
         userSelect: 'none',
       }
-      expect(prefixAll(input)).to.eql(output)
+      expect(prefix(input)).toEqual(output)
     })
 
     it('should use dash-cased alternative values in array', () => {
@@ -26,7 +52,7 @@ describe('Static Prefixer', () => {
       const output = {
         marginLeft: ['-webkit-calc(30deg)', '-moz-calc(30deg)', 'calc(30deg)'],
       }
-      expect(prefixAll(input)).to.eql(output)
+      expect(prefix(input)).toEqual(output)
     })
 
     it('should also resolve nested objects', () => {
@@ -35,16 +61,16 @@ describe('Static Prefixer', () => {
         innerStyles: { transition: '300ms all ease-in' },
       }
       const output = {
-        MozTransition: '200ms all linear',
         WebkitTransition: '200ms all linear',
+        MozTransition: '200ms all linear',
         transition: '200ms all linear',
         innerStyles: {
-          MozTransition: '300ms all ease-in',
           WebkitTransition: '300ms all ease-in',
+          MozTransition: '300ms all ease-in',
           transition: '300ms all ease-in',
         },
       }
-      expect(prefixAll(input)).to.eql(output)
+      expect(prefix(input)).toEqual(output)
     })
   })
 
@@ -54,15 +80,15 @@ describe('Static Prefixer', () => {
       const output = {
         width: ['-webkit-calc(30px)', '-moz-calc(30px)', 'calc(30px)'],
       }
-      expect(prefixAll(input)).to.eql(output)
-      expect(prefixAll(input)).to.eql(output)
+      expect(prefix(input)).toEqual(output)
+      expect(prefix(input)).toEqual(output)
     })
 
     it('should prefix special cursor values', () => {
       const input = { cursor: 'zoom-in' }
       const output = { cursor: ['-webkit-zoom-in', '-moz-zoom-in', 'zoom-in'] }
-      expect(prefixAll(input)).to.eql(output)
-      expect(prefixAll(input)).to.eql(output)
+      expect(prefix(input)).toEqual(output)
+      expect(prefix(input)).toEqual(output)
     })
 
     it('should resolve flex-direction for all flexbox specification', () => {
@@ -74,20 +100,20 @@ describe('Static Prefixer', () => {
         msFlexDirection: 'column-reverse',
         flexDirection: 'column-reverse',
       }
-      expect(prefixAll(input)).to.eql(output)
-      expect(prefixAll(input)).to.eql(output)
+      expect(prefix(input)).toEqual(output)
+      expect(prefix(input)).toEqual(output)
     })
 
     it('should resolve alternative values for all flexbox specification', () => {
       const input = { justifyContent: 'space-around' }
       const output = {
         WebkitBoxPack: 'justify',
+        msFlexPack: 'distribute',
         WebkitJustifyContent: 'space-around',
         justifyContent: 'space-around',
-        msFlexPack: 'distribute',
       }
-      expect(prefixAll(input)).to.eql(output)
-      expect(prefixAll(input)).to.eql(output)
+      expect(prefix(input)).toEqual(output)
+      expect(prefix(input)).toEqual(output)
     })
 
     it('should resolve flexbox variants', () => {
@@ -97,15 +123,15 @@ describe('Static Prefixer', () => {
         width: '200px',
       }
       const output = {
-        WebkitAlignItems: 'center',
         WebkitBoxAlign: 'center',
         msFlexAlign: 'center',
+        WebkitAlignItems: 'center',
         alignItems: 'center',
         height: '100px',
         width: '200px',
       }
-      expect(prefixAll(input)).to.eql(output)
-      expect(prefixAll(input)).to.eql(output)
+      expect(prefix(input)).toEqual(output)
+      expect(prefix(input)).toEqual(output)
     })
 
     it('should not resolve alternative values on alignSelf', () => {
@@ -115,8 +141,8 @@ describe('Static Prefixer', () => {
         WebkitAlignSelf: 'flex-start',
         alignSelf: 'flex-start',
       }
-      expect(prefixAll(input)).to.eql(output)
-      expect(prefixAll(input)).to.eql(output)
+      expect(prefix(input)).toEqual(output)
+      expect(prefix(input)).toEqual(output)
     })
 
     it('should prefix gradients', () => {
@@ -130,8 +156,8 @@ describe('Static Prefixer', () => {
           'linear-gradient(to bottom right, red, yellow)',
         ],
       }
-      expect(prefixAll(input)).to.eql(output)
-      expect(prefixAll(input)).to.eql(output)
+      expect(prefix(input)).toEqual(output)
+      expect(prefix(input)).toEqual(output)
     })
 
     it('should correctly prefix gradients within multi-values', () => {
@@ -146,8 +172,8 @@ describe('Static Prefixer', () => {
           'url("https://foo.bar"), linear-gradient(to bottom right, red, yellow)',
         ],
       }
-      expect(prefixAll(input)).to.eql(output)
-      expect(prefixAll(input)).to.eql(output)
+      expect(prefix(input)).toEqual(output)
+      expect(prefix(input)).toEqual(output)
     })
 
     it('should add all flexbox display types', () => {
@@ -161,8 +187,8 @@ describe('Static Prefixer', () => {
           'flex',
         ],
       }
-      expect(prefixAll(input)).to.eql(output)
-      expect(prefixAll(input)).to.eql(output)
+      expect(prefix(input)).toEqual(output)
+      expect(prefix(input)).toEqual(output)
     })
 
     it('should add all inline flexbox display types', () => {
@@ -176,8 +202,8 @@ describe('Static Prefixer', () => {
           'inline-flex',
         ],
       }
-      expect(prefixAll(input)).to.eql(output)
-      expect(prefixAll(input)).to.eql(output)
+      expect(prefix(input)).toEqual(output)
+      expect(prefix(input)).toEqual(output)
     })
 
     it('should prefix special sizing values', () => {
@@ -185,8 +211,8 @@ describe('Static Prefixer', () => {
       const output = {
         width: ['-webkit-min-content', '-moz-min-content', 'min-content'],
       }
-      expect(prefixAll(input)).to.eql(output)
-      expect(prefixAll(input)).to.eql(output)
+      expect(prefix(input)).toEqual(output)
+      expect(prefix(input)).toEqual(output)
     })
 
     it('should prefix every property within transition values', () => {
@@ -201,8 +227,8 @@ describe('Static Prefixer', () => {
         transition:
           '200ms linear -moz-appearance,200ms linear -webkit-appearance,200ms linear appearance, 100ms linear width',
       }
-      expect(prefixAll(input)).to.eql(output)
-      expect(prefixAll(input)).to.eql(output)
+      expect(prefix(input)).toEqual(output)
+      expect(prefix(input)).toEqual(output)
     })
 
     it('should prefix transitions with cubic beziers', () => {
@@ -210,26 +236,26 @@ describe('Static Prefixer', () => {
         transition: 'transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000)',
       }
       const output = {
-        transition:
-          '-ms-transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000),-moz-transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000),-webkit-transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000),transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000)',
         WebkitTransition:
           '-webkit-transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000),transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000)',
         MozTransition:
           '-moz-transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000),transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000)',
+        transition:
+          '-ms-transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000),-moz-transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000),-webkit-transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000),transform 0.4s cubic-bezier(0.065, 1.360, 0.680, 1.000)',
       }
-      expect(prefixAll(input)).to.eql(output)
-      expect(prefixAll(input)).to.eql(output)
+      expect(prefix(input)).toEqual(output)
+      expect(prefix(input)).toEqual(output)
     })
 
     it('should prefix transition values with border', () => {
       const input = { transition: 'border 500ms linear' }
       const output = {
-        transition: 'border 500ms linear',
         WebkitTransition: 'border 500ms linear',
         MozTransition: 'border 500ms linear',
+        transition: 'border 500ms linear',
       }
-      expect(prefixAll(input)).to.eql(output)
-      expect(prefixAll(input)).to.eql(output)
+      expect(prefix(input)).toEqual(output)
+      expect(prefix(input)).toEqual(output)
     })
 
     it('should prefix transition values for prefixed properties', () => {
@@ -238,8 +264,8 @@ describe('Static Prefixer', () => {
         WebkitTransition:
           '200ms linear -webkit-appearance,200ms linear appearance',
       }
-      expect(prefixAll(input)).to.eql(output)
-      expect(prefixAll(input)).to.eql(output)
+      expect(prefix(input)).toEqual(output)
+      expect(prefix(input)).toEqual(output)
     })
 
     it('should not prefix msTransition or mozTransition', () => {
@@ -251,8 +277,8 @@ describe('Static Prefixer', () => {
         msTransition: '200ms linear appearance',
         mozTransition: '300ms linear width',
       }
-      expect(prefixAll(input)).to.eql(output)
-      expect(prefixAll(input)).to.eql(output)
+      expect(prefix(input)).toEqual(output)
+      expect(prefix(input)).toEqual(output)
     })
 
     it('should prefix array values', () => {
@@ -260,8 +286,8 @@ describe('Static Prefixer', () => {
       const output = {
         width: ['-webkit-calc(100%)', '-moz-calc(100%)', 'calc(100%)'],
       }
-      expect(prefixAll(input)).to.eql(output)
-      expect(prefixAll(input)).to.eql(output)
+      expect(prefix(input)).toEqual(output)
+      expect(prefix(input)).toEqual(output)
     })
 
     it('should prefix multiple array values', () => {
@@ -276,8 +302,8 @@ describe('Static Prefixer', () => {
           'min-content',
         ],
       }
-      expect(prefixAll(input)).to.eql(output)
-      expect(prefixAll(input)).to.eql(output)
+      expect(prefix(input)).toEqual(output)
+      expect(prefix(input)).toEqual(output)
     })
 
     it('should prefix multiple array values and keep others', () => {
@@ -290,8 +316,8 @@ describe('Static Prefixer', () => {
           '100%',
         ],
       }
-      expect(prefixAll(input)).to.eql(output)
-      expect(prefixAll(input)).to.eql(output)
+      expect(prefix(input)).toEqual(output)
+      expect(prefix(input)).toEqual(output)
     })
 
     it('should prefix calc values', () => {
@@ -299,29 +325,30 @@ describe('Static Prefixer', () => {
       const output = {
         width: ['-webkit-calc(100%)', '-moz-calc(100%)', 'calc(100%)'],
       }
-      expect(prefixAll(input)).to.eql(output)
-      expect(prefixAll(input)).to.eql(output)
+      expect(prefix(input)).toEqual(output)
+      expect(prefix(input)).toEqual(output)
     })
 
     it('should prefix writingMode', () => {
       const input = { writingMode: 'horizontal-tb' }
       const output = {
-        writingMode: 'horizontal-tb',
-        msWritingMode: 'horizontal-tb',
         WebkitWritingMode: 'horizontal-tb',
+        msWritingMode: 'horizontal-tb',
+        writingMode: 'horizontal-tb',
       }
-      expect(prefixAll(input)).to.eql(output)
-      expect(prefixAll(input)).to.eql(output)
+      expect(prefix(input)).toEqual(output)
+      expect(prefix(input)).toEqual(output)
     })
 
     it('should prefix textOrientation', () => {
       const input = { textOrientation: 'upright' }
       const output = {
-        textOrientation: 'upright',
         WebkitTextOrientation: 'upright',
+        textOrientation: 'upright',
       }
-      expect(prefixAll(input)).to.eql(output)
-      expect(prefixAll(input)).to.eql(output)
+
+      expect(prefix(input)).toEqual(output)
+      expect(prefix(input)).toEqual(output)
     })
   })
 })

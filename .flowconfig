@@ -9,4 +9,4 @@
 .*/node_modules/chalk/*.*
 
 [version]
-^0.38.0
+^0.80.0

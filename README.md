@@ -1,46 +1,17 @@
-# Autoprefixer for Style Objects
+# inline-style-prefixer
 
-**inline-style-prefixer** adds required **vendor prefixes** to your style object. It only adds prefixes if they're actually required by evaluating the browser's `userAgent` against data from [caniuse.com](http://caniuse.com/).
-<br>
+A small, simple and fast vendor prefixer from JavaScript style object.
 
-Alternatively it ships a static version that adds all available vendor prefixes.
-
-[![Build Status](https://travis-ci.org/rofrischmann/inline-style-prefixer.svg)](https://travis-ci.org/rofrischmann/inline-style-prefixer)
-[![Test Coverage](https://codeclimate.com/github/rofrischmann/inline-style-prefixer/badges/coverage.svg)](https://codeclimate.com/github/rofrischmann/inline-style-prefixer/coverage)
-[![npm downloads](https://img.shields.io/npm/dm/inline-style-prefixer.svg)](https://img.shields.io/npm/dm/inline-style-prefixer.svg)
-![Dependencies](https://david-dm.org/rofrischmann/inline-style-prefixer.svg)
+<img alt="TravisCI" src="https://travis-ci.org/rofrischmann/inline-style-prefixer.svg?branch=master"> <a href="https://codeclimate.com/github/rofrischmann/inline-style-prefixer/coverage"><img alt="Test Coverage" src="https://codeclimate.com/github/rofrischmann/inline-style-prefixer/badges/coverage.svg"></a> <img alt="npm downloads" src="https://img.shields.io/npm/dm/inline-style-prefixer.svg"> <img alt="gzipped size" src="https://img.shields.io/bundlephobia/minzip/inline-style-prefixer.svg?colorB=4c1&label=gzipped%20size"> <img alt="npm version" src="https://badge.fury.io/js/inline-style-prefixer.svg">
 
 ## Support Us
 Support Robin Frischmann's work on [Fela](https://github.com/rofrischmann/fela) and its ecosystem (inline-style-prefixer) directly via [**Patreon**](https://www.patreon.com/rofrischmann).
-
-Or support us on [**Open Collective**](https://opencollective.com/fela) to fund community work. This also includes inline-style-prefixer as well.<br>
-Thank you to all our backers!
-
-<a href="https://opencollective.com/fela/backer/0/website?requireActive=false" target="_blank"><img src="https://opencollective.com/fela/backer/0/avatar.svg?requireActive=false"></a>
-<a href="https://opencollective.com/fela/backer/1/website?requireActive=false" target="_blank"><img src="https://opencollective.com/fela/backer/1/avatar.svg?requireActive=false"></a>
-<a href="https://opencollective.com/fela/backer/2/website?requireActive=false" target="_blank"><img src="https://opencollective.com/fela/backer/2/avatar.svg?requireActive=false"></a>
-<a href="https://opencollective.com/fela/backer/3/website?requireActive=false" target="_blank"><img src="https://opencollective.com/fela/backer/3/avatar.svg?requireActive=false"></a>
-<a href="https://opencollective.com/fela/backer/4/website?requireActive=false" target="_blank"><img src="https://opencollective.com/fela/backer/4/avatar.svg?requireActive=false"></a>
-<a href="https://opencollective.com/fela/backer/5/website?requireActive=false" target="_blank"><img src="https://opencollective.com/fela/backer/5/avatar.svg?requireActive=false"></a>
-<a href="https://opencollective.com/fela/backer/6/website?requireActive=false" target="_blank"><img src="https://opencollective.com/fela/backer/6/avatar.svg?requireActive=false"></a>
-<a href="https://opencollective.com/fela/backer/7/website?requireActive=false" target="_blank"><img src="https://opencollective.com/fela/backer/7/avatar.svg?requireActive=false"></a>
-<a href="https://opencollective.com/fela/backer/8/website?requireActive=false" target="_blank"><img src="https://opencollective.com/fela/backer/8/avatar.svg?requireActive=false"></a>
-<a href="https://opencollective.com/fela/backer/9/website?requireActive=false" target="_blank"><img src="https://opencollective.com/fela/backer/9/avatar.svg?requireActive=false"></a>
 
 ## Installation
 ```sh
 yarn add inline-style-prefixer
 ```
 If you're still using npm, you may run `npm i --save inline-style-prefixer`.
-We also provide [UMD](https://github.com/umdjs/umd) builds for each package in the `dist` folder. You can easily use them via [unpkg](https://unpkg.com/).
-```HTML
-<!-- Unminified versions -->
-<script src="https://unpkg.com/inline-style-prefixer@3.0.1/dist/inline-style-prefixer.js"></script>
-<script src="https://unpkg.com/inline-style-prefixer@3.0.1/dist/inline-style-prefix-all.js"></script>
-<!-- Minified versions -->
-<script src="https://unpkg.com/inline-style-prefixer@3.0.1/dist/inline-style-prefixer.min.js"></script>
-<script src="https://unpkg.com/inline-style-prefixer@3.0.1/dist/inline-style-prefix-all.min.js"></script>
-```
 
 ## Browser Support
 It supports all major browsers with the following versions. For other, unsupported browses, we automatically use a fallback.
@@ -63,45 +34,10 @@ It will **only** add prefixes if a property still needs them in one of the above
 Don't worry - we got you covered. Check [this guide](https://github.com/rofrischmann/inline-style-prefixer/blob/master/docs/guides/CustomPrefixer.md).
 
 
-## Dynamic vs. Static
-Before using the prefixer, you have to decide which one you want to use. We ship two different versions - a dynamic and a static version.
-
-The **dynamic prefixer** evaluates the `userAgent` to identify the browser environment. Using this technique, we are able to only add the bare minimum of prefixes. Browser detection is quite accurate (~90% correctness), but yet also  	expensive which is why the package is almost 3 times as big as the static version.
-
-> It uses the static prefixer as a fallback.
-
-![Gzipped Size](https://img.shields.io/badge/gzipped-8.50kb-brightgreen.svg)
+## Usage
 
 ```javascript
-import Prefixer from 'inline-style-prefixer'
-
-const style = {
-  transition: '200ms all linear',
-  userSelect: 'none',
-  boxSizing: 'border-box',
-  display: 'flex',
-  color: 'blue'
-}
-
-const prefixer = new Prefixer()
-const prefixedStyle = prefixer.prefix(style)
-
-// prefixedStyle === output
-const output = {
-  transition: '200ms all linear',
-  WebkitUserSelect: 'none',
-  boxSizing: 'border-box',
-  display: '-webkit-flex',
-  color: 'blue'
-}
-```
-
-The **static prefixer**, on the other hand, adds all required prefixes according the above mentioned browser versions. Removing the browser detection makes it both smaller and fast, but also drastically increases the output.
-
-![Gzipped Size](https://img.shields.io/badge/gzipped-2.70kb-brightgreen.svg)
-
-```javascript
-import prefixAll from 'inline-style-prefixer/static'
+import prefix from 'inline-style-prefixer'
 
 const style = {
   transition: '200ms all linear',
@@ -110,10 +46,9 @@ const style = {
   color: 'blue'
 }
 
-const prefixedStyle = prefixAll(style)
+const output = prefix(style)
 
-// prefixedStyle === output
-const output = {
+output === {
   WebkitTransition: '200ms all linear',
   transition: '200ms all linear',
   MozBoxSizing: 'border-box',
@@ -130,12 +65,12 @@ You can use TypeScript definition from [DefinitelyTyped](https://github.com/Defi
 npm install --save @types/inline-style-prefixer
 ```
 
-Then import in your code:
+Then import in your code
 
 ```typescript
-import prefixAll = require('inline-style-prefixer/static');
+import prefix = require('inline-style-prefixer');
 
-const prefixedStyle = prefixAll({
+const prefixedStyle = prefix({
   transition: '200ms all linear',
   boxSizing: 'border-box',
   display: 'flex',

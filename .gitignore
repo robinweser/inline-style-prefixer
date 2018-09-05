@@ -19,11 +19,10 @@ Thumbs.db
 *.sw?
 *.vi
 
-static/
-dynamic/
-utils/
-generator/
 node_modules/
 npm-debug.log
-coverage
+**/coverage
 _book
+.vscode
+lib
+es

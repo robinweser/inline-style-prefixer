@@ -1,35 +1,33 @@
 /* @flow */
-import generateStaticPrefixMap from './generateStaticPrefixMap'
-import generateDynamicPrefixMap from './generateDynamicPrefixMap'
+import generatePrefixMap from './generatePrefixMap'
 import generatePluginList from './generatePluginList'
 
-function generateImportString(plugin, pluginPath, compatibility) {
+function generateImportString(plugin, compatibility) {
   if (compatibility) {
-    return `var ${plugin} = require('inline-style-prefixer/${pluginPath}/plugins/${plugin}')`
+    return `var ${plugin} = require('inline-style-prefixer/plugins/${plugin}')`
   }
-  return `import ${plugin} from 'inline-style-prefixer/${pluginPath}/plugins/${plugin}'`
+  return `import ${plugin} from 'inline-style-prefixer/plugins/${plugin}'`
 }
 
-function generateFile(prefixMap, pluginList, compatibility, pluginPath) {
+function generateFile(prefixMap, pluginList, compatibility) {
   const pluginImports = pluginList
-    .map(plugin => generateImportString(plugin, pluginPath, compatibility))
+    .map(plugin => generateImportString(plugin, compatibility))
     .join('\n')
 
   const moduleExporter = compatibility ? 'module.exports = ' : 'export default'
   const pluginExport = `[${pluginList.join(',')}]`
   const prefixMapExport = JSON.stringify(prefixMap)
 
-  if (pluginPath === 'static') {
-    const prefixVariables = [
-      'var w = ["Webkit"];',
-      'var m = ["Moz"];',
-      'var ms = ["ms"];',
-      'var wm = ["Webkit","Moz"];',
-      'var wms = ["Webkit","ms"];',
-      'var wmms = ["Webkit","Moz","ms"];',
-    ].join('\n')
+  const prefixVariables = [
+    'var w = ["Webkit"];',
+    'var m = ["Moz"];',
+    'var ms = ["ms"];',
+    'var wm = ["Webkit","Moz"];',
+    'var wms = ["Webkit","ms"];',
+    'var wmms = ["Webkit","Moz","ms"];',
+  ].join('\n')
 
-    return `${pluginImports}
+  return `${pluginImports}
 ${prefixVariables}
 
 ${moduleExporter} {
@@ -41,14 +39,6 @@ ${moduleExporter} {
     .replace(/\["Webkit","Moz"\]/g, 'wm')
     .replace(/\["Webkit","ms"\]/g, 'wms')
     .replace(/\["Webkit","Moz","ms"\]/g, 'wmms')}
-}`
-  }
-
-  return `${pluginImports}
-
-${moduleExporter} {
-  plugins: ${pluginExport},
-  prefixMap: ${prefixMapExport}
 }`
 }
 
@@ -67,53 +57,41 @@ function saveFile(fileContent: string, path: string): void {
 }
 
 type GenerationOption = {
-  staticPath?: string,
-  dynamicPath?: string,
+  path?: string,
   compatibility?: boolean,
   plugins?: boolean,
   prefixMap?: boolean,
 }
 
+const defaultOptions = {
+  prefixMap: true,
+  plugins: true,
+  compatibility: false,
+}
+
 export default function generateData(
   browserList: Object,
-  {
-    compatibility,
-    plugins,
-    staticPath,
-    dynamicPath,
-    prefixMap,
-  }: GenerationOption = {}
+  userOptions: GenerationOption = {}
 ) {
-  const shouldRenderPlugins = plugins !== undefined ? plugins : true
-  const shouldRenderPrefixMap = prefixMap !== undefined ? prefixMap : true
-
-  const data = {
-    static: shouldRenderPrefixMap ? generateStaticPrefixMap(browserList) : {},
-    dynamic: shouldRenderPrefixMap ? generateDynamicPrefixMap(browserList) : {},
-    plugins: shouldRenderPlugins ? generatePluginList(browserList) : [],
+  const options = {
+    ...defaultOptions,
+    ...userOptions,
   }
 
-  if (staticPath) {
-    const fileContent = generateFile(
-      data.static,
-      data.plugins,
-      compatibility,
-      'static'
+  const { compatibility, plugins, path, prefixMap } = options
+
+  const requiredPrefixMap = prefixMap ? generatePrefixMap(browserList) : {}
+  const requiredPlugins = plugins ? generatePluginList(browserList) : []
+
+  if (path) {
+    saveFile(
+      generateFile(requiredPrefixMap, requiredPlugins, compatibility),
+      path
     )
-
-    saveFile(fileContent, staticPath)
   }
 
-  if (dynamicPath) {
-    const fileContent = generateFile(
-      data.dynamic,
-      data.plugins,
-      compatibility,
-      'dynamic'
-    )
-
-    saveFile(fileContent, dynamicPath)
+  return {
+    prefixMap: requiredPrefixMap,
+    plugins: requiredPlugins,
   }
-
-  return data
 }

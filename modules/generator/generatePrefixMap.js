@@ -1,5 +1,4 @@
 /* @flow */
-
 import { getSupport } from 'caniuse-api'
 
 import propertyMap from './maps/propertyMap'
@@ -45,7 +44,7 @@ function filterAndRemoveIfEmpty(
   }
 }
 
-export default function generateStaticPrefixMap(browserList: Object): Object {
+export default function generatePrefixMap(browserList: Object): Object {
   const prefixMap = {}
 
   for (const browser in prefixBrowserMap) {

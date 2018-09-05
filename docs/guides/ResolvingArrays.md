@@ -1,4 +1,4 @@
-# Resolving Array Values
+# Resolving Array values
 
 Sometimes, vendor prefixed styles require multiple values for a single property. Technically, we can't have multiple values for a single key in a JavaScript object. That's why both prefixer use an array of values instead e.g.
 ```javascript
@@ -18,7 +18,7 @@ The above example would be transformed to the following valid CSS string:
 }
 ```
 
-To achieve that, I recommend using [`resolveArrayValue(propety, value)`](https://github.com/rofrischmann/css-in-js-utils#resolvearrayvalueproperty-value) provided by [css-in-js-utils](https://github.com/rofrischmann/css-in-js-utils).
+To achieve that, I recommend using the [resolveArrayValue](https://github.com/rofrischmann/css-in-js-utils#resolvearrayvalueproperty-value) API provided by [css-in-js-utils](https://github.com/rofrischmann/css-in-js-utils).
 
 ### Example
 ```javascript

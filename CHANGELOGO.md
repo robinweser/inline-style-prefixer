@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.0
+We entirely removed the dynamic version of the prefixer due to constant issues with browser detection and the almost impossible need to keep all the versions updated and in sync.
+There are no other changes except the import paths for this version.
+
+Improvements, additions and bug fixes will be build on top of the new major version shortly.
+
 ## 4.0
 
 ### 4.0.2

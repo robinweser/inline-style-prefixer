@@ -1,6 +1,6 @@
 import createPrefixer from './createPrefixer'
 
-import staticData from './staticData'
+import data from './data'
 
 import cursor from './plugins/cursor'
 import crossFade from './plugins/crossFade'
@@ -26,7 +26,9 @@ const plugins = [
   flex,
 ]
 
-export default createPrefixer({
-  prefixMap: staticData.prefixMap,
+const prefix = createPrefixer({
+  prefixMap: data.prefixMap,
   plugins,
 })
+
+export { createPrefixer, prefix }

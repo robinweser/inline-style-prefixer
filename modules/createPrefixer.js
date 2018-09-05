@@ -5,15 +5,19 @@ import prefixValue from '../utils/prefixValue'
 import addNewValuesOnly from '../utils/addNewValuesOnly'
 import isObject from '../utils/isObject'
 
-type StaticData = { prefixMap: Object, plugins: Array<Function> }
+type StaticData = {
+  prefixMap: Object,
+  plugins: Array<Function>,
+}
+
 export default function createPrefixer({ prefixMap, plugins }: StaticData) {
-  function prefixAll(style: Object): Object {
+  return function prefix(style: Object): Object {
     for (const property in style) {
       const value = style[property]
 
       // handle nested objects
       if (isObject(value)) {
-        style[property] = prefixAll(value)
+        style[property] = prefix(value)
         // handle array values
       } else if (Array.isArray(value)) {
         const combinedValue = []
@@ -55,6 +59,4 @@ export default function createPrefixer({ prefixMap, plugins }: StaticData) {
 
     return style
   }
-
-  return prefixAll
 }
