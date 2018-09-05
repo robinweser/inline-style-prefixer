@@ -43,7 +43,8 @@
     "rootDir": "modules"
   },
   "dependencies": {
-    "css-in-js-utils": "^2.0.0"
+    "css-in-js-utils": "^2.0.0",
+    "gitbook-plugin-prism": "^2.4.0"
   },
   "devDependencies": {
     "babel": "^6.5.2",
