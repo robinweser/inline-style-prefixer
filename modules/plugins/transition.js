@@ -2,7 +2,7 @@
 import hyphenateProperty from 'css-in-js-utils/lib/hyphenateProperty'
 import isPrefixedValue from 'css-in-js-utils/lib/isPrefixedValue'
 
-import capitalizeString from '../../utils/capitalizeString'
+import capitalizeString from '../utils/capitalizeString'
 
 const properties = {
   transition: true,

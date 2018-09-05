@@ -1,9 +1,9 @@
 /* @flow */
-import prefixProperty from '../utils/prefixProperty'
-import prefixValue from '../utils/prefixValue'
+import prefixProperty from './utils/prefixProperty'
+import prefixValue from './utils/prefixValue'
 
-import addNewValuesOnly from '../utils/addNewValuesOnly'
-import isObject from '../utils/isObject'
+import addNewValuesOnly from './utils/addNewValuesOnly'
+import isObject from './utils/isObject'
 
 type StaticData = {
   prefixMap: Object,
