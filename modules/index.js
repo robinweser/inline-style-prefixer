@@ -2,6 +2,7 @@ import createPrefixer from './createPrefixer'
 
 import data from './data'
 
+import backgroundClip from './plugins/backgroundClip'
 import cursor from './plugins/cursor'
 import crossFade from './plugins/crossFade'
 import filter from './plugins/filter'
@@ -14,6 +15,7 @@ import sizing from './plugins/sizing'
 import transition from './plugins/transition'
 
 const plugins = [
+  backgroundClip,
   crossFade,
   cursor,
   filter,

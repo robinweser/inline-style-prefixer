@@ -1,3 +1,4 @@
+import backgroundClip from './backgroundClip'
 import calc from './calc'
 import cursor from './cursor'
 import crossFade from './crossFade'
@@ -12,16 +13,17 @@ import sizing from './sizing'
 import transition from './transition'
 
 export default [
-  position,
+  backgroundClip,
   calc,
-  imageSet,
   crossFade,
-  filter,
   cursor,
-  sizing,
-  gradient,
-  transition,
+  filter,
+  flex,
   flexboxIE,
   flexboxOld,
-  flex,
+  gradient,
+  imageSet,
+  position,
+  sizing,
+  transition,
 ]
