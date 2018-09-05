@@ -12,13 +12,10 @@ const defaultBrowserSupport = {
   opera: 30,
   op_mini: 12,
   and_uc: 11,
-  and_chr: 55
+  and_chr: 55,
 }
 
 generateData(defaultBrowserSupport, {
-  staticPath: `${__dirname}/modules/static/staticData.js`,
-  dynamicPath: `${__dirname}/modules/dynamic/dynamicData.js`,
-  compatibility: false,
-  prefixData: true,
-  plugins: false
+  path: `${__dirname}/modules/data.js`,
+  plugins: false,
 })
