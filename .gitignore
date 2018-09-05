@@ -26,3 +26,4 @@ _book
 .vscode
 lib
 es
+modules/data.js
