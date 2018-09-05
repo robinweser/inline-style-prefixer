@@ -1,6 +1,12 @@
 # Changelog
 
+
 ## 5.0
+
+### 5.0.1
+* added a plugin that adds a `-webkit-` prefix if `background-clip` is set to `text` ( [#159](https://github.com/rofrischmann/inline-style-prefixer/issues/159) )
+
+### 5.0.0
 We entirely removed the dynamic version of the prefixer due to constant issues with browser detection and the almost impossible need to keep all the versions updated and in sync.
 There are no other changes except the import paths for this version.
 
