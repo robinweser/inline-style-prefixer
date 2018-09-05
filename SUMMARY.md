@@ -10,6 +10,5 @@
 * [3. API Reference](docs/API.md)
     * [3.1. prefix](docs/api/prefix.md)
     * [3.2. createPrefixer](docs/api/createPrefixer.md)
-  * 3.3. generator
-    * [3.3.1. generateData](docs/api/generator/generateData.md)
-* [5. CHANGELOG](CHANGELOG.md)
+  * [3.3. generateData](docs/api/generator/generateData.md)
+* [4. Changelog](CHANGELOG.md)

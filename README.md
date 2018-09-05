@@ -37,7 +37,7 @@ Don't worry - we got you covered. Check [this guide](https://github.com/rofrisch
 ## Usage
 
 ```javascript
-import prefix from 'inline-style-prefixer'
+import { prefix } from 'inline-style-prefixer'
 
 const style = {
   transition: '200ms all linear',
@@ -62,20 +62,10 @@ output === {
 You can use TypeScript definition from [DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/inline-style-prefixer) using [@types/inline-style-prefixer](https://www.npmjs.com/package/@types/inline-style-prefixer)
 
 ```sh
-npm install --save @types/inline-style-prefixer
-```
+yarn add @types/inline-style-prefixer
 
-Then import in your code
-
-```typescript
-import prefix = require('inline-style-prefixer');
-
-const prefixedStyle = prefix({
-  transition: '200ms all linear',
-  boxSizing: 'border-box',
-  display: 'flex',
-  color: 'blue'
-});
+# alternatively use npm
+npm i --save @types/inline-style-prefixer
 ```
 
 ## Documentation
@@ -84,7 +74,6 @@ If you got any issue using this prefixer, please first check the FAQ's. Most cas
 * [Usage Guides](https://inline-style-prefixer.js.org/docs/UsageGuides.html)
 * [Data Reference](https://inline-style-prefixer.js.org/docs/DataReference.html)
 * [API Reference](https://inline-style-prefixer.js.org/docs/API.html)
-* [FAQ](https://inline-style-prefixer.js.org/docs/FAQ.html)
 
 ## Community
 Here are some popular users of this library:
