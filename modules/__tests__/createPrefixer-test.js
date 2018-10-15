@@ -364,12 +364,12 @@ describe('Static Prefixer', () => {
       })
 
       it('should expand singular flex-grow', () => {
-        const input = { flex: '1' }
+        const input = { flex: '1.1' }
         const output = {
-          flex: '1',
-          MozFlex: '1',
-          msFlex: '1 1 0%',
-          WebkitFlex: '1',
+          flex: '1.1',
+          MozFlex: '1.1',
+          msFlex: '1.1 1 0%',
+          WebkitFlex: '1.1',
         }
         expect(prefix(input)).toEqual(output)
       })

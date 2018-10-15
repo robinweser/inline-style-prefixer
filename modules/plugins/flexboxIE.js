@@ -23,20 +23,20 @@ const flexShorthandMappings = {
   none: '0 0 auto',
   unset: 'unset',
 }
-const isPositiveNumber = /^\d*[1-9]\d*$/
+const isPositiveNumber = /^\d+(\.\d+)?$/
 
 export default function flexboxIE(
   property: string,
   value: any,
   style: Object
 ): void {
-  if (alternativeProps.hasOwnProperty(property)) {
+  if (Object.prototype.hasOwnProperty.call(alternativeProps, property)) {
     style[alternativeProps[property]] = alternativeValues[value] || value
   }
   if (property === 'flex') {
     // For certain values we can do straight mappings based on the spec
     // for the expansions.
-    if (flexShorthandMappings.hasOwnProperty(value)) {
+    if (Object.prototype.hasOwnProperty.call(flexShorthandMappings, value)) {
       style.msFlex = flexShorthandMappings[value]
       return
     }
