@@ -23,7 +23,7 @@ const flexShorthandMappings = {
   none: '0 0 auto',
   unset: 'unset',
 }
-const isPositiveNumber = /^\d+(\.\d+)?$/
+const isUnitlessNumber = /^\d+(\.\d+)?$/
 
 export default function flexboxIE(
   property: string,
@@ -42,7 +42,7 @@ export default function flexboxIE(
     }
     // Here we have no direct mapping, so we favor looking for a
     // unitless positive number as that will be the most common use-case.
-    if (isPositiveNumber.test(value)) {
+    if (isUnitlessNumber.test(value)) {
       style.msFlex = `${value} 1 0%`
       return
     }
@@ -60,7 +60,7 @@ export default function flexboxIE(
         // always be a unitless number and represents flex-grow.
         // The second unit will represent flex-shrink for a unitless
         // value, or flex-basis otherwise.
-        if (isPositiveNumber.test(flexValues[1])) {
+        if (isUnitlessNumber.test(flexValues[1])) {
           style.msFlex = `${flexValues[0]} ${flexValues[1]} 0%`
         } else {
           style.msFlex = `${flexValues[0]} 1 ${flexValues[1]}`
