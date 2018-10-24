@@ -1,6 +1,6 @@
 {
   "name": "inline-style-prefixer",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "Run-time Autoprefixer for JavaScript style objects",
   "module": "es/index.js",
   "jsnext:main": "es/index.js",
@@ -17,7 +17,7 @@
     "babel": "yarn babel:es && yarn babel:lib",
     "build": "yarn run check && yarn generate && yarn babel",
     "check": "yarn clear && yarn format && yarn lint && yarn coverage && yarn flow",
-    "clear": "rimraf lib coverage",
+    "clear": "rimraf lib es coverage _book",
     "docs": "gitbook install && gitbook build && gh-pages -d _book",
     "flow": "flow",
     "format": "prettier --write \"./modules/**/*.js\"",

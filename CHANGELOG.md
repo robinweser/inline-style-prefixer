@@ -1,7 +1,9 @@
 # Changelog
 
-
 ## 5.0
+
+### 5.0.2
+* expanding flexbox shorthands for IE10 ( [#166](https://github.com/rofrischmann/inline-style-prefixer/issues/166) )
 
 ### 5.0.1
 * added a plugin that adds a `-webkit-` prefix if `background-clip` is set to `text` ( [#159](https://github.com/rofrischmann/inline-style-prefixer/issues/159) )
