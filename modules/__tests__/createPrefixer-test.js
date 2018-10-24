@@ -350,5 +350,73 @@ describe('Static Prefixer', () => {
       expect(prefix(input)).toEqual(output)
       expect(prefix(input)).toEqual(output)
     })
+
+    describe('flexboxIE shorthand expansions', () => {
+      it('should expand basic values', () => {
+        const input = { flex: 'auto' }
+        const output = {
+          flex: 'auto',
+          MozFlex: 'auto',
+          msFlex: '1 1 auto',
+          WebkitFlex: 'auto',
+        }
+        expect(prefix(input)).toEqual(output)
+      })
+
+      it('should expand singular flex-grow', () => {
+        const input = { flex: '1.1' }
+        const output = {
+          flex: '1.1',
+          MozFlex: '1.1',
+          msFlex: '1.1 1 0%',
+          WebkitFlex: '1.1',
+        }
+        expect(prefix(input)).toEqual(output)
+      })
+
+      it('should expand single united values', () => {
+        const input = { flex: '1px' }
+        const output = {
+          flex: '1px',
+          MozFlex: '1px',
+          msFlex: '1 1 1px',
+          WebkitFlex: '1px',
+        }
+        expect(prefix(input)).toEqual(output)
+      })
+
+      it('should expand flex-grow + flex-shrink', () => {
+        const input = { flex: '1 3' }
+        const output = {
+          flex: '1 3',
+          MozFlex: '1 3',
+          msFlex: '1 3 0%',
+          WebkitFlex: '1 3',
+        }
+        expect(prefix(input)).toEqual(output)
+      })
+
+      it('should pass through 3 values', () => {
+        const input = { flex: '2 2 10%' }
+        const output = {
+          flex: '2 2 10%',
+          MozFlex: '2 2 10%',
+          msFlex: '2 2 10%',
+          WebkitFlex: '2 2 10%',
+        }
+        expect(prefix(input)).toEqual(output)
+      })
+
+      it('should expand flex-grow + flex-basis', () => {
+        const input = { flex: '0 30px' }
+        const output = {
+          flex: '0 30px',
+          MozFlex: '0 30px',
+          msFlex: '0 1 30px',
+          WebkitFlex: '0 30px',
+        }
+        expect(prefix(input)).toEqual(output)
+      })
+    })
   })
 })
