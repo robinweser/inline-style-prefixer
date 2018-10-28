@@ -4,9 +4,9 @@ import generatePluginList from './generatePluginList'
 
 function generateImportString(plugin, compatibility) {
   if (compatibility) {
-    return `var ${plugin} = require('inline-style-prefixer/plugins/${plugin}')`
+    return `var ${plugin} = require('inline-style-prefixer/lib/plugins/${plugin}')`
   }
-  return `import ${plugin} from 'inline-style-prefixer/plugins/${plugin}'`
+  return `import ${plugin} from 'inline-style-prefixer/lib/plugins/${plugin}'`
 }
 
 function generateFile(prefixMap, pluginList, compatibility) {
