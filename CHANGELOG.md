@@ -2,6 +2,9 @@
 
 ## 5.0
 
+### 5.0.3
+* fix generator output path for plugins ( [#167](https://github.com/rofrischmann/inline-style-prefixer/pull/167) )
+
 ### 5.0.2
 * expanding flexbox shorthands for IE10 ( [#166](https://github.com/rofrischmann/inline-style-prefixer/issues/166) )
 
