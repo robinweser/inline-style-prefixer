@@ -43,8 +43,7 @@
     "rootDir": "modules"
   },
   "dependencies": {
-    "css-in-js-utils": "^2.0.0",
-    "gitbook-plugin-prism": "^2.4.0"
+    "css-in-js-utils": "^2.0.0"
   },
   "devDependencies": {
     "babel": "^6.5.2",
@@ -72,7 +71,7 @@
     "gitbook-plugin-anker-enable": "0.0.4",
     "gitbook-plugin-edit-link": "^2.0.2",
     "gitbook-plugin-github": "^2.0.0",
-    "gitbook-plugin-prism": "^2.2.1",
+    "gitbook-plugin-prism": "^2.4.0",
     "jest": "^19.0.2",
     "prettier": "^1.14.2",
     "rimraf": "^2.6.2"
