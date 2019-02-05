@@ -71,6 +71,14 @@ export default {
     and_uc: maximumVersion,
     ios_saf: maximumVersion,
   },
+  logical: {
+    chrome: 68,
+    safari: maximumVersion,
+    opera: maximumVersion,
+    and_chr: 66,
+    ios_saf: maximumVersion,
+    firefox: 40,
+  },
   position: {
     safari: maximumVersion,
     ios_saf: maximumVersion,

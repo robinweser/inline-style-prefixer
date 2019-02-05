@@ -8,6 +8,7 @@ import flexboxIE from './flexboxIE'
 import flexboxOld from './flexboxOld'
 import gradient from './gradient'
 import imageSet from './imageSet'
+import logical from './logical'
 import position from './position'
 import sizing from './sizing'
 import transition from './transition'
@@ -23,6 +24,7 @@ export default [
   flexboxOld,
   gradient,
   imageSet,
+  logical,
   position,
   sizing,
   transition,
