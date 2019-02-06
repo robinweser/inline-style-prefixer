@@ -10,6 +10,7 @@ import flex from './plugins/flex'
 import flexboxOld from './plugins/flexboxOld'
 import gradient from './plugins/gradient'
 import imageSet from './plugins/imageSet'
+import logical from './plugins/logical'
 import position from './plugins/position'
 import sizing from './plugins/sizing'
 import transition from './plugins/transition'
@@ -22,6 +23,7 @@ const plugins = [
   flexboxOld,
   gradient,
   imageSet,
+  logical,
   position,
   sizing,
   transition,

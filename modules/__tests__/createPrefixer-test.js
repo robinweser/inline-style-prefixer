@@ -176,6 +176,19 @@ describe('Static Prefixer', () => {
       expect(prefix(input)).toEqual(output)
     })
 
+    it('should prefix css logical properties', () => {
+      const input = {
+        marginInlineStart: '1px',
+      }
+      const output = {
+        marginInlineStart: '1px',
+        WebkitMarginStart: '1px',
+        MozMarginStart: '1px',
+      }
+      expect(prefix(input)).toEqual(output)
+      expect(prefix(input)).toEqual(output)
+    })
+
     it('should add all flexbox display types', () => {
       const input = { display: 'flex' }
       const output = {
