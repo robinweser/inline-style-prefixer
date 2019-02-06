@@ -2,6 +2,9 @@
 
 ## 5.0
 
+### 5.0.4
+* added a plugin that transform logical properties ( [#170](https://github.com/rofrischmann/inline-style-prefixer/issues/170) )
+
 ### 5.0.3
 * fix generator output path for plugins ( [#167](https://github.com/rofrischmann/inline-style-prefixer/pull/167) )
 
