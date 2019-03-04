@@ -13,7 +13,7 @@ const displayValues = {
 
 const propertyConverters = {
   alignSelf: (value: any, style: Object) => {
-    if (alignmentValues.includes(value)) {
+    if (alignmentValues.indexOf(value) > -1) {
       style.msGridRowAlign = value
     }
   },
@@ -73,7 +73,7 @@ const propertyConverters = {
   },
 
   justifySelf: (value: any, style: Object) => {
-    if (alignmentValues.includes(value)) {
+    if (alignmentValues.indexOf(value) > -1) {
       style.msGridColumnAlign = value
     }
   },
