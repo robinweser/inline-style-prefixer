@@ -475,6 +475,16 @@ describe('Static Prefixer', () => {
           }
           expect(prefix(input)).toEqual(output)
         })
+
+        it('should prefix templating even with named grid lines', () => {
+          const input = { gridTemplateColumns: '1fr [header content] auto' }
+          const output = {
+            gridTemplateColumns: '1fr [header content] auto',
+            msGridColumns: '1fr [header content] auto',
+            msGridTemplateColumns: '1fr [header content] auto', // Not a valid property
+          }
+          expect(prefix(input)).toEqual(output)
+        })
       })
 
       describe('positions', () => {
