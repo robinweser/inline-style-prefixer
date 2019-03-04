@@ -1,10 +1,10 @@
 /* @flow */
 
 function isSimplePositionValue(value: any) {
-  return typeof value === 'number' && !Number.isNaN(value)
+  return typeof value === 'number' && !isNaN(value)
 }
 
-const alignmentValues = new Set(['center', 'end', 'start', 'stretch'])
+const alignmentValues = ['center', 'end', 'start', 'stretch']
 
 const displayValues = {
   'inline-grid': ['-ms-inline-grid', 'inline-grid'],
@@ -13,7 +13,7 @@ const displayValues = {
 
 const propertyConverters = {
   alignSelf: (value: any, style: Object) => {
-    if (alignmentValues.has(value)) {
+    if (alignmentValues.includes(value)) {
       style.msGridRowAlign = value
     }
   },
@@ -73,7 +73,7 @@ const propertyConverters = {
   },
 
   justifySelf: (value: any, style: Object) => {
-    if (alignmentValues.has(value)) {
+    if (alignmentValues.includes(value)) {
       style.msGridColumnAlign = value
     }
   },
