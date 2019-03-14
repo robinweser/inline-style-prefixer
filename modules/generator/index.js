@@ -9,7 +9,11 @@ function generateImportString(plugin, compatibility) {
   return `import ${plugin} from 'inline-style-prefixer/lib/plugins/${plugin}'`
 }
 
-function generateFile(prefixMap, pluginList, compatibility) {
+export function generateFile(
+  prefixMap: Object,
+  pluginList: Array<string>,
+  compatibility?: boolean
+) {
   const pluginImports = pluginList
     .map(plugin => generateImportString(plugin, compatibility))
     .join('\n')
