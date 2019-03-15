@@ -461,7 +461,6 @@ describe('Static Prefixer', () => {
           const output = {
             gridTemplateColumns: '1fr auto',
             msGridColumns: '1fr auto',
-            msGridTemplateColumns: '1fr auto', // Not a valid property
           }
           expect(prefix(input)).toEqual(output)
         })
@@ -471,7 +470,6 @@ describe('Static Prefixer', () => {
           const output = {
             gridTemplateRows: '1fr auto',
             msGridRows: '1fr auto',
-            msGridTemplateRows: '1fr auto', // Not a valid property
           }
           expect(prefix(input)).toEqual(output)
         })
@@ -481,7 +479,6 @@ describe('Static Prefixer', () => {
           const output = {
             gridTemplateColumns: '1fr [header content] auto',
             msGridColumns: '1fr [header content] auto',
-            msGridTemplateColumns: '1fr [header content] auto', // Not a valid property
           }
           expect(prefix(input)).toEqual(output)
         })
@@ -494,9 +491,7 @@ describe('Static Prefixer', () => {
             gridColumnEnd: 5,
             gridColumnStart: 2,
             msGridColumn: 2,
-            msGridColumnEnd: 5, // Not a valid property
             msGridColumnSpan: 3,
-            msGridColumnStart: 2, // Not a valid property
           }
           expect(prefix(input)).toEqual(output)
         })
@@ -507,9 +502,7 @@ describe('Static Prefixer', () => {
             gridRowEnd: 7,
             gridRowStart: 3,
             msGridRow: 3,
-            msGridRowEnd: 7, // Not a valid property
             msGridRowSpan: 4,
-            msGridRowStart: 3, // Not a valid property
           }
           expect(prefix(input)).toEqual(output)
         })
@@ -519,8 +512,6 @@ describe('Static Prefixer', () => {
           const output = {
             gridRowEnd: 5,
             gridRowStart: 'span 3',
-            msGridRowEnd: 5, // Not a valid property
-            msGridRowStart: 'span 3', // Not a valid property
           }
           expect(prefix(input)).toEqual(output)
         })
