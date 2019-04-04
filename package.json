@@ -1,6 +1,6 @@
 {
   "name": "inline-style-prefixer",
-  "version": "5.0.4",
+  "version": "5.1.0",
   "description": "Run-time Autoprefixer for JavaScript style objects",
   "module": "es/index.js",
   "jsnext:main": "es/index.js",

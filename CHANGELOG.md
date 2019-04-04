@@ -2,6 +2,9 @@
 
 ## 5.0
 
+### 5.1.0
+* added a plugin that transforms grid properties ( [#174](https://github.com/rofrischmann/inline-style-prefixer/pull/174) )
+
 ### 5.0.4
 * added a plugin that transform logical properties ( [#170](https://github.com/rofrischmann/inline-style-prefixer/issues/170) )
 
