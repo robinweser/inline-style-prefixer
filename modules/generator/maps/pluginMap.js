@@ -63,6 +63,11 @@ export default {
     android: 4.4,
     and_uc: maximumVersion,
   },
+  grid: {
+    edge: 16,
+    ie: 11,
+    ie_mob: 11,
+  },
   imageSet: {
     chrome: maximumVersion,
     safari: maximumVersion,

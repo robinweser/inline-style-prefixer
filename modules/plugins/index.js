@@ -7,6 +7,7 @@ import flex from './flex'
 import flexboxIE from './flexboxIE'
 import flexboxOld from './flexboxOld'
 import gradient from './gradient'
+import grid from './grid'
 import imageSet from './imageSet'
 import logical from './logical'
 import position from './position'
@@ -23,6 +24,7 @@ export default [
   flexboxIE,
   flexboxOld,
   gradient,
+  grid,
   imageSet,
   logical,
   position,
