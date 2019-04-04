@@ -431,5 +431,120 @@ describe('Static Prefixer', () => {
         expect(prefix(input)).toEqual(output)
       })
     })
+
+    describe('grid', () => {
+      it('should prefix display values', () => {
+        const input = { display: 'grid' }
+        const inlineInput = { display: 'inline-grid' }
+        const output = { display: ['-ms-grid', 'grid'] }
+        const inlineOutput = { display: ['-ms-inline-grid', 'inline-grid'] }
+        expect(prefix(input)).toEqual(output)
+        expect(prefix(inlineInput)).toEqual(inlineOutput)
+      })
+
+      it('should prefix basic alignment values', () => {
+        const input = { alignSelf: 'stretch', justifySelf: 'end' }
+        const output = {
+          WebkitAlignSelf: 'stretch',
+          alignSelf: 'stretch',
+          justifySelf: 'end',
+          msFlexItemAlign: 'stretch',
+          msGridColumnAlign: 'end',
+          msGridRowAlign: 'stretch',
+        }
+        expect(prefix(input)).toEqual(output)
+      })
+
+      describe('template', () => {
+        it('should prefix column templating', () => {
+          const input = { gridTemplateColumns: '1fr auto' }
+          const output = {
+            gridTemplateColumns: '1fr auto',
+            msGridColumns: '1fr auto',
+          }
+          expect(prefix(input)).toEqual(output)
+        })
+
+        it('should prefix row templating', () => {
+          const input = { gridTemplateRows: '1fr auto' }
+          const output = {
+            gridTemplateRows: '1fr auto',
+            msGridRows: '1fr auto',
+          }
+          expect(prefix(input)).toEqual(output)
+        })
+
+        it('should prefix templating even with named grid lines', () => {
+          const input = { gridTemplateColumns: '1fr [header content] auto' }
+          const output = {
+            gridTemplateColumns: '1fr [header content] auto',
+            msGridColumns: '1fr [header content] auto',
+          }
+          expect(prefix(input)).toEqual(output)
+        })
+      })
+
+      describe('positions', () => {
+        it('should prefix a cell with numerical start and end column values', () => {
+          const input = { gridColumnStart: 2, gridColumnEnd: 5 }
+          const output = {
+            gridColumnEnd: 5,
+            gridColumnStart: 2,
+            msGridColumn: 2,
+            msGridColumnSpan: 3,
+          }
+          expect(prefix(input)).toEqual(output)
+        })
+
+        it('should prefix a cell with numerical start and end row values', () => {
+          const input = { gridRowStart: 3, gridRowEnd: 7 }
+          const output = {
+            gridRowEnd: 7,
+            gridRowStart: 3,
+            msGridRow: 3,
+            msGridRowSpan: 4,
+          }
+          expect(prefix(input)).toEqual(output)
+        })
+
+        it('should not prefix a cell with non-numerical position values', () => {
+          const input = { gridRowStart: 'span 3', gridRowEnd: 5 }
+          const output = {
+            gridRowEnd: 5,
+            gridRowStart: 'span 3',
+          }
+          expect(prefix(input)).toEqual(output)
+        })
+
+        it('should expand the shorthand column syntax', () => {
+          const input = { gridColumn: '3 / 5' }
+          const output = {
+            gridColumn: '3 / 5',
+            msGridColumn: 3,
+            msGridColumnSpan: 2,
+          }
+          expect(prefix(input)).toEqual(output)
+        })
+
+        it('should expand the shorthand row syntax', () => {
+          const input = { gridRow: '2 / 7' }
+          const output = {
+            gridRow: '2 / 7',
+            msGridRow: 2,
+            msGridRowSpan: 5,
+          }
+          expect(prefix(input)).toEqual(output)
+        })
+
+        it('should not expand non-numerical values', () => {
+          const input = { gridRow: '2 / span 3' }
+          const output = {
+            gridRow: '2 / span 3',
+            msGridRow: 2,
+          }
+          expect(prefix(input)).toEqual(output)
+        })
+      })
+    })
   })
 })

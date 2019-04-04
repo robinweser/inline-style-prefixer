@@ -9,6 +9,7 @@ import filter from './plugins/filter'
 import flex from './plugins/flex'
 import flexboxOld from './plugins/flexboxOld'
 import gradient from './plugins/gradient'
+import grid from './plugins/grid'
 import imageSet from './plugins/imageSet'
 import logical from './plugins/logical'
 import position from './plugins/position'
@@ -22,6 +23,7 @@ const plugins = [
   filter,
   flexboxOld,
   gradient,
+  grid,
   imageSet,
   logical,
   position,
