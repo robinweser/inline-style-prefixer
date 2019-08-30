@@ -491,7 +491,7 @@ describe('Static Prefixer', () => {
             gridColumnEnd: 5,
             gridColumnStart: 2,
             msGridColumn: 2,
-            msGridColumnSpan: 3,
+            msGridColumnSpan: '3',
           }
           expect(prefix(input)).toEqual(output)
         })
@@ -502,7 +502,7 @@ describe('Static Prefixer', () => {
             gridRowEnd: 7,
             gridRowStart: 3,
             msGridRow: 3,
-            msGridRowSpan: 4,
+            msGridRowSpan: '4',
           }
           expect(prefix(input)).toEqual(output)
         })
@@ -521,7 +521,7 @@ describe('Static Prefixer', () => {
           const output = {
             gridColumn: '3 / 5',
             msGridColumn: 3,
-            msGridColumnSpan: 2,
+            msGridColumnSpan: '2',
           }
           expect(prefix(input)).toEqual(output)
         })
@@ -531,7 +531,7 @@ describe('Static Prefixer', () => {
           const output = {
             gridRow: '2 / 7',
             msGridRow: 2,
-            msGridRowSpan: 5,
+            msGridRowSpan: '5',
           }
           expect(prefix(input)).toEqual(output)
         })

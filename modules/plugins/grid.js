@@ -31,7 +31,7 @@ const propertyConverters = {
   gridColumnEnd: (value: any, style: Object) => {
     const { msGridColumn } = style
     if (isSimplePositionValue(value) && isSimplePositionValue(msGridColumn)) {
-      style.msGridColumnSpan = value - msGridColumn
+      style.msGridColumnSpan = String(value - msGridColumn)
     }
   },
 
@@ -54,7 +54,7 @@ const propertyConverters = {
   gridRowEnd: (value: any, style: Object) => {
     const { msGridRow } = style
     if (isSimplePositionValue(value) && isSimplePositionValue(msGridRow)) {
-      style.msGridRowSpan = value - msGridRow
+      style.msGridRowSpan = String(value - msGridRow)
     }
   },
 
@@ -88,7 +88,7 @@ export default function grid(
     return displayValues[value]
   }
 
-  if (property in propertyConverters) {
+  if (property in propertyConverters && typeof value !== 'undefined') {
     const propertyConverter = propertyConverters[property]
     propertyConverter(value, style)
   }
