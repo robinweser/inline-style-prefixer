@@ -22,9 +22,15 @@ const propertyConverters = {
     if (isSimplePositionValue(value)) {
       style.msGridColumn = value
     } else {
-      const [start, end] = value.split('/').map(position => +position)
-      propertyConverters.gridColumnStart(start, style)
-      propertyConverters.gridColumnEnd(end, style)
+      const [start, end] = value.split('/')
+      propertyConverters.gridColumnStart(+start, style)
+
+      const [maybeSpan, maybeNumber] = end.split(/ ?span /)
+      if (maybeSpan === '') {
+        propertyConverters.gridColumnEnd(+start + +maybeNumber, style)
+      } else {
+        propertyConverters.gridColumnEnd(+end, style)
+      }
     }
   },
 
@@ -45,9 +51,15 @@ const propertyConverters = {
     if (isSimplePositionValue(value)) {
       style.msGridRow = value
     } else {
-      const [start, end] = value.split('/').map(position => +position)
-      propertyConverters.gridRowStart(start, style)
-      propertyConverters.gridRowEnd(end, style)
+      const [start, end] = value.split('/')
+      propertyConverters.gridRowStart(+start, style)
+
+      const [maybeSpan, maybeNumber] = end.split(/ ?span /)
+      if (maybeSpan === '') {
+        propertyConverters.gridRowEnd(+start + +maybeNumber, style)
+      } else {
+        propertyConverters.gridRowEnd(+end, style)
+      }
     }
   },
 
