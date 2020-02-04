@@ -2,6 +2,9 @@
 
 ## 5.0
 
+### 5.1.1
+* added support for `span` values in grid properties ( [#186](https://github.com/rofrischmann/inline-style-prefixer/pull/186) )
+
 ### 5.1.0
 * added a plugin that transforms grid properties ( [#174](https://github.com/rofrischmann/inline-style-prefixer/pull/174) )
 
