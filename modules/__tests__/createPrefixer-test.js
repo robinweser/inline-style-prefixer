@@ -526,6 +526,16 @@ describe('Static Prefixer', () => {
           expect(prefix(input)).toEqual(output)
         })
 
+        it('should expand the shorthand column syntax with span', () => {
+          const input = { gridColumn: '3 / span 1' }
+          const output = {
+            gridColumn: '3 / span 1',
+            msGridColumn: 3,
+            msGridColumnSpan: 1,
+          }
+          expect(prefix(input)).toEqual(output)
+        })
+
         it('should expand the shorthand row syntax', () => {
           const input = { gridRow: '2 / 7' }
           const output = {
@@ -536,11 +546,12 @@ describe('Static Prefixer', () => {
           expect(prefix(input)).toEqual(output)
         })
 
-        it('should not expand non-numerical values', () => {
+        it('should expand the shorthand row syntax with span', () => {
           const input = { gridRow: '2 / span 3' }
           const output = {
             gridRow: '2 / span 3',
             msGridRow: 2,
+            msGridRowSpan: 3,
           }
           expect(prefix(input)).toEqual(output)
         })
