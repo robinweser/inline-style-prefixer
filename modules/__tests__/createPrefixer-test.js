@@ -555,6 +555,16 @@ describe('Static Prefixer', () => {
           }
           expect(prefix(input)).toEqual(output)
         })
+
+        it('should expand the shorthand without syntax and a span', () => {
+          const input = { gridRow: 'span 3' }
+          const output = {
+            gridRow: 'span 3',
+            msGridRow: 2,
+            msGridRowSpan: 3,
+          }
+          expect(prefix(input)).toEqual(output)
+        })
       })
     })
   })
