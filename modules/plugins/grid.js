@@ -4,6 +4,10 @@ function isSimplePositionValue(value: any) {
   return typeof value === 'number' && !isNaN(value)
 }
 
+function isComplexSpanValue(value: string) {
+  return typeof value === 'string' && value.includes('/')
+}
+
 const alignmentValues = ['center', 'end', 'start', 'stretch']
 
 const displayValues = {
@@ -21,7 +25,7 @@ const propertyConverters = {
   gridColumn: (value: any, style: Object) => {
     if (isSimplePositionValue(value)) {
       style.msGridColumn = value
-    } else {
+    } else if (isComplexSpanValue(value)) {
       const [start, end] = value.split('/')
       propertyConverters.gridColumnStart(+start, style)
 
@@ -31,6 +35,8 @@ const propertyConverters = {
       } else {
         propertyConverters.gridColumnEnd(+end, style)
       }
+    } else {
+      propertyConverters.gridColumnStart(value, style)
     }
   },
 
@@ -50,7 +56,7 @@ const propertyConverters = {
   gridRow: (value: any, style: Object) => {
     if (isSimplePositionValue(value)) {
       style.msGridRow = value
-    } else {
+    } else if (isComplexSpanValue(value)) {
       const [start, end] = value.split('/')
       propertyConverters.gridRowStart(+start, style)
 
@@ -60,6 +66,8 @@ const propertyConverters = {
       } else {
         propertyConverters.gridRowEnd(+end, style)
       }
+    } else {
+      propertyConverters.gridRowStart(value, style)
     }
   },
 
