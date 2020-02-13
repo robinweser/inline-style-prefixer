@@ -2,6 +2,10 @@
 
 ## 5.0
 
+### 5.1.2
+* fixed bugs that occured with 5.1.1
+* added support for `span X` values in grid properties ( [#190](https://github.com/rofrischmann/inline-style-prefixer/pull/190) )
+
 ### 5.1.1
 * added support for `span` values in grid properties ( [#186](https://github.com/rofrischmann/inline-style-prefixer/pull/186) )
 
