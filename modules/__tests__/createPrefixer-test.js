@@ -555,6 +555,21 @@ describe('Static Prefixer', () => {
           }
           expect(prefix(input)).toEqual(output)
         })
+
+        it('should expand the shorthand gridRow without a slash', () => {
+          const input = { gridRow: 'span 3' }
+          const output = {
+            gridRow: 'span 3',
+          }
+          expect(prefix(input)).toEqual(output)
+        })
+        it('should expand the shorthand gridColumn without a slash', () => {
+          const input = { gridColumn: 'span 3' }
+          const output = {
+            gridColumn: 'span 3',
+          }
+          expect(prefix(input)).toEqual(output)
+        })
       })
     })
   })
