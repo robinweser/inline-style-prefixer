@@ -9,7 +9,6 @@ const browserList = {
   ios_saf: 0,
   safari: 0,
   ie: 0,
-  ie_mob: 0,
   edge: 0,
   opera: 0,
   op_mini: 0,
@@ -346,7 +345,6 @@ describe('Static Prefixer', () => {
       const input = { writingMode: 'horizontal-tb' }
       const output = {
         WebkitWritingMode: 'horizontal-tb',
-        msWritingMode: 'horizontal-tb',
         writingMode: 'horizontal-tb',
       }
       expect(prefix(input)).toEqual(output)

@@ -15,7 +15,6 @@ const prefixBrowserMap = {
   and_chr: 'Webkit',
   and_uc: 'Webkit',
   op_mini: 'Webkit',
-  ie_mob: 'ms',
 }
 
 // remove flexprops from IE

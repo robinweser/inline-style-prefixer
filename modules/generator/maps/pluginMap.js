@@ -42,7 +42,6 @@ export default {
     opera: 16,
   },
   flexboxIE: {
-    ie_mob: 11,
     ie: 11,
   },
   flexboxOld: {
@@ -66,7 +65,6 @@ export default {
   grid: {
     edge: 16,
     ie: 11,
-    ie_mob: 11,
   },
   imageSet: {
     chrome: maximumVersion,
@@ -103,7 +101,6 @@ export default {
     and_uc: maximumVersion,
     ios_saf: maximumVersion,
     msie: maximumVersion,
-    ie_mob: maximumVersion,
     edge: maximumVersion,
     firefox: maximumVersion,
     op_mini: maximumVersion,

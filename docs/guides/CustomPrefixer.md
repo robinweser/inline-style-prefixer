@@ -24,7 +24,6 @@ const browserList = {
   ios_saf: 8,
   safari: 8,
   ie: 11,
-  ie_mob: 11,
   edge: 12,
   opera: 16,
   op_mini: 12,
