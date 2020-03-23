@@ -1,5 +1,12 @@
 # Changelog
 
+## 6.0
+
+### 6.0.0
+>  While this might not be breaking anything, we decided to release a new major just to be safe with this change. 
+
+* removed `ie_mob` support as it is deprecated and was removed from `caniuse-api` ( [#192](https://github.com/rofrischmann/inline-style-prefixer/pull/192) )
+
 ## 5.0
 
 ### 5.1.2
