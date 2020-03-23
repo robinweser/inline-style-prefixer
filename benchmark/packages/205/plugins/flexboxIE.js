@@ -42,7 +42,7 @@ function flexboxIE(_ref) {
   var css = _ref.prefix.css;
   var keepUnprefixed = _ref.keepUnprefixed;
 
-  if ((alternativeProps[property] || property === 'display' && typeof value === 'string' && value.indexOf('flex') > -1) && (browser === 'ie_mob' || browser === 'ie') && version == 10) {
+  if ((alternativeProps[property] || property === 'display' && typeof value === 'string' && value.indexOf('flex') > -1) && browser === 'ie' && version == 10) {
     if (!keepUnprefixed && !Array.isArray(styles[property])) {
       delete styles[property];
     }

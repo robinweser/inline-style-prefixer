@@ -7,7 +7,6 @@ const defaultBrowserSupport = {
   ios_saf: 9,
   safari: 9,
   ie: 11,
-  ie_mob: 11,
   edge: 12,
   opera: 30,
   op_mini: 12,

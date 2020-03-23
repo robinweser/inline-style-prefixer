@@ -38,7 +38,7 @@ function flexboxIE(property, value, style, _ref) {
       keepUnprefixed = _ref.keepUnprefixed,
       requiresPrefix = _ref.requiresPrefix;
 
-  if ((alternativeProps.hasOwnProperty(property) || property === 'display' && typeof value === 'string' && value.indexOf('flex') > -1) && (browserName === 'ie_mob' || browserName === 'ie') && browserVersion === 10) {
+  if ((alternativeProps.hasOwnProperty(property) || property === 'display' && typeof value === 'string' && value.indexOf('flex') > -1) && browserName === 'ie' && browserVersion === 10) {
     delete requiresPrefix[property];
 
     if (!keepUnprefixed && !Array.isArray(style[property])) {
