@@ -24,7 +24,7 @@ const flexShorthandMappings = {
   unset: 'unset',
 }
 const isUnitlessNumber = /^\d+(\.\d+)?$/
-const logTag='inline-style-prefixer.flexboxIE plugin';
+const logTag = 'inline-style-prefixer.flexboxIE plugin'
 export default function flexboxIE(
   property: string,
   value: any,
@@ -37,28 +37,32 @@ export default function flexboxIE(
     // For certain values we can do straight mappings based on the spec
     // for the expansions.
     if (Object.prototype.hasOwnProperty.call(flexShorthandMappings, value)) {
-       style.msFlex = flexShorthandMappings[value]
-       return
+      style.msFlex = flexShorthandMappings[value]
+      return
     }
     // Here we have no direct mapping, so we favor looking for a
     // unitless positive number as that will be the most common use-case.
     if (isUnitlessNumber.test(value)) {
-       style.msFlex = `${value} 1 0%`
-       return
+      style.msFlex = `${value} 1 0%`
+      return
     }
-    
-    if(typeof value === 'number' && value < 0){
-       // ignore negative values;
-       console.warn(`${logTag}: "flex: ${value}", negative values is not valid and will be ignored.`);
-       return  
+
+    if (typeof value === 'number' && value < 0) {
+      // ignore negative values;
+      console.warn(
+        `${logTag}: "flex: ${value}", negative values is not valid and will be ignored.`
+      )
+      return
     }
-    
-    if(!value.split){
-      console.warn(`${logTag}: "flex: ${value}", value format is not detected, it will be remain as is`);
+
+    if (!value.split) {
+      console.warn(
+        `${logTag}: "flex: ${value}", value format is not detected, it will be remain as is`
+      )
       style.msFlex = value
-      return ;
+      return
     }
-    
+
     // The next thing we can look for is if there are multiple values.
     const flexValues = value.split(/\s/)
     // If we only have a single value that wasn't a positive unitless
