@@ -1,20 +1,19 @@
 import generateData from './modules/generator'
 
 const defaultBrowserSupport = {
-  chrome: 55,
-  android: 5,
-  firefox: 52,
-  ios_saf: 9,
-  safari: 9,
-  ie: 11,
-  edge: 12,
-  opera: 30,
+  chrome: 80,
+  android: 8,
+  firefox: 70,
+  ios_saf: 12,
+  safari: 12,
+  ie: 12,
+  edge: 18,
+  opera: 55,
   op_mini: 12,
-  and_uc: 11,
-  and_chr: 55,
+  and_chr: 80,
 }
 
 generateData(defaultBrowserSupport, {
   path: `${__dirname}/modules/data.js`,
-  plugins: false,
+  plugins: true,
 })

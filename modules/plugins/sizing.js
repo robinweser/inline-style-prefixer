@@ -20,6 +20,6 @@ const values = {
 
 export default function sizing(property: string, value: any): ?Array<any> {
   if (properties.hasOwnProperty(property) && values.hasOwnProperty(value)) {
-    return prefixes.map(prefix => prefix + value)
+    return prefixes.map((prefix) => prefix + value)
   }
 }
