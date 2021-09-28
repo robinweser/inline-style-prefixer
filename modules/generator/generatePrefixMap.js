@@ -73,7 +73,7 @@ export default function generatePrefixMap(browserList: Object): Object {
     filterAndRemoveIfEmpty(
       prefixMap,
       flexPropsIE[i],
-      prefix => prefix !== 'ms' && prefix !== 'Moz'
+      (prefix) => prefix !== 'ms' && prefix !== 'Moz'
     )
   }
 
@@ -82,11 +82,15 @@ export default function generatePrefixMap(browserList: Object): Object {
   filterAndRemoveIfEmpty(
     prefixMap,
     'transition',
-    prefix => prefix !== 'Moz' && prefix !== 'Webkit'
+    (prefix) => prefix !== 'Moz' && prefix !== 'Webkit'
   )
 
   // remove WebkitFlexDirection as it does not exist
-  filterAndRemoveIfEmpty(prefixMap, 'flexDirection', prefix => prefix !== 'Moz')
+  filterAndRemoveIfEmpty(
+    prefixMap,
+    'flexDirection',
+    (prefix) => prefix !== 'Moz'
+  )
 
   return prefixMap
 }

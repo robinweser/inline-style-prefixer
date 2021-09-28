@@ -10,7 +10,7 @@ export default function filter(property: string, value: any): ?Array<string> {
     !isPrefixedValue(value) &&
     value.indexOf('filter(') > -1
   ) {
-    return prefixes.map(prefix =>
+    return prefixes.map((prefix) =>
       value.replace(/filter\(/g, `${prefix}filter(`)
     )
   }

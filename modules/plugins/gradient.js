@@ -10,6 +10,8 @@ export default function gradient(property: string, value: any): ?Array<string> {
     !isPrefixedValue(value) &&
     values.test(value)
   ) {
-    return prefixes.map(prefix => value.replace(values, grad => prefix + grad))
+    return prefixes.map((prefix) =>
+      value.replace(values, (grad) => prefix + grad)
+    )
   }
 }

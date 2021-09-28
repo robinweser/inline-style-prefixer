@@ -68,7 +68,7 @@ export default function transition(
     // if the property is already prefixed
     const webkitOutput = outputValue
       .split(/,(?![^()]*(?:\([^()]*\))?\))/g)
-      .filter(val => !/-moz-|-ms-/.test(val))
+      .filter((val) => !/-moz-|-ms-/.test(val))
       .join(',')
 
     if (property.indexOf('Webkit') > -1) {
@@ -77,7 +77,7 @@ export default function transition(
 
     const mozOutput = outputValue
       .split(/,(?![^()]*(?:\([^()]*\))?\))/g)
-      .filter(val => !/-webkit-|-ms-/.test(val))
+      .filter((val) => !/-webkit-|-ms-/.test(val))
       .join(',')
 
     if (property.indexOf('Moz') > -1) {

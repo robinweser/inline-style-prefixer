@@ -13,7 +13,7 @@ export default function crossFade(
     !isPrefixedValue(value) &&
     value.indexOf('cross-fade(') > -1
   ) {
-    return prefixes.map(prefix =>
+    return prefixes.map((prefix) =>
       value.replace(/cross-fade\(/g, `${prefix}cross-fade(`)
     )
   }

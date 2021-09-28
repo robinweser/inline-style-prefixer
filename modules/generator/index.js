@@ -15,7 +15,7 @@ export function generateFile(
   compatibility?: boolean
 ) {
   const pluginImports = pluginList
-    .map(plugin => generateImportString(plugin, compatibility))
+    .map((plugin) => generateImportString(plugin, compatibility))
     .join('\n')
 
   const moduleExporter = compatibility ? 'module.exports = ' : 'export default'
@@ -51,7 +51,7 @@ function saveFile(fileContent: string, path: string): void {
   const fs = require('fs')
   /* eslint-enable global-require */
 
-  fs.writeFile(path, fileContent, err => {
+  fs.writeFile(path, fileContent, (err) => {
     if (err) {
       throw err
     }

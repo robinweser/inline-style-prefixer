@@ -1,6 +1,6 @@
 {
   "name": "inline-style-prefixer",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "description": "Run-time Autoprefixer for JavaScript style objects",
   "module": "es/index.js",
   "jsnext:main": "es/index.js",
@@ -23,7 +23,7 @@
     "format": "prettier --write \"./modules/**/*.js\"",
     "generate": "cross-env BABEL_ENV=commonjs babel-node generateDefaultData",
     "lint": "eslint modules/**/*.js",
-    "release": "yarn build && npm publish && yarn docs",
+    "release": "yarn build && npm publish",
     "test": "cross-env BABEL_ENV=commonjs jest",
     "coverage": "yarn test --coverage"
   },
