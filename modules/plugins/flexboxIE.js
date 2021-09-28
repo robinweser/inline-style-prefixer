@@ -24,7 +24,7 @@ const flexShorthandMappings = {
   unset: 'unset',
 }
 const isUnitlessNumber = /^\d+(\.\d+)?$/
-
+const logTag = 'inline-style-prefixer.flexboxIE plugin'
 export default function flexboxIE(
   property: string,
   value: any,
@@ -44,6 +44,22 @@ export default function flexboxIE(
     // unitless positive number as that will be the most common use-case.
     if (isUnitlessNumber.test(value)) {
       style.msFlex = `${value} 1 0%`
+      return
+    }
+
+    if (typeof value === 'number' && value < 0) {
+      // ignore negative values;
+      console.warn(
+        `${logTag}: "flex: ${value}", negative values is not valid and will be ignored.`
+      )
+      return
+    }
+
+    if (!value.split) {
+      console.warn(
+        `${logTag}: "flex: ${value}", value format is not detected, it will be remain as is`
+      )
+      style.msFlex = value
       return
     }
 
