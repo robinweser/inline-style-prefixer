@@ -2,7 +2,7 @@
 import isPrefixedValue from 'css-in-js-utils/lib/isPrefixedValue'
 
 // http://caniuse.com/#search=cross-fade
-const prefixes = ['-webkit-', '']
+import { prefixesWebkit as prefixes } from '../utils/constants'
 
 export default function crossFade(
   property: string,

@@ -1,25 +1,11 @@
 /* @flow */
-const prefixes = ['-webkit-', '-moz-', '']
+import { prefixesWebkitAndMoz as prefixes } from '../utils/constants'
 
-const properties = {
-  maxHeight: true,
-  maxWidth: true,
-  width: true,
-  height: true,
-  columnWidth: true,
-  minWidth: true,
-  minHeight: true,
-}
-const values = {
-  'min-content': true,
-  'max-content': true,
-  'fill-available': true,
-  'fit-content': true,
-  'contain-floats': true,
-}
+const properties = ['maxHeight', 'maxWidth', 'width', 'height', 'columnWidth', 'minWidth', 'minHeight']
+const values = ['min-content', 'max-content', 'fill-available', 'fit-content', 'contain-floats']
 
 export default function sizing(property: string, value: any): ?Array<any> {
-  if (properties.hasOwnProperty(property) && values.hasOwnProperty(value)) {
+  if (properties.indexOf(property) > -1 && values.indexOf(value) > -1) {
     return prefixes.map((prefix) => prefix + value)
   }
 }

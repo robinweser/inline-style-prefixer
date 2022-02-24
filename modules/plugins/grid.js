@@ -30,11 +30,10 @@ const propertyConverters = {
       propertyConverters.gridColumnStart(+start, style)
 
       const [maybeSpan, maybeNumber] = end.split(/ ?span /)
-      if (maybeSpan === '') {
-        propertyConverters.gridColumnEnd(+start + +maybeNumber, style)
-      } else {
-        propertyConverters.gridColumnEnd(+end, style)
-      }
+      propertyConverters.gridColumnEnd(
+        maybeSpan === '' ? +start + +maybeNumber : +end,
+        style
+      )
     } else {
       propertyConverters.gridColumnStart(value, style)
     }
@@ -61,11 +60,10 @@ const propertyConverters = {
       propertyConverters.gridRowStart(+start, style)
 
       const [maybeSpan, maybeNumber] = end.split(/ ?span /)
-      if (maybeSpan === '') {
-        propertyConverters.gridRowEnd(+start + +maybeNumber, style)
-      } else {
-        propertyConverters.gridRowEnd(+end, style)
-      }
+      propertyConverters.gridRowEnd(
+        maybeSpan === '' ? +start + +maybeNumber : +end,
+        style
+      )
     } else {
       propertyConverters.gridRowStart(value, style)
     }

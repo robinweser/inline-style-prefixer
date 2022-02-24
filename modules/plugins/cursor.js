@@ -1,15 +1,10 @@
 /* @flow */
-const prefixes = ['-webkit-', '-moz-', '']
+import { prefixesWebkitAndMoz as prefixes } from '../utils/constants'
 
-const values = {
-  'zoom-in': true,
-  'zoom-out': true,
-  grab: true,
-  grabbing: true,
-}
+const values = ['zoom-in', 'zoom-out', 'grab', 'grabbing']
 
 export default function cursor(property: string, value: any): ?Array<string> {
-  if (property === 'cursor' && values.hasOwnProperty(value)) {
+  if (property === 'cursor' && values.indexOf(value) > -1) {
     return prefixes.map((prefix) => prefix + value)
   }
 }

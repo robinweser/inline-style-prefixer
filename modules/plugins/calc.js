@@ -1,7 +1,6 @@
 /* @flow */
 import isPrefixedValue from 'css-in-js-utils/lib/isPrefixedValue'
-
-const prefixes = ['-webkit-', '-moz-', '']
+import { prefixesWebkitAndMoz as prefixes } from '../utils/constants'
 
 export default function calc(property: string, value: any): ?Array<string> {
   if (

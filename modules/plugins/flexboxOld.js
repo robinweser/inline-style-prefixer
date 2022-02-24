@@ -21,16 +21,8 @@ export default function flexboxOld(
   style: Object
 ): void {
   if (property === 'flexDirection' && typeof value === 'string') {
-    if (value.indexOf('column') > -1) {
-      style.WebkitBoxOrient = 'vertical'
-    } else {
-      style.WebkitBoxOrient = 'horizontal'
-    }
-    if (value.indexOf('reverse') > -1) {
-      style.WebkitBoxDirection = 'reverse'
-    } else {
-      style.WebkitBoxDirection = 'normal'
-    }
+    style.WebkitBoxOrient = value.indexOf('column') > -1 ? 'vertical' : 'horizontal'
+    style.WebkitBoxDirection = value.indexOf('reverse') > -1 ? 'reverse' : 'normal'
   }
   if (alternativeProps.hasOwnProperty(property)) {
     style[alternativeProps[property]] = alternativeValues[value] || value

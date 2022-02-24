@@ -1,7 +1,7 @@
 /* @flow */
 import isPrefixedValue from 'css-in-js-utils/lib/isPrefixedValue'
+import { prefixesWebkitAndMoz as prefixes } from '../utils/constants'
 
-const prefixes = ['-webkit-', '-moz-', '']
 const values = /linear-gradient|radial-gradient|repeating-linear-gradient|repeating-radial-gradient/gi
 
 export default function gradient(property: string, value: any): ?Array<string> {

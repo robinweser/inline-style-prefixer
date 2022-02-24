@@ -4,14 +4,7 @@ import isPrefixedValue from 'css-in-js-utils/lib/isPrefixedValue'
 
 import capitalizeString from '../utils/capitalizeString'
 
-const properties = {
-  transition: true,
-  transitionProperty: true,
-  WebkitTransition: true,
-  WebkitTransitionProperty: true,
-  MozTransition: true,
-  MozTransitionProperty: true,
-}
+const properties = ['transition', 'transitionProperty', 'WebkitTransition', 'WebkitTransitionProperty', 'MozTransition', 'MozTransitionProperty']
 
 const prefixMapping = {
   Webkit: '-webkit-',
@@ -19,13 +12,15 @@ const prefixMapping = {
   ms: '-ms-',
 }
 
+const rTransitionSplitter = /,(?![^()]*(?:\([^()]*\))?\))/g
+
 function prefixValue(value: string, propertyPrefixMap: Object): string {
   if (isPrefixedValue(value)) {
     return value
   }
 
   // only split multi values, not cubic beziers
-  const multipleValues = value.split(/,(?![^()]*(?:\([^()]*\))?\))/g)
+  const multipleValues = value.split(rTransitionSplitter)
 
   for (let i = 0, len = multipleValues.length; i < len; ++i) {
     const singleValue = multipleValues[i]
@@ -63,11 +58,12 @@ export default function transition(
   propertyPrefixMap: Object
 ): ?string {
   // also check for already prefixed transitions
-  if (typeof value === 'string' && properties.hasOwnProperty(property)) {
+  if (typeof value === 'string' && properties.indexOf(property) > -1) {
     const outputValue = prefixValue(value, propertyPrefixMap)
     // if the property is already prefixed
-    const webkitOutput = outputValue
-      .split(/,(?![^()]*(?:\([^()]*\))?\))/g)
+    const multipleValues = outputValue.split(rTransitionSplitter)
+
+    const webkitOutput = multipleValues
       .filter((val) => !/-moz-|-ms-/.test(val))
       .join(',')
 
@@ -75,8 +71,7 @@ export default function transition(
       return webkitOutput
     }
 
-    const mozOutput = outputValue
-      .split(/,(?![^()]*(?:\([^()]*\))?\))/g)
+    const mozOutput = multipleValues
       .filter((val) => !/-webkit-|-ms-/.test(val))
       .join(',')
 
