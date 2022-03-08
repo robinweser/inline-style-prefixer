@@ -1,4 +1,3 @@
-import backgroundClip from './backgroundClip'
 import calc from './calc'
 import cursor from './cursor'
 import crossFade from './crossFade'
@@ -15,7 +14,6 @@ import sizing from './sizing'
 import transition from './transition'
 
 export default [
-  backgroundClip,
   calc,
   crossFade,
   cursor,
