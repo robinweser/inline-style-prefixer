@@ -54,14 +54,16 @@ export default function generatePrefixMap(browserList: Object): Object {
       const versions = getSupport(keyword)
 
       for (let i = 0, len = keywordProperties.length; i < len; ++i) {
-        if (versions[browser].x >= browserList[browser]) {
-          const property = keywordProperties[i]
-          if (!prefixMap[property]) {
-            prefixMap[property] = []
-          }
+        if (versions[browser]){
+          if (versions[browser].x >= browserList[browser]) {
+            var property = keywordProperties[i];
+            if (!prefixMap[property]) {
+              prefixMap[property] = [];
+            }
 
-          if (prefixMap[property].indexOf(prefix) === -1) {
-            prefixMap[property].push(prefix)
+            if (prefixMap[property].indexOf(prefix) === -1) {
+              prefixMap[property].push(prefix);
+            }
           }
         }
       }
