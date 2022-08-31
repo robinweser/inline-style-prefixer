@@ -74,6 +74,17 @@ describe('Static Prefixer', () => {
   })
 
   describe('Resolving special plugins', () => {
+    it('should prefix background-clips correctly (issue #194)', () => {
+      const input = { backgroundClip: 'text' }
+      const output = {
+        MozBackgroundClip: 'text',
+        WebkitBackgroundClip: 'text',
+        backgroundClip: 'text'
+      }
+      expect(prefix(input)).toEqual(output)
+      expect(prefix(input)).toEqual(output)
+    })
+
     it('should prefix calc expressions', () => {
       const input = { width: 'calc(30px)' }
       const output = {
