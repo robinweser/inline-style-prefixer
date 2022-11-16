@@ -1,6 +1,16 @@
 # Changelog
 
+## 7.0
+
+### 7.0.0
+
+- remove `backgroundClip` plugin
+
 ## 6.0
+
+### 6.0.4
+
+- hotfix bringing back a no-op `backgroundClip` plugin to preserve clients using a custom configuration
 
 ### 6.0.3
 

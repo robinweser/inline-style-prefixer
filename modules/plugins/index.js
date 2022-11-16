@@ -12,10 +12,8 @@ import logical from './logical'
 import position from './position'
 import sizing from './sizing'
 import transition from './transition'
-import backgroundClip from './backgroundClip'
 
 export default [
-  backgroundClip,
   calc,
   crossFade,
   cursor,
