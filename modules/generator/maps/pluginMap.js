@@ -2,16 +2,6 @@
 const maximumVersion = 9999
 
 export default {
-  backgroundClip: {
-    chrome: maximumVersion,
-    safari: maximumVersion,
-    opera: maximumVersion,
-    and_chr: maximumVersion,
-    ios_saf: maximumVersion,
-    edge: maximumVersion,
-    firefox: maximumVersion,
-    op_mini: maximumVersion,
-  },
   calc: {
     firefox: 15,
     chrome: 25,
