@@ -1,6 +1,6 @@
-import prefixAll from '../../packages/302/static'
+import { prefix } from '../../packages/700'
 
-export const static302 = () => {
+export const static700 = () => {
   const styles = {
     color: 'red',
     display: 'flex',
@@ -18,6 +18,6 @@ export const static302 = () => {
     },
   }
 
-  const prefixed = prefixAll(styles)
+  const prefixed = prefix(styles)
   return prefixed
 }

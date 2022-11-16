@@ -1,17 +1,11 @@
-/* @flow */
 import prefixProperty from './utils/prefixProperty'
 import prefixValue from './utils/prefixValue'
 
 import addNewValuesOnly from './utils/addNewValuesOnly'
 import isObject from './utils/isObject'
 
-type StaticData = {
-  prefixMap: Object,
-  plugins: Array<Function>,
-}
-
-export default function createPrefixer({ prefixMap, plugins }: StaticData) {
-  return function prefix(style: Object): Object {
+export default function createPrefixer({ prefixMap, plugins }) {
+  return function prefix(style) {
     for (const property in style) {
       const value = style[property]
 
@@ -30,6 +24,7 @@ export default function createPrefixer({ prefixMap, plugins }: StaticData) {
             style,
             prefixMap
           )
+
           addNewValuesOnly(combinedValue, processedValue || value[i])
         }
 

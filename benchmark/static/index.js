@@ -1,6 +1,6 @@
 import { Suite } from 'benchmark'
 import beautifyBenchmark from 'beautify-benchmark'
-import { static302, static301, static300, static205 } from './cases'
+import { static700, static302, static301, static300, static205 } from './cases'
 
 export const run = () => {
   console.log('Running static test.')
@@ -11,6 +11,7 @@ export const run = () => {
   testSuite.add('3.0.0', () => static300())
   testSuite.add('3.0.1', () => static301())
   testSuite.add('3.0.2', () => static302())
+  testSuite.add('7.0.0', () => static700())
 
   testSuite.on('cycle', (e) => {
     beautifyBenchmark.add(e.target)
@@ -21,8 +22,11 @@ export const run = () => {
     console.log(`Fastest is: ${this.filter('fastest').map('name')}\n`)
 
     console.log(
-      `Improvement: ${Math.round(this[this.length - 1].hz / this[this.length - 2].hz * 100) /
-        100}x faster`
+      `Improvement: ${
+        Math.round(
+          (this[this.length - 1].hz / this[this.length - 2].hz) * 100
+        ) / 100
+      }x faster`
     )
   })
 

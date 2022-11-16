@@ -1,11 +1,4 @@
-/* @flow */
-export default function prefixValue(
-  plugins: Array<Function>,
-  property: string,
-  value: any,
-  style: Object,
-  metaData: ?Object
-): ?any {
+export default function prefixValue(plugins, property, value, style, metaData) {
   for (let i = 0, len = plugins.length; i < len; ++i) {
     const processedValue = plugins[i](property, value, style, metaData)
 

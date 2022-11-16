@@ -1,4 +1,3 @@
-/* @flow */
 const prefixes = ['-webkit-', '-moz-', '']
 
 const values = {
@@ -8,7 +7,7 @@ const values = {
   grabbing: true,
 }
 
-export default function cursor(property: string, value: any): ?Array<string> {
+export default function cursor(property, value) {
   if (property === 'cursor' && values.hasOwnProperty(value)) {
     return prefixes.map((prefix) => prefix + value)
   }

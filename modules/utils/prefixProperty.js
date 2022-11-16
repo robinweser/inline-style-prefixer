@@ -1,26 +1,21 @@
 import capitalizeString from './capitalizeString'
 
-/* @flow */
-export default function prefixProperty(
-  prefixProperties: Object,
-  property: string,
-  style: Object
-): void {
-  if (prefixProperties.hasOwnProperty(property)) {
-    const newStyle = {}
-    const requiredPrefixes = prefixProperties[property]
+export default function prefixProperty(prefixProperties, property, style) {
+  const requiredPrefixes = prefixProperties[property]
+
+  if (requiredPrefixes && style.hasOwnProperty(property)) {
     const capitalizedProperty = capitalizeString(property)
-    const keys = Object.keys(style)
-    for (let i = 0; i < keys.length; i++) {
-      const styleProperty = keys[i]
-      if (styleProperty === property) {
-        for (let j = 0; j < requiredPrefixes.length; j++) {
-          newStyle[requiredPrefixes[j] + capitalizedProperty] = style[property]
-        }
+
+    for (let i = 0; i < requiredPrefixes.length; ++i) {
+      const prefixedProperty = requiredPrefixes[i] + capitalizedProperty
+
+      if (!style[prefixedProperty]) {
+        style[prefixedProperty] = style[property]
       }
-      newStyle[styleProperty] = style[styleProperty]
     }
-    return newStyle
+
+    style[property] = style[property]
   }
+
   return style
 }

@@ -1,4 +1,3 @@
-/* @flow */
 const values = {
   flex: ['-webkit-box', '-moz-box', '-ms-flexbox', '-webkit-flex', 'flex'],
   'inline-flex': [
@@ -10,7 +9,7 @@ const values = {
   ],
 }
 
-export default function flex(property: string, value: any): ?Array<string> {
+export default function flex(property, value) {
   if (property === 'display' && values.hasOwnProperty(value)) {
     return values[value]
   }
