@@ -1,9 +1,6 @@
-/* @flow */
 import pluginMap from './maps/pluginMap'
 
-export default function getRecommendedPlugins(
-  browserList: Object
-): Array<string> {
+export default function getRecommendedPlugins(browserList) {
   const recommendedPlugins = {}
 
   for (const plugin in pluginMap) {

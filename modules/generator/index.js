@@ -1,4 +1,3 @@
-/* @flow */
 import generatePrefixMap from './generatePrefixMap'
 import generatePluginList from './generatePluginList'
 
@@ -9,11 +8,7 @@ function generateImportString(plugin, compatibility) {
   return `import ${plugin} from 'inline-style-prefixer/lib/plugins/${plugin}'`
 }
 
-export function generateFile(
-  prefixMap: Object,
-  pluginList: Array<string>,
-  compatibility?: boolean
-) {
+export function generateFile(prefixMap, pluginList, compatibility) {
   const pluginImports = pluginList
     .map((plugin) => generateImportString(plugin, compatibility))
     .join('\n')
@@ -46,7 +41,7 @@ ${moduleExporter} {
 }`
 }
 
-function saveFile(fileContent: string, path: string): void {
+function saveFile(fileContent, path) {
   /* eslint-disable global-require */
   const fs = require('fs')
   /* eslint-enable global-require */
@@ -60,23 +55,13 @@ function saveFile(fileContent: string, path: string): void {
   })
 }
 
-type GenerationOption = {
-  path?: string,
-  compatibility?: boolean,
-  plugins?: boolean,
-  prefixMap?: boolean,
-}
-
 const defaultOptions = {
   prefixMap: true,
   plugins: true,
   compatibility: false,
 }
 
-export default function generateData(
-  browserList: Object,
-  userOptions: GenerationOption = {}
-) {
+export default function generateData(browserList, userOptions = {}) {
   const options = {
     ...defaultOptions,
     ...userOptions,

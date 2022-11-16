@@ -1,4 +1,3 @@
-/* @flow */
 const alternativeProps = {
   marginBlockStart: ['WebkitMarginBefore'],
   marginBlockEnd: ['WebkitMarginAfter'],
@@ -26,11 +25,7 @@ const alternativeProps = {
   borderInlineEndWidth: ['WebkitBorderEndWidth', 'MozBorderEndWidth'],
 }
 
-export default function logical(
-  property: string,
-  value: any,
-  style: Object
-): void {
+export default function logical(property, value, style) {
   if (Object.prototype.hasOwnProperty.call(alternativeProps, property)) {
     const alternativePropList = alternativeProps[property]
     for (let i = 0, len = alternativePropList.length; i < len; ++i) {

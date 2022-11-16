@@ -1,4 +1,3 @@
-/* @flow */
 import hyphenateProperty from 'css-in-js-utils/lib/hyphenateProperty'
 import isPrefixedValue from 'css-in-js-utils/lib/isPrefixedValue'
 
@@ -19,7 +18,7 @@ const prefixMapping = {
   ms: '-ms-',
 }
 
-function prefixValue(value: string, propertyPrefixMap: Object): string {
+function prefixValue(value, propertyPrefixMap) {
   if (isPrefixedValue(value)) {
     return value
   }
@@ -56,12 +55,7 @@ function prefixValue(value: string, propertyPrefixMap: Object): string {
   return multipleValues.join(',')
 }
 
-export default function transition(
-  property: string,
-  value: any,
-  style: Object,
-  propertyPrefixMap: Object
-): ?string {
+export default function transition(property, value, style, propertyPrefixMap) {
   // also check for already prefixed transitions
   if (typeof value === 'string' && properties.hasOwnProperty(property)) {
     const outputValue = prefixValue(value, propertyPrefixMap)

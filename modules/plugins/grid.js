@@ -1,10 +1,8 @@
-/* @flow */
-
-function isSimplePositionValue(value: any) {
+function isSimplePositionValue(value) {
   return typeof value === 'number' && !isNaN(value)
 }
 
-function isComplexSpanValue(value: string) {
+function isComplexSpanValue(value) {
   return typeof value === 'string' && value.includes('/')
 }
 
@@ -16,13 +14,13 @@ const displayValues = {
 }
 
 const propertyConverters = {
-  alignSelf: (value: any, style: Object) => {
+  alignSelf: (value, style) => {
     if (alignmentValues.indexOf(value) > -1) {
       style.msGridRowAlign = value
     }
   },
 
-  gridColumn: (value: any, style: Object) => {
+  gridColumn: (value, style) => {
     if (isSimplePositionValue(value)) {
       style.msGridColumn = value
     } else if (isComplexSpanValue(value)) {
@@ -40,20 +38,20 @@ const propertyConverters = {
     }
   },
 
-  gridColumnEnd: (value: any, style: Object) => {
+  gridColumnEnd: (value, style) => {
     const { msGridColumn } = style
     if (isSimplePositionValue(value) && isSimplePositionValue(msGridColumn)) {
       style.msGridColumnSpan = value - msGridColumn
     }
   },
 
-  gridColumnStart: (value: any, style: Object) => {
+  gridColumnStart: (value, style) => {
     if (isSimplePositionValue(value)) {
       style.msGridColumn = value
     }
   },
 
-  gridRow: (value: any, style: Object) => {
+  gridRow: (value, style) => {
     if (isSimplePositionValue(value)) {
       style.msGridRow = value
     } else if (isComplexSpanValue(value)) {
@@ -71,39 +69,35 @@ const propertyConverters = {
     }
   },
 
-  gridRowEnd: (value: any, style: Object) => {
+  gridRowEnd: (value, style) => {
     const { msGridRow } = style
     if (isSimplePositionValue(value) && isSimplePositionValue(msGridRow)) {
       style.msGridRowSpan = value - msGridRow
     }
   },
 
-  gridRowStart: (value: any, style: Object) => {
+  gridRowStart: (value, style) => {
     if (isSimplePositionValue(value)) {
       style.msGridRow = value
     }
   },
 
-  gridTemplateColumns: (value: any, style: Object) => {
+  gridTemplateColumns: (value, style) => {
     style.msGridColumns = value
   },
 
-  gridTemplateRows: (value: any, style: Object) => {
+  gridTemplateRows: (value, style) => {
     style.msGridRows = value
   },
 
-  justifySelf: (value: any, style: Object) => {
+  justifySelf: (value, style) => {
     if (alignmentValues.indexOf(value) > -1) {
       style.msGridColumnAlign = value
     }
   },
 }
 
-export default function grid(
-  property: string,
-  value: any,
-  style: Object
-): ?Array<string> {
+export default function grid(property, value, style) {
   if (property === 'display' && value in displayValues) {
     return displayValues[value]
   }

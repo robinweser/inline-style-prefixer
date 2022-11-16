@@ -1,10 +1,9 @@
-/* @flow */
 import isPrefixedValue from 'css-in-js-utils/lib/isPrefixedValue'
 
 // http://caniuse.com/#feat=css-image-set
 const prefixes = ['-webkit-', '']
 
-export default function imageSet(property: string, value: any): ?Array<string> {
+export default function imageSet(property, value) {
   if (
     typeof value === 'string' &&
     !isPrefixedValue(value) &&

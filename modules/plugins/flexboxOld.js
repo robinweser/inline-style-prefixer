@@ -1,4 +1,3 @@
-/* @flow */
 const alternativeValues = {
   'space-around': 'justify',
   'space-between': 'justify',
@@ -15,11 +14,7 @@ const alternativeProps = {
   flexGrow: 'WebkitBoxFlex',
 }
 
-export default function flexboxOld(
-  property: string,
-  value: any,
-  style: Object
-): void {
+export default function flexboxOld(property, value, style) {
   if (property === 'flexDirection' && typeof value === 'string') {
     if (value.indexOf('column') > -1) {
       style.WebkitBoxOrient = 'vertical'

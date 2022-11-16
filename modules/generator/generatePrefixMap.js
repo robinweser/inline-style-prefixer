@@ -1,4 +1,3 @@
-/* @flow */
 import { getSupport } from 'caniuse-api'
 
 import propertyMap from './maps/propertyMap'
@@ -29,11 +28,7 @@ const flexPropsIE = [
   'flexBasis',
 ]
 
-function filterAndRemoveIfEmpty(
-  map: Object,
-  property: string,
-  filter: Function
-): void {
+function filterAndRemoveIfEmpty(map, property, filter) {
   if (map[property]) {
     map[property] = map[property].filter(filter)
 
@@ -43,7 +38,7 @@ function filterAndRemoveIfEmpty(
   }
 }
 
-export default function generatePrefixMap(browserList: Object): Object {
+export default function generatePrefixMap(browserList) {
   const prefixMap = {}
 
   for (const browser in prefixBrowserMap) {
@@ -54,15 +49,16 @@ export default function generatePrefixMap(browserList: Object): Object {
       const versions = getSupport(keyword)
 
       for (let i = 0, len = keywordProperties.length; i < len; ++i) {
-        if (versions[browser]){
+        if (versions[browser]) {
           if (versions[browser].x >= browserList[browser]) {
-            var property = keywordProperties[i];
+            const property = keywordProperties[i]
+
             if (!prefixMap[property]) {
-              prefixMap[property] = [];
+              prefixMap[property] = []
             }
 
             if (prefixMap[property].indexOf(prefix) === -1) {
-              prefixMap[property].push(prefix);
+              prefixMap[property].push(prefix)
             }
           }
         }

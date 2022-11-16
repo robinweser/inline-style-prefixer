@@ -6,9 +6,6 @@
     "node": true,
     "jest": true
   },
-  "plugins": [
-    "flowtype"
-  ],
   "rules": {
     "semi": [ 2, "never" ],
     "object-curly-newline": [ 0 ],

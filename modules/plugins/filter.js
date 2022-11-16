@@ -4,7 +4,7 @@ const FILTER_REGEX = /filter\(/g
 // http://caniuse.com/#feat=css-filter-function
 const prefixes = ['-webkit-', '']
 
-export default function filter(property: string, value: any): ?Array<string> {
+export default function filter(property, value) {
   if (
     typeof value === 'string' &&
     !isPrefixedValue(value) &&

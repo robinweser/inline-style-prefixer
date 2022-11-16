@@ -13,8 +13,6 @@ export default function prefixProperty(prefixProperties, property, style) {
         style[prefixedProperty] = style[property]
       }
     }
-
-    style[property] = style[property]
   }
 
   return style
