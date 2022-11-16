@@ -2,6 +2,10 @@
 
 ## 6.0
 
+### 6.0.3
+
+- Cleanup ( [#225](https://github.com/robinweser/inline-style-prefixer/pull/225) )
+
 ### 6.0.2
 
 - fixed an issue with how `background-clip` was prefixed ( [#221](https://github.com/robinweser/inline-style-prefixer/pull/221) )
