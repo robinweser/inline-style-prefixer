@@ -53,7 +53,7 @@ output === {
   transition: '200ms all linear',
   MozBoxSizing: 'border-box',
   boxSizing: 'border-box',
-  display: [ '-webkit-box', '-moz-box', '-ms-flexbox', '-webkit-flex', 'flex' ]
+  display: [ '-webkit-box', '-moz-box', '-ms-flexbox', '-webkit-flex', 'flex' ],
   color: 'blue'
 }
 ```
